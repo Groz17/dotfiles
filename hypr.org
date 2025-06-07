@@ -44,8 +44,7 @@ $fileManager = ghostty -e yazi
 # $menu = wofi --show drun
 $menu = rofi -show drun
 #$menu = wofi -show drun
-# $browser = firefox
-$browser = floorp
+$browser = floorp || flatpak run one.ablaze.floorp
 
 # open krita/image editing software with clipboard as input? for when commenting screenshotted code?
 #+end_src
