@@ -3,7 +3,7 @@
 #+startup: content
 #+auto_tangle: t
 
-* TODO
+* TODO TASK LIST
 - [ ] add c-r c-{a/l} for current webpage url?
 - [ ] configure website keybindings, so u can remove tweaks for yt addon
 - [ ] use c-c for llm confirm

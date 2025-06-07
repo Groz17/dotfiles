@@ -8,7 +8,7 @@
 # on Ghostty's website, at https://ghostty.org/docs/config.
 
 
-*  TODO TODO LIST
+*  TODO TASK LIST
 - [ ] split docker container pane same cwd?
 - [ ] window-save-state?
 

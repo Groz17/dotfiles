@@ -7,7 +7,7 @@ Create your files separately and then link them to this file like this:
 source = ~/.config/hypr/myColors.conf
 * Hyprland
 
-** TODO
+** TODO TASK LIST
 - [ ] hyprshot don't save to clipboard
 - [ ] move to workspace without going there
 - [ ] keybinding to go running emacs instance(s)

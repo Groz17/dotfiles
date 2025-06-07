@@ -2,7 +2,7 @@
 #+startup: content
 #+auto_tangle: t
 
-* TODO
+* TODO TASK LIST
 - [ ] m-c-j to activate vim mode doesn't work?
 - [ ] keybinding for pwd|c? and most common longish commands? analysis w/ atuin
 
