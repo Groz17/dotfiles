@@ -58,7 +58,7 @@ mouse-hide-while-typing=true
 window-save-state=always
 #+end_src
 Dirty hack
-#+begin_src python :var font-size=(if (not (string-match  "Battery status not available" (battery))) 13 11)
+#+begin_src python :var font-size=(if (string-match  "Power N/A, battery unknown (N/A% load, remaining time N/A)"(battery)) 13 11)
 #+end_src
 
 #+begin_src ghostty
