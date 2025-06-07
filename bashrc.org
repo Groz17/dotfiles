@@ -557,4 +557,8 @@ for (( ; ; )); do
 	[ $correct_code == $guessed_code ] && echo "Correct" || echo "Wrong! ($correct_code)"
 done
 }
+
+J(){
+cd "$(fd -i -td '^'"$(sed 's/[][^\\."+*?()|{}$#&~-]/\\\0/' <<< "$1")"'.*$' ~/vimwiki | ifne sh -c 'awk "{print length,\$0}"|sort -k1,1n |cut -f1 --complement -d " "|fzf -1')"
+}
 #+end_src
