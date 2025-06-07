@@ -2,7 +2,7 @@
 #+startup: content
 #+auto_tangle: t
 
-#_begin_src fzf
+#+begin_src fzf
 # how to automatically put fzf window at the top of the screen?
 --cycle 
 # TODO: this line doesn't work
@@ -111,4 +111,4 @@
            # unix-word-rubout           ctrl-w
            # up                         ctrl-k  ctrl-p  up
            # yank                       ctrl-y
-#_end_src
+#+end_src
