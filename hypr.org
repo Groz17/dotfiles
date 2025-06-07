@@ -689,8 +689,8 @@ can u use source code (maybe elisp) to pick random image?
 # wallpaper=,~/Pictures/om.jpg
 # preload=~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper.jpg
 # wallpaper=,~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper.jpg
-preload=~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper_purple.jpg
-wallpaper=,~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper_purple.jpg
+preload=~/Pictures/Wallpapers/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper_purple.jpg
+wallpaper=,~/Pictures/Wallpapers/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper_purple.jpg
 # preload=~/Pictures/RxlwP.png
 # wallpaper=,~/Pictures/RxlwP.png
 #+end_src
