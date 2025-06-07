@@ -564,7 +564,7 @@ windowrulev2 = opacity 0.9,class:^(pulsemixer)$
 # bind = $mainMod , t, exec, [float] $terminal -e nvim --clean -c 'hi\ Normal\ guibg=none\|inoremap\<S-space\>\ \<cmd\>up\<cr\>\<esc\>\|nnoremap\<S-space\>\ \<cmd\>up\<cr\>\<esc\>\|$\|exe\ \"norm\!\ o\\\<cr\>\\\<esc\>zt\"\|startinsert' ~/todo
 # open neovim in file w/ keymaps? like pressing <super>n<space>fp to go plugins or smth?
 # substitute with org-capture?
-bind = $mainMod , t, exec, [float] $terminal -e nvim -u ~/.config/nvim/hyrp_float.vim -c 'norm!\ Gzt2o' ~/todo/todo.txt
+bind = $mainMod , t, exec, [float] $terminal -e nvim -u ~/scripts/hyrp_float.vim -c 'norm!\ Gzt2o' ~/todo/todo.txt
 # bind = $mainMod , t, exec, [float] $terminal -e emacsclient -t -e '\(execute-kbd-macro "Gzt2o"\)'  ~/todo/todo.txt 
 
 # doesn't pick up aliases
