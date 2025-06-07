@@ -9,7 +9,7 @@
 ;;write diff between pc and laptop?
 
 
-* ━━━━━━━━━━━━━━━━━━━━━━━━━━━┫ TODO ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+* TODO TASK LIST
 org-babel for kanata/config files in general?
 
 basically i want: 
@@ -55,7 +55,7 @@ crea tutti o i piu importanti prefix in emacs like (place keys considering impor
 - [ ] M-g
   also for every two keypress prefix use a letter, like q (macro key in vim) for C-x C-k (macro key in emacs), etc...
 
-* ━━━━━━━━━━━━━━━━━━━━━━━━━━━┫ SETTINGS ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+*  SETTINGS
 #+begin_src kbd
 
 (defcfg
@@ -80,7 +80,7 @@ crea tutti o i piu importanti prefix in emacs like (place keys considering impor
 
 #+end_src
 
-* ━━━━━━━━━━━━━━━━━━━━━━━━━━━┫ KEYBOARD ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+*  KEYBOARD
 conditinally tangle:
 , #+begin_src python :tangle (when (not (string-match  "Battery status not available" (battery))) "laptop.sh")
 
@@ -118,7 +118,7 @@ f11
  ;;(defvirtualkeys fk1  (layer-switch nav))
 #+end_src
 
-* ━━━━━━━━━━━━━━━━━━━━━━━━━━━┫ ALIAS ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+*  ALIAS
 #+begin_src kbd
 
 (defalias
@@ -658,7 +658,7 @@ d0 (tap-hold-press-timeout 175 175 0 0 0)
 
 #+end_src
 
-* ━━━━━━━━━━━━━━━━━━━━━━━━━━━┫ LAYERS ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+*  LAYERS
 #+begin_src kbd
 
 ;; defvar and defalias diff?
@@ -845,7 +845,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 #+end_src
 
-* ━━━━━━━━━━━━━━━━━━━━━━━━━━━┫ CHORDS ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+*  CHORDS
  purtroppo Chords legati a layout... qwerty (eventualmente adatta in base a prima letter premuta)
 also use alt and altgr... (by themselves+chords)
  find unusual combinations lik hj/jh/etc... (also three (maybe more) letters like kl; ) (the letters don't have to be adiacent)
