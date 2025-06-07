@@ -22,6 +22,7 @@
 # --bind='ctrl-space:half-page-down,alt-space:half-page-up,ctrl-g:jump-accept,alt-<:first,alt->:last,alt-j:preview-down,alt-k:preview-up,alt-n:preview-page-down,alt-p:preview-page-up,alt-a:select-all,alt-w:toggle-preview-wrap,alt-p:toggle-preview,ctrl-s:toggle-sort,ctrl-y:execute-silent(xsel -b<<<{} && dunstify "Lines copied")+abort'
 --bind 'ctrl-space:half-page-down,alt-space:half-page-up'
 --bind 'ctrl-h:backward-delete-char/eof'
+--bind 'ctrl-l:accept'
 --bind 'ctrl-s:jump-accept'
 --bind 'alt-<:first,alt->:last'
 --bind 'alt-j:preview-down,alt-k:preview-up'
