@@ -56,7 +56,12 @@ adjust-cell-height=3%
 # adjust-cell-height=35%
 mouse-hide-while-typing=true
 window-save-state=always
-font-size=11
+#+end_src
+Dirty hack
+#+begin_src python :var font-size=(if (not (string-match  "Battery status not available" (battery))) 13 11)
+#+end_src
+
+#+begin_src ghostty
 # non funge?
 window-inherit-working-directory=true
 # split-divider-color=yellow
