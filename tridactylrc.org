@@ -1,0 +1,722 @@
+# -*- comment-start: "\""; -*-
+#+property: header-args :tangle ~/.config/tridactyl/tridactylrc
+#+startup: content
+#+auto_tangle: t
+
+* TODO
+- [ ] add c-r c-{a/l} for current webpage url?
+- [ ] configure website keybindings, so u can remove tweaks for yt addon
+- [ ] use c-c for llm confirm
+- [ ] implement youtube keybindings, like h in insert mode=arrow? so u can get rid of  extensions (what about values though?) maybe playerctl?
+- [ ] automatically select first option?
+- [ ] syntax highlighting? for tridactylrc inside orgmode
+- [ ] Make Tridactyl work on addons.mozilla.org (:h fixamo).
+
+* OPTIONS
+#+begin_src tridactyl
+" Clear the config (is this really necessary?)
+sanitise tridactyllocal tridactylsync
+
+" you can use 2gt to switch to the second most recently used tab (so identical to <C-^>), 3gt to the third most recently used tab, etc. (#4595)
+set tabsort mru
+
+" Start with left-hand chars for fewer mouse interrupts
+set hintchars fdsagvcxztrewqbhyjklnmuiop
+
+" If you want to support e.g. French:
+" set followpagepatterns.next ^(next|newer|prochain)\b|»|>>
+" set followpagepatterns.prev ^(prev(ious)?|older|précédent)\b|«|<<
+set followpagepatterns.next ^(next|newer|prochain)\b|»|>>
+set followpagepatterns.prev ^(prev(ious)?|older|précédent)\b|«|<<
+
+" set customthemes.custom span.TridactylHint { font-family: monospace !important; background: transparent !important; color: black !important; text-shadow: cyan -1px -1px 0px, cyan -1px 0px 0px, cyan -1px 1px 0px, cyan 1px -1px 0px, cyan 1px 0px 0px, cyan 1px 1px 0px, cyan 0px 1px 0px, cyan 0px -1px 0px !important; }
+" Permitted values: run :composite js tri.styling.THEMES | fillcmdline to find out.
+" set theme custom
+set theme midnight
+" set theme quake
+
+" set visualexitauto false
+set visualexitauto true
+
+"set homepages ["old.reddit.com"]
+set homepages ["reddit.com","youtube.com"]
+
+#+end_src
+
+* PERSONAL SCRIPTS
+
+#+begin_src tridactyl
+" send clipboard to ~/todo?
+" bind <space>a composite js -p tri.excmds.shellescape(JS_ARG).then(url => tri.excmds.exclaim_quiet('sh ~/.config/tridactyl/test ' + url))
+" bind <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
+" use alt mappings?
+" bind <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
+bind <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
+bind <space>A composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append_no_space
+" Clipboard mapping?
+" bind <space>c exclaim_quiet sh -c 'printf '\n%s\n' "$(wl-paste)" >> ~/todo && notify-send "Sent Clipboard"'
+" bind <space>c exclaim_quiet sh -c 'echo >> ~/todo && echo "$(wl-paste)" >> ~/todo && notify-send "Sent Clipboard"'
+" bind <space>c exclaim_quiet sh -c 'echo >> ~/todo && clip="$(wl-paste)" && echo "$clip" >> ~/todo && notify-send "Sent Clipboard"'
+bind <space>c exclaim_quiet bash -c 'clip="$(wl-paste)" && echo >> ~/todo/todo.txt && echo "$clip" >> ~/todo/todo.txt && notify-send "Sent Clipboard" "$clip"'
+" bind <space>C exclaim_quiet sh -c 'echo "$(wl-paste)" >> ~/todo && notify-send "Sent Clipboard (No Newline)"'
+bind <space>C exclaim_quiet bash -c 'clip="$(wl-paste)" && echo "$clip" >> ~/todo/todo.txt && notify-send "Sent Clipboard (No Newline)" "$clip"'
+" bind <space><space> followpage next
+" bind <space><s-space> followpage prev
+bind <space>s composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/scripts/subs
+
+ " TODO: metti i chapters as well
+ " "bind yS composite clipboard yank ; exclaim ~/scripts/vimwiki_scripts/clipboard2vimwiki.sh
+ ""bind ys composite get_current_url | exclaim ~/.config/tridactyl/scripts/subs
+ ""bind yS composite get_current_url | exclaim ~/.config/tridactyl/scripts/subs_playlist
+
+" https://github.com/moyiz/git-dev.nvim
+" bind ;go composite get_current_url | shellescape | js -p tri.excmds.exclaim("kitty -e nvim -c \'GitDevOpen " + JS_ARG + "\'")
+"bind ;go composite get_current_url | shellescape | js -p tri.excmds.exclaim("xdg-open nvim-gitdev://open/?repo=" + JS_ARG)
+
+#+end_src
+
+* BINDS
+#+begin_src tridactyl
+" bind --mode=$mode $key $excmd
+bind gp focusinput -p
+bind i mode ignore
+" metti fra le prime cosi runna subito"
+bind --mode=ignore <esc> composite mode normal
+
+" bind --mode=browser <C-.> jsua browser.sidebarAction.open(); tri.excmds.sidebaropen("https://mail.google.com/mail/mu")
+
+" it works: zoom -0.05 true
+" maybe consider swap mappigs? j -> down -> zoomin?
+bind <c-k> zoom 0.1 true
+" bind . zoom 0.1 true
+bind <c-j> zoom -0.1 true
+" bind , zoom -0.1 true
+
+bind b fillcmdline bmarks
+bind B fillcmdline bmarks -t
+
+bind !! fillcmdline exclaim
+
+unbind --mode=ex <Tab>
+unbind gf
+unbind <space>
+" i use C-i
+unbind <Backspace>
+
+" ─ VISUAL
+" bind --mode=visual c composite js.document.getSelection().toString() | send to todo
+" bind --mode=visual C composite js.document.getSelection().toString() | send to todo no newline
+" bind --mode=visual q composite js.document.getSelection().toString() | send to qr code
+
+" 3gt to the third most recently used tab
+" set keyboardlayoutforce true
+
+"colourscheme base16-phd
+"colourscheme base16-green-screen
+"colourscheme base16-dracula
+" colourscheme midnight
+
+" https://github.com/tridactyl/tridactyl/issues/158 (youtube videos extension with shortcut)
+
+" autocmd DocStart youtube\.com/watch\?v=.* mode ignore
+
+"" REDIRECTS " ┣
+#+end_src
+
+* MOVEMENT
+#+begin_src tridactyl
+
+" ────────────────────────────────────────────────────────────
+" The default jump of 10 is a bit much.
+" bind j scrollline 3
+" bind k scrollline -3
+
+bind % scrollto 50
+bind 0 scrollto 0 x
+
+bind e fillcmdline goto
+
+#+end_src
+
+** TAB MANAGEMENT
+#+begin_src tridactyl
+bind U tabuniq
+
+bind / fillcmdline find
+bind ? fillcmdline find -reverse
+bind n findnext --search-from-view
+bind N findnext --reverse --search-from-view
+
+"urlmodify
+" bind <a-s> js tri.excmds.urlmodify("-r", "^", "https://web.archive.org/save/")
+" find a way to save it to your web archive as well
+" bind <a-s> urlmodify -r ^ https://web.archive.org/save/
+
+"A non integer string means to search the URL and title for matches, in this window if called from tab, all windows if called from anytab. Title matches can contain '*' as a wildcard.
+bind T fillcmdline tab
+bind O fillcmdline tabopen
+" bind O fillcmdline tabopen -b
+bind ge current_url open
+bind gE current_url tabopen
+
+"bind ZZ composite tabonly | tabclose
+
+" successivo, prossimo, etc...
+bind {{ composite tabduplicate | followpage prev
+bind }} composite tabduplicate | followpage next
+
+" bind <c-^> tab #
+bind ^ tab #
+" why not, faster
+bind # tab #
+" bind 2^ -> go back 2 pages
+" bind <n>^ -> go back n pages
+
+"I hate myself
+bind 2>> tabmove +2
+bind 2<< tabmove -2
+
+" go to middle tab on the screenwidth (not only on the middle of first screen!!!)
+bind gm tab 12 
+
+" move to last
+" bind >$
+
+" move to first
+" bind <0
+
+" << and >> should take a count!
+
+" cmds are also split with semicolons (;) and don't pass things along to each other.
+" bind x composite tabnext ; tabclose ; tab #
+" bind x composite tabnext ; tabclose
+bind x composite tabnext ; tabclose ; tab #
+" bind X composite tabprev ; tabclose
+bind X composite tabprev ; tabclose
+
+" bind \p hint -wp
+" bind \t fillcmdline tabpush
+" bind \T fillcmdline tabgrab
+
+"" Scroll to next/prev section with }/{
+" bind { js (function() { var prevTargetElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, hr, section, article, aside, nav, header, main'); var currentY = window.scrollY; for (var i = prevTargetElements.length - 1; i >= 0; i--) { var pElementY = prevTargetElements[i].getBoundingClientRect().top + window.scrollY; if (pElementY < currentY) { window.scrollTo({ top: pElementY, behavior: 'smooth' }); break; } } })();
+" bind } js (function() { var nextTargetElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, hr, section, article, aside, nav, header, main'); var currentY = window.scrollY; for (var i = 0; i < nextTargetElements.length; i++) { var nElementY = nextTargetElements[i].getBoundingClientRect().top + window.scrollY; if (nElementY > (currentY+1)) { window.scrollTo({ top: nElementY, behavior: 'smooth', block: 'start' }); break; } } })();
+
+" ─ Media
+bind <A-]> js document.querySelector('video').playbackRate+=0.25
+bind <A-[> js document.querySelector('video').playbackRate-=0.25
+bind <A-=> js document.querySelector('video').playbackRate=1
+
+" Open right click menu on links. Based on https://github.com/tridactyl/tridactyl/blob/master/.tridactylrc#L86
+" bind ;C composite hint -; !s xdotool key Menu
+" bind ;c hint -c [class*="expand"],[class="togg"],[class="comment_folder"]
+" bind ;u hint -Jc [class*="arrow"]
+" bind ga js void(open('https://archive.is/search/?q='+encodeURIComponent(document.location)))
+" bind gc composite get_current_url | tabopen gc
+" bind gT js void(open('https://translate.google.com/translate?hl=en&sl=auto&tl=en&u='+encodeURIComponent(document.location)))
+" bind <A-t> composite hint -W | js -p tri.excmds.open('https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=' + JS_ARG)
+
+" TODO: fix
+bindurl inoreader.com --mode=normal ;; hint -;c .reader_pane_sinner,tree_pane
+
+autocmd DocStart canary.discord.com mode ignore
+autocmd DocStart ptb.discord.com mode ignore
+autocmd DocStart www.codecademy.com mode ignore
+
+" bind D tabclose and open right tab// bind d tabclose and open left tab?
+
+"https://github-wiki-see.page/m/tridactyl/tridactyl/wiki/Adding-your-own-functionality
+command tabcloseallbykeyword jsb -p browser.tabs.query({}).then(tabs => tabs.forEach( t => { if(t.url.includes(JS_ARG)) browser.tabs.remove(t.id) }))
+
+bind D fillcmdline tabcloseallbykeyword 
+
+" ^ esiste per un motivo
+" bind d tabclose
+
+" doesn't work with reddit tho...
+" bind gr reader?
+
+"bind d composite tabclose; tabprev; tabprev; tabprev; tabprev
+
+" Close current tab and switch to most recent previous tab (modify default behaviour)
+" bind d composite tabclose | tab #
+
+bind gx0 tabcloseallto left
+bind gx$ tabcloseallto right
+
+bind gP composite clipboard tabopen ; tab #
+
+" Make gu take you back to subreddit from comments
+"bindurl reddit.com gu urlparent 4
+
+" Handy multiwindow/multitasking binds
+bind gd tabdetach
+bind gD composite tabduplicate ; tabdetach
+
+" go private
+" bind gp current_url winopen -popup -private
+" go incognito (vimium mapping)
+bind gI current_url winopen -popup -private
+
+" l for listen
+" bind ,l js -p tri.excmds.shellescape(JS_ARG).then(url => tri.excmds.exclaim_quiet('mpv --no-video --no-terminal ' + url))
+alias mpvsafel js -p tri.excmds.shellescape(JS_ARG).then(url => tri.excmds.exclaim_quiet('mpv --no-video --no-terminal ' + url))
+bind ,l hint -W mpvsafel
+
+bind gs viewsource
+
+"bind yG 
+
+" maybe use t to translate selection to another language, like tr for russian, ta for arabic, ts (or maybe te for español) for spanish, etc..."
+
+" TABGROUP
+" would be cool to add tabs to group by regex, like .*youtube.* to youtube group...
+" bind t tabopen
+unbind t
+bind tA tabgroupabort
+bind tc fillcmdline tabgroupcreate
+" bind tx fillcmdline tabgroupclose
+" q perche x e troppo vicino a c e perche q e piu diffile da raggiungere
+bind tq fillcmdline tabgroupclose
+bind ts fillcmdline tabgroupswitch
+bind tm fillcmdline tabgroupmove
+bind tr fillcmdline tabgrouprename
+
+" bind tl tabgrouplast
+
+  *** TABGROUP
+" bind ta tgroupswitch emacs
+" bind tr tgroupswitch life
+" bind ts tgroupswitch learn
+" bind tt tgroupswitch prog
+" bind td tgroupswitch dots
+" bind tn tgroupswitch wr
+" bind te tgroupswitch cons
+" bind ti tgroupswitch buy
+
+#+end_src
+
+* READLINE
+#+begin_src tridactyl
+
+"bind --mode=hint <A-j> hint.focusNextHint
+"bind --mode=hint <A-k> hint.focusPreviousHint
+
+bind --mode=ex <c-j> ex.next_completion
+bind --mode=ex <c-k> ex.prev_completion
+"<C-Enter>: string = "ex.execute_ex_on_completion"
+"unbind --mode=ex <Tab>
+"unbind --mode=ex <c-a>
+unbind --mode=ex <c-f>
+bind --mode=ex <Tab> ex.complete
+bind --mode=ex <c-n> ex.next_history
+bind --mode=ex <c-p> ex.prev_history
+
+" check ivy-keymaps?
+bind --mode=ex <c-Enter> ex.next_completion ; ex.accept_line
+
+"for chatgpt
+" basically cr: s-cr, <c-c><c-c>: cr"
+"bind --mode=insert      <C-c><C-c>   return
+" bindurl chatgpt\.com/ <c-c> js tri.excmds.yank(document.querySelector('.player-timedtext').innerText.replace("\n", ""))
+" bindurl chatgpt\.com/ <cr> <s-cr>
+
+bind --mode=insert  <c-c><c-c>  ex.accept_line
+bind --mode=input   <c-c><c-c>  ex.accept_line
+
+"insert mode is entered by clicking on text areas while input mode is entered by using gi
+"readline ftw
+bind --mode=ex          <C-a>   text.beginning_of_line
+bind --mode=insert      <C-a>   text.beginning_of_line
+bind --mode=input       <C-a>   text.beginning_of_line
+bind --mode=ex          <C-e>   text.end_of_line
+bind --mode=insert      <C-e>   text.end_of_line
+bind --mode=input       <C-e>   text.end_of_line
+bind --mode=ex          <C-f>   text.forward_char
+bind --mode=insert      <C-f>   text.forward_char
+bind --mode=input       <C-f>   text.forward_char
+bind --mode=ex          <C-b>   text.backward_char
+bind --mode=insert      <C-b>   text.backward_char
+bind --mode=input       <C-b>   text.backward_char
+bind --mode=ex          <C-k>   text.kill_line
+bind --mode=insert      <C-k>   text.kill_line
+bind --mode=input       <C-k>   text.kill_line
+bind --mode=ex          <A-d>   text.kill_word
+bind --mode=ex          <C-u>   text.backward_kill_line
+bind --mode=insert      <C-u>   text.backward_kill_line
+bind --mode=input       <C-u>   text.backward_kill_line
+bind --mode=ex          <Tab>   text.tab_insert
+bind --mode=insert      <Tab>   text.tab_insert
+bind --mode=input       <Tab>   text.tab_insert
+bind --mode=ex          <C-y>   composite getclip selection | text.insert_text
+bind --mode=insert      <C-y>   composite getclip selection | text.insert_text
+bind --mode=input       <C-y>   composite getclip selection | text.insert_text
+bind --mode=ex          <A-c>   text.capitalize_word
+bind --mode=insert      <A-c>   text.capitalize_word
+bind --mode=input       <A-c>   text.capitalize_word
+bind --mode=ex          <A-l>   text.downcase_word
+bind --mode=insert      <A-l>   text.downcase_word
+bind --mode=input       <A-l>   text.downcase_word
+bind --mode=ex          <A-u>   text.upcase_word
+bind --mode=insert      <A-u>   text.upcase_word
+bind --mode=input       <A-u>   text.upcase_word
+bind --mode=ex          <C-h>   text.delete_backward_char
+bind --mode=insert      <C-h>   text.delete_backward_char
+bind --mode=input       <C-h>   text.delete_backward_char
+bind --mode=ex          <C-d>   text.delete_char
+bind --mode=insert      <C-d>   text.delete_char
+bind --mode=input       <C-d>   text.delete_char
+bind --mode=ex          <C-t>   text.transpose_chars
+bind --mode=insert      <C-t>   text.transpose_chars
+bind --mode=input       <C-t>   text.transpose_chars
+bind --mode=ex          <A-t>   text.transpose_words
+bind --mode=insert      <A-t>   text.transpose_words
+bind --mode=input       <A-t>   text.transpose_words
+bind --mode=ex          <A-b>   text.backward_word
+bind --mode=insert      <A-b>   text.backward_word
+bind --mode=input       <A-b>   text.backward_word
+bind --mode=ex          <A-f>   text.forward_word
+bind --mode=insert      <A-f>   text.forward_word
+bind --mode=input       <A-f>   text.forward_word
+bind --mode=ex          <C-w>   text.backward_kill_word
+bind --mode=insert      <C-w>   text.backward_kill_word
+bind --mode=input       <C-w>   text.backward_kill_word
+
+"bind --mode=ex          <C-l>   ex.insert_completion
+bind --mode=ex          <Tab>   ex.insert_completion
+"bind --mode=ex          <C-e>   ex.deselect_completion
+
+" bind --mode=insert <C-j> !s xdotool key Down
+" bind --mode=insert <C-k> !s xdotool key Up
+
+bind --mode=ex      <c-l>  ex.accept_line
+bind --mode=insert  <c-l>  ex.accept_line
+bind --mode=input   <c-l>  ex.accept_line
+
+#+end_src
+
+* HINTS
+
+#+begin_src tridactyl
+"JavaScript hints (grey ones) 
+
+bind <a-r> fillcmdline hint -fr 
+
+bind yf hint -y
+
+"bind ,/ fillcmdline hint -fr 
+
+" lo uso per neovim, c'è gia gF
+bind <a-f> hint -qb
+"bind yF hint -yq
+
+bind ;/ fillcmdline hint -bfr 
+
+alias join js -p JS_ARG.join("\n")
+" Make it so that if you press a key twice, it clears that entry from the clipboard
+bind yF composite hint -qpipe a href | join | yank
+
+" Only hint search results on Google and DDG
+"bindurl www.google.com f hint -Jc .rc > .r > a
+"bindurl www.google.com F hint -Jbc .rc>.r>a
+
+" bind ... hint -frk
+#+end_src
+
+* AUTOCMDS
+#+begin_src tridactyl
+autocmd DocStart reddit\.com/.*tl=it urlmodify -Q tl
+" autocmd BeforeRequest *tl=it (u) => ({redirectUrl: e.url.replace("tl=it","")}).
+" autocmd BeforeRequest *://*.reddit.com/* (u) => ({if(u.url.match("[?|&]tl=it")) {redirectUrl: u.url.replace("tl=it","")}}).
+" autocmd DocStart chatgpt\.com kill initiali popup
+" autocmd DocStart chatgpt.com js document.querySelector("a .cursor-pointer").click()
+" <a href="#" class="mt-5 cursor-pointer text-sm font-semibold text-token-text-secondary underline">Stay logged out</a>
+
+" qmark?
+"bind --mode=normal gom open https://mail.google.com/mail/
+"bind --mode=normal gnm open https://mail.google.com/mail/
+
+"bind --mode=normal zz source --url https://gist.github.com/jseb93/bce6a9cf73159f67332154ba17324e7a
+
+"bind <space><space> exclaim ~/bin/screenshoot_firefox
+" bind ,s exclaim ~/bin/screenshoot_firefox
+
+"like in vim
+bind gO fillcmdline goto
+
+" bind ;t ttsread -c title
+
+" " bind ,v open www.reddit.com/r/vim/new
+" " https://egeek.me/2021/07/17/playing-any-video-from-firefox-with-mpv-and-youtube-dl/
+" bind ,v composite js document.location.href.replace('https://', 'ytdl://') | shellescape | js -p 'PATH="$PATH:/usr/local/bin" mpv ' + JS_ARG | !s
+" bind ,V tabopen www.reddit.com/r/vim/new
+" bind ,n open www.reddit.com/r/neovim/new
+" bind ,N tabopen www.reddit.com/r/neovim/new
+
+bind gi focusinput
+
+bindurl reddit.com <Space><Space> urlmodify -t www old
+bindurl https://github.com/.*/.*/blob f hint -c .blob-num,a
+bindurl https://github.com/notifications <Space><Space> openGithubNotifications
+bindurl youtu((\.be)|(be\.com)) f hint -J
+
+"" Stupid workaround to let hint -; be used with composite which steals semi-colons
+command hint_focus hint -;
+
+bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
+#+end_src
+
+* INTERNATIONALISATION
+#+begin_src tridactyl
+set keyboardlayoutbase qwerty
+set keyboardlayoutforce true
+
+" Commands
+
+" delete w command before?"
+command w saveas ~/Downloads/firefox
+
+command cache composite get_current_url | tabopen gc
+command text composite get_current_url | tabopen txt
+command translate composite get_current_url | tabopen tr
+command wayback composite get_current_url | tabopen wb
+" ┣ Inject Google Translate
+" From https://github.com/jeremiahlee/page-translator
+command translate js let googleTranslateCallback = document.createElement('script'); googleTranslateCallback.innerHTML = "function googleTranslateElementInit(){ new google.translate.TranslateElement(); }"; document.body.insertBefore(googleTranslateCallback, document.body.firstChild); let googleTranslateScript = document.createElement('script'); googleTranslateScript.charset="UTF-8"; googleTranslateScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit&tl=&sl=&hl="; document.body.insertBefore(googleTranslateScript, document.body.firstChild);
+
+" Isolate Facebook in its own container
+set auconcreatecontainer true
+autocontain facebook\.com facebook
+
+#+end_src
+
+* QUICKMARKS
+Use searchurls when you need to insert some (small) input, quickmarks otherwise (like for forums)
+#+begin_src tridactyl
+quickmark a https://www.artstation.com/
+" quickmark g https://github.com/tanath/dotfiles
+quickmark h https://news.ycombinator.com/
+quickmark i https://www.inoreader.com/all_articles
+quickmark n https://news.google.com/foryou
+quickmark N https://news.google.com/
+
+quickmark m https://www.minuteinbox.com/
+
+" Reddit
+quickmark e https://www.reddit.com/r/emacs/new
+quickmark n https://www.reddit.com/r/neovim/new
+quickmark v https://www.reddit.com/r/neovim/new
+
+quickmark s http://localhost:8989/calendar
+" quickmark t https://github.com/Tanath/dotfiles/blob/master/browsers/tridactylrc
+quickmark w https://wallhaven.cc/random
+quickmark y https://www.youtube.com/playlist?list=WL
+
+" LLM
+" start in insert mode for those?
+quickmark c https://chatgpt.com
+quickmark d https://duck.ai
+quickmark m https://www.copilot.microsoft.com
+quickmark l  https://chat.mistral.ai/chat?model=codestral
+quickmark p https://www.perplexity.ai
+#+end_src
+
+* SEARCHURLS
+#+begin_src tridactyl
+" use ai to categorize
+" set searchengine g
+
+#+end_src
+
+** Wikis
+#+begin_src tridactyl
+set searchurls.wg https//wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
+set searchurls.wa https://wiki.archlinux.org/index.php?title=Special%3ASearch&search=%s
+" set searchurls.wp https://en.wikipedia.org/wiki/Special:Search?search=%s&go=Go
+" set searchurls.wi https://en.wiktionary.org/wiki/Special:Search?search=%s&go=Go
+set searchurls.aw https://wiki.archlinux.org/index.php?search=%s
+set searchurls.w https://en.wikipedia.org/w/index.php?search=%s&title=Special%3ASearch
+set searchurls.wi https://it.wikipedia.org/w/index.php?search=%s&title=Special%3ASearch
+set searchurls.wd  https://en.wiktionary.org/wiki/?search=%s
+
+set searchurls.de  https://devdocs.io/#q=
+
+#+end_src
+
+** News/Media
+#+begin_src tridactyl
+
+#+end_src
+
+** E-commerce
+#+begin_src tridactyl
+
+#+end_src
+
+** Social media
+#+begin_src tridactyl
+
+#+end_src
+
+** LLM
+#+begin_src tridactyl
+#+end_src
+
+** Entertainment
+#+begin_src tridactyl
+
+" set searchurls.alt https://alternativeto.net/browse/search?q=%s
+" set searchurls.af https://www.acronymfinder.com/~/search/af.aspx?string=exact&Acronym=%s
+" set searchurls.ar https://archive.is/search/?q=%s
+" set searchurls.gi https://www.google.ca/search?tbm=isch&safe=off&q=%s
+" set searchurls.gl https://www.google.com/search?btnI=I%27m+Feeling+Lucky&q=%s
+" set searchurls.gm https://www.google.ca/maps?q=%s
+" set searchurls.gn https://news.google.ca/news?hl=en&num=30&q=%s&btnG=Search+News
+" set searchurls.m https://search.marginalia.nu/search?js=&adtech=&profile=&query=%s
+" set searchurls.mc https://www.google.ca/search?num=20&q=%s%20site:metacritic.com
+" set searchurls.ol https://www.onelook.com/?w=%s&ls=b
+" set searchurls.rr https://www.royalroad.com/fictions/search?title=%s
+" set searchurls.su https://summarist.ai/summary/%s
+" set searchurls.th https://www.thesaurus.com/browse/%s
+" set searchurls.tr https://translate.google.com/?op=translate&text=%s&sl=auto&tl=en
+" set searchurls.tu https://translate.google.com/translate?hl=en&u=%s&sl=auto&tl=en
+" set searchurls.tw https://twitter.com/search?q=%s
+" set searchurls.txt https://www.google.ca/search?q=cache:%s&strip=1
+" set searchurls.ud https://www.urbandictionary.com/define.php?term=%s
+" set searchurls.wa https://www.wolframalpha.com/input/?i=%s
+" set searchurls.wb https://web.archive.org/web/*/%s
+" set searchurls.yt https://www.youtube.com/results?search_query=%s
+
+"set searchurls.bl https://www.browserling.com/browse/win/7/chrome/72/%s
+"set searchurls.dv https://www.dividend.com/search?q=%s
+"set searchurls.gd https://drive.google.com/drive/search?q=%s
+"set searchurls.ll https://lucidlife.wordpress.com/?s=%s
+"set searchurls.rd https://www.reddit.com/search?q=%s
+"set searchurls.sd https://slickdeals.net/newsearch.php?rating=2&q=%s
+"set searchurls.st https://stocktwits.com/symbol/%s
+"set searchurls.tv https://www.tradingview.com/chart/?symbol=%s
+"set searchurls.yf https://finance.yahoo.com/quote/%s
+"set searchurls.yt https://www.youtube.com/results?search_query=%s
+
+set searchurls.alt https://alternativeto.net/browse/search/?q=
+set searchurls.af https://www.acronymfinder.com/~/search/af.aspx?string=exact&Acronym=%s
+set searchurls.ar https://archive.is/search/?q=%s
+set searchurls.boardgamegeek https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q=
+set searchurls.boardgameprices https://boardgameprices.com/compare-prices-for?q=
+set searchurls.boardgamepricesuk https://boardgameprices.co.uk/item/search?search=
+set searchurls.booksprice https://booksprice.com/compare.do?inputData=
+set searchurls.bookspriceuk http://booksprice.co.uk/compare.do?inputData=
+set searchurls.chambersbiog https://chambers.co.uk/search/?query=%s&title=biog
+set searchurls.chambersdict https://chambers.co.uk/search/?query=%s&title=21st
+set searchurls.chambersthes https://chambers.co.uk/search/?query=%s&title=thes
+set searchurls.ebay https://www.ebay.com/sch/i.html?_nkw=
+set searchurls.ebayuk https://www.ebay.co.uk/sch/i.html?_nkw=
+set searchurls.etymonline https://www.etymonline.com/search?q=
+set searchurls.goodreads https://www.goodreads.com/search?q=
+set searchurls.hotukdeals https://www.hotukdeals.com/search?q=
+set searchurls.oeis https://oeis.org/search?q=
+set searchurls.powerthesaurus https://www.powerthesaurus.org/_search?q=
+
+" crea binding per scaricare canzone in ~/Music [yt-dlp]
+set searchurls.yt https://www.youtube.com/results?search_query=%s
+" set searchurls.yT https://www.youtube.com/results?search_query=%s&sp=CAM%253D
+set searchurls.ys https://www.youtube.com/results?search_query=%s&sp=CAM%253D
+" qualcosa tipo yt ... m per i risultati con il most viewed filter (o yt ... u per upload date)
+" set searchurls.gh https://github.com/search?q=%s
+
+#+end_src
+
+** GitHub
+#+begin_src tridactyl
+set searchurls.gh https://github.com/search?q=%s
+
+set searchurls.gg https://github.com/search?q=%s&type=code
+" search for vim code
+set searchurls.ggv https://github.com/search?q=%s+lang%3A"Vim+script"+&type=code
+" search for lua code
+set searchurls.ggl https://github.com/search?q=%s+lang%3ALua+&type=code
+" search for elisp code
+set searchurls.gge https://github.com/search?q=%s+lang%3A"Emacs+lisp"+&type=code
+
+" regex
+set searchurls.g/ https://github.com/search?q=%2F%s%2F&type=code
+set searchurls.gr https://github.com/search?q=%s&type=repositories
+set searchurls.gi https://github.com/search?q=%s&type=issues
+set searchurls.gp https://github.com/search?q=%s&type=pullrequests
+set searchurls.gd https://github.com/search?q=%s&type=discussions
+set searchurls.gu https://github.com/search?q=%s&type=users
+set searchurls.gc https://github.com/search?q=%s&type=commits
+set searchurls.gk https://github.com/search?q=%s&type=registrypackages
+set searchurls.gw https://github.com/search?q=%s&type=wikis
+set searchurls.gt https://github.com/search?q=%s&type=topics
+set searchurls.gm https://github.com/search?q=%s&type=marketplace
+
+#+end_src
+
+** Google
+#+begin_src tridactyl
+set searchurls.g https://www.google.ca/search?safe=off&num=20&q=%s
+set searchurls.gc https://www.google.ca/search?q=cache:%s
+set searchurls.gi https://www.google.ca/search?tbm=isch&safe=off&q=%s
+
+" set searchurls.fc https://toolbox.google.com/factcheck/explorer/%s;hl=en
+" set searchurls.g https://www.google.ca/search?safe=off&num=20&q=%s
+" set searchurls.gc https://www.google.ca/search?q=cache:%s
+
+#+end_src
+** Languages
+#+begin_src tridactyl
+
+set searchurls.fc https://toolbox.google.com/factcheck/explorer/%s;hl=en
+" annulla startinsert con questo mapping (visto che la stringa è stata già cercata)
+set searchurls.wr https://www.wordreference.com/enit/%s
+" how to do smth like wr word1 word2 and have tridactyl open two tabs with the wordreference search set to word1 for the first and word2 for the second?
+" for typing mistakes?
+" would be cool to search with wordrefrence with the currently selected word; also the s mapping seems wasted (use for ex. <a-s> or <a-e> (exact) when pressing o to search exactly) and it matches with leap.nvim (think about it...)
+" set searchurls.Wr https://www.wordreference.com/enit/%s
+" set searchurls.WR https://www.wordreference.com/enit/%s
+" set searchurls.wR https://www.wordreference.com/enit/%s
+set searchurls.wrs https://www.wordreference.com/esit/%s
+" set searchurls.wrs https://www.wordreference.com/enes/%s
+" set searchurls.wrs https://www.wordreference.com/ites/%s
+set searchurls.wrS https://www.wordreference.com/esen/%s
+" set searchurls.wrS https://www.wordreference.com/esen/%s
+" set searchurls.wrS https://www.wordreference.com/esit/%s
+set searchurls.wrr https://www.wordreference.com/ruit/%s
+set searchurls.wrR https://www.wordreference.com/ruen/%s
+set searchurls.wra https://www.wordreference.com/enar/%s
+set searchurls.ur https://www.urbandictionary.com/define.php?term=%s
+" set searchurls.a https://www.amazon.it/s?k=%s&__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&ref=nb_sb_noss
+set searchurls.az https://www.amazon.it/s?k=%s&__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&ref=nb_sb_noss
+" fai in modo che digitando rd ti compaia la history di reddit filtrata con quello che stai scrivendo [fallo per tutti le altre "keyword"]
+set searchurls.rd https://www.reddit.com/search?q=%s
+set searchurls.rdn https://www.reddit.com/r/neovim/search/?q=%s&restrict_sr=1
+
+" twitter?
+set searchurls.tw https://twitter.com/search?q=%s&src=typed_query
+
+set searchurls.tr https://www.treccani.it/vocabolario/%s
+
+" google images (would be nice to only have a one-key mapping like o...)
+set searchurls.im  http://www.google.com/search?tbm=isch&q=%s
+" set searchurls.im  https://lens.google.com/search
+#+end_src
+** Search engines
+#+begin_src tridactyl
+set searchurls.googleuk https://www.google.co.uk/search?q=
+set searchurls.yahoo https://search.yahoo.com/search?p=
+set searchurls.twitter https://twitter.com/search?q=
+set searchurls.wikipedia https://en.wikipedia.org/wiki/SpecialSearch/
+set searchurls.amazon https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
+set searchurls.amazonuk https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
+set searchurls.startpage https://startpage.com/do/search?language=english&cat=web&query=
+set searchurls.github https://github.com/search?utf8=✓&q=
+set searchurls.searx https://searx.me/?category_general=on&q=
+set searchurls.cnrtl http//www.cnrtl.fr/lexicographie/
+set searchurls.osm https://www.openstreetmap.org/search?query=
+set searchurls.mdn https://developer.mozilla.org/en-US/search?q=
+set searchurls.gentoo_wiki https://wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
+set searchurls.qwant https://www.qwant.com/?q=
+
+#+end_src
+

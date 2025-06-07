@@ -1,0 +1,583 @@
+#+startup: content
+#+auto_tangle: t
+
+* Keys
+
+# silent option (no verbose when executing?)
+** TODO
+#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+# waiting for modes...
+# control_menu(down) <C-j>
+# control_menu(up) <C-k>
+
+toggle_two_page_mode |
+
+#+end_src
+** NAVIGATION AND ZOOM
+#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+goto_beginning;goto_top_of_page gg
+
+# Goto left/right/bottom/top side of the page
+# This enable the view left and right in a multi-column PDF like a paper, etc 
+# goto_left             <C-h>
+# goto_right            <C-l>
+goto_left             ^
+goto_right            g_
+# Goto left/right side of the page ignoring white margins
+goto_left_smart      0
+goto_left_smart ^
+goto_right_smart     $
+goto_top_of_page      H
+goto_bottom_of_page   L
+
+# Goto the top-right side of page. Useful for two column documents
+goto_top_of_page;goto_right_smart zz
+
+# Movement (can be prefixed with a number)
+move_left           l
+move_right          h
+
+# Goto forward for one page width. (can be prefixed with a number)
+# (note that going forward for one page width is not usually what you want because if
+# the page is larger than the screen you will miss some content. What you usually want is screen_down)
+next_page <C-f>
+previous_page <C-b>
+
+# Go down one screen width (can be prefixed with a number which tells how many screen widths should we go down)
+# screen_down <space>
+# screen_up <S-<space>>
+screen_down <C-d>
+screen_up   <C-u>
+
+# Goto the next/prev chapter
+next_chapter gc
+prev_chapter gC
+
+# Goto previous viewing state and delete the current (and future) state(s).
+# pop_state w
+
+# Goto the previous history point
+prev_state <C-o>
+
+# Create a new sioyek window
+new_window <C-t>
+
+# Close the current sioyek window
+# close_window <C-w>
+# unbind <C-w>
+
+## Search and switch between sioyek windows
+#goto_window <unbound>
+# goto_window <A-o>
+# goto_window <C-w>j
+
+# If we are not at the end of viewing history, goto the next history point
+next_state <C-i>
+
+# Open table of contents.
+# goto_toc t
+# like in Neovim
+goto_toc gO
+
+# Zoom
+zoom_in <C-k>
+# Mnemonic: zoom so much that it becomes a point
+# zoom_in .
+# maybe use zz to restore default zoom (like <c-0> on firefox)
+# fit_to_page_width =
+# fit_to_page_width <space>
+# zoom/zen mnemonic
+# fit_to_page_width z
+# clear mnemonic + complements ^j,^k
+fit_to_page_width <C-l>
+# fit_to_page_width_smart <S-space>
+# fit_to_page_width_smart Z
+fit_to_page_width_smart <C-L>
+zoom_out <C-j>
+# zoom_out ,
+# actually this makes more sense (zoom out a lot-> point)
+# zoom_out .
+
+## Zoom in/out on the mouse cursor (instead of center of screen)
+# zoom_in_cursor <unbound>
+# zoom_out_cursor <unbound>
+
+# Rotate document
+# rotate_clockwise r
+# rotate_counterclockwise R
+rotate_clockwise \>
+rotate_counterclockwise \<
+
+# Automatically set the zoom level and horizontal offset such that the current page is centered horizontally and
+# it fills the screen width
+fit_to_page_width <f9>
+# Same as fit_to_page_with but ignores page margins
+fit_to_page_width_smart <f10>
+
+## Similar to fit_to_page_width, but for height
+#fit_to_page_height   <unbound>
+
+## Similar to fit_to_page_width_smart but for height
+#fit_to_page_height_smart   <unbound>
+
+## Same as fit_to_page_width, but instead of filling the screen width, it fills the ratio of screen that is
+## configured in `prefs_user.config` using `fit_to_page_width_ratio` config. See https://github.com/ahrm/sioyek/issues/162#issuecomment-1059738730.
+#fit_to_page_width_ratio <unbound>
+
+# Open a file dialog to select a document.
+# open_document e
+# Open an embedded file dialog in sioyek
+open_document_embedded O
+# Open an embedded file dialog in sioyek rooted in the directory of current opened file
+open_document_embedded_from_current_path o
+
+# Open a searchable list of previously opened documents.
+open_prev_doc r
+
+## Opens the last document opened is sioyek. It is useful when you want to quickly toggle between two documents
+open_last_document <C-^>
+
+## Keyboard shortcut to enter visual mark mode (instead of right clicking)
+#enter_visual_mark_mode <unbound>
+
+# Command the move the visual mark to the next/previous line
+# these keys only work when a visual mark is set (by right clicking or using `visual_mark_under_cursor` command)
+move_visual_mark_up k
+move_visual_mark_down j
+move_visual_mark_up <up>
+move_visual_mark_down <down>
+
+## lock horizontal scroll, useful when using laptop touchpads
+# toggle_horizontal_scroll_lock <unbound>
+# toggle_horizontal_scroll_lock zw
+
+#+end_src
+** SEARCH
+#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+
+# Search the document.
+# example: /something                   (searches the document for 'something')
+# you can also specify a page range to search:
+# example: /<110,135>something          (searches pages 110 to 135 (inclusive) for 'something')
+# search /
+regex_search /
+
+# Searches the current chapter. This is essentially the same as search but the range prefix is autofilled
+# with the range of the current lowest level subchapter.
+chapter_search c/
+
+# Goto the next search item. Can be prefixed with a number which is the same as performing the command n times
+# for example if we are on the 10th search result and we input 15n, we go to the 25th search result.
+next_item n
+# Goto the previous search result. Can be prefixed with a number with similar rules as next_item.
+previous_item N
+
+# overview_next_item <C-n>
+# overview_prev_item <C-N>
+# like vim's search bindings
+overview_next_item <C-g>
+overview_prev_item <C-t>
+
+#+end_src
+** BOOKMARKS
+#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+# Add a bookmark in the current location (opens a text input where you can specify the bookmark text)
+add_bookmark b
+delete_bookmark db
+
+# Open bookmarks menu of the current document.
+goto_bookmark gb
+
+# Open bookmarks menu of all documents.
+goto_bookmark_g gB
+
+#+end_src
+** HIGHLIGHTS
+#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+# You can select a piece of text and press the `add_highlight` shortcut followed by a symbol (a character from a-z) to highlight
+# the text
+# like vim's folds
+# add_highlight zz
+# add_highlight f
+add_highlight <space>
+# Goto highlights of current document
+goto_highlight g<space>
+# Goto highlights of all documents
+goto_highlight_g g<s-space>
+# Left click on a highlight and then press the `delete_highlight` shortcut to delete it.
+delete_highlight d<space>
+
+# Sets the highlight type to be used for other operations (the default highlight type is 'a')
+#set_select_highlight_type
+
+## Same as `add_highlight` but uses the current selected highlight type as the type of highlight
+#add_highlight_with_current_type <unbound>
+
+## Toggle select highlight mode. In select highlight mode, all text selected using mouse will automatically be highlighted
+## with highlight type set using `set_select_highlight_type`
+#toggle_select_highlight <unbound>
+# maybe use <space> as toggle prefix? or better just vim mapping you found?
+#toggle_select_highlight z<space>
+
+# Goto next/previous highlight in current document
+goto_next_highlight gnh
+goto_prev_highlight gNh
+# goto_next_highlight zJ
+# goto_prev_highlight zK
+
+## Goto next/previous highlight of the current selected highlight type
+#goto_next_highlight_of_type <unbound>
+#goto_prev_highlight_of_type <unbound>
+# goto_next_highlight_of_type zj
+# goto_prev_highlight_of_type zk
+
+#+end_src
+** MARKS
+#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+
+# Mark the current location. After pressing the mark button, you must enter a symbol (a letter from a-z or A-Z).
+# this marks the current location in the file with the entered symbol. Afterwards you will be able to return to
+# the locations of the marks using goto_mark command.
+# example:  mm      (marks the current location in the file with a mark named 'm')
+set_mark m
+# Goto a previously set mark. After pressing goto_mark you must enter a symbol associated with a previously set mark.
+# example:  `m      (goes to the location of the mark named m)
+goto_mark `
+
+#+end_src
+** PORTALS
+#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+# If we are in default state, goto portal state with the current location in document as the portal source
+# if we are already in the portal state, create the portal with the current location as destination.
+portal p
+
+# Delete the portal with the closest source to current location
+delete_portal dp
+
+# Goto the position of the portal with the closest source to current location
+goto_portal gp
+goto_portal <tab>
+
+# Similar to goto_portal, except when prev_state is called, the destination of the portal is update to be the state
+# on which prev_state is called
+edit_portal P
+edit_portal <S-<tab>>
+
+# Open/Close the helper window for portals
+# toggle_window_configuration <f12>
+toggle_window_configuration <C-p>
+
+## open/close helper window
+#toggle_one_window <unbound>
+#toggle_one_window ap
+
+#+end_src
+** MISC
+#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+
+# Copy selected text
+copy <C-c>
+# copy y
+
+copy_all_text Y
+# copy_current_chapter_text yc
+copy_current_chapter_text y
+
+# use hyprland
+# toggle_fullscreen <f11>
+
+# Toggles whether we highlight pdf links or not
+# toggle_highlight <f1>
+# toggle_highlight zl
+
+# Search the selected text using one of the search engines defined using search_url_* settings in prefs.config (* can be any letter between 'a' and 'z')
+# see https://sioyek-documentation.readthedocs.io/en/latest/usage.html#external-search
+external_search s
+
+# opens the selected text as a url in the default browser
+# open_selected_url Q
+
+# Toggle dark mode (inverted colors)
+# toggle_dark_mode <f8>
+# toggle_dark_mode zb
+# should automatically do it w/ darkman
+# toggle_dark_mode C
+
+## Toggle custom color mode. You can specify the text background color in your `prefs_user.config` file
+## see https://sioyek-documentation.readthedocs.io/en/latest/configuration.html#custom-background-color-and-custom-text-color
+#toggle_custom_color <f8>
+toggle_custom_color zc
+
+# Toggle synctex mode. When in synctex mode, right clicking on a pdf launches the corresponding latex page.
+# toggle_synctex <f4>
+
+## Perform a synctex search under the mouse cursor
+#synctex_under_cursor <unbound>
+
+# While in mouse drag mode, instead of selecting text you can pan the screen using mouse
+# toggle_mouse_drag_mode <f6>
+
+# In visual scroll mode, mouse wheel performs `move_visual_mark_up` and `move_visual_mark_down` commands
+# toggle_visual_scroll <f7>
+
+# In visual scroll mode, create an overview to/go to/portal to the definition in highlighted line
+# should accept v:count
+overview_definition K
+goto_definition gd
+portal_to_definition ]
+
+# In presentation mode, we fit the pages to screen and movement keys move entire pages
+# toggle_presentation_mode <f5>
+
+## Quit sioyek
+quit q
+
+# Open PDF links using keyboard
+open_link f
+
+# Select text using keyboard
+# how to expand text with motions?
+# how to select the whole current line with V? and column mode with <c-v>?
+keyboard_select v
+
+# Smart jump using keyboard
+keyboard_smart_jump F
+
+## Open overview window using keyboard
+#keyboard_overview <unbound>
+keyboard_overview <S-k>
+
+## If the preview is not correct, jump to the next preview
+#next_preview <C-n>
+
+## If the preview is not correct, jump to the previous preview
+#previous_preview <C-N>
+
+## Jump to the location of the current overview
+#goto_overview <unbound>
+
+## Create a portal to the location of the current overview
+#portal_to_overview <unbound>
+
+## Center the window on selected text
+#goto_selected_text <unbound>
+
+## Focus the visual mark on the text matching the given string (useful when extensions want to focus on a text)
+#focus_text <unbound>
+
+## Smart jump to the location under mouse cursor
+#smart_jump_under_cursor <unbound>
+## Open overview window to the location under mouse cursor
+#overview_under_cursor <unbound>
+## Set a visual mark under mouse cursor
+#visual_mark_under_cursor <unbound>
+# visual_mark_under_cursor;toggle_visual_scroll	<S-j>
+## Close the overview window
+#close_overview <unbound>
+## Exit visual mark mode
+#close_visual_mark <unbound>
+# close_visual_mark <esc>
+
+## Import sioyek data from an exported file
+#import <unbound>
+
+## Export sioyek data into a json file
+#export <unbound>
+
+## Execute shell commands. For example:
+## sioyek --new-instance %1
+## in the command %1 expands to the path of the current file and %2 expand to the file name of the current file
+#execute <unbound>
+
+## (deprecated see bottom of the page) Execute a predefined command. these commands are defined in `prefs_user.config` file using the following syntax:
+## --------prefs_user.config-----------
+## execute_command_a	some_command %1 %2
+## execute_command_x	another_command %2
+## ------------------------------------
+## now in order to execute the second command you can first execute `execute_predefined_command` and then press 'x'
+#execute_predefined_command <unbound>
+#execute_predefined_command e
+#execute_predefined_command x
+
+## Embed the annotations (highlights and bookmarks) into a new PDF file so they are visible to other PDF readers
+#embed_annotations <unbound>
+# embed_annotations <C-s>
+# maybe <c-s-s> to embed in-place?
+
+## Copy the current window configuration to clipboard so they can be used in `prefs_user.config`
+#copy_window_size_config <unbound>
+
+## Opens the default preference file
+#prefs <unbound>
+## Opens the user preference file with highest priority
+#prefs_user <unbound>
+## Opens a list of all user preference files
+#prefs_user_all <unbound>
+
+## Opens the default kwys file
+#keys <unbound>
+## Opens the user keys file with highest priority
+#keys_user <unbound>
+## Opens a list of all user keys files
+#keys_user_all <unbound>
+
+## Enter password for password protected documents
+#enter_password <unbound>
+
+## Toggle fastread mode. this is an experiental feature
+#toggle_fastread <unbound>
+
+## Toggle statusbar display
+#toggle_statusbar <unbound>
+
+#how to reload config?
+## Reload sioyek window
+reload <C-r>
+
+## Set the status string to be displayed in sioyek's statusbar (it is useful for extensions)
+#set_status_string <unbound>
+
+## Clears the status string set by `set_status_string`
+#clear_status_string <unbound>
+
+## Toggles the window titlebar
+#toggle_titlebar <unbound>
+
+#+end_src
+** ANNOTATIONS
+#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+# add_freetext_bookmark t
+# what's the difference? when embedded?
+# add_freetext_bookmark i
+# add_freetext_bookmark('W 0 0 0.5 0.5') i
+# usa t come xournalpp? e T per latex forse?
+add_freetext_bookmark('W 0 0 1 1') i
+add_freetext_bookmark('W -1 -1 1 1') a
+add_freetext_bookmark('0.2 1 0.5 0.5') A
+add_marked_bookmark I
+
+#+end_src
+** FREEHAND
+#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+# d to delete? also update index/toc/page number?
+
+# they work w/ embed_annotations
+
+# thinkpad t490 ha touchpad, usalo!
+# automatically enter drawing when touching cursor?
+toggle_freehand_drawing_mode d
+# confirm mapping?
+clear_current_page_drawings u
+clear_current_document_drawings U
+
+#+end_src
+** CUSTOM COMMANDS
+#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+## You can bind custom commands defined in `prefs_user.config` using the same syntax as the built-in commands
+## --------prefs_user.config-----------
+## new_command	_my_command_name python /path/to/script.py %{file_name} %{paper_name}
+## ------------------------------------
+## now you can bind _my_command_name to a keybind here:
+#_my_command_name <unbound>
+
+# execute_command_p <C-p>
+
+# https://github.com/ahrm/sioyek-python-extensions/tree/main
+# control_click_command _download_paper
+# D _dual_panelify
+_dual_panelify <C-v> 
+
+# usa Alt mappings per gli shortcut che chiamano i tuoi script
+_pg2jpg4anki <A-p>
+_screenshot2jpg4anki <A-s>
+
+# add binding to open current pdf in vi-xournalpp
+#+end_src
+
+* Prefs
+ 
+
+# vim: set foldenable foldmethod=expr foldexpr=getline(v\:lnum)!~'^#\ -':
+# see:/usr/etc/sioyek/prefs.config
+# https://github.com/ahrm/sioyek/issues/355
+# emacs_mode_menus 1
+
+super_fast_search 1
+show_close_portal_in_statusbar 1
+keyboard_point_selection 1
+
+ruler_mode 1 
+
+** SEARCH
+#+begin_src sioyek :tangle ~/.config/sioyek/prefs_user.config
+# usa le stesse di tridactyl
+# can you use multiple letters? post github issue (also uppercase)
+search_url_g   https://www.google.com/search?q=
+search_url_y   https://www.youtube.com/results?search_query=
+search_url_e   https://www.wordreference.com/enit/
+search_url_w   https://en.wikipedia.org/wiki/
+# can't
+# search_url_W   https://it.wikipedia.org/wiki/
+
+# ---------- IDK ----------
+keyboard_select_background_color 0 0 0 0
+
+should_warn_about_user_key_override 0
+
+# I guess you have to use the absolute path...
+execute_command_o python3 ~/.config/sioyek/scripts/ocr.py "%1"
+execute_command_t python3 ~/.config/sioyek/scripts/translate.py "%6"
+# double?
+execute_command_p /usr/bin/lp -o sides=one-sided -o media=a4 %1
+
+# https://github.com/ahrm/sioyek/issues/845
+# show_document_name_in_statusbar 1
+# status_bar_format %{document_name} Page %{current_page} / %{num_pages}%{chapter_name}%{search_results}%{search_progress}%{link_status}%{waiting_for_symbol}%{indexing}%{preview_index}%{synctex}%{drag}%{presentation}%{visual_scroll}%{locked_scroll}%{highlight}%{closest_bookmark}%{close_portal}%{rect_select}%{custom_message}%{download}
+
+# custom_background_color              0.180 0.204 0.251
+# custom_text_color                    1.0 1.0 1.0
+# https://mil.ad/blog/2022/gruvbox-for-sioyek.html
+# startup_commands toggle_custom_color
+custom_color_contrast 0.3
+custom_color_mode_empty_background_color #1d2021
+page_separator_color #1d2021
+page_separator_width 10
+custom_background_color #282828
+custom_text_color #fbf1c7
+search_highlight_color #7ec16e
+status_bar_color #427b58
+status_bar_text_color #fbf1c7
+
+#+end_src
+** EXTENSIONS
+#+begin_src sioyek :tangle ~/.config/sioyek/prefs_user.config
+new_command _download_paper ~/pip/sioyek/bin/python -m sioyek.paper_downloader download "%{sioyek_path}" "%{paper_name}" "%{selected_text}" [Your Email, If Using Unpaywall]
+control_click_command _download_paper
+
+new_command _dual_panelify ~/pip/sioyek/bin/python -m sioyek.dual_panelify "%{sioyek_path}" "%{file_path}" "%{command_text}"
+
+new_command _embed_annotations ~/pip/sioyek/bin/python -m sioyek.embed_annotations "%{sioyek_path}" "%{local_database}" "%{shared_database}" "%{file_path}"
+
+new_command _extract_highlights ~/pip/sioyek/bin/python -m sioyek.extract_highlights "%{sioyek_path}" "%{local_database}" "%{shared_database}" "%1" %{zoom_level}
+
+new_command _translate_selected_text ~/pip/sioyek/bin/python -m sioyek.translate "%{sioyek_path}" "%{selected_text}"
+new_command _translate_current_line_text ~/pip/sioyek/bin/python -m sioyek.translate "%{sioyek_path}" "%{line_text}"
+
+new_command _import_annotations ~/pip/sioyek/bin/python -m sioyek.import_annotations "%{sioyek_path}" "%{local_database}" "%{shared_database}" "%{file_path}"
+
+new_command _remove_annotations ~/pip/sioyek/bin/python -m sioyek.remove_annotation "%{sioyek_path}" "%{local_database}" "%{shared_database}" "%{file_path}" "%{selected_rect}"
+
+new_command _add_text ~/pip/sioyek/bin/python -m sioyek.add_text "%{sioyek_path}" "%{local_database}" "%{shared_database}" "%{file_path}" "%{selected_rect}" "%{command_text}"
+new_command _add_red_text ~/pip/sioyek/bin/python -m sioyek.add_text "%{sioyek_path}" "%{local_database}" "%{shared_database}" "%{file_path}" "%{selected_rect}" "%{command_text}" fontsize=5 text_color=255,0,0
+
+** CUSTOM COMMANDS
+#+begin_src sioyek :tangle ~/.config/sioyek/prefs_user.config
+# new_command _test notify-send "%{page_number}"
+# TODO: environment variable for home
+# new_command _pg2jpg4anki ~/.config/sioyek/myscripts/pg2jpg4anki "%{file_path}" "%{page_number}"
+# new_command _pg2jpg4anki_rofi ~/.config/sioyek/myscripts/pg2jpg4anki_rofi "%{file_path}" "%{page_number}" "%{selected_text}"
+new_command _pg2jpg4anki ~/.config/sioyek/myscripts/pg2jpg4anki "%{file_path}" "%{page_number}" "%{selected_text}"
+new_command _screenshot2jpg4anki ~/.config/sioyek/myscripts/screenshot2jpg4anki "%{file_path}" "%{page_number}" "%{selected_text}"
+new_command _espeak espeak "%{line_text}"
+#+end_src
+

@@ -1,0 +1,697 @@
+#+startup: content
+#+auto_tangle: t
+Refer to the wiki for more information. see: https://wiki.hyprland.org/Configuring/
+
+You can split this configuration into multiple files
+Create your files separately and then link them to this file like this:
+source = ~/.config/hypr/myColors.conf
+* Hyprland
+
+** TODO
+- [ ] hyprshot don't save to clipboard
+- [ ] move to workspace without going there
+- [ ] keybinding to go running emacs instance(s)
+- [ ] focus on open?
+- [ ] mapping close notification
+- [ ] open chatgpt in workspace
+- [ ] wl-paste -s, --seat seat-name    Pick the seat to work with.?
+- [ ] iio-hyprland && sensory-proxy
+- [ ] quick mapping to show bar (when in fullscreen mode)? maybe just a few secs
+- [ ] focus pane when moving mouse
+- [ ] also u could use keys like f20 here (no modifier b4)
+- [ ] turn pane into own tab?
+
+# hyprctl clients -j | jq -r '.[]|(.pid|tostring)+"\t"+.title' | grep -v "$USER"@ | rofi -dmenu  -display-column-separator '\t' -display-columns 2
+
+** [[https://wiki.hyprland.org/Configuring/Monitors/][MONITORS]]
+ruota schermo per prendere appunti?
+
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+# monitor=,preferred,auto,auto
+# monitor=,preferred,auto,auto, transform, 1
+monitor=,preferred,auto,auto, transform, 0
+#+end_src
+
+** [[https://wiki.hyprland.org/Configuring/Keywords/][MY PROGRAMS]]
+
+Set programs that you use
+
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+$terminal = ghostty
+#$fileManager = dolphin
+$fileManager = ghostty -e yazi
+# $fileManager = ghostty -e spf
+# $menu = wofi --show drun
+$menu = rofi -show drun
+#$menu = wofi -show drun
+# $browser = firefox
+$browser = floorp
+
+# open krita/image editing software with clipboard as input? for when commenting screenshotted code?
+#+end_src
+** AUTOSTART
+Autostart necessary processes (like notifications daemons, status bars, etc.)
+Or execute your favorite apps at launch
+
+should u use & for these exec-onces?
+
+*** Necessary processes
+search for others w/ llm or configs
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+  # exec-once = nm-applet &
+  # find themes
+  exec-once = hyprctl setcursor Bibata-Modern-Classic 24
+#+end_src
+  
+**** Status bar
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+exec-once = waybar & swaync & hypridle
+#+end_src  
+**** Notification daemon
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+  #exec-once = swaync
+#+end_src  
+**** Clipboard
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+  # exec-once = wl-clipbard-history -t
+exec-once = wl-paste --type text --watch cliphist store
+exec-once = wl-paste --type image --watch cliphist store
+#+end_src  
+**** Geolocalization
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+# exec-once = ags &
+# ags -c config.js
+exec-once = /usr/lib/geoclue-2.0/demos/agent
+# exec-once = /usr/lib/geoclue-2.0/demos/agent && gammastep
+exec-once = darkman run
+#+end_src  
+
+**** Wallpaper
+how to zoom wallpaper?
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+exec-once = hyprpaper
+#+end_src  
+
+*** Favorite apps
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+  # exec-once = ~/scripts/DailyRandomAnki
+  # exec-once = swww-daemon&&~/scripts/DailyRandomAnki
+  # exec-once = swww-daemon && swww img "$DAILY_ANKI_QUESTION_PATH"
+
+  # start emacs server
+  # exec-once = /usr/bin/emacs --daemon
+  # so it picks up my config?
+  # exec-once = emacs --with-x-toolkit-lucid --daemon
+  exec-once = emacs --daemon
+#+end_src
+
+# not sure if good idea
+# exec-once = /opt/docker-desktop/bin/docker-desktop
+
+** [[https://wiki.hyprland.org/Configuring/Environment-variables/][ENVIRONMENT VARIABLES]]
+
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+
+# open in emacs?
+# env = GRIMBLAST_EDITOR,photoflare
+# env = XDG_SCREENSHOTS_DIR,~/Pictures/Screenshots/
+# Optionally, customize slurp's appearance
+env = SLURP_ARGS, -d -b -B F050F022 -b 10101022 -c ff00ff
+# Can fix high cpu loads on some machines
+env = GRIMBLAST_HIDE_CURSOR, 0
+
+env = XCURSOR_SIZE,24
+env = HYPRCURSOR_SIZE,24
+cursor{
+    inactive_timeout=1
+}
+
+#+end_src
+** [[https://wiki.hyprland.org/Configuring/Permissions/][PERMISSIONS]]
+Please note permission changes here require a Hyprland restart and are not applied on-the-fly for security reasons
+
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+
+# ecosystem {
+#   enforce_permissions = 1
+# }
+
+# permission = /usr/(bin|local/bin)/grim, screencopy, allow
+# permission = /usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland, screencopy, allow
+# permission = /usr/(bin|local/bin)/hyprpm, plugin, allow
+#+end_src
+** [[https://wiki.hyprland.org/Configuring/Variables/][LOOK AND FEEL]]
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+
+# https://wiki.hyprland.org/Configuring/Variables/#general
+general {
+    gaps_in = 5
+    gaps_out = 20
+
+    border_size = 2
+
+    # https://wiki.hyprland.org/Configuring/Variables/#variable-types for info about colors
+    # col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
+    col.active_border = rgba(03cc70ff) rgba(00ff99ee) 45deg
+    col.inactive_border = rgba(595959aa)
+    #col.inactive_border = rgb(000000)
+
+    # Set to true enable resizing windows by clicking and dragging on borders and gaps
+    resize_on_border = true
+
+    # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
+    allow_tearing = false
+
+    # layout = master
+    layout = dwindle
+}
+
+# https://wiki.hyprland.org/Configuring/Variables/#decoration
+decoration {
+    rounding = 15
+
+# Change transparency of focused and unfocused windows
+# mapping for opacity
+    active_opacity = 1
+    inactive_opacity = 0.8
+
+    shadow {
+        enabled = true
+        range = 4
+        render_power = 3
+        color = rgba(1a1a1aee)
+    }
+
+    # https://wiki.hyprland.org/Configuring/Variables/#blur
+    blur {
+        # enabled = true
+        enabled = false
+        size = 3
+        passes = 1
+
+        vibrancy = 0.1696
+    }
+}
+
+binds{
+    # for when u don't remember stuff
+  # workspace_back_and_forth=true
+workspace_back_and_forth=false
+# dunno what this does
+allow_workspace_cycles=true
+movefocus_cycles_fullscreen=true
+    }
+
+# https://wiki.hyprland.org/Configuring/Variables/#animations
+animations {
+    enabled = yes, please :)
+
+    # Default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
+
+    bezier = easeOutQuint,0.23,1,0.32,1
+    bezier = easeInOutCubic,0.65,0.05,0.36,1
+    bezier = linear,0,0,1,1
+    bezier = almostLinear,0.5,0.5,0.75,1.0
+    bezier = quick,0.15,0,0.1,1
+
+    animation = global, 1, 10, default
+    animation = border, 1, 5.39, easeOutQuint
+    animation = windows, 1, 4.79, easeOutQuint
+    animation = windowsIn, 1, 4.1, easeOutQuint, popin 87%
+    animation = windowsOut, 1, 1.49, linear, popin 87%
+    animation = fadeIn, 1, 1.73, almostLinear
+    animation = fadeOut, 1, 1.46, almostLinear
+    animation = fade, 1, 3.03, quick
+    animation = layers, 1, 3.81, easeOutQuint
+    animation = layersIn, 1, 4, easeOutQuint, fade
+    animation = layersOut, 1, 1.5, linear, fade
+    animation = fadeLayersIn, 1, 1.79, almostLinear
+    animation = fadeLayersOut, 1, 1.39, almostLinear
+    animation = workspaces, 1, 1.94, almostLinear, fade
+    animation = workspacesIn, 1, 1.21, almostLinear, fade
+    animation = workspacesOut, 1, 1.94, almostLinear, fade
+}
+
+# Ref https://wiki.hyprland.org/Configuring/Workspace-Rules/
+# "Smart gaps" / "No gaps when only"
+# uncomment all if you wish to use that.
+# workspace = w[tv1], gapsout:0, gapsin:0
+# workspace = f[1], gapsout:0, gapsin:0
+# windowrulev2 = bordersize 0, floating:0, onworkspace:w[tv1]
+# windowrulev2 = rounding 0, floating:0, onworkspace:w[tv1]
+# windowrulev2 = bordersize 0, floating:0, onworkspace:f[1]
+# windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
+
+# See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
+dwindle {
+    pseudotile = true # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+    preserve_split = true # You probably want this
+}
+
+# See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
+master {
+    new_status = master
+}
+
+# https://wiki.hyprland.org/Configuring/Variables/#misc
+misc {
+    force_default_wallpaper = 0 # Set to 0 or 1 to disable the anime mascot wallpapers
+    disable_hyprland_logo = true # If true disables the random hyprland logo / anime girl background. :(
+    disable_splash_rendering = true 
+enable_anr_dialog=false
+# https://github.com/hyprwm/Hyprland/pull/6880
+    exit_window_retains_fullscreen = true
+}
+
+#+end_src
+** INPUT
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+
+# https://wiki.hyprland.org/Configuring/Variables/#input
+input {
+    kb_layout = us
+    kb_variant =
+    kb_model =
+    kb_options =
+    kb_rules =
+
+touchdevice  {
+    transform = 0
+    }
+
+    follow_mouse = 1
+
+    sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+
+    touchpad {
+        natural_scroll = false
+    }
+}
+
+# https://wiki.hyprland.org/Configuring/Variables/#gestures
+gestures {
+    # off
+    workspace_swipe = true
+    workspace_swipe_fingers = 3
+}
+
+# Example per-device config
+# See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more
+device {
+    name = epic-mouse-v1
+    sensitivity = -0.5
+}
+
+#+end_src
+
+*** 8BITDO CONTROLLER
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+# modifier: win+ctrl+shift (doesn't work)
+# modifier: win+ctrl (doesn't work) -> ctrl sta per controller
+# bind=super ctrl shift,h,exec, playerctl position 10-
+bind=super ctrl,h,exec, playerctl position 10-
+bind=super ctrl,l,exec, playerctl position 10+
+#+end_src
+** KEYBINDINGS
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+
+# See https://wiki.hyprland.org/Configuring/Keywords/
+$mainMod = SUPER # Sets "Windows" key as main modifier
+
+# bind = $mainMod, W, layoutmsg, swapwithmaster master
+bind = $mainMod, W, layoutmsg, layoutmsg, cyclenext
+# maybe use mainmod e to start programs?
+
+# Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
+bind = $mainMod, Return, exec, $terminal
+# bind = $mainMod, semicolon, exec, $terminal
+# bind =  shift,space, exec, $terminal
+
+bind = $mainMod SHIFT, Q, killactive,
+bind = $mainMod, Backspace, exit,
+
+#+end_src
+*** OPEN APPS
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+# prefix bind for opening files like in vim/emacs? use $EDITOR (magari con nvim -c or smth)
+# how to quickly switch between emacs and neovim?
+# open terminal when exiting or before emacs?
+bind = $mainMod, e, exec, emacsclient -c  -a 'emacs' -F "'(fullscreen . fullboth)"
+# bind = $mainMod, d, exec, emacsclient -c  -a 'emacs' -F "'(app-launcher)" DT video?
+bind = $mainMod shift, e, exec, emacs -Q
+### maybe better to put in free workspace?
+bind=super ,equal,exec, emacsclient -e '(full-calc)' -c -a emacs
+# have To use shift+9...
+# bind=super , (,exec, emacsclient -e '(eshell)' -c -a emacs
+bind=super , minus,exec, emacsclient -e '(eshell)' -c -a emacs
+
+# maybe these mappings should go under the terminal/ghostty keybind prefix (use zellij/tmux maybe?) or actually this is better maybe, use something like exwm
+bind = $mainMod, v, exec, ghostty --fullscreen -e nvim
+# create kanata chord for this?
+bind = $mainMod, B, exec, $browser
+bind = $mainMod, n, exec, hyprctl keyword gaps_in=0
+ # a for apps
+ # use emacs
+# bind = $mainMod, a, exec, ferdium --ozone-platform=wayland --enable-fetures-WaylandWindowDecorations
+# bind = $mainMod, esc, shutdown,
+bind = $mainMod, period, exec, [float] $fileManager
+# bind = $mainMod, space, togglefloating,
+# bind = $mainMod, g, togglefloating,
+#bind = $mainMod SHIFT, F, togglefloating,
+bind = $mainMod SHIFT, F, fullscreen, 
+#maybe o as the vim mapping ^wo?
+# bind = $mainMod, F, fullscreen, 0
+bind = $mainMod, F, fullscreen, 1
+# super shift enter?
+bind = $mainMod, D, exec, $menu
+# similar to alt-tab (same keymap)
+bind = $mainMod, tab, exec, rofi -show window
+# query screen for color
+bind = $mainMod, c, exec, hyprpicker -a
+# bind = $mainMod, P, pseudo,
+# toggle like vim-unimpaired
+# kinda looks like vertical and horizontal but mixed
+bind = $mainMod, backslash, togglesplit
+# bind = $mainMod, w, togglesplit
+# bind = $mainMod, G, centerwindow
+bind = $mainMod, G, togglegroup
+bind = $mainMod, tab, changegroupactive, f
+bind = $mainMod shift, tab, changegroupactive, b
+bind = $mainMod SHIFT, G, moveoutofgroup
+# bind = $mainMod SHIFT, Tab, bringactivetotop
+# maybe use mod+y (rot13 of l) (general way to remap if a letter is already remapped?)
+# bind = $mainMod SHIFT, x, exec, hyprlock
+# zzz mnemonic
+# maybe shift? so u don't accidentaly type? test!
+bind = $mainMod , z, exec, hyprlock
+# bind = $mainMod shift, z, exec, shutdown now
+bind = $mainMod , delete, exec, shutdown now
+##bind = $mainMod, G, hyprlock
+bind = $mainMod, page_up, workspace, e+1
+# use sudo instead of wiki password? gpg?
+# bind = $mainMod,I, exec, sudo -c ''
+bind = $mainMod, page_down, workspace, e-1
+# need to use emacs completions
+# bind = alt, tab, workspace, m+1
+# bind = alt shift, tab, workspace, m-1
+
+###grimblast
+
+# would be nice to show icon if item is multiline?
+
+# lines and width don't work
+bind = $mainMod shift, equal, exec, cliphist list | rofi -dmenu -display-columns 2 -p "Select item to copy" -lines 30 -width 75 | cliphist decode | wl-copy
+# cliphist but for primary selection?
+
+# use grim
+# also works when using transparent window
+### OCR
+bind = $mainMod, o, exec, sh -c 'grimblast save area - | tesseract - - | wl-copy'
+bind = $mainMod SHIFT, o, exec, sh -c 'grimblast save area - | tesseract - - | tr \\n \  | wl-copy'
+
+# edit?
+# add filename?
+# --openfile
+# p->salva in Pictures mnemonic
+bind = SUPER,       p, exec, grimblast --notify save area
+bind = SUPER SHIFT, p, exec, grimblast --notify save active
+# dunno what these do, also clash with kanata terminal keybindings
+# bind = SUPER ALT,   p, exec, grimblast --notify save output
+# bind = SUPER CTRL,  p, exec, grimblast --notify save screen
+# bind = SUPER,       c, exec, grimblast --notify copy area
+# nice dicotomy/mnemonic w y (copy) and p (paste)
+bind = SUPER,       y, exec, grimblast --notify copy area
+bind = SUPER SHIFT, y, exec, grimblast --notify copy active
+# bind = SUPER ALT,   c, exec, grimblast --notify copy output
+# bind = SUPER CTRL,  c, exec, grimblast --notify copy screen
+
+# bind = $mainMod, x, exec, sed -i 's/^\s**monitor\s*=.*,\s*0/&1/' ~/.config/hypr/hyprland.conf
+# in attesa di tablet mode
+# it should really support v:count though
+# bind = $mainMod, x, exec, perl -pi -e 's/^\s**monitor\s*=.*,\s*\K([01])$/$1 eq 0 ? "1":"0"/e' ~/.config/hypr/hyprland.conf
+# bind = $mainMod, x, exec, perl -pi -e 's/^\s**monitor\s*=.*,\s*\K([01])$/$1^1/e' ~/.config/hypr/hyprland.conf
+# bind = $mainMod, x, exec, hyprclt keyword monitor ',preferred,auto,auto, transform, 0' && hyprctl keyword input:touchdevice:transform 0 
+bind = $mainMod, x, exec, ~/.config/hypr/scripts/monitor
+
+# Move focus with mainMod + arrow keys
+bind = $mainMod, h, movefocus, l
+bind = $mainMod, j, movefocus, d
+bind = $mainMod, l, movefocus, r
+bind = $mainMod, k, movefocus, u
+
+# TODO: make these work like in vim
+bind = $mainMod SHIFT, h, movewindow, l
+bind = $mainMod SHIFT, j, movewindow, d
+bind = $mainMod SHIFT, l, movewindow, r
+bind = $mainMod SHIFT, k, movewindow, u
+
+# Switch workspaces with mainMod + [0-9]
+bind = $mainMod, 1, workspace, 1
+bind = $mainMod, 2, workspace, 2
+bind = $mainMod, 3, workspace, 3
+bind = $mainMod, 4, workspace, 4
+bind = $mainMod, 5, workspace, 5
+bind = $mainMod, 6, workspace, 6
+bind = $mainMod, 7, workspace, 7
+bind = $mainMod, 8, workspace, 8
+bind = $mainMod, 9, workspace, 9
+bind = $mainMod, 0, workspace, 10
+
+# Move active window to a workspace with mainMod + SHIFT + [0-9]
+bind = $mainMod SHIFT, 1, movetoworkspacesilent, 1
+bind = $mainMod SHIFT, 2, movetoworkspacesilent, 2
+bind = $mainMod SHIFT, 3, movetoworkspacesilent, 3
+bind = $mainMod SHIFT, 4, movetoworkspacesilent, 4
+bind = $mainMod SHIFT, 5, movetoworkspacesilent, 5
+bind = $mainMod SHIFT, 6, movetoworkspacesilent, 6
+bind = $mainMod SHIFT, 7, movetoworkspacesilent, 7
+bind = $mainMod SHIFT, 8, movetoworkspacesilent, 8
+bind = $mainMod SHIFT, 9, movetoworkspacesilent, 9
+bind = $mainMod SHIFT, 0, movetoworkspacesilent, 10
+
+bind = $mainMod , R, submap, resize
+submap=resize
+binde=,H,resizeactive,-10 0
+binde=,J,resizeactive,0 10
+binde=,K,resizeactive,0 -10
+binde=,L,resizeactive,10 0
+bind=,escape,submap,reset
+submap=reset
+
+# Example special workspace (scratchpad)
+# bind = $mainMod, S, togglespecialworkspace, magic
+# bind = $mainMod SHIFT, S, movetoworkspace, special:magic
+bind = $mainMod, S, togglespecialworkspace
+bind = $mainMod SHIFT, S, movetoworkspace, special
+# bind = $mainMod, period, togglespecialworkspace, magic
+# bind = $mainMod, comma, movetoworkspace, special:magic
+
+# Scroll through existing workspaces with mainMod + scroll
+bind = $mainMod, mouse_down, workspace, e+1
+bind = $mainMod, mouse_up, workspace, e-1
+
+# Move/resize windows with mainMod + LMB/RMB and dragging
+bindm = $mainMod, mouse:272, movewindow
+bindm = $mainMod, mouse:273, resizewindow
+
+# Laptop multimedia keys for volume and LCD brightness
+bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindel = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindel = ,XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindel = ,XF86MonBrightnessUp, exec, brightnessctl s 10%+
+bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
+
+# Requires playerctl
+# go 10 sec forward? for tridactyl yt...
+# bindl = , XF86AudioNext, exec, playerctl next
+bindl = $mainMod, n, exec, playerctl next
+# usa stessi keybindings di mpv?
+# bindl = $mainMod, greater, exec, playerctl next
+# bindl = $mainMod, p, exec, playerctl play-pause
+# bindl = , XF86AudioPause, exec, playerctl play-pause
+# bindl = $mainMod, ., exec, playerctl play-pause
+# bindl = , XF86AudioPlay, exec, playerctl play-pause
+# bindl = , XF86AudioPrev, exec, playerctl previous
+# make these support v:count?
+bindl = $mainMod shift, n, exec, playerctl previous
+# bindl = $mainMod, less, exec, playerctl previous
+
+# bindl = $mainMod shift, n, exec, scripts/active
+
+#+end_src
+** [[https://wiki.hyprland.org/Configuring/Window-Rules/][WINDOWS]] AND [[https://wiki.hyprland.org/Configuring/Workspace-Rules/][WORKSPACES]]
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+
+# Example windowrule v1
+# windowrule = float, ^(kitty)$
+
+# Example windowrule v2
+# windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
+
+# Ignore maximize requests from apps. You'll probably like this.
+windowrulev2 = suppressevent maximize, class:.**
+
+# Fix some dragging issues with XWayland
+windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+
+# bind = $mainMod , semicolon, exec, [float] ghostty
+# TODO:
+# bind = $mainMod shift, return, exec, [float] $terminal
+bind = $mainMod , slash, exec, [float] $terminal
+# bind = $mainMod , a, exec, [workspace 2 silent; float; move 0 0] $terminal
+# how to make the current terminal floating?
+
+# like vim/noice binding but for your shell
+# how to hide prompt? or just put the shell as a title...
+# bind = $mainMod , y, exec, [float;size 10% 10;center]$terminal
+# close after successfull command?
+bind = $mainMod shift,semicolon, exec, [float;size 50% 10%;center]$terminal
+# windowrulev2 = float,class:^(ex)$
+
+windowrulev2 = float,class:^(pulsemixer)$
+windowrulev2 = size 700 400,class:^(pulsemixer)$
+windowrulev2 = move 100%-800 100%-500,class:^(pulsemixer)$
+windowrulev2 = opacity 0.9,class:^(pulsemixer)$
+# bind = $mainMod, A, exec, $terminal --class=pulsemixer sh -c 'pulsemixer' 
+# bind = $mainMod, m, exec, $terminal --class=pulsemixer -e sh -c 'pulsemixer' 
+
+# how to escape dollar sign?
+# bind = $mainMod , t, exec, [float] $terminal -e nvim +$$ ~/todo
+# bind = $mainMod , t, exec, [float] $terminal -e nvim -c TransparentEnable ~/todo
+# not sure why but backslashes necessary... they get interpreted by the shell? exec?
+# just use a prompt and append that line
+# bind = $mainMod , t, exec, [float] $terminal -e nvim --clean -c 'hi\ Normal\ guibg=none\|inoremap\<S-space\>\ \<cmd\>up\<cr\>\<esc\>\|nnoremap\<S-space\>\ \<cmd\>up\<cr\>\<esc\>\|$\|exe\ \"norm\!\ o\\\<cr\>\\\<esc\>zt\"\|startinsert' ~/todo
+# open neovim in file w/ keymaps? like pressing <super>n<space>fp to go plugins or smth?
+# substitute with org-capture?
+bind = $mainMod , t, exec, [float] $terminal -e nvim -u ~/.config/nvim/hyrp_float.vim -c 'norm!\ Gzt2o' ~/todo/todo.txt
+# bind = $mainMod , t, exec, [float] $terminal -e emacsclient -t -e '\(execute-kbd-macro "Gzt2o"\)'  ~/todo/todo.txt 
+
+# doesn't pick up aliases
+# how to go to last line
+# bind = $mainMod , t, exec, [float] $terminal -e emacsclient -t  ~/todo/todo.txt -e '\(end-of-buffer\)'
+# bind = $mainMod , t, exec, [float] $terminal -e emacsclient -t  ~/todo/todo.txt
+bind = $mainMod shift , t, exec, [float] $terminal -e nvim -u ~/.config/nvim/hyrp_float.vim -c 'norm!\ Gzto' ~/todo/todo.txt
+# for language learning? arabic/spanish (like anki)... I want this at startup
+# bind = $mainMod , a, exec, ~/scripts/DailyRandomAnki
+bind = $mainMod , m, exec, ~/scripts/songs
+# left Click?
+# bind = $mainMod , space, exec, [float] $terminal
+
+# goto last workspace? mod<c-^>
+
+workspace=1,class:^(emacs)$
+
+# https://www.reddit.com/r/hyprland/comments/1gbbgt8/no_gaps_when_only/
+# "Smart gaps" / "No gaps when only"
+# uncomment all if you wish to use that.
+workspace = w[t1], gapsout:0, gapsin:0
+workspace = w[tg1], gapsout:0, gapsin:0
+workspace = f[1], gapsout:0, gapsin:0
+windowrulev2 = bordersize 0, floating:0, onworkspace:w[t1]
+windowrulev2 = rounding 0, floating:0, onworkspace:w[t1]
+windowrulev2 = bordersize 0, floating:0, onworkspace:w[tg1]
+windowrulev2 = rounding 0, floating:0, onworkspace:w[tg1]
+windowrulev2 = bordersize 0, floating:0, onworkspace:f[1]
+windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
+#+end_src
+*** SPECIAL WORKSPACES
+#+begin_src hypr :tangle ~/.config/hypr/hyprland.conf
+# just use emacs
+
+# - calculator
+# - music
+# - password manager
+# - htop
+# - email client
+
+# special workspace usage reddit post
+# windowrulev2 = float,class:(qalculate-gtk)
+# windowrulev2 = workspace special:calculator,class:(qalculate-gtk)
+# like calc-dispatch in emacs
+# can't use shift + numbers cause those are for workspaces
+# bind=super shift,8,exec, pgrep qalculate-gtk&&hyprctl dispatch togglespecialworkspace calculator||qalculate-gtk&
+# TODO: fai check/toggle/notify/etc...
+bind=super shift,b,exec, bash -c "bluetoothctl <<< connect\ $(bluetoothctl <<< devices | awk '/ Soundcore P2 Mini$/{print $2}')"
+#+end_src
+
+* Hyprlock
+cosa succede se lo schermo e gia dark? notifica in qlk modo
+#+begin_src hypr :tangle ~/.config/hypr/hyprlock.conf
+general {
+    ignore_empty_input=false
+}
+background {
+    monitor =
+        color = rgba(25, 20, 20, 1.0)
+        blur_passes = 2
+}
+
+input-field {
+    monitor =
+        size = 20%, 5%
+        outline_thickness = 3
+        inner_color = rgba(0, 0, 0, 0.0) # no fill
+        outer_color = rgba(33ccffee) rgba(00ff99ee) 45deg
+        check_color=rgba(00ff99ee) rgba(ff6633ee) 120deg
+        fail_color=rgba(ff6633ee) rgba(ff0066ee) 40deg
+        font_color = rgb(143, 143, 143)
+# fade_on_empty = false
+        rounding = 15
+        position = 0, -20
+        halign = center
+        valign = center
+}
+#+end_src
+* Hypridle
+#+begin_src hypr :tangle ~/.config/hypr/hypridle.conf
+
+general {
+    lock_cmd = pidof hyprlock || hyprlock       # avoid starting multiple hyprlock instances.
+    # before_sleep_cmd = loginctl lock-session    # lock before suspend.
+    # after_sleep_cmd = hyprctl dispatch dpms on  # to avoid having to press a key twice to turn on the display.
+}
+listener {
+    # timeout = 300                            # in seconds.
+    timeout = 600                            # in seconds.
+    on-timeout = loginctl lock-session
+    # on-resume = notify-send "Welcome back!"  # command to run when activity is detected after timeout has fired.
+}
+
+listener {
+    # timeout = 150                                # 2.5min.
+    timeout = 300                                # 2.5min.
+    on-timeout = brightnessctl -s set 10         # set monitor backlight to minimum, avoid 0 on OLED monitor.
+    on-resume = brightnessctl -r                 # monitor backlight restore.
+}
+# # turn off keyboard backlight, comment out this section if you dont have a keyboard backlight.
+# listener { 
+#     timeout = 150                                          # 2.5min.
+#     on-timeout = brightnessctl -sd rgb:kbd_backlight set 0 # turn off keyboard backlight.
+#     on-resume = brightnessctl -rd rgb:kbd_backlight        # turn on keyboard backlight.
+# }
+# listener {
+#     timeout = 330                                 # 5.5min
+#     on-timeout = hyprctl dispatch dpms off        # screen off when timeout has passed
+#     on-resume = hyprctl dispatch dpms on          # screen on when activity is detected after timeout has fired.
+# }
+# listener {
+#     timeout = 1800                                # 30min
+#     on-timeout = systemctl suspend                # suspend pc
+# }
+#+end_src
+* Hyprpaper
+
+can u use source code (maybe elisp) to pick random image?
+#+begin_src hypr :tangle ~/.config/hypr/hyprpaper.conf
+# preload=/tmp/anki
+# https://wallpapersafari.com/w/izoh9I/download
+# preload=~/Pictures/om.jpg
+# wallpaper=,~/Pictures/om.jpg
+# preload=~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper.jpg
+# wallpaper=,~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper.jpg
+preload=~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper_purple.jpg
+wallpaper=,~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper_purple.jpg
+# preload=~/Pictures/RxlwP.png
+# wallpaper=,~/Pictures/RxlwP.png
+#+end_src

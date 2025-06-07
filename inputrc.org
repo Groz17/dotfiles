@@ -1,0 +1,41 @@
+#+property: header-args :tangle ~/.inputrc
+#+startup: content
+#+auto_tangle: t
+
+* TODO
+- [ ] m-c-j to activate vim mode doesn't work?
+- [ ] keybinding for pwd|c? and most common longish commands? analysis w/ atuin
+
+#+begin_src inputrc
+set completion-ignore-case On
+set show-all-if-ambiguous on
+# "\C-i": menu-complete
+"\C-i": menu-complete
+# https://askubuntu.com/questions/1396132/when-i-paste-in-the-terminal-sometimes-the-contents-are-prefixed-with-the-charac
+"\C-v": ""
+# "\C-v": previous-screen-line
+
+# $if Bash
+# "\C-j": '\C-a "$(\C-e)"\C-a'
+# "\C-j": '\C-e | nvim\C-m'
+# $endif
+#
+# ctrl+{1..9} to match alt (like emacs...)
+
+# for some reasons m-p/n don't work in hyprland?
+set enable-meta-key on
+set convert-meta on
+# Meta-p: non-incremental-reverse-search-history
+# Meta-n: non-incremental-forward-search-history
+
+# like zsh
+"\C-x\C-k": '\C-a\C-k'
+
+# kanata s/l=f14=c-x
+"\e[24~": "\C-x"
+# doesn't work?
+# "\e[25~": "\C-u"
+# ctrl-m doesn't work?
+"\C-m": accept-line
+#+end_src
+

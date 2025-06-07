@@ -1,0 +1,212 @@
+#+property: header-args :tangle "~/.config/ghostty/config"
+#+startup: content
+#+auto_tangle: t
+
+# Run `ghostty +show-config --default --docs` to view a list of
+# all available config options and their default values.
+# Additionally, each config option is also explained in detail
+# on Ghostty's website, at https://ghostty.org/docs/config.
+
+
+*  TODO TODO LIST
+- [ ] split docker container pane same cwd?
+- [ ] window-save-state?
+
+*  Prefs
+#+begin_src ghostty
+
+# font-family = Iosevka
+font-family = Aporetic Sans Mono
+# font-family = Adwaita Mono
+# font-family = Maple Mono
+# toggle with keybinding?
+# font-feature= -calt, -liga, -dlig
+window-padding-x = 0
+window-padding-y = 0
+# theme=Kanagawa Dragon
+theme=light:rose-pine-dawn,dark:rose-pine
+# theme = dark:catppuccin-frappe,light:catppuccin-latte
+# https://usgraphics.com/products/berkeley-mono
+# theme=purplepeter
+# theme=vesper
+# theme=Belafonte Night
+
+confirm-close-surface=true
+
+# # Any line beginning with a # is a comment. It's not possible to put
+# # a comment after a config option, since it would be interpreted as a
+# # part of the value. For example, this will have a value of "#123abc":
+# background = #123abc
+#
+# # Empty values are used to reset config keys to default.
+# key =
+#
+# # Some config options have unique syntaxes for their value,
+# # which is explained in the docs for that config option.
+# # Just for example:
+# resize-overlay-duration = 4s 200ms
+
+window-padding-balance=true
+# copy-on-select=clipboard
+# background-opacity=0.8
+background-opacity=0.7
+cursor-style=block
+shell-integration-features=no-cursor,sudo,no-title
+adjust-cell-height=3%
+# adjust-cell-height=35%
+mouse-hide-while-typing=true
+window-save-state=always
+font-size=11
+# non funge?
+window-inherit-working-directory=true
+# split-divider-color=yellow
+#+end_src
+
+*  Keybinds 
+#+begin_src ghostty
+
+# keybind = shift+ctrl+left_bracket=previous_tab
+# keybind = shift+ctrl+right_bracket=next_tab
+# keybind = shift+ctrl+,=move_tab:-1
+# keybind = shift+ctrl+.=move_tab:+1
+
+# basically leader mimics ctrl...
+# I want to have a leader based control system for ghostty (to avoid key collissions with other applications), where <C-s> is used as my leader key for operations
+# while the meta/alt key is used for movement within the multiplexed terminals
+
+## fix stuff
+# keybind=ctrl+m=text:\x0D
+keybind=ctrl+i=text:\x09
+keybind=ctrl+[=text:\x1B
+# keybind=ctrl+Return=text:\x0D+control?
+
+# General
+keybind=super+alt+r=reload_config
+keybind = super+alt+a=select_all
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
+# keybind = super+alt+y=copy_to_clipboard
+# keybind = super+alt+p=paste_from_clipboard
+# keybind = super+alt+k>i>l>l=close_surface
+# Currently not working
+keybind = super+alt+shift+i=inspector:toggle
+
+## keybindings
+keybind=clear
+# maybe use prefix=home variable?
+# disable home in bash/zsh? for ghostty
+# keybind=homehift+alt+v=new_split:right
+##keybind=homehift+alt+v=new_split:right
+# keybind=cmd+v=new_split:right
+# magari fai keybindings simili per hyprland?
+# keybind=super+alt+v=new_split:right
+# use s/l (like ctrl-x) and 0,1,2,3,... like emacs (tanto userai sempre e solo emacs GUI)
+keybind=super+alt+v=new_split:right
+keybind=super+alt+shift+v=new_split:left
+keybind=super+alt+s=new_split:up
+keybind=super+alt+shift+s=new_split:down
+keybind=super+alt+shift+s=new_split:down
+
+# https://www.reddit.com/r/Ghostty/comments/1hy4out/ghostty_config_with_leader_based_bindings/?rdt=56822
+
+# # Window stuff (isn't this basically hyprland job?) metto qua i keybindings o in hyprland o in nixos?
+# actually the difference is that you can use these mappings only from ghostty, so just put them in hyprland/kanata/nix
+# keybind = global:super+alt+q>n=new_window --doesn't work On linux
+keybind = super+alt+d=toggle_window_decorations
+# keybind = super+alt+w>f=toggle_fullscreen
+# Note This requires you to have the right editor set via xdg. 
+# This can be done with `xdg-mime default nvim.desktop text/plain`
+keybind = super+alt+w=write_scrollback_file:open
+keybind = super+alt+shift+w=write_screen_file:open
+
+# Scroll
+# use C-v and A-v like emacs? do these work just shell?
+keybind = super+alt+d=scroll_page_down
+keybind = super+alt+u=scroll_page_up
+#
+# # Tab and splits (panes)
+# keybind = super+alt+t=new_tab
+keybind = super+alt+n=new_tab
+# turn split to tab? like ^wT in vim
+keybind = super+alt+o=toggle_split_zoom
+#
+# keybind = super+alt+equal=equalize_splits
+keybind = super+alt+e=equalize_splits
+# resize mode? do these actions support something like v:count?
+keybind = super+alt+,=resize_split:left,10
+keybind = super+alt+.=resize_split:right,10
+# keybind = alt>6=resize_split:up,10
+# keybind = alt>7=resize_split:down,10
+
+# keybind = super+alt+k=increase_font_size:1
+# come pdf bindings
+# keybind = super+alt+alt+k=increase_font_size:1
+# keybind = super+alt+]=increase_font_size:-1
+# kanata help?
+# keybind = super+alt+[=increase_font_size:-1
+# TODO: find cool mappings to be able to use - and +
+# keybind = super+alt+]=increase_font_size:1
+# keybind = super+alt+[=decrease_font_size:1
+# probably kanata
+# keybind = super+alt+kp_add=increase_font_size:1
+keybind = super+alt+equal=increase_font_size:1
+# keybind = super+alt++=increase_font_size:1
+keybind = super+alt+-=decrease_font_size:1
+#
+keybind = global:super+alt+grave_accent=toggle_quick_terminal
+# # -= Navigation 
+#
+# # Split navigation
+keybind = super+alt+h=goto_split:left
+keybind = super+alt+j=goto_split:bottom
+keybind = super+alt+k=goto_split:top
+keybind = super+alt+l=goto_split:right
+#
+# # Tab navigation
+# don't work...
+# keybind = super+alt+(=previous_tab
+# keybind = super+alt+)=next_tab
+# keybind = super+alt+[=previous_tab
+# keybind = super+alt+]=next_tab
+# keybind = super+alt+shift+j=previous_tab
+# keybind = super+alt+shift+k=next_tab
+keybind = super+alt+shift+t=previous_tab
+keybind = super+alt+t=next_tab
+keybind = super+alt+0=goto_tab:1
+keybind = super+alt+^=goto_tab:1
+# goto last tab action? w/ $ or smth
+# # Prompt navigation
+# like ctrl-p/n 
+# keybind = super+alt+b=jump_to_prompt:-1
+# keybind = super+alt+f=jump_to_prompt:1
+# keybind = super+alt+p=jump_to_prompt:-1
+# keybind = super+alt+n=jump_to_prompt:1
+
+# Elsewhere, Ghostty intros a new performable: keybinding prefix to control if a configured keyboard shortcut “should only consume the input if the action is performed”, as per this given example:
+# keybind = performable:ctrl+c=copy_to_clipboard
+# In this setup, Ghostty only “consumes” — responds to the keyboard shortcut — if there’s selected text to be copied. If not, the shortcut is passed on to the shell (which the app devs note usually triggers an interrupt signal).
+#
+# ghostty mapping to Move window to its own tab?
+#
+# keybind=alt+n=unbind
+# keybind=alt+p=unbind
+#
+# set terminal cursor color #00ffa0
+# search scrollback with leader+/
+#+end_src
+
+*  Commands 
+#+begin_src ghostty
+
+#+end_src
+
+*  Shaders 
+#+begin_src ghostty
+
+# how to reload those?
+# custom-shader = ./shaders/galaxy.glsl
+# custom-shader = ./shaders/drunkard.glsl
+# custom-shader = ./shaders/bloom.glsl
+# custom-shader = ./shaders/water.glsl
+# custom-shader = ./shaders/glitchy.glsl
+#+end_src
