@@ -570,6 +570,7 @@ new_command _remove_annotations ~/pip/sioyek/bin/python -m sioyek.remove_annotat
 new_command _add_text ~/pip/sioyek/bin/python -m sioyek.add_text "%{sioyek_path}" "%{local_database}" "%{shared_database}" "%{file_path}" "%{selected_rect}" "%{command_text}"
 new_command _add_red_text ~/pip/sioyek/bin/python -m sioyek.add_text "%{sioyek_path}" "%{local_database}" "%{shared_database}" "%{file_path}" "%{selected_rect}" "%{command_text}" fontsize=5 text_color=255,0,0
 
+#+end_src
 ** CUSTOM COMMANDS
 #+begin_src sioyek :tangle ~/.config/sioyek/prefs_user.config
 # new_command _test notify-send "%{page_number}"
