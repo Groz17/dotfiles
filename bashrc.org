@@ -157,7 +157,7 @@ emacsclient -t -a "emacs" -c --eval "(info \"$1\")"
 # export MANWIDTH=999
 export EDITOR="nvim"
 # usa orgmode
-export FZF_DEFAULT_OPTS_FILE="$HOME"/.config/fzf/.fzfrc
+export FZF_DEFAULT_OPTS_FILE="$HOME"/.config/fzfrc
 export OLLAMA_API_BASE=http://127.0.0.1:11434
 # export INPUTRC="$HOME"/.config/inputrc
 # export GPG_TTY=$(tty)
