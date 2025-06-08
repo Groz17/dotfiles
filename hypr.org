@@ -120,6 +120,8 @@ env = GRIMBLAST_HIDE_CURSOR, 0
 
 env = XCURSOR_SIZE,24
 env = HYPRCURSOR_SIZE,24
+
+
 cursor{
     inactive_timeout=1
 }
@@ -344,7 +346,7 @@ bind=super ,equal,exec, emacsclient -e '(full-calc)' -c -a emacs
 bind=super , minus,exec, emacsclient -e '(eshell)' -c -a emacs
 
 # maybe these mappings should go under the terminal/ghostty keybind prefix (use zellij/tmux maybe?) or actually this is better maybe, use something like exwm
-bind = $mainMod, v, exec, ghostty --fullscreen -e nvim
+bind = $mainMod, v, exec, PATH=$HOME/.cargo/bin:$PATH ghostty --fullscreen -e nvim
 # create kanata chord for this?
 bind = $mainMod, B, exec, $browser
 bind = $mainMod, n, exec, hyprctl keyword gaps_in=0
