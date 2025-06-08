@@ -73,6 +73,41 @@ bind <space>s composite get_current_url | shellescape | exclaim_quiet ~/.config/
 " bind ;go composite get_current_url | shellescape | js -p tri.excmds.exclaim("kitty -e nvim -c \'GitDevOpen " + JS_ARG + "\'")
 "bind ;go composite get_current_url | shellescape | js -p tri.excmds.exclaim("xdg-open nvim-gitdev://open/?repo=" + JS_ARG)
 
+bind <a-w> composite get_current_url | exclaim  ~/scripts/to_markdown/browser/webpage
+
+" add another mapping that prepends the url (source)
+" would be cool to send the selection to todo and the title (with # prefixed) + selection to tips
+bind <a-c> composite js -s ~/scripts/to_markdown/browser/selection_html.js ; exclaim  ~/scripts/to_markdown/browser/selection
+bind >2 composite get_current_url | exclaim /home/giorgio/scripts/browser/2pdf
+
+bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
+
+" Git{Hub,Lab} git clone via SSH yank
+" bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
+
+" come g C alias in .gitconfig...
+" usa exclaim_quiet per non avere output nella command line
+bind gC composite get_current_url | exclaim_quiet ~/scripts/git_clone.sh
+
+" crea mapping per inserire plugin in lazy e copiare la configurazione in <plugin_name>lua così da poter usare il plugin subito...
+
+bind yp composite get_current_url | exclaim_quiet ~/.config/nvim/scripts/clone_from_browser
+
+" v -> veloce
+" bind <a-v> exclaim ~/bin/tabs_stat.sh
+bind <a-v> exclaim ~/scripts/tabs_stat.sh
+" x -> vicino a z usata per Copylinks++
+" bind <a-x> exclaim ~/bin/filtra_tabs.sh
+" magari usa un unico binding per copiare url da website e filtrarli...
+bind <a-x> exclaim ~/scripts/filtra_tabs.sh
+
+" get all urls in page (<a-z> the ones filtered by regex [copylinks++]; create another script with those regex and delete the add-on)
+" bind <a-a> js -s ~/Projects/src/JavaScript/urls.js
+bind <a-a> js -s ~/scripts/to_markdown/browser/urls_all.js
+bind <a-l> js -s ~/scripts/to_markdown/browser/urls_linux.js
+" bind <a-z> js -s ~/Projects/src/JavaScript/urls_regex.js
+
+
 #+end_src
 
 * BINDS
@@ -425,18 +460,13 @@ bind yF composite hint -qpipe a href | join | yank
 
 * AUTOCMDS
 #+begin_src tridactyl
-autocmd DocStart reddit\.com/.*tl=it urlmodify -Q tl
+" autocmd DocStart reddit\.com/.*tl=it urlmodify -Q tl
+autocmd DocStart reddit\.com/.*tl=* urlmodify -Q tl
 " autocmd BeforeRequest *tl=it (u) => ({redirectUrl: e.url.replace("tl=it","")}).
 " autocmd BeforeRequest *://*.reddit.com/* (u) => ({if(u.url.match("[?|&]tl=it")) {redirectUrl: u.url.replace("tl=it","")}}).
 " autocmd DocStart chatgpt\.com kill initiali popup
 " autocmd DocStart chatgpt.com js document.querySelector("a .cursor-pointer").click()
 " <a href="#" class="mt-5 cursor-pointer text-sm font-semibold text-token-text-secondary underline">Stay logged out</a>
-
-" qmark?
-"bind --mode=normal gom open https://mail.google.com/mail/
-"bind --mode=normal gnm open https://mail.google.com/mail/
-
-"bind --mode=normal zz source --url https://gist.github.com/jseb93/bce6a9cf73159f67332154ba17324e7a
 
 "bind <space><space> exclaim ~/bin/screenshoot_firefox
 " bind ,s exclaim ~/bin/screenshoot_firefox
@@ -445,13 +475,6 @@ autocmd DocStart reddit\.com/.*tl=it urlmodify -Q tl
 bind gO fillcmdline goto
 
 " bind ;t ttsread -c title
-
-" " bind ,v open www.reddit.com/r/vim/new
-" " https://egeek.me/2021/07/17/playing-any-video-from-firefox-with-mpv-and-youtube-dl/
-" bind ,v composite js document.location.href.replace('https://', 'ytdl://') | shellescape | js -p 'PATH="$PATH:/usr/local/bin" mpv ' + JS_ARG | !s
-" bind ,V tabopen www.reddit.com/r/vim/new
-" bind ,n open www.reddit.com/r/neovim/new
-" bind ,N tabopen www.reddit.com/r/neovim/new
 
 bind gi focusinput
 
