@@ -1,6 +1,5 @@
 #+property: header-args :tangle "~/.config/kanata/config.kbd"
 #+startup: content
-#+auto_tangle: t
 ;; two/multiple keys to activate layer?
 ;; config.kbd beautifier?
 

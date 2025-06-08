@@ -1,5 +1,4 @@
 #+startup: content
-#+auto_tangle: t
 
 * Keys
 

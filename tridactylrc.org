@@ -1,7 +1,6 @@
 # -*- comment-start: "\""; -*-
 #+property: header-args :tangle ~/.config/tridactyl/tridactylrc
 #+startup: content
-#+auto_tangle: t
 
 * TODO TASK LIST
 - [ ] add c-r c-{a/l} for current webpage url?

@@ -1,6 +1,5 @@
 #+property: header-args :tangle "~/.config/ghostty/config"
 #+startup: content
-#+auto_tangle: t
 
 # Run `ghostty +show-config --default --docs` to view a list of
 # all available config options and their default values.

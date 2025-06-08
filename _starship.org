@@ -1,6 +1,5 @@
 #+property: header-args :tangle ~/.config/starship.toml
 #+startup: content
-#+auto_tangle: t
 
 #+begin_src toml
 # add exit code?

@@ -1,6 +1,5 @@
 #+property: header-args :tangle ~/.inputrc
 #+startup: content
-#+auto_tangle: t
 
 * TODO TASK LIST
 - [ ] m-c-j to activate vim mode doesn't work?

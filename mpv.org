@@ -1,5 +1,4 @@
 #+startup: content
-#+auto_tangle: t
 Mirror config for emms?
 * Keys
 #+begin_src mpv :tangle ~/.config/mpv/input.conf

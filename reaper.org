@@ -1,6 +1,5 @@
 #+property: header-args :tangle ~/.config/REAPER/Scripts/reaper-keys/internal/definitions/bindings.lua
 #+startup: content
-#+auto_tangle: t
 
 * Global
 #+begin_src lua

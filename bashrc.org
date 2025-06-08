@@ -1,6 +1,5 @@
 #+property: header-args :tangle ~/.bashrc
 #+startup: content
-#+auto_tangle: t
 
 * TODO TASK LIST
  - [ ] aliases and env vars shouldn't be bound to a  specific shell...

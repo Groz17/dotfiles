@@ -1,6 +1,5 @@
 #+property: header-args :tangle ~/.config/rofi/config.rasi
 #+startup: content
-#+auto_tangle: t
 
 - [ ] find readline configs? or copy your telescope.nvim config...
 - [ ] search for emacs/readline/vim bindings... stuff like c-v for example

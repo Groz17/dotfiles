@@ -1,5 +1,4 @@
 #+startup: content
-#+auto_tangle: t
 Refer to the wiki for more information. see: https://wiki.hyprland.org/Configuring/
 
 You can split this configuration into multiple files
