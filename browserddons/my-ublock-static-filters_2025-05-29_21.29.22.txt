@@ -1,1 +1,2 @@
 chatgpt.com##+js(set-session-storage-item, oai/apps/noAuthHasDismissedSoftRateLimitModal, true)
+||accounts.google.com/gsi/*$xhr,script,3p
