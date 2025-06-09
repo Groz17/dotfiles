@@ -1,4 +1,4 @@
-#+property: header-args :tangle "~/.config/ghostty/config"
+#+property: header-args :tangle ~/.config/ghostty/config
 #+startup: content
 
 # Run `ghostty +show-config --default --docs` to view a list of
