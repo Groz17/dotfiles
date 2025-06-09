@@ -50,18 +50,18 @@ set homepages ["reddit.com","youtube.com"]
 " bind <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
 " use alt mappings?
 " bind <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
-bind <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
-bind <space>A composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append_no_space
+bind --mode=normal <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
+bind --mode=normal <space>A composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append_no_space
 " Clipboard mapping?
 " bind <space>c exclaim_quiet sh -c 'printf '\n%s\n' "$(wl-paste)" >> ~/todo && notify-send "Sent Clipboard"'
 " bind <space>c exclaim_quiet sh -c 'echo >> ~/todo && echo "$(wl-paste)" >> ~/todo && notify-send "Sent Clipboard"'
 " bind <space>c exclaim_quiet sh -c 'echo >> ~/todo && clip="$(wl-paste)" && echo "$clip" >> ~/todo && notify-send "Sent Clipboard"'
-bind <space>c exclaim_quiet bash -c 'clip="$(wl-paste)" && echo >> ~/todo/todo.txt && echo "$clip" >> ~/todo/todo.txt && notify-send "Sent Clipboard" "$clip"'
+bind --mode=normal <space>c exclaim_quiet bash -c 'clip="$(wl-paste)" && echo >> ~/todo/todo.txt && echo "$clip" >> ~/todo/todo.txt && notify-send "Sent Clipboard" "$clip"'
 " bind <space>C exclaim_quiet sh -c 'echo "$(wl-paste)" >> ~/todo && notify-send "Sent Clipboard (No Newline)"'
 bind <space>C exclaim_quiet bash -c 'clip="$(wl-paste)" && echo "$clip" >> ~/todo/todo.txt && notify-send "Sent Clipboard (No Newline)" "$clip"'
 " bind <space><space> followpage next
 " bind <space><s-space> followpage prev
-bind <space>s composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/scripts/subs
+bind --mode=normal <space>s composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/scripts/subs
 
  " TODO: metti i chapters as well
  " "bind yS composite clipboard yank ; exclaim ~/scripts/vimwiki_scripts/clipboard2vimwiki.sh
@@ -144,7 +144,7 @@ unbind <Backspace>
 " bind --mode=visual q composite js.document.getSelection().toString() | send to qr code
 
 " bind --mode=visual Y composite js.document.getSelection().toString() | yank markdown?
-bind yH composite hint -pipe * innerHTML | 
+bind yH composite hint -pipe * innerHTML | yank
 
 " 3gt to the third most recently used tab
 " set keyboardlayoutforce true
@@ -751,8 +751,8 @@ set searchurls.qwant https://www.qwant.com/?q=
 #+begin_src vim
 set video_seek 5
 " seek forward/backward seconds defined in video_seek
-set videomaps.w jsep $ex('video_with').then(video => {const count = Number(JS_ARG) || 1; const tic = Number(get('video_seek')); video.currentTime += tic * count }); 1;
-set videomaps.b jsep $ex('video_with').then(video => {const count = Number(JS_ARG) || 1; const tic = Number(get('video_seek')); video.currentTime -= tic * count }); 1;
+set videomaps.l jsep $ex('video_with').then(video => {const count = Number(JS_ARG) || 1; const tic = Number(get('video_seek')); video.currentTime += tic * count }); 1;
+set videomaps.h jsep $ex('video_with').then(video => {const count = Number(JS_ARG) || 1; const tic = Number(get('video_seek')); video.currentTime -= tic * count }); 1;
 
 set video_seek_op 120
 seturl ^https://www.youtube.com/watch\?v=116OjLa1DwY video_seek_op 42
