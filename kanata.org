@@ -1,4 +1,4 @@
-#+property: header-args :tangle "~/.config/kanata/config.kbd"
+#+property: header-args :tangle ~/.config/kanata/config.kbd
 #+startup: content
 ;; two/multiple keys to activate layer?
 ;; config.kbd beautifier?
@@ -125,8 +125,10 @@ f11
 ;;ow to togg le 
   ;;[   (tap-hold 200 249 [ [)
   ;;[   (tap-hold 200 249 bspc (macro S-bspc))
-  [   (tap-hold 200 249 (macro S-5) (macro S-bspc)) ;; same place as [{
-  ]   (tap-hold 200 249 (macro S-1) (macro S-bspc)) ;; comfortable to type %!
+  ;; [   (tap-hold 200 249 (macro S-5) (macro S-bspc)) ;; same place as [{
+  [   (tap-hold 200 249 [ (macro S-bspc)) ;; same place as [{
+  ;; ]   (tap-hold 200 249 (macro S-1) (macro S-bspc)) ;; comfortable to type %!
+  ]   (tap-hold 200 249 ] (macro S-bspc)) ;; comfortable to type %!
   \   (tap-hold 200 249 \ (macro S-\))
   ;; f11 lrld
    f11 f11
@@ -175,7 +177,8 @@ f11
   ;; u can use tap-dance for keys that don't produce symbols
   ;;< (caps-word 10000)
   ;;< (multi f24 (tap-hold-press-timeout 200 175 S-\ lsft (macro S-[)))
-  < (macro S-6) ;; ^ looks like shift symbol
+;;  < (macro S-6) ;; ^ looks like shift symbol
+  < (multi f24 (tap-hold-press-timeout 200 175 S-9 (macro S-9) (macro S-[)))
   ;;vin   (tap-hold 200 249 bspc (layer-while-held nav))
 
   rpar (multi f24 (tap-hold-press-timeout 200 175 S-0 rsft (macro S-])))
