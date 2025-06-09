@@ -104,7 +104,7 @@ alias V="SUDO_EDITOR=\"nvim\" sudoedit"
 # alias E="emacsclient -c -a emacs -nw"
 # alias e="emacsclient -c -a emacs -nw"
 # alias E="emacsclient -c -a emacs"
-alias em="emacsclient -c -a emacs"
+alias em="emacsclient -c -a ''"
 # cool: https://www.reddit.com/r/emacs/comments/3rxfr5/xclip_copypaste_killyank_and_emacs_in_a_terminal/
 alias e='emacsclient -t -a ""'
 alias E="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
