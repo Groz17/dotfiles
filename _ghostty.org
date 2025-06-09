@@ -96,7 +96,7 @@ keybind = ctrl+shift+v=paste_from_clipboard
 keybind = super+alt+shift+i=inspector:toggle
 
 ## keybindings
-keybind=clear
+# keybind=clear per il momento
 # maybe use prefix=home variable?
 # disable home in bash/zsh? for ghostty
 # keybind=homehift+alt+v=new_split:right
