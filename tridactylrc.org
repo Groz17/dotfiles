@@ -12,7 +12,7 @@
 - [ ] Make Tridactyl work on addons.mozilla.org (:h fixamo).
 
 * OPTIONS
-#+begin_src tridactyl
+#+begin_src vim
 " Clear the config (is this really necessary?)
 sanitise tridactyllocal tridactylsync
 
@@ -44,7 +44,7 @@ set homepages ["reddit.com","youtube.com"]
 
 * PERSONAL SCRIPTS
 
-#+begin_src tridactyl
+#+begin_src vim
 " send clipboard to ~/todo?
 " bind <space>a composite js -p tri.excmds.shellescape(JS_ARG).then(url => tri.excmds.exclaim_quiet('sh ~/.config/tridactyl/test ' + url))
 " bind <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
@@ -87,6 +87,7 @@ bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replac
 " come g C alias in .gitconfig...
 " usa exclaim_quiet per non avere output nella command line
 bind gC composite get_current_url | exclaim_quiet ~/scripts/git_clone.sh
+bind <space>d composite get_current_url | exclaim_quiet ~/.config/tridactyl/scripts/download
 
 " crea mapping per inserire plugin in lazy e copiare la configurazione in <plugin_name>lua così da poter usare il plugin subito...
 
@@ -110,7 +111,7 @@ bind <a-l> js -s ~/scripts/to_markdown/browser/urls_linux.js
 #+end_src
 
 * BINDS
-#+begin_src tridactyl
+#+begin_src vim
 " bind --mode=$mode $key $excmd
 bind gp focusinput -p
 bind i mode ignore
@@ -142,6 +143,9 @@ unbind <Backspace>
 " bind --mode=visual C composite js.document.getSelection().toString() | send to todo no newline
 " bind --mode=visual q composite js.document.getSelection().toString() | send to qr code
 
+" bind --mode=visual Y composite js.document.getSelection().toString() | yank markdown?
+bind yH composite hint -pipe * innerHTML | 
+
 " 3gt to the third most recently used tab
 " set keyboardlayoutforce true
 
@@ -158,7 +162,7 @@ unbind <Backspace>
 #+end_src
 
 * MOVEMENT
-#+begin_src tridactyl
+#+begin_src vim
 
 " ────────────────────────────────────────────────────────────
 " The default jump of 10 is a bit much.
@@ -173,7 +177,7 @@ bind e fillcmdline goto
 #+end_src
 
 ** TAB MANAGEMENT
-#+begin_src tridactyl
+#+begin_src vim
 bind U tabuniq
 
 bind / fillcmdline find
@@ -331,7 +335,7 @@ bind tr fillcmdline tabgrouprename
 #+end_src
 
 * READLINE
-#+begin_src tridactyl
+#+begin_src vim
 
 "bind --mode=hint <A-j> hint.focusNextHint
 "bind --mode=hint <A-k> hint.focusPreviousHint
@@ -431,7 +435,7 @@ bind --mode=input   <c-l>  ex.accept_line
 
 * HINTS
 
-#+begin_src tridactyl
+#+begin_src vim
 "JavaScript hints (grey ones) 
 
 bind <a-r> fillcmdline hint -fr 
@@ -458,7 +462,7 @@ bind yF composite hint -qpipe a href | join | yank
 #+end_src
 
 * AUTOCMDS
-#+begin_src tridactyl
+#+begin_src vim
 " autocmd DocStart reddit\.com/.*tl=it urlmodify -Q tl
 autocmd DocStart reddit\.com/.*tl=* urlmodify -Q tl
 " autocmd BeforeRequest *tl=it (u) => ({redirectUrl: e.url.replace("tl=it","")}).
@@ -489,7 +493,7 @@ bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replac
 #+end_src
 
 * INTERNATIONALISATION
-#+begin_src tridactyl
+#+begin_src vim
 set keyboardlayoutbase qwerty
 set keyboardlayoutforce true
 
@@ -514,7 +518,7 @@ autocontain facebook\.com facebook
 
 * QUICKMARKS
 Use searchurls when you need to insert some (small) input, quickmarks otherwise (like for forums)
-#+begin_src tridactyl
+#+begin_src vim
 quickmark a https://www.artstation.com/
 " quickmark g https://github.com/tanath/dotfiles
 quickmark h https://news.ycombinator.com/
@@ -544,14 +548,14 @@ quickmark p https://www.perplexity.ai
 #+end_src
 
 * SEARCHURLS
-#+begin_src tridactyl
+#+begin_src vim
 " use ai to categorize
 " set searchengine g
 
 #+end_src
 
 ** Wikis
-#+begin_src tridactyl
+#+begin_src vim
 set searchurls.wg https//wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
 set searchurls.wa https://wiki.archlinux.org/index.php?title=Special%3ASearch&search=%s
 " set searchurls.wp https://en.wikipedia.org/wiki/Special:Search?search=%s&go=Go
@@ -566,26 +570,26 @@ set searchurls.de  https://devdocs.io/#q=
 #+end_src
 
 ** News/Media
-#+begin_src tridactyl
+#+begin_src vim
 
 #+end_src
 
 ** E-commerce
-#+begin_src tridactyl
+#+begin_src vim
 
 #+end_src
 
 ** Social media
-#+begin_src tridactyl
+#+begin_src vim
 
 #+end_src
 
 ** LLM
-#+begin_src tridactyl
+#+begin_src vim
 #+end_src
 
 ** Entertainment
-#+begin_src tridactyl
+#+begin_src vim
 
 " set searchurls.alt https://alternativeto.net/browse/search?q=%s
 " set searchurls.af https://www.acronymfinder.com/~/search/af.aspx?string=exact&Acronym=%s
@@ -649,7 +653,7 @@ set searchurls.ys https://www.youtube.com/results?search_query=%s&sp=CAM%253D
 #+end_src
 
 ** GitHub
-#+begin_src tridactyl
+#+begin_src vim
 set searchurls.gh https://github.com/search?q=%s
 
 set searchurls.gg https://github.com/search?q=%s&type=code
@@ -676,7 +680,7 @@ set searchurls.gm https://github.com/search?q=%s&type=marketplace
 #+end_src
 
 ** Google
-#+begin_src tridactyl
+#+begin_src vim
 set searchurls.g https://www.google.ca/search?safe=off&num=20&q=%s
 set searchurls.gc https://www.google.ca/search?q=cache:%s
 set searchurls.gi https://www.google.ca/search?tbm=isch&safe=off&q=%s
@@ -687,7 +691,7 @@ set searchurls.gi https://www.google.ca/search?tbm=isch&safe=off&q=%s
 
 #+end_src
 ** Languages
-#+begin_src tridactyl
+#+begin_src vim
 
 set searchurls.fc https://toolbox.google.com/factcheck/explorer/%s;hl=en
 " annulla startinsert con questo mapping (visto che la stringa è stata già cercata)
@@ -724,7 +728,7 @@ set searchurls.im  http://www.google.com/search?tbm=isch&q=%s
 " set searchurls.im  https://lens.google.com/search
 #+end_src
 ** Search engines
-#+begin_src tridactyl
+#+begin_src vim
 set searchurls.googleuk https://www.google.co.uk/search?q=
 set searchurls.yahoo https://search.yahoo.com/search?p=
 set searchurls.twitter https://twitter.com/search?q=
@@ -742,3 +746,118 @@ set searchurls.qwant https://www.qwant.com/?q=
 
 #+end_src
 
+* [[https://github.com/tridactyl/tridactyl/wiki/Video-mode][Video Mode]]
+** Basic seeking
+#+begin_src vim
+set video_seek 5
+" seek forward/backward seconds defined in video_seek
+set videomaps.w jsep $ex('video_with').then(video => {const count = Number(JS_ARG) || 1; const tic = Number(get('video_seek')); video.currentTime += tic * count }); 1;
+set videomaps.b jsep $ex('video_with').then(video => {const count = Number(JS_ARG) || 1; const tic = Number(get('video_seek')); video.currentTime -= tic * count }); 1;
+
+set video_seek_op 120
+seturl ^https://www.youtube.com/watch\?v=116OjLa1DwY video_seek_op 42
+set videomaps.C video_with video.currentTime = Number(get('video_seek_op'))
+set videomaps.a video_with video.currentTime = 0
+set videomaps.A video_with video.currentTime = video.duration
+#+end_src
+
+Although I do not know who will seek to the end or the beginning, I
+still do it.
+
+** Seek with specify time
+The arguments which pass to the =goto= and the =goby= commands should be
+a spaces splited number. The last number is the second, and previous
+number is minute, and hour. If the first number is prefix with =-=,
+=goto= command will count from the end of the video, and the =goby=
+command will count from the current time.
+
+#+begin_src vim
+set videomaps.gt fillcmdline video_goto
+set videomaps.i fillcmdline video_goto
+set videomaps.I fillcmdline video_goby
+
+alias video_goby js -d@ let time = JS_ARGS.filter(Boolean); let sign = '+'; if (time[0].match(/^[-+]/)) { sign = time[0].charAt(0); time[0] = time[0].slice(1) } time = time.filter(Boolean).map(Number); const second = time.reduce((s, n) => s*60+n, 0); tri.controller.acceptExCmd(`video_with video.currentTime ${sign}= ${second}`) @
+alias video_goto js -d@ let time = JS_ARGS.filter(Boolean); let sign = '+'; if (time[0].match(/^[-+]/)) { sign = time[0].charAt(0); time[0] = time[0].slice(1) } time = time.filter(Boolean).map(Number); let second = time.reduce((s, n) => s*60+n, 0); if (sign == '-') second = `video.duration - ${second}`; tri.controller.acceptExCmd(`video_with video.currentTime = ${second}`) @
+#+end_src
+
+E.g:
+
+#+begin_src vim
+" go to 1m 30s of the video
+video_goto 1 30
+" go to 1h 30m 22s of the video
+video_goto 1 30 22
+" go to the last 1:30 of the video
+video_goto -1 30
+
+" seek 1:30 from the current position
+video_goby 1 30
+" go back 1:30 from the current position
+video_goby -1 30
+#+end_src
+
+P.S. These commands are not very useful in fact.
+
+** Mark the timestamp
+These commands can mark and jump to the timestamps in video, just like
+built-in =markadd= or =markjump=.
+
+#+begin_src vim
+set videomaps.m gobble 1 video_mark_add
+set videomaps.' gobble 1 video_mark_goto
+set videomaps.ge video_mark_empty
+
+set videomaps.E video_mark_goby +1
+set videomaps.e video_mark_goby -1
+set video_mark_tollorance 1
+alias video_mark_add jsep void $ex('video_with').then(video => { const mark = JS_ARG; tri.videoMark.addMark(mark, video.currentTime); $ex('video_mode') })
+alias video_mark_empty js const vm = tri.videoMark; vm.historyStore = Object.values(vm.mark).sort((a,b) => a-b);
+alias video_mark_goby jsep void $ex('video_with').then(video => { const current = video.currentTime; const n = Number(JS_ARG); const time = tri.videoMark.goby(current, n); video.currentTime = time; $ex('video_mode'); })
+alias video_mark_goto jsep void $ex('video_with').then(video => { const mark = JS_ARG; tri.videoMark.addBlur(video.currentTime); const time = tri.videoMark.mark[mark]; if (typeof time == 'number') video.currentTime = time; $ex('video_mode') })
+
+alias video_mark_init jse if(!tri.videoMark){tri.videoMark={historyStore:[],mark:{},goby(current,n){const index=this.historyStore.findIndex(t=>{if(t>current)return true});const move=n<0?n:n-1;let time;if(~index)time=this.historyStore.at(index+move);else time=this.historyStore.at(move);if(Math.abs(time-current)>this.tollorance)return time;else return this.goby(current,n>0?n+1:n-1)},add(time){this.historyStore.push(time);this.historyStore.sort((a,b)=>a-b)},addBlur(time){const exist=this.historyStore.some(t=>Math.abs(t-time)<this.tollorance);if(!exist)this.add(time);return!exist},addMark(mark,time){this.mark[mark]=time;const index=this.historyStore.findIndex(t=>Math.abs(t-time)<this.tollorance);if(~index)this.historyStore[index]=time;else this.add(time)},tollorance:Number(get('video_mark_tollorance')) || 1,markEventHandler(videoEvent){const video=videoEvent.target;const time=video.currentTime;this.addBlur(time);const previousTime=this.getTimerTime();this.addBlur(previousTime)},timerEventHandler(event){const video=event.target;this.videoTimer={epoch:Date.now(),video:video.currentTime,rate:video.playbackRate}},videoTimer:null,getTimerTime(){const now=Date.now();const t=this.videoTimer;if(t)return(now-t.epoch)/1e3*t.rate+t.video}};void async function(){const vm=tri.videoMark;while(true){await sleep(800);const video=await $ex("video_with");if(video){const handler=tri.videoMark.markEventHandler.bind(tri.videoMark);video.addEventListener("seeked",handler);video.addEventListener("pause",handler);const timer=vm.timerEventHandler.bind(vm);video.addEventListener("playing",timer);video.addEventListener("ratechange",timer);timer({target:video});break}}}()}
+#+end_src
+
+These commands should call after the =video_mark_init=. Personally, I
+call =video_mark_init= when entering the video mode.
+
+The m and ' will mark a timestamp with a character. Lowercase and
+uppercase are considered as different character.
+
+The =video_mark_goby= will go to the nth next/prev mark from the current
+timestamp. If the nth mark has difference time below the
+=video_mark_tollorance=, this timestamp will be skiped. Moreover,
+everytime the user seek or pause the video, it will make a anonymouse
+mark, which can be jumped to with the =video_mark_goby= command. When
+seek, both the before timestamp and the after timestamp will be marked
+too. By the way, if any mark already exist within the tollorance before
+a anonymouse mark is created, the creation of the anonymouse mark will
+be canceled.
+
+** Enter and exit the mode
+#+begin_src vim
+alias video_mode composite mode video ; video_mark_init
+alias exit_video mode normal
+bind gv video_mode
+set videomaps.V exit_video
+set videomaps.z mode normal
+
+bindurl ^https://www.youtube.com/watch\? v video_mode
+autocmd DocLoad ^https://www.youtube.com/watch\? video_mode
+#+end_src
+
+** Misc
+#+begin_src vim
+set videomaps.gf fullscreen
+set videomaps.q fullscreen
+set videomaps.🕷🕷INHERITS🕷🕷 nmaps
+#+end_src
+
+** Helper command
+They just like =js=, but pre-define some useful functions.
+
+#+begin_src vim
+alias video_with jse let video; if (document.activeElement.name == 'VIDEO') video = document.activeElement; else video = $all('video').find(v => !v.paused); if (!video) video = $('video'); video;
+alias jse js 'use strict'; function $all(q, root=document) { return Array.from(root.querySelectorAll(q)) }; function $(q, root=document) { return root.querySelector(q) }; let $ex = (s) => tri.controller.acceptExCmd(s) ; let $set = (...args) => tri.config.set(...args);
+alias jsep js -p 'use strict'; function $all(q, root=document) { return Array.from(root.querySelectorAll(q)) }; function $(q, root=document) { return root.querySelector(q) }; let $ex = (s) => tri.controller.acceptExCmd(s) ; let $set = (...args) => tri.config.set(...args);
+#+end_src
