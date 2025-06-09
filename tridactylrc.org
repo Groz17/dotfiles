@@ -747,6 +747,18 @@ set searchurls.qwant https://www.qwant.com/?q=
 #+end_src
 
 * [[https://github.com/tridactyl/tridactyl/wiki/Video-mode][Video Mode]]
+** Enter and exit the mode
+#+begin_src vim
+alias video_mode composite mode video ; video_mark_init
+alias exit_video mode normal
+bind gv video_mode
+set videomaps.V exit_video
+set videomaps.z mode normal
+
+bindurl ^https://www.youtube.com/watch\? v video_mode
+autocmd DocLoad ^https://www.youtube.com/watch\? video_mode
+#+end_src
+
 ** Basic seeking
 #+begin_src vim
 set video_seek 5
@@ -755,10 +767,13 @@ set videomaps.l jsep $ex('video_with').then(video => {const count = Number(JS_AR
 set videomaps.h jsep $ex('video_with').then(video => {const count = Number(JS_ARG) || 1; const tic = Number(get('video_seek')); video.currentTime -= tic * count }); 1;
 
 set video_seek_op 120
+set videomaps.L jsep $ex('video_with').then(video => {const count = Number(JS_ARG) || 1; const tic = Number(get('video_seek_op')); video.currentTime += tic * count }); 1;
+set videomaps.H jsep $ex('video_with').then(video => {const count = Number(JS_ARG) || 1; const tic = Number(get('video_seek_op')); video.currentTime -= tic * count }); 1;
+
 seturl ^https://www.youtube.com/watch\?v=116OjLa1DwY video_seek_op 42
-set videomaps.C video_with video.currentTime = Number(get('video_seek_op'))
-set videomaps.a video_with video.currentTime = 0
-set videomaps.A video_with video.currentTime = video.duration
+" set videomaps.C video_with video.currentTime = Number(get('video_seek_op'))
+set videomaps.gg video_with video.currentTime = 0
+set videomaps.G video_with video.currentTime = video.duration
 #+end_src
 
 Although I do not know who will seek to the end or the beginning, I
@@ -834,23 +849,10 @@ too. By the way, if any mark already exist within the tollorance before
 a anonymouse mark is created, the creation of the anonymouse mark will
 be canceled.
 
-** Enter and exit the mode
-#+begin_src vim
-alias video_mode composite mode video ; video_mark_init
-alias exit_video mode normal
-bind gv video_mode
-set videomaps.V exit_video
-set videomaps.z mode normal
-
-bindurl ^https://www.youtube.com/watch\? v video_mode
-autocmd DocLoad ^https://www.youtube.com/watch\? video_mode
-#+end_src
-
 ** Misc
 #+begin_src vim
-set videomaps.gf fullscreen
-set videomaps.q fullscreen
-set videomaps.🕷🕷INHERITS🕷🕷 nmaps
+set videomaps.f fullscreen
+" set videomaps.🕷🕷INHERITS🕷🕷 nmaps
 #+end_src
 
 ** Helper command
