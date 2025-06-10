@@ -76,7 +76,7 @@ bind <a-w> composite get_current_url | exclaim  ~/scripts/to_markdown/browser/we
 
 " add another mapping that prepends the url (source)
 " would be cool to send the selection to todo and the title (with # prefixed) + selection to tips
-bind <a-c> composite js -s ~/scripts/to_markdown/browser/selection_html.js ; exclaim  ~/scripts/to_markdown/browser/selection
+bind <a-c> composite js -s ~/.config/tridactyl/scripts/selection_html.js ; exclaim  ~/.config/tridactyl/scripts/to-markdown
 bind >2 composite get_current_url | exclaim /home/giorgio/scripts/browser/2pdf
 
 bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
