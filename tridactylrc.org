@@ -84,9 +84,7 @@ bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replac
 " Git{Hub,Lab} git clone via SSH yank
 " bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
 
-" come g C alias in .gitconfig...
 " usa exclaim_quiet per non avere output nella command line
-bind gC composite get_current_url | exclaim_quiet ~/scripts/git_clone.sh
 bind <space>d composite get_current_url | exclaim_quiet ~/.config/tridactyl/scripts/download
 
 " crea mapping per inserire plugin in lazy e copiare la configurazione in <plugin_name>lua così da poter usare il plugin subito...
