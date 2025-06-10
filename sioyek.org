@@ -1,10 +1,13 @@
 #+startup: content
 
 * Keys
+:PROPERTIES:
+:header-args: :tangle  ~/.config/sioyek/keys_user.config
+:END:
 
 # silent option (no verbose when executing?)
 ** TODO TASK LIST
-#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+#+begin_src sioyek
 # waiting for modes...
 # control_menu(down) <C-j>
 # control_menu(up) <C-k>
@@ -13,7 +16,7 @@ toggle_two_page_mode |
 
 #+end_src
 ** NAVIGATION AND ZOOM
-#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+#+begin_src sioyek
 goto_beginning;goto_top_of_page gg
 
 # Goto left/right/bottom/top side of the page
@@ -152,7 +155,7 @@ move_visual_mark_down <down>
 
 #+end_src
 ** SEARCH
-#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+#+begin_src sioyek
 
 # Search the document.
 # example: /something                   (searches the document for 'something')
@@ -179,7 +182,7 @@ overview_prev_item <C-t>
 
 #+end_src
 ** BOOKMARKS
-#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+#+begin_src sioyek
 # Add a bookmark in the current location (opens a text input where you can specify the bookmark text)
 add_bookmark b
 delete_bookmark db
@@ -192,7 +195,7 @@ goto_bookmark_g gB
 
 #+end_src
 ** HIGHLIGHTS
-#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+#+begin_src sioyek
 # You can select a piece of text and press the `add_highlight` shortcut followed by a symbol (a character from a-z) to highlight
 # the text
 # like vim's folds
@@ -232,7 +235,7 @@ goto_prev_highlight gNh
 
 #+end_src
 ** MARKS
-#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+#+begin_src sioyek
 
 # Mark the current location. After pressing the mark button, you must enter a symbol (a letter from a-z or A-Z).
 # this marks the current location in the file with the entered symbol. Afterwards you will be able to return to
@@ -245,7 +248,7 @@ goto_mark `
 
 #+end_src
 ** PORTALS
-#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+#+begin_src sioyek
 # If we are in default state, goto portal state with the current location in document as the portal source
 # if we are already in the portal state, create the portal with the current location as destination.
 portal p
@@ -272,7 +275,7 @@ toggle_window_configuration <C-p>
 
 #+end_src
 ** MISC
-#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+#+begin_src sioyek
 
 # Copy selected text
 copy <C-c>
@@ -444,7 +447,7 @@ reload <C-r>
 
 #+end_src
 ** ANNOTATIONS
-#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+#+begin_src sioyek
 # add_freetext_bookmark t
 # what's the difference? when embedded?
 # add_freetext_bookmark i
@@ -457,7 +460,7 @@ add_marked_bookmark I
 
 #+end_src
 ** FREEHAND
-#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+#+begin_src sioyek
 # d to delete? also update index/toc/page number?
 
 # they work w/ embed_annotations
@@ -471,7 +474,7 @@ clear_current_document_drawings U
 
 #+end_src
 ** CUSTOM COMMANDS
-#+begin_src sioyek :tangle ~/.config/sioyek/keys_user.config
+#+begin_src sioyek
 ## You can bind custom commands defined in `prefs_user.config` using the same syntax as the built-in commands
 ## --------prefs_user.config-----------
 ## new_command	_my_command_name python /path/to/script.py %{file_name} %{paper_name}
@@ -494,7 +497,9 @@ _screenshot2jpg4anki <A-s>
 #+end_src
 
 * Prefs
- 
+:PROPERTIES:
+:header-args: :tangle  ~/.config/sioyek/prefs_user.config
+:END:
 
 # vim: set foldenable foldmethod=expr foldexpr=getline(v\:lnum)!~'^#\ -':
 # see:/usr/etc/sioyek/prefs.config
@@ -508,7 +513,7 @@ keyboard_point_selection 1
 ruler_mode 1 
 
 ** SEARCH
-#+begin_src sioyek :tangle ~/.config/sioyek/prefs_user.config
+#+begin_src sioyek
 # usa le stesse di tridactyl
 # can you use multiple letters? post github issue (also uppercase)
 search_url_g   https://www.google.com/search?q=
@@ -549,7 +554,7 @@ status_bar_text_color #fbf1c7
 
 #+end_src
 ** EXTENSIONS
-#+begin_src sioyek :tangle ~/.config/sioyek/prefs_user.config
+#+begin_src sioyek
 new_command _download_paper ~/pip/sioyek/bin/python -m sioyek.paper_downloader download "%{sioyek_path}" "%{paper_name}" "%{selected_text}" [Your Email, If Using Unpaywall]
 control_click_command _download_paper
 
@@ -571,7 +576,7 @@ new_command _add_red_text ~/pip/sioyek/bin/python -m sioyek.add_text "%{sioyek_p
 
 #+end_src
 ** CUSTOM COMMANDS
-#+begin_src sioyek :tangle ~/.config/sioyek/prefs_user.config
+#+begin_src sioyek
 # new_command _test notify-send "%{page_number}"
 # TODO: environment variable for home
 # new_command _pg2jpg4anki ~/.config/sioyek/myscripts/pg2jpg4anki "%{file_path}" "%{page_number}"

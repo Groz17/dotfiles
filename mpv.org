@@ -1,7 +1,10 @@
 #+startup: content
 Mirror config for emms?
 * Keys
-#+begin_src mpv :tangle ~/.config/mpv/input.conf
+:PROPERTIES:
+:header-args: :tangle ~/.config/mpv/input.conf
+:END:
+#+begin_src mpv
 
 # Strings need to be quoted and escaped:
 #   KEY show-text "This is a single backslash: \\ and a quote: \" !"
@@ -20,7 +23,7 @@ Mirror config for emms?
 Basically swap left/right w/ h/l 
 *** Seek forward/backward
 Playlists: > & <
-#+begin_src mpv :tangle ~/.config/mpv/input.conf
+#+begin_src mpv
 ## Seek units are in seconds, but note that these are limited by keyframes
 # vim like -> 2l seek 4? or contrast
 0 seek 0 absolute
@@ -47,7 +50,7 @@ c add chapter 1                     # skip to next chapter
 C  add chapter -1                   # skip to previous chapter
 #+end_src
 
-#+begin_src mpv :tangle ~/.config/mpv/input.conf
+#+begin_src mpv
 # Do smaller, always exact (non-keyframe-limited), seeks with shift.
 # Don't show them on the OSD (no-osd).
 #Shift+RIGHT no-osd seek  1 exact
@@ -80,7 +83,7 @@ Ctrl+j     add video-zoom  -0.1
 Basically [],{},BS
 [] are nice to press as mouse button in thinkpad
 
-#+begin_src mpv :tangle ~/.config/mpv/input.conf
+#+begin_src mpv
 
 #Shift+BS revert-seek                   # undo previous (or marked) seek
 #Shift+Ctrl+BS revert-seek mark         # mark position for revert-seek
@@ -109,12 +112,12 @@ Basically [],{},BS
 #+end_src
 *** Volume
 m to mute
-#+begin_src mpv :tangle ~/.config/mpv/input.conf
+#+begin_src mpv
 j add volume -2
 k add volume 2
 #+end_src
 
-#+begin_src mpv :tangle ~/.config/mpv/input.conf
+#+begin_src mpv
 #d cycle deinterlace
 #r add sub-pos -1                       # move subtitles up
 #R add sub-pos +1                       #                down
@@ -189,15 +192,18 @@ c cycle sub                            # cycle through subtitles
  #+end_src
 
 ** Run commands
-#+begin_src mpv :tangle ~/.config/mpv/input.conf
+#+begin_src mpv
 
 y run "/bin/sh" "-c" "printf %s ${=time-pos} | wl-copy"
 #+end_src
 
 
 * Prefs
+:PROPERTIES:
+:header-args: :tangle  ~/.config/mpv/mpv.conf
+:END:
 ** Subtitles
-#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
+#+begin_src mpv
 # yt subtitles
 
 sub-auto=fuzzy
