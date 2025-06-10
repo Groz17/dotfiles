@@ -6,7 +6,7 @@
 - [ ] take from readline and also give to readline/emacs?
   
 * Keys
-#+begin_src rasi
+#+begin_src conf
 // rofi -show keys
 configuration {
 kb-row-up: "Up,Control+k,Shift+Tab,Shift+ISO_Left_Tab";
@@ -49,7 +49,7 @@ kb-select-10: "Control+0";
 #+end_src
 
 * Themes
-#+begin_src rasi
+#+begin_src conf
 // @import "/usr/share/rofi/themes/gruvbox-dark.rasi"
 // @import "/usr/share/rofi/themes/iggy.rasi"
 // @import "/usr/share/rofi/themes/Arc.rasi"

@@ -55,7 +55,7 @@ crea tutti o i piu importanti prefix in emacs like (place keys considering impor
   also for every two keypress prefix use a letter, like q (macro key in vim) for C-x C-k (macro key in emacs), etc...
 
 *  SETTINGS
-#+begin_src kbd
+#+begin_src lisp
 
 (defcfg
 ;;obiettivo finale
@@ -84,7 +84,7 @@ conditinally tangle:
 , #+begin_src python :tangle (when (not (string-match  "Battery status not available" (battery))) "laptop.sh")
 
 make ansi and iso defsrc?
-#+begin_src kbd
+#+begin_src lisp
 
 ;; e un bene che bspc sia in una posizione scomodina (non vuoi favoreggiare sbagli)
 (defsrc
@@ -118,7 +118,7 @@ f11
 #+end_src
 
 *  ALIAS
-#+begin_src kbd
+#+begin_src lisp
 
 (defalias
 
@@ -648,7 +648,7 @@ d0 (tap-hold-press-timeout 175 175 0 0 0)
    v:count?
    also S-9 and S-0 could be an idea (like emacs c-x())
    better to toggle though
-#+begin_src kbd
+#+begin_src lisp
 ;; - (tap-hold-press-timeout 175 175 rpt-any - (macro S--))
 - (tap-hold-press-timeout 175 175 (dynamic-macro-record 0) - (macro S--))
 = (tap-hold-press-timeout 175 175 dynamic-macro-record-stop = (macro S-=))
@@ -661,7 +661,7 @@ d0 (tap-hold-press-timeout 175 175 0 0 0)
 #+end_src
 
 *  LAYERS
-#+begin_src kbd
+#+begin_src lisp
 
 ;; defvar and defalias diff?
 (defvar
@@ -853,7 +853,7 @@ also use alt and altgr... (by themselves+chords)
  find unusual combinations lik hj/jh/etc... (also three (maybe more) letters like kl; ) (the letters don't have to be adiacent)
  double chord taps?
  how to repeat chords w/ rpt-any
-#+begin_src kbd
+#+begin_src lisp
 
 (defchordsv2
 ;;(f d) esc 150 first-release ()

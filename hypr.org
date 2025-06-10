@@ -28,7 +28,7 @@ source = ~/.config/hypr/myColors.conf
 ** [[https://wiki.hyprland.org/Configuring/Monitors/][MONITORS]]
 ruota schermo per prendere appunti?
 
-#+begin_src hypr
+#+begin_src conf
 # monitor=,preferred,auto,auto
 # monitor=,preferred,auto,auto, transform, 1
 monitor=,preferred,auto,auto, transform, 0
@@ -38,7 +38,7 @@ monitor=,preferred,auto,auto, transform, 0
 
 Set programs that you use
 
-#+begin_src hypr
+#+begin_src conf
 $terminal = ghostty
 #$fileManager = dolphin
 $fileManager = ghostty -e yazi
@@ -58,28 +58,28 @@ should u use & for these exec-onces?
 
 *** Necessary processes
 search for others w/ llm or configs
-#+begin_src hypr
+#+begin_src conf
   # exec-once = nm-applet &
   # find themes
   exec-once = hyprctl setcursor Bibata-Modern-Classic 24
 #+end_src
   
 **** Status bar
-#+begin_src hypr
+#+begin_src conf
 exec-once = waybar & swaync & hypridle
 #+end_src  
 **** Notification daemon
-#+begin_src hypr
+#+begin_src conf
   #exec-once = swaync
 #+end_src  
 **** Clipboard
-#+begin_src hypr
+#+begin_src conf
   # exec-once = wl-clipbard-history -t
 exec-once = wl-paste --type text --watch cliphist store
 exec-once = wl-paste --type image --watch cliphist store
 #+end_src  
 **** Geolocalization
-#+begin_src hypr
+#+begin_src conf
 # exec-once = ags &
 # ags -c config.js
 exec-once = /usr/lib/geoclue-2.0/demos/agent
@@ -89,12 +89,12 @@ exec-once = darkman run
 
 **** Wallpaper
 how to zoom wallpaper?
-#+begin_src hypr
+#+begin_src conf
 exec-once = hyprpaper
 #+end_src  
 
 *** Favorite apps
-#+begin_src hypr
+#+begin_src conf
   # exec-once = ~/scripts/DailyRandomAnki
   # exec-once = swww-daemon&&~/scripts/DailyRandomAnki
   # exec-once = swww-daemon && swww img "$DAILY_ANKI_QUESTION_PATH"
@@ -111,7 +111,7 @@ exec-once = hyprpaper
 
 ** [[https://wiki.hyprland.org/Configuring/Environment-variables/][ENVIRONMENT VARIABLES]]
 
-#+begin_src hypr
+#+begin_src conf
 
 # open in emacs?
 # env = GRIMBLAST_EDITOR,photoflare
@@ -133,7 +133,7 @@ cursor{
 ** [[https://wiki.hyprland.org/Configuring/Permissions/][PERMISSIONS]]
 Please note permission changes here require a Hyprland restart and are not applied on-the-fly for security reasons
 
-#+begin_src hypr
+#+begin_src conf
 
 # ecosystem {
 #   enforce_permissions = 1
@@ -144,7 +144,7 @@ Please note permission changes here require a Hyprland restart and are not appli
 # permission = /usr/(bin|local/bin)/hyprpm, plugin, allow
 #+end_src
 ** [[https://wiki.hyprland.org/Configuring/Variables/][LOOK AND FEEL]]
-#+begin_src hypr
+#+begin_src conf
 
 # https://wiki.hyprland.org/Configuring/Variables/#general
 general {
@@ -268,7 +268,7 @@ enable_anr_dialog=false
 
 #+end_src
 ** INPUT
-#+begin_src hypr
+#+begin_src conf
 
 # https://wiki.hyprland.org/Configuring/Variables/#input
 input {
@@ -308,7 +308,7 @@ device {
 #+end_src
 
 *** 8BITDO CONTROLLER
-#+begin_src hypr
+#+begin_src conf
 # modifier: win+ctrl+shift (doesn't work)
 # modifier: win+ctrl (doesn't work) -> ctrl sta per controller
 # bind=super ctrl shift,h,exec, playerctl position 10-
@@ -316,7 +316,7 @@ bind=super ctrl,h,exec, playerctl position 10-
 bind=super ctrl,l,exec, playerctl position 10+
 #+end_src
 ** KEYBINDINGS
-#+begin_src hypr
+#+begin_src conf
 
 # See https://wiki.hyprland.org/Configuring/Keywords/
 $mainMod = SUPER # Sets "Windows" key as main modifier
@@ -335,7 +335,7 @@ bind = $mainMod, Backspace, exit,
 
 #+end_src
 *** OPEN APPS
-#+begin_src hypr
+#+begin_src conf
 # prefix bind for opening files like in vim/emacs? use $EDITOR (magari con nvim -c or smth)
 # how to quickly switch between emacs and neovim?
 # open terminal when exiting or before emacs?
@@ -524,7 +524,7 @@ bindl = $mainMod shift, n, exec, playerctl previous
 
 #+end_src
 ** [[https://wiki.hyprland.org/Configuring/Window-Rules/][WINDOWS]] AND [[https://wiki.hyprland.org/Configuring/Workspace-Rules/][WORKSPACES]]
-#+begin_src hypr
+#+begin_src conf
 
 # Example windowrule v1
 # windowrule = float, ^(kitty)$
@@ -599,7 +599,7 @@ windowrulev2 = bordersize 0, floating:0, onworkspace:f[1]
 windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 #+end_src
 *** SPECIAL WORKSPACES
-#+begin_src hypr
+#+begin_src conf
 # just use emacs
 
 # - calculator
@@ -624,7 +624,7 @@ bind=super shift,b,exec, bash -c "bluetoothctl <<< connect\ $(bluetoothctl <<< d
 :END:
 
 cosa succede se lo schermo e gia dark? notifica in qlk modo
-#+begin_src hypr
+#+begin_src conf
 general {
     ignore_empty_input=false
 }
@@ -655,7 +655,7 @@ input-field {
 :header-args: :tangle  ~/.config/hypr/hypridle.conf
 :END:
 
-#+begin_src hypr
+#+begin_src conf
 
 general {
     lock_cmd = pidof hyprlock || hyprlock       # avoid starting multiple hyprlock instances.
@@ -697,7 +697,7 @@ listener {
 :header-args: :tangle  ~/.config/hypr/hyprpaper.conf
 :END:
 can u use source code (maybe elisp) to pick random image?
-#+begin_src hypr
+#+begin_src conf
 # preload=/tmp/anki
 # https://wallpapersafari.com/w/izoh9I/download
 # preload=~/Pictures/om.jpg

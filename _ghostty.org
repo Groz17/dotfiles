@@ -12,7 +12,7 @@
 - [ ] window-save-state?
 
 *  Prefs
-#+begin_src ghostty
+#+begin_src conf
 
 # font-family = Iosevka
 font-family = Aporetic Sans Mono
@@ -60,14 +60,14 @@ Dirty hack
 #+begin_src python :var font-size=(if (string-match  "Power N/A, battery unknown (N/A% load, remaining time N/A)"(battery)) 13 11)
 #+end_src
 
-#+begin_src ghostty
+#+begin_src conf
 # non funge?
 window-inherit-working-directory=true
 # split-divider-color=yellow
 #+end_src
 
 *  Keybinds 
-#+begin_src ghostty
+#+begin_src conf
 
 # keybind = shift+ctrl+left_bracket=previous_tab
 # keybind = shift+ctrl+right_bracket=next_tab
@@ -200,12 +200,12 @@ keybind = super+alt+^=goto_tab:1
 #+end_src
 
 *  Commands 
-#+begin_src ghostty
+#+begin_src conf
 
 #+end_src
 
 *  Shaders 
-#+begin_src ghostty
+#+begin_src conf
 
 # how to reload those?
 # custom-shader = ./shaders/galaxy.glsl

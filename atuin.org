@@ -5,7 +5,7 @@
 - ctrl r for local dir and c-s-r for global?
 - ctrl l To select?
 
-#+begin_src atuin
+#+begin_src toml
 ## where to store your database, default is your system data directory
 ## linux/mac: ~/.local/share/atuin/history.db
 ## windows: %USERPROFILE%/.local/share/atuin/history.db

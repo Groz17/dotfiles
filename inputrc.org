@@ -5,7 +5,7 @@
 - [ ] m-c-j to activate vim mode doesn't work?
 - [ ] keybinding for pwd|c? and most common longish commands? analysis w/ atuin
 
-#+begin_src inputrc
+#+begin_src conf
 set completion-ignore-case On
 set show-all-if-ambiguous on
 # "\C-i": menu-complete

@@ -1,7 +1,7 @@
 #+property: header-args :tangle ~/.config/fzfrc
 #+startup: content
 
-#+begin_src fzf
+#+begin_src conf
 # how to automatically put fzf window at the top of the screen?
 --cycle 
 # TODO: this line doesn't work
