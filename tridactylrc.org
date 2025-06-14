@@ -72,11 +72,11 @@ bind --mode=normal <space>s composite get_current_url | shellescape | exclaim_qu
 " bind ;go composite get_current_url | shellescape | js -p tri.excmds.exclaim("kitty -e nvim -c \'GitDevOpen " + JS_ARG + "\'")
 "bind ;go composite get_current_url | shellescape | js -p tri.excmds.exclaim("xdg-open nvim-gitdev://open/?repo=" + JS_ARG)
 
-bind <a-w> composite get_current_url | exclaim  ~/scripts/to_markdown/browser/webpage
+bind <a-w> composite get_current_url | exclaim_quiet  ~/scripts/to_markdown/browser/webpage
 
 " add another mapping that prepends the url (source)
 " would be cool to send the selection to todo and the title (with # prefixed) + selection to tips
-bind <a-c> composite js -s ~/.config/tridactyl/scripts/selection_html.js ; exclaim  ~/.config/tridactyl/scripts/to-markdown
+bind <a-c> composite js -s ~/.config/tridactyl/scripts/selection_html.js ; exclaim_quiet  ~/.config/tridactyl/scripts/to-markdown
 bind >2 composite get_current_url | exclaim /home/giorgio/scripts/browser/2pdf
 
 bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
@@ -93,11 +93,11 @@ bind yp composite get_current_url | exclaim_quiet ~/.config/nvim/scripts/clone_f
 
 " v -> veloce
 " bind <a-v> exclaim ~/bin/tabs_stat.sh
-bind <a-v> exclaim ~/scripts/tabs_stat.sh
+bind <a-v> exclai_quietm ~/scripts/tabs_stat.sh
 " x -> vicino a z usata per Copylinks++
 " bind <a-x> exclaim ~/bin/filtra_tabs.sh
 " magari usa un unico binding per copiare url da website e filtrarli...
-bind <a-x> exclaim ~/scripts/filtra_tabs.sh
+bind <a-x> exclaim_quiet ~/scripts/filtra_tabs.sh
 
 " get all urls in page (<a-z> the ones filtered by regex [copylinks++]; create another script with those regex and delete the add-on)
 " bind <a-a> js -s ~/Projects/src/JavaScript/urls.js
