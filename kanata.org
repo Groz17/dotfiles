@@ -247,7 +247,9 @@ f11
   ;; a (tap-hold 175 150 a (tap-hold-press-timeout 0 100 a (layer-while-held nav) (macro S-a)))
   ;; a (tap-hold 175 150 a (tap-hold-press-timeout 0 100 a (macro C-c) (macro S-a)))
 
-;; ───────────────────────────── MOUSE ──────────────────────────────
+#+end_src
+** MOUSE
+#+begin_src lisp :tangle (if (string-match  "Power N/A, battery unknown (N/A% load, remaining time N/A)"(battery)) "no" (substring(cdr(assoc "header-args"(symbol-value 'org-keyword-properties)))8))
 ;; how to make touchpad work?
 
 ;; now u have two more leader keys in - and _
@@ -289,6 +291,36 @@ mmid mmid
 ;; use leader and localleader with mouse buttons to get more symbols; also use chords with them? like modifier+leader, since a leader assumes
 ;; something after this is great...
 ;; mrgt (tap-dance 300 ( (macro S--) = ))
+
+#+end_src
+
+#+begin_src lisp :tangle (if (string-match  "Power N/A, battery unknown (N/A% load, remaining time N/A)"(battery)) (substring(cdr(assoc "header-args"(symbol-value 'org-keyword-properties)))8) "no")
+mmid mmid
+mrgt mrgt
+mlft mlft
+#+end_src
+
+** terminal
+#+begin_src lisp
+   ;; use e/i 'cause middle finger is the strongest ig
+   ;; crea modifiers nuovi with super + combinazione di altri modifiers: super+{cltrl,alt,shift} 2^3 insieme delle parti (except shift only for hyprland)
+   ;; can also do super+modifiers+symbols (for neovim/emacs/editor leader...)
+   ;; e (tap-hold 175 150 e (tap-hold-press-timeout 0 100 e (multi lmet lalt) (macro S-e)))
+   ;;lmet lctl so i can press lmet+lctl+lalt easily w/ w+d
+   e (tap-hold 175 175 e (tap-hold-press-timeout 0 100 e (multi lmet lalt) (macro S-e)))
+   ;;e (tap-hold 175 175 e (tap-hold-press-timeout 0 100 e e (macro S-e)))
+
+  ;;e (tap-hold-press-timeout 200 200 e e (macro S-e))
+  ;;e (tap-hold 175 200 e (tap-hold-press-timeout 0 200 e lmet (macro S-e)))
+   ;; i think c and m are better for symbols than e and i since you use two fingers instead of 1... 
+   ;;e (tap-hold 175 200 e (tap-hold-press-timeout 0 200 e (layer-while-held symbols) (macro S-e)))
+  ;;e (tap-hold 175 200 e (tap-hold-press-timeout 0 200 e f11 (macro S-e)))
+
+  ;; i (tap-hold-press-timeout 175 150 i  (macro S-i))
+  i (tap-hold 175 175 i (tap-hold-press-timeout 0 100 i (multi lmet lalt) (macro S-i)))
+  ;;i (tap-hold 175 175 i (tap-hold-press-timeout 0 100 i i (macro S-i)))
+  ;;i (tap-hold 175 200 i (tap-hold-press-timeout 0 200 i (layer-while-held symbols) (macro S-i)))
+  ;;i (tap-hold 175 200 i (tap-hold-press-timeout 0 200 i f11 (macro S-i)))
 
 ;; ───────────────────────────── HRM ──────────────────────────────
 ;; from left to right asdf
@@ -393,26 +425,6 @@ mmid mmid
   ;;spc (tap-hold 50 100 spc (tap-hold-release-timeout 0 350 spc lmet (multi S-spc)))
   ;;spc (tap-hold 175 200 spc (tap-hold-press-timeout 0 200 spc lmet (macro lsft spc)))
  ;; spc (tap-hold 175 200 spc (tap-hold-press-timeout 0 200 spc lmet (multi S-spc)))
-;; ───────────────────────────── terminal ──────────────────────────────
-   ;; use e/i 'cause middle finger is the strongest ig
-   ;; crea modifiers nuovi with super + combinazione di altri modifiers: super+{cltrl,alt,shift} 2^3 insieme delle parti (except shift only for hyprland)
-   ;; can also do super+modifiers+symbols (for neovim/emacs/editor leader...)
-   ;; e (tap-hold 175 150 e (tap-hold-press-timeout 0 100 e (multi lmet lalt) (macro S-e)))
-   ;;lmet lctl so i can press lmet+lctl+lalt easily w/ w+d
-   e (tap-hold 175 175 e (tap-hold-press-timeout 0 100 e (multi lmet lalt) (macro S-e)))
-   ;;e (tap-hold 175 175 e (tap-hold-press-timeout 0 100 e e (macro S-e)))
-
-  ;;e (tap-hold-press-timeout 200 200 e e (macro S-e))
-  ;;e (tap-hold 175 200 e (tap-hold-press-timeout 0 200 e lmet (macro S-e)))
-   ;; i think c and m are better for symbols than e and i since you use two fingers instead of 1... 
-   ;;e (tap-hold 175 200 e (tap-hold-press-timeout 0 200 e (layer-while-held symbols) (macro S-e)))
-  ;;e (tap-hold 175 200 e (tap-hold-press-timeout 0 200 e f11 (macro S-e)))
-
-  ;; i (tap-hold-press-timeout 175 150 i  (macro S-i))
-  i (tap-hold 175 175 i (tap-hold-press-timeout 0 100 i (multi lmet lalt) (macro S-i)))
-  ;;i (tap-hold 175 175 i (tap-hold-press-timeout 0 100 i i (macro S-i)))
-  ;;i (tap-hold 175 200 i (tap-hold-press-timeout 0 200 i (layer-while-held symbols) (macro S-i)))
-  ;;i (tap-hold 175 200 i (tap-hold-press-timeout 0 200 i f11 (macro S-i)))
 
 ;; ───────────────────────────── register ──────────────────────────────
 ;;per vim
