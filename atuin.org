@@ -2,8 +2,8 @@
 #+startup: content
 * TODO TASK LIST
 
-- ctrl r for local dir and c-s-r for global?
-- ctrl l To select?
+- [ ] ctrl r for local dir and c-s-r for global?
+- [ ] ctrl l To select?
 
 #+begin_src toml
 ## where to store your database, default is your system data directory
