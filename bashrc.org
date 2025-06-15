@@ -2,12 +2,18 @@
 #+startup: content
 
 * TODO TASK LIST
- - [ ] aliases and env vars shouldn't be bound to a  specific shell...
+ - [ ] aliases and env vars shouldn't be bound to a specific shell...
  - [ ] maybe global shell file?
 
 #+begin_src bash
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+#+end_src
+
+* Starship
+#+begin_src shell
+
 
 # Load starship prompt if starship is installed
 if [ -x /usr/bin/starship ]; then
@@ -25,6 +31,9 @@ if [ -x /usr/bin/starship ]; then
 	unset -f __main
 fi
 
+#+end_src
+
+#+begin_src shell
 # Advanced command-not-found hook
 # source /usr/share/doc/find-the-command/ftc.bash
 
