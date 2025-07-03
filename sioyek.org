@@ -514,6 +514,7 @@ ruler_mode 1
 
 ** SEARCH
 #+begin_src conf
+super_fast_search 1
 # usa le stesse di tridactyl
 # can you use multiple letters? post github issue (also uppercase)
 search_url_g   https://www.google.com/search?q=
