@@ -88,7 +88,7 @@ make ansi and iso defsrc?
 
 ;; e un bene che bspc sia in una posizione scomodina (non vuoi favoreggiare sbagli)
 (defsrc
-f11
+   esc
  grv 1 2 3 4 5 6 7 8 9 - = bspc
   tab  q    w    e    r    t          y    u    i    o    p    [ ]
   caps a    s    d    f    g          h    j    k    l    ;    ' \ ret
@@ -100,7 +100,7 @@ f11
 ;; maybe lftl ctrl and mrgt shift and mmid alt? layers ofc
 
 (deflayer base
-@f11
+ @esc
  @grv @d1 @d2 @d3 @d4 @d5 @d6 @d7 @d8 @d9 @- @= @bspc
  @tab  @q    @w    @e    @r    @t          @y    @u    @i    @o    @p    @[ @]
   @caps @a @s @d   @f   @g          @h    @j   @k   @l  @; @' @\ @ret
@@ -129,9 +129,9 @@ f11
   [   (tap-hold 200 249 [ (macro S-bspc)) ;; same place as [{
   ;; ]   (tap-hold 200 249 (macro S-1) (macro S-bspc)) ;; comfortable to type %!
   ]   (tap-hold 200 249 ] (macro S-bspc)) ;; comfortable to type %!
-  \   (tap-hold 200 249 \ (macro S-\))
+  \   (tap-hold 175 175 \ (macro S-\))
   ;; f11 lrld
-   f11 f11
+  ;;  f11 f11
   ;;f11 (layer-switch nav)
 
   ;; tab   (tap-hold 0 175 tab (macro S-tab))
@@ -227,9 +227,6 @@ f11
   ;;ralt (tap-hold 175 150 (multi lsft \) (tap-hold-press-timeout 0 100 (multi lsft \) \ (macro S-d)))
   ralt (tap-hold 175 150 = (tap-hold-press-timeout 0 100 = \ (macro S-=)))
 
-  ;; double shift/caps tab?
-  ;; map it to disable/toggle kanata (for when you pass pc to other)
-  esc caps
   ;;lctl (macro S-3)
    ;; lctl \
    lctl rpt-any ;; ... doesn't work with c-m-s-v though? for emacs
@@ -419,8 +416,8 @@ mlft mlft
   ;;spc (tap-hold 175 200 spc (tap-hold-press-timeout 0 200 spc (layer-while-held symbols) (macro S-spc)))
   ;; at least this becomes usable
 
-  spc   (tap-hold 200 130 spc lmet)
- ;;spc (tap-hold-press-timeout 0 200 spc lmet (multi S-spc))
+;;  spc   (tap-hold 200 130 spc lmet)
+spc (tap-hold-press-timeout 0 200 spc lmet (multi S-spc))
 
   ;;spc (tap-hold 50 100 spc (tap-hold-release-timeout 0 350 spc lmet (multi S-spc)))
   ;;spc (tap-hold 175 200 spc (tap-hold-press-timeout 0 200 spc lmet (macro lsft spc)))
@@ -668,6 +665,11 @@ d0 (tap-hold-press-timeout 175 175 0 0 0)
   ;; remember u can also use keys like FAVORITES (from mapping.txt)
   ;; grv (tap-hold 200 249 f14 (macro S-grv)) ;; usa C-u 0 for emacs (comes before vim)
  grv (tap-hold 200 249 (dynamic-macro-play 0) (macro S-grv)) ;; usa C-u 0 for emacs
+
+  ;; double shift/caps tab?
+  ;; map it to disable/toggle kanata (for when you pass pc to other)
+  ;; esc caps
+ esc (tap-hold 200 249 (dynamic-macro-play 0) (macro S-grv)) ;; usa C-u 0 for emacs
 )
 
 #+end_src
