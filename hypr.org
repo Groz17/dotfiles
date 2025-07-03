@@ -10,6 +10,7 @@ source = ~/.config/hypr/myColors.conf
 :END:
 
 ** TODO TASK LIST
+- [ ] add search image in clipboard? after using grim...
 - [ ] hyprshot don't save to clipboard
 - [ ] move to workspace without going there
 - [ ] keybinding to go running emacs instance(s)
@@ -123,6 +124,7 @@ env = GRIMBLAST_HIDE_CURSOR, 0
 
 env = XCURSOR_SIZE,24
 env = HYPRCURSOR_SIZE,24
+env = PATH,$HOME/.cargo/bin:$PATH
 
 
 cursor{
@@ -349,10 +351,11 @@ bind=super ,equal,exec, emacsclient -e '(full-calc)' -c -a emacs
 bind=super , minus,exec, emacsclient -e '(eshell)' -c -a emacs
 
 # maybe these mappings should go under the terminal/ghostty keybind prefix (use zellij/tmux maybe?) or actually this is better maybe, use something like exwm
-bind = $mainMod, v, exec, PATH=$HOME/.cargo/bin:$PATH ghostty --fullscreen -e nvim
+# bind = $mainMod, v, exec, PATH=$HOME/.cargo/bin:$PATH ghostty --fullscreen -e nvim
+bind = $mainMod, v, exec, ghostty --fullscreen -e nvim
 # create kanata chord for this?
 bind = $mainMod, B, exec, $browser
-bind = $mainMod, n, exec, hyprctl keyword gaps_in=0
+# bind = $mainMod, n, exec, hyprctl keyword gaps_in=0
  # a for apps
  # use emacs
 # bind = $mainMod, a, exec, ferdium --ozone-platform=wayland --enable-fetures-WaylandWindowDecorations
@@ -523,7 +526,7 @@ bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
 # Requires playerctl
 # go 10 sec forward? for tridactyl yt...
 # bindl = , XF86AudioNext, exec, playerctl next
-bindl = $mainMod, n, exec, playerctl next
+# bindl = $mainMod, n, exec, playerctl next
 # usa stessi keybindings di mpv?
 # bindl = $mainMod, greater, exec, playerctl next
 # bindl = $mainMod, p, exec, playerctl play-pause
@@ -592,13 +595,40 @@ bind = $mainMod , t, exec, [float] $terminal -e nvim -u ~/scripts/hyrp_float.vim
 bind = $mainMod shift , t, exec, [float] $terminal -e nvim -u ~/.config/nvim/hyrp_float.vim -c 'norm!\ Gzto' ~/todo/todo.txt
 # for language learning? arabic/spanish (like anki)... I want this at startup
 # bind = $mainMod , a, exec, ~/scripts/DailyRandomAnki
-bind = $mainMod , m, exec, ~/scripts/songs
+# bind = $mainMod , m, exec, ~/scripts/songs
+# write scripts here and tangle them
+bind = $mainMod , m, exec, ~/.config/hypr/scripts/songs
+# bind = $mainMod , n, exec, PATH=$HOME/.cargo/bin:$PATH ~/.config/hypr/scripts/send_clipboard
+# TODO: add v:count hyprland
+# metti in kanata?
+bind = $mainMod , n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'norm 1 Q'"
+bind = $mainMod shift, slash, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'let @+=input(\">\")|norm 1 Q'"
+
 # left Click?
 # bind = $mainMod , space, exec, [float] $terminal
 
 # goto last workspace? mod<c-^>
 
 workspace=1,class:^(emacs)$
+
+#+end_src
+
+** Scripts
+*** Notifications
+
+#+begin_src conf
+bind = $mainMod SHIFT, comma, exec, ~/.config/hypr/scripts/notifications
+#+end_src
+
+#+begin_src bash :tangle ~/.config/hypr/scripts/notifications
+#!/usr/bin/env bash
+for i in {1..3}; do dunstctl history-pop;done
+sleep 5
+dunstctl close-all
+#+end_src
+
+#+begin_src conf
+
 
 # https://www.reddit.com/r/hyprland/comments/1gbbgt8/no_gaps_when_only/
 # "Smart gaps" / "No gaps when only"
