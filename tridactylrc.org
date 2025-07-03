@@ -4,6 +4,7 @@
 
 * TODO TASK LIST
 - [ ] add c-r c-{a/l} for current webpage url?
+- [ ] clear cache for current site and all (uppercase)?
 - [ ] configure website keybindings, so u can remove tweaks for yt addon
 - [ ] use c-c for llm confirm
 - [ ] implement youtube keybindings, like h in insert mode=arrow? so u can get rid of  extensions (what about values though?) maybe playerctl?
@@ -86,6 +87,7 @@ bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replac
 
 " usa exclaim_quiet per non avere output nella command line
 bind <space>d composite get_current_url | exclaim_quiet ~/.config/tridactyl/scripts/download
+bind <space><space> composite get_current_url | yank ; exclaim_quiet hyprctl dispatch exec '[float] ghostty -e "nvim -c '\''norm 1 Q'\''"'
 
 " crea mapping per inserire plugin in lazy e copiare la configurazione in <plugin_name>lua così da poter usare il plugin subito...
 
@@ -93,7 +95,7 @@ bind yp composite get_current_url | exclaim_quiet ~/.config/nvim/scripts/clone_f
 
 " v -> veloce
 " bind <a-v> exclaim ~/bin/tabs_stat.sh
-bind <a-v> exclai_quietm ~/scripts/tabs_stat.sh
+bind <a-v> exclaim_quiet ~/scripts/tabs_stat.sh
 " x -> vicino a z usata per Copylinks++
 " bind <a-x> exclaim ~/bin/filtra_tabs.sh
 " magari usa un unico binding per copiare url da website e filtrarli...
@@ -479,7 +481,7 @@ bind gO fillcmdline goto
 
 bind gi focusinput
 
-bindurl reddit.com <Space><Space> urlmodify -t www old
+# bindurl reddit.com <Space><Space> urlmodify -t www old
 bindurl https://github.com/.*/.*/blob f hint -c .blob-num,a
 bindurl https://github.com/notifications <Space><Space> openGithubNotifications
 bindurl youtu((\.be)|(be\.com)) f hint -J
@@ -758,6 +760,15 @@ bindurl ^https://www.youtube.com/watch\? v video_mode
 autocmd DocLoad ^https://www.youtube.com/watch\? video_mode
 #+end_src
 
+** Helper command
+They just like =js=, but pre-define some useful functions.
+
+#+begin_src conf
+alias video_with jse let video; if (document.activeElement.name == 'VIDEO') video = document.activeElement; else video = $all('video').find(v => !v.paused); if (!video) video = $('video'); video;
+alias jse js 'use strict'; function $all(q, root=document) { return Array.from(root.querySelectorAll(q)) }; function $(q, root=document) { return root.querySelector(q) }; let $ex = (s) => tri.controller.acceptExCmd(s) ; let $set = (...args) => tri.config.set(...args);
+alias jsep js -p 'use strict'; function $all(q, root=document) { return Array.from(root.querySelectorAll(q)) }; function $(q, root=document) { return root.querySelector(q) }; let $ex = (s) => tri.controller.acceptExCmd(s) ; let $set = (...args) => tri.config.set(...args);
+#+end_src
+
 ** Basic seeking
 #+begin_src conf
 set video_seek 5
@@ -852,13 +863,4 @@ be canceled.
 #+begin_src conf
 set videomaps.f fullscreen
 " set videomaps.🕷🕷INHERITS🕷🕷 nmaps
-#+end_src
-
-** Helper command
-They just like =js=, but pre-define some useful functions.
-
-#+begin_src conf
-alias video_with jse let video; if (document.activeElement.name == 'VIDEO') video = document.activeElement; else video = $all('video').find(v => !v.paused); if (!video) video = $('video'); video;
-alias jse js 'use strict'; function $all(q, root=document) { return Array.from(root.querySelectorAll(q)) }; function $(q, root=document) { return root.querySelector(q) }; let $ex = (s) => tri.controller.acceptExCmd(s) ; let $set = (...args) => tri.config.set(...args);
-alias jsep js -p 'use strict'; function $all(q, root=document) { return Array.from(root.querySelectorAll(q)) }; function $(q, root=document) { return root.querySelector(q) }; let $ex = (s) => tri.controller.acceptExCmd(s) ; let $set = (...args) => tri.config.set(...args);
 #+end_src
