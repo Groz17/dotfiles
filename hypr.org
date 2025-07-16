@@ -4,6 +4,7 @@ Refer to the wiki for more information. see: https://wiki.hyprland.org/Configuri
 You can split this configuration into multiple files
 Create your files separately and then link them to this file like this:
 source = ~/.config/hypr/myColors.conf
+
 * Hyprland
 :PROPERTIES:
 :header-args: :tangle  ~/.config/hypr/hyprland.conf
@@ -42,7 +43,7 @@ Set programs that you use
 #+begin_src conf
 $terminal = ghostty
 #$fileManager = dolphin
-$fileManager = ghostty -e yazi
+$fileManager = dired
 # $fileManager = ghostty -e spf
 # $menu = wofi --show drun
 $menu = rofi -show drun
@@ -116,7 +117,7 @@ exec-once = hyprpaper
 
 # open in emacs?
 # env = GRIMBLAST_EDITOR,photoflare
-# env = XDG_SCREENSHOTS_DIR,~/Pictures/Screenshots/
+env = XDG_SCREENSHOTS_DIR,$HOME/Pictures/Screenshots
 # Optionally, customize slurp's appearance
 env = SLURP_ARGS, -d -b -B F050F022 -b 10101022 -c ff00ff
 # Can fix high cpu loads on some machines
@@ -341,7 +342,7 @@ bind = $mainMod, Backspace, exit,
 # prefix bind for opening files like in vim/emacs? use $EDITOR (magari con nvim -c or smth)
 # how to quickly switch between emacs and neovim?
 # open terminal when exiting or before emacs?
-bind = $mainMod, e, exec, emacsclient -c  -a 'emacs' -F "'(fullscreen . fullboth)"
+bind = $mainMod, e, exec, emacsclient -c  -a '' -F "'(fullscreen . fullboth)"
 # bind = $mainMod, d, exec, emacsclient -c  -a 'emacs' -F "'(app-launcher)" DT video?
 bind = $mainMod shift, e, exec, emacs -Q
 ### maybe better to put in free workspace?
@@ -431,7 +432,6 @@ bind = SUPER SHIFT, y, exec, grimblast --notify copy active
 # bind = SUPER ALT,   c, exec, grimblast --notify copy output
 # bind = SUPER CTRL,  c, exec, grimblast --notify copy screen
 
-# bind = $mainMod, x, exec, sed -i 's/^\s**monitor\s*=.*,\s*0/&1/' ~/.config/hypr/hyprland.conf
 # in attesa di tablet mode
 # it should really support v:count though
 # bind = $mainMod, x, exec, perl -pi -e 's/^\s**monitor\s*=.*,\s*\K([01])$/$1 eq 0 ? "1":"0"/e' ~/.config/hypr/hyprland.conf
@@ -541,6 +541,7 @@ bindl = $mainMod shift, n, exec, playerctl previous
 # bindl = $mainMod shift, n, exec, scripts/active
 
 #+end_src
+
 ** [[https://wiki.hyprland.org/Configuring/Window-Rules/][WINDOWS]] AND [[https://wiki.hyprland.org/Configuring/Workspace-Rules/][WORKSPACES]]
 #+begin_src conf
 
@@ -601,8 +602,12 @@ bind = $mainMod , m, exec, ~/.config/hypr/scripts/songs
 # bind = $mainMod , n, exec, PATH=$HOME/.cargo/bin:$PATH ~/.config/hypr/scripts/send_clipboard
 # TODO: add v:count hyprland
 # metti in kanata?
-bind = $mainMod , n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'norm 1 Q'"
-bind = $mainMod shift, slash, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'let @+=input(\">\")|norm 1 Q'"
+bind = $mainMod , n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'norm 1 Qd'"
+# hyprctl activewindow -j | jq .title?
+bind = $mainMod shift, n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'let @+=\"## \" ..input(\">\")..\"\n\"..@+|norm 1 Qy'"
+#funge da term: bind = $mainMod shift, n, exec, hyprctl dispatch exec 'PATH=$HOME/.cargo/bin:$PATH ghostty -e "nvim -c '\''let @+=\"# \" ..input(\">\")..@+|norm 1 Qy'\''"'
+# resize terminal for input?
+bind = $mainMod shift, slash, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'let @+=input(\">\")|norm 1 Qd'"
 
 # left Click?
 # bind = $mainMod , space, exec, [float] $terminal
@@ -736,11 +741,12 @@ listener {
 #     on-timeout = systemctl suspend                # suspend pc
 # }
 #+end_src
-* Hyprpaper
 
+* Hyprpaper
 :PROPERTIES:
 :header-args: :tangle  ~/.config/hypr/hyprpaper.conf
 :END:
+
 can u use source code (maybe elisp) to pick random image?
 #+begin_src conf
 # preload=/tmp/anki
@@ -749,8 +755,9 @@ can u use source code (maybe elisp) to pick random image?
 # wallpaper=,~/Pictures/om.jpg
 # preload=~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper.jpg
 # wallpaper=,~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper.jpg
-preload=~/Pictures/Wallpapers/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper_purple.jpg
-wallpaper=,~/Pictures/Wallpapers/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper_purple.jpg
+# preload=~/Pictures/Wallpapers/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper_purple.jpg
+preload=~/Pictures/Wallpapers/kanagawa-inverted-darker.jpg
+wallpaper=,~/Pictures/Wallpapers/kanagawa-inverted-darker.jpg
 # preload=~/Pictures/RxlwP.png
 # wallpaper=,~/Pictures/RxlwP.png
 #+end_src
