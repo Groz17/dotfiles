@@ -17,6 +17,11 @@
 " Clear the config (is this really necessary?)
 sanitise tridactyllocal tridactylsync
 
+"" This will remove a lot of the FF regular UI
+"" It can be surprising at first
+""guiset_quiet gui none
+""guiset_quiet statuspanel right
+
 " you can use 2gt to switch to the second most recently used tab (so identical to <C-^>), 3gt to the third most recently used tab, etc. (#4595)
 set tabsort mru
 
@@ -41,9 +46,184 @@ set visualexitauto true
 "set homepages ["old.reddit.com"]
 set homepages ["reddit.com","youtube.com"]
 
+"" Smooth scrolling, yes please. This is still a bit janky in Tridactyl.
+set smoothscroll true
+
+"" set editorcmd to suckless terminal, or use the defaults on other platforms
+""js tri.browserBg.runtime.getPlatformInfo().then(os=>{const editorcmd = os.os=="linux" ? "st vim" : "auto"; tri.config.set("editorcmd", editorcmd)})
+
+"" Testing this one for now...
+""set hintfiltermode vimperator-reflow
+""set hintnames numeric
+
+set editorcmd emacsclient -a \"\" -c -e '(progn (find-file "%f") (forward-line (1- %l)) (forward-char %c))'
+
 #+end_src
 
-* PERSONAL SCRIPTS
+* BINDS
+#+begin_src conf
+" bind --mode=$mode $key $excmd
+bind gp focusinput -p
+bind i mode ignore
+" metti fra le prime cosi runna subito"
+bind --mode=ignore <esc> composite mode normal
+
+" bind --mode=browser <C-.> jsua browser.sidebarAction.open(); tri.excmds.sidebaropen("https://mail.google.com/mail/mu")
+
+" it works: zoom -0.05 true
+" maybe consider swap mappigs? j -> down -> zoomin?
+bind <c-k> zoom 0.1 true
+bind --mode=insert <c-k> zoom 0.1 true
+" bind . zoom 0.1 true
+bind <c-j> zoom -0.1 true
+bind --mode=insert <c-j> zoom -0.1 true
+
+" bind , zoom -0.1 true
+
+bind b fillcmdline bmarks
+bind B fillcmdline bmarks -t
+
+bind !! fillcmdline exclaim
+
+unbind --mode=ex <Tab>
+unbind gf
+unbind <space>
+" i use C-i
+unbind <Backspace>
+
+" VISUAL
+" bind --mode=visual c composite js.document.getSelection().toString() | send to todo
+" bind --mode=visual C composite js.document.getSelection().toString() | send to todo no newline
+" bind --mode=visual q composite js.document.getSelection().toString() | send to qr code
+
+" bind --mode=visual Y composite js.document.getSelection().toString() | yank markdown?
+bind yH composite hint -pipe * innerHTML | yank
+
+" 3gt to the third most recently used tab
+" set keyboardlayoutforce true
+
+"colourscheme base16-phd
+"colourscheme base16-green-screen
+"colourscheme base16-dracula
+" colourscheme midnight
+
+" https://github.com/tridactyl/tridactyl/issues/158 (youtube videos extension with shortcut)
+
+" autocmd DocStart youtube\.com/watch\?v=.* mode ignore
+
+"" REDIRECTS " ┣
+#+end_src
+
+** Bindurls
+#+begin_src conf
+"" Make hackernews less noisy
+alias ff_hn_bg hint -Jbc .titleline > a , .subline > a:nth-of-type(4), .morelink, .pagetop a, .titleline a
+alias ff_hn hint -Jc .titleline > a , .subline > a:nth-of-type(4), .morelink, .pagetop a, .titleline a
+alias ff_hn_to hint -Jc .titleline > a , .morelink
+bindurl news.ycombinator.com f ff_hn_to
+bindurl news.ycombinator.com F hint
+
+
+" " Only hint search results on Google and DDG and StartPage
+bindurl www.google.com f hint -Jc #search div:not(.action-menu) > a
+bindurl www.google.com F hint -Jbc #search div:not(.action-menu) > a
+bindurl ^https://duckduckgo.com f hint -Jc [data-testid="result-title-a"]
+bindurl ^https://duckduckgo.com F hint -Jbc [data-testid="result-title-a"]
+bindurl www.startpage.com f hint -Jc .w-gl__result-second-line-container > a , .pagination__num , .next, .prev
+bindurl www.startpage.com F hint -Jbc .w-gl__result-second-line-container > a , .pagination__num , .next, .prev
+ 
+#+end_src
+
+** [[https://github.com/yashasolutions/tridactylmode/blob/master/sample-tridactylrc.tri][Emacs-inspired]]
+#+begin_src conf
+
+unbind <F12>
+
+" Edit field in external editor
+bind --mode=insert <C-c>' editor
+bind --mode=insert <C-c><C-c> editor
+bind --mode=input <C-c><C-c> editor
+
+bind --mode=input <F12><C-c> composite sanitise tridactyllocal; winclose
+
+bind --mode=insert <C-g> composite unfocus | mode normal
+bind --mode=visual <A-w> composite js document.getSelection().toString() | clipboard yank
+bind --mode=insert <F12>h js document.activeElement.select()
+
+bind --mode=browser <C-g> escapehatch
+
+" Hinting
+bind f hint
+" bind <C-u>f hint -b
+bind c hint -y
+bind w clipboard yank
+bind --mode=hint <C-g> hint.reset
+bind --mode=hint <C-n> hint.focusBottomHint
+bind --mode=hint <C-p> hint.focusTopHint
+bind --mode=hint <C-f> hint.focusRightHint
+bind --mode=hint <C-b> hint.focusLeftHint
+" bind --mode=insert <C-u>f hint -t
+
+" bind <C-i> focusinput -l
+
+" Bookmarks
+bind M current_url bmark
+bind <F12>rj fillcmdline bmarks
+" bind <C-u><F12>rj fillcmdline bmarks -t
+bind <F12>rm current_url bmark
+
+" Help
+bind <f18>h help
+bind <f18>b fillcmdline help -b
+bind <f18>f fillcmdline help -e
+bind <f18>v fillcmdline help -s
+
+alias describe help
+
+"" Fighting against old habit
+bind --mode=normal <C-w> js alert("<C-w> remapped to C-x 0")
+bind --mode=normal <C-l> js alert("Use the minibuffer instead")
+bind --mode=normal <C-t> js alert("Use the minibuffer instead")
+
+"" Emacs style command minibuffer
+bind <A-x> fillcmdline_notrail
+
+"" Close current tab ala emacs
+unbind --mode=normal <F12>
+bind <F12>0 winclose 
+bind <F12>k tabclose
+bind <F12>o fillcmdline t
+
+""bind <Escape><C-s> fillcmdline find
+""bind <C-s><C-s> findnext
+""bind <C-g> clearsearchhighlight
+""bind <Escape><Escape> composite mode normal ; hidecmdline
+
+""bind <F12>l tabnext
+""bind <F12>h tabprev
+bind <F12>b fillcmdline bufferall
+""bind <Space><Space> fillcmdline buffer
+bind <F12>1 tabdetach 
+bind <F12>tm mute toggle
+bind <F12>u undo
+bind <C-/> undo
+
+"" C-n and C-p require patching FF
+"" C-k cannot be used even after a patch... go figure
+bind --mode=ex     <C-n> ex.next_completion
+bind --mode=ex     <C-p> ex.prev_completion
+bind --mode=ex     <C-y> ex.insert_completion
+bind --mode=ex     <C-e> ex.deselect_completion
+bind --mode=ex     <Tab> ex.complete
+bind --mode=ex     <C-g> composite text.beginning_of_line ; text.forward_word ; text.kill_word
+
+
+
+#+end_src
+
+
+
+** PERSONAL SCRIPTS
 
 #+begin_src conf
 " send clipboard to ~/todo?
@@ -87,7 +267,18 @@ bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replac
 
 " usa exclaim_quiet per non avere output nella command line
 bind <space>d composite get_current_url | exclaim_quiet ~/.config/tridactyl/scripts/download
-bind <space><space> composite get_current_url | yank ; exclaim_quiet hyprctl dispatch exec '[float] ghostty -e "nvim -c '\''norm 1 Q'\''"'
+bind <space><space> composite get_current_url | yank ; exclaim_quiet hyprctl dispatch exec '[float] ghostty -e "nvim -c '\''norm 1 Qd'\''"'
+bind <space><S-space> composite js "# [" + document.title + "](" + document.URL + ")" | yank ; exclaim_quiet ~/.config/tridactyl/scripts/data
+
+#+end_src
+
+#+begin_src bash :tangle ~/.config/tridactyl/scripts/data
+#!/usr/bin/env bash
+for id in $(cliphist list|head -2|cut -f1); do cliphist decode $id;echo; done | wl-copy
+hyprctl dispatch exec '[float] ghostty -e "nvim -c '\''norm 1 Qy'\''"'
+#+end_src
+
+#+begin_src conf
 
 " crea mapping per inserire plugin in lazy e copiare la configurazione in <plugin_name>lua così da poter usare il plugin subito...
 
@@ -110,61 +301,9 @@ bind <a-l> js -s ~/scripts/to_markdown/browser/urls_linux.js
 
 #+end_src
 
-* BINDS
-#+begin_src conf
-" bind --mode=$mode $key $excmd
-bind gp focusinput -p
-bind i mode ignore
-" metti fra le prime cosi runna subito"
-bind --mode=ignore <esc> composite mode normal
-
-" bind --mode=browser <C-.> jsua browser.sidebarAction.open(); tri.excmds.sidebaropen("https://mail.google.com/mail/mu")
-
-" it works: zoom -0.05 true
-" maybe consider swap mappigs? j -> down -> zoomin?
-bind <c-k> zoom 0.1 true
-" bind . zoom 0.1 true
-bind <c-j> zoom -0.1 true
-" bind , zoom -0.1 true
-
-bind b fillcmdline bmarks
-bind B fillcmdline bmarks -t
-
-bind !! fillcmdline exclaim
-
-unbind --mode=ex <Tab>
-unbind gf
-unbind <space>
-" i use C-i
-unbind <Backspace>
-
-" ─ VISUAL
-" bind --mode=visual c composite js.document.getSelection().toString() | send to todo
-" bind --mode=visual C composite js.document.getSelection().toString() | send to todo no newline
-" bind --mode=visual q composite js.document.getSelection().toString() | send to qr code
-
-" bind --mode=visual Y composite js.document.getSelection().toString() | yank markdown?
-bind yH composite hint -pipe * innerHTML | yank
-
-" 3gt to the third most recently used tab
-" set keyboardlayoutforce true
-
-"colourscheme base16-phd
-"colourscheme base16-green-screen
-"colourscheme base16-dracula
-" colourscheme midnight
-
-" https://github.com/tridactyl/tridactyl/issues/158 (youtube videos extension with shortcut)
-
-" autocmd DocStart youtube\.com/watch\?v=.* mode ignore
-
-"" REDIRECTS " ┣
-#+end_src
-
 * MOVEMENT
 #+begin_src conf
 
-" ────────────────────────────────────────────────────────────
 " The default jump of 10 is a bit much.
 " bind j scrollline 3
 " bind k scrollline -3
@@ -240,7 +379,7 @@ bind X composite tabprev ; tabclose
 " bind { js (function() { var prevTargetElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, hr, section, article, aside, nav, header, main'); var currentY = window.scrollY; for (var i = prevTargetElements.length - 1; i >= 0; i--) { var pElementY = prevTargetElements[i].getBoundingClientRect().top + window.scrollY; if (pElementY < currentY) { window.scrollTo({ top: pElementY, behavior: 'smooth' }); break; } } })();
 " bind } js (function() { var nextTargetElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, hr, section, article, aside, nav, header, main'); var currentY = window.scrollY; for (var i = 0; i < nextTargetElements.length; i++) { var nElementY = nextTargetElements[i].getBoundingClientRect().top + window.scrollY; if (nElementY > (currentY+1)) { window.scrollTo({ top: nElementY, behavior: 'smooth', block: 'start' }); break; } } })();
 
-" ─ Media
+" Media
 bind <A-]> js document.querySelector('video').playbackRate+=0.25
 bind <A-[> js document.querySelector('video').playbackRate-=0.25
 bind <A-=> js document.querySelector('video').playbackRate=1
@@ -340,6 +479,8 @@ bind tr fillcmdline tabgrouprename
 "bind --mode=hint <A-j> hint.focusNextHint
 "bind --mode=hint <A-k> hint.focusPreviousHint
 
+bind --mode=ex <c-g> ex.hide_and_clear
+
 bind --mode=ex <c-j> ex.next_completion
 bind --mode=ex <c-k> ex.prev_completion
 "<C-Enter>: string = "ex.execute_ex_on_completion"
@@ -380,6 +521,8 @@ bind --mode=ex          <C-k>   text.kill_line
 bind --mode=insert      <C-k>   text.kill_line
 bind --mode=input       <C-k>   text.kill_line
 bind --mode=ex          <A-d>   text.kill_word
+bind --mode=insert      <A-d>   text.kill_word
+bind --mode=input       <A-d>   text.kill_word
 bind --mode=ex          <C-u>   text.backward_kill_line
 bind --mode=insert      <C-u>   text.backward_kill_line
 bind --mode=input       <C-u>   text.backward_kill_line
@@ -462,6 +605,7 @@ bind yF composite hint -qpipe a href | join | yank
 #+end_src
 
 * AUTOCMDS
+** URL redirects
 #+begin_src conf
 " autocmd DocStart reddit\.com/.*tl=it urlmodify -Q tl
 autocmd DocStart reddit\.com/.*tl=* urlmodify -Q tl
@@ -480,6 +624,11 @@ bind gO fillcmdline goto
 " bind ;t ttsread -c title
 
 bind gi focusinput
+
+""autocmd DocStart ^http(s?)://www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
+"" autocmd DocLoad twitter.com urlmodify -t twitter.com nitter.net
+
+" autocmd to save current url in file/DB? for history or to use in other programs like hyprland
 
 # bindurl reddit.com <Space><Space> urlmodify -t www old
 bindurl https://github.com/.*/.*/blob f hint -c .blob-num,a
@@ -863,4 +1012,25 @@ be canceled.
 #+begin_src conf
 set videomaps.f fullscreen
 " set videomaps.🕷🕷INHERITS🕷🕷 nmaps
+#+end_src
+
+* Blacklist
+#+begin_src conf
+"" Blacklisting figma and others
+"" side note: Shift+Esc will toogle ignore mode
+blacklistadd figma.com
+blacklistadd gmail.com
+blacklistadd docs.google.com
+blacklistadd sheets.google.com
+
+
+#+end_src
+
+* Alias
+#+begin_src conf
+
+"" Suspend / "discard" all tabs - handy for stretching out battery life
+alias discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts.map(t=>t.id)))
+
+
 #+end_src
