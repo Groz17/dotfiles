@@ -38,3 +38,5 @@ set convert-meta on
 "\C-m": accept-line
 #+end_src
 
+  append to .bashrc?
+bind -x C-v: jq -Rr @sh<<<"$(wl-paste)"
