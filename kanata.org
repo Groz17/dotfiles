@@ -19,6 +19,7 @@ basically i want:
 - [ ] use touchpad for localleader?
 
 - [ ] kanata syntax highlighting? at least in emacs?
+- [ ] layers for arabic/cyrillic?
 - [ ] if u manage to make shift+1,2,3,4 useless, make sure to bind that to f keys for emacs (macros)
 - [ ] key that repeats two times the shifted version of char, for stuff like &&, etc...
 - [ ] hold keys for stuff like \ and C-z for emacs (from insert mode normal command?)
@@ -669,7 +670,10 @@ d0 (tap-hold-press-timeout 175 175 0 0 0)
   ;; double shift/caps tab?
   ;; map it to disable/toggle kanata (for when you pass pc to other)
   ;; esc caps
- esc (tap-hold 200 249 (dynamic-macro-play 0) (macro S-grv)) ;; usa C-u 0 for emacs
+ ;; esc (tap-hold 200 249 (dynamic-macro-play 0) (macro S-grv)) ;; usa C-u 0 for emacs
+;; how to repeat?
+ ;; esc (tap-hold 200 249 (dynamic-macro-play 0) (dynamic-macro-play 0)) ;; usa C-u 0 for emacs
+ esc (dynamic-macro-play 0)
 )
 
 #+end_src
