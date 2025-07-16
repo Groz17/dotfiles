@@ -118,8 +118,13 @@ alias em="emacsclient -c -a ''"
 alias e='emacsclient -t -a ""'
 alias E="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
 
+alias vinfo='nvim -c "silent only" -c "Vinfo "'
+alias perli='reply'
+
+
 alias f="fd"
 alias g="git"
+alias clj='clojure'
 alias gg="lazygit"
 alias d="lazydocker"
 alias l="ls"
@@ -127,11 +132,20 @@ alias s="sioyek"
 alias x="xournalpp"
 alias excalidraw="firefoxpwa site launch  01JQHQYS8VXCZZWMQMBN3HA1N2"
 alias a="apy"
+
 alias c="wl-copy"
 alias p="wl-paste"
+
 # alias aider="~/pip/aider/bin/aider"
 alias V="nvim -c TransparentEnable"
 alias userctl="systemctl --user"
+
+alias rtfm='ranger /usr/share/doc/arch-wiki/html/en'
+
+function WTF {
+      # wtf -t comp $(cat /usr/share/games/bsdgames/acronyms.comp | cut -f1 | shuf -n1)
+wtf  $(cat /usr/share/misc/acronyms.comp | cut -f1 | shuf -n1)
+      }
 
 export LEDGER_CURRENT_FILE="$HOME/protondrive/ledger/ledger-2017.dat"
 export LEDGER_FILE="$HOME/protondrive/ledger/ledger.dat"
@@ -150,11 +164,14 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.config/emacs/bin:$PATH"
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 
+# PROMPT_COMMAND='printf "\033]133;A\007"'
+
 # doesn't work
 # export XDG_SCREENSHOTS_DIR="$HOME/Pictures/Screenshots/"
 
 # export JAVA_HOME=/usr/lib/jvm/java-23-openjdk/
 # export PATH="$PATH:$JAVA_HOME/bin"
+# make it so man with multiple arguments open vim with multiple buffers/quickfix
 export MANPAGER="nvim +Man!"
 
 info() {
@@ -525,21 +542,25 @@ fi
 #------------------------------------------------------------------------------
 fi # (include guard) end of main content
 
-### Atuin end
-
-# eval "$(pay-respects bash --alias| sed '$s/f/fk/')"
-# eval "$(printf '%s\n'  'r !pay-respects bash --alias' 'v/^alias /d' 's/f/fk' Q | ed -s)"
-# lol eval "$(printf '%s\n'  'r !pay-respects bash --alias' 'v/^alias /d' 's/f/<space>' Q | ed -s)"
-
+#+end_src
+** Direnv
+#+begin_src bash
 
 # Make sure it appears even after rvm, git-prompt and other shell extensions that manipulate the prompt.
 eval "$(direnv hook bash)"
 # In some target folder, create an .envrc file and add some export(1) and unset(1) directives in it.
 # Type direnv allow .  and watch direnv loading your new environment. Note that direnv edit . is a handy  short‐ cut that opens the file in your $EDITOR and automatically reloads it if the file's modification time has changed.
 
+#+end_src
+# eval "$(pay-respects bash --alias| sed '$s/f/fk/')"
+# eval "$(printf '%s\n'  'r !pay-respects bash --alias' 'v/^alias /d' 's/f/fk' Q | ed -s)"
+# lol eval "$(printf '%s\n'  'r !pay-respects bash --alias' 'v/^alias /d' 's/f/<space>' Q | ed -s)"
+
+
+** Zoxide
+#+begin_src bash
 # Please ensure that zoxide is initialized right at the end of your shell configuration file (usually ~/.bashrc).
 eval "$(zoxide init --cmd j bash)"
-### zoxid end
 #+end_src
 
 * Functions
@@ -551,6 +572,10 @@ nj(){
     nvim "$dir/Main.java"
     git -C "$dir" init
 
+}
+
+html2pdf() {
+	typst compile <(rdrview -H "$1" | pandoc -f html -t typst) /dev/stdout | zathura -
 }
 
 # try the same w/ elisp/clojure
@@ -581,5 +606,44 @@ dir=~/vimwiki/Obsidian_vault/phone
 for f in $files; do [[ -f "${f##*/}" ]] && adb pull "$f" "${f##*/}"_$(date +%s) || adb pull "$f" .;done
 # attenzione agli spazi
 adb shell rm $files
+}
+
+
+#+end_src
+** Emacs-inspired
+#+begin_src bash
+compile () {
+    args="${*:-$(emacsclient --eval '(print compile-command nil)' \
+                 | sed 's/^.//;s/.$//')}"  # strip outer quotes
+    emacsclient -t --eval "(compile \"$args\")"
+  }
+
+# similar to vidir
+dired () {
+  target=${1:-$PWD}
+    if [ ! -d "$target" ]; then
+        echo "Not a directory: '$target'" >&2
+        return 1
+    fi
+    emacsclient -t --eval "(progn (dired \"$target\") (wdired-change-to-wdired-mode))"
+  }
+
+eww () {
+  emacsclient -t --eval "(eww \"$*\")"
+}
+
+agenda () {
+    # emacsclient -t --eval "(progn (org-agenda-list)(kill-buffer "*dashboard*") (delete-other-windows))"
+    # emacsclient -t --eval "(progn (org-agenda-list) (delete-other-windows)(kill-buffer "*dashboard*"))"
+    emacsclient -t --eval "(progn (org-agenda-list) (delete-other-windows))"
+}
+
+magit () {
+  target=${1:-$PWD}
+  if ! git rev-parse --is-inside-work-tree &>/dev/null ; then
+    echo "Not a git repository: '$target'" >&2
+    return 1
+  fi
+  emacsclient -t --eval "(magit-status-setup-buffer \"$target\")"
 }
 #+end_src
