@@ -2,6 +2,7 @@
 #+property: header-args :tangle ~/.config/tridactyl/tridactylrc
 #+startup: content
 
+# neo_mouse_mode
 * TODO TASK LIST
 - [ ] add c-r c-{a/l} for current webpage url?
 - [ ] clear cache for current site and all (uppercase)?
@@ -11,6 +12,7 @@
 - [ ] automatically select first option?
 - [ ] syntax highlighting? for tridactylrc inside orgmode
 - [ ] Make Tridactyl work on addons.mozilla.org (:h fixamo).
+- [ ] userscript?
 
 * OPTIONS
 #+begin_src conf
@@ -39,6 +41,24 @@ set followpagepatterns.prev ^(prev(ious)?|older|précédent)\b|«|<<
 " set theme custom
 set theme midnight
 " set theme quake
+
+#+end_src
+ 
+** RSS
+#+begin_src conf
+      #
+# alias save_rss jsb -p tri.native.run("cat >> ~/.config.newsboat/urls", JS_ARG)
+   # set rsscmd save_rss %u
+#+end_src
+
+** Proxy
+proxies: any = o({// "socksName": "socks://hostname:port",// "socks4": "socks4://hostname:port",// "https": "https://username:password@hostname:port"})
+You can add a new proxy with proxyadd proxyname proxyurl
+
+#+begin_src conf
+
+set completions.Tab.statusstylepretty true
+set modeindicatorshowkeys true
 
 " set visualexitauto false
 set visualexitauto true
@@ -435,6 +455,9 @@ bind gD composite tabduplicate ; tabdetach
 " go incognito (vimium mapping)
 bind gI current_url winopen -popup -private
 
+" bind ;t ttsread -c title
+bind <space>t fillcmdline ttsread -t
+
 " l for listen
 " bind ,l js -p tri.excmds.shellescape(JS_ARG).then(url => tri.excmds.exclaim_quiet('mpv --no-video --no-terminal ' + url))
 alias mpvsafel js -p tri.excmds.shellescape(JS_ARG).then(url => tri.excmds.exclaim_quiet('mpv --no-video --no-terminal ' + url))
@@ -563,16 +586,16 @@ bind --mode=ex          <C-w>   text.backward_kill_word
 bind --mode=insert      <C-w>   text.backward_kill_word
 bind --mode=input       <C-w>   text.backward_kill_word
 
-"bind --mode=ex          <C-l>   ex.insert_completion
+bind --mode=ex          <C-l>   ex.insert_completion
 bind --mode=ex          <Tab>   ex.insert_completion
 "bind --mode=ex          <C-e>   ex.deselect_completion
 
 " bind --mode=insert <C-j> !s xdotool key Down
 " bind --mode=insert <C-k> !s xdotool key Up
 
-bind --mode=ex      <c-l>  ex.accept_line
-bind --mode=insert  <c-l>  ex.accept_line
-bind --mode=input   <c-l>  ex.accept_line
+"bind --mode=ex      <c-l>  ex.accept_line
+"bind --mode=insert  <c-l>  ex.accept_line
+"bind --mode=input   <c-l>  ex.accept_line
 
 #+end_src
 
@@ -620,8 +643,6 @@ autocmd DocStart reddit\.com/.*tl=* urlmodify -Q tl
 
 "like in vim
 bind gO fillcmdline goto
-
-" bind ;t ttsread -c title
 
 bind gi focusinput
 
@@ -702,7 +723,7 @@ quickmark p https://www.perplexity.ai
 " set searchengine g
 
 #+end_src
-
+# set jsurls.googleloud query => "https://google.com/search?q=" + query.toUpperCase()
 ** Wikis
 #+begin_src conf
 set searchurls.wg https//wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
@@ -1034,3 +1055,4 @@ alias discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts.m
 
 
 #+end_src
+
