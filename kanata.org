@@ -226,7 +226,7 @@ make ansi and iso defsrc?
   ;; per shell pipeline: mnemonic: eventuali opzioni vengono prima della pipe
   ;; also nice for org mode tables |-tab goes all in one direction
   ;;ralt (tap-hold 175 150 (multi lsft \) (tap-hold-press-timeout 0 100 (multi lsft \) \ (macro S-d)))
-  ralt (tap-hold 175 150 = (tap-hold-press-timeout 0 100 = \ (macro S-=)))
+  ralt (tap-hold 175 175 = (tap-hold-press-timeout 0 100 = \ (macro S-=)))
 
   ;;lctl (macro S-3)
    ;; lctl \
