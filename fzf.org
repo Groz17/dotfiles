@@ -1,7 +1,21 @@
 #+property: header-args :tangle ~/.config/fzfrc
 #+startup: content
 
+* Options
+
+** Appearance
 #+begin_src conf
+--color=fg:-1,bg:-1,hl:bold:cyan
+--color=fg+:-1,bg+:-1,hl+:bold:cyan
+--color=border:white,preview-border:white
+--color=marker:bold:cyan,prompt:bold:red,pointer:bold:red
+--color=gutter:-1,info:bold:red,spinner:cyan,header:white
+
+# --no-unicode
+--border=sharp
+--margin=0
+--padding=0
+
 # how to automatically put fzf window at the top of the screen?
 --cycle 
 # TODO: this line doesn't work
@@ -16,10 +30,13 @@
 --preview-window='right:nowrap'  
 --preview='[[ $(file --mime {}) =~ directory ]] && eza --tree --color=always {} | head -200 || ([[ $(file --mime {}) =~ binary ]] && echo {} is a binary file) || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' 
 # --preview='[[ $(file --mime {}) =~ directory ]] && eza --tree --color=always {} | head -200 || ([[ $(file --mime {}) =~ binary ]] && echo {} is a binary file) || (nvcat -n {} || cat {}) 2> /dev/null | head -300' 
-# use same mappings as readline
-# --bind='ctrl-space:half-page-down,alt-space:half-page-up,ctrl-g:jump-accept,alt-<:first,alt->:last,alt-j:preview-down,alt-k:preview-up,alt-n:preview-page-down,alt-p:preview-page-up,alt-a:select-all,alt-w:toggle-preview-wrap,alt-p:toggle-preview,ctrl-s:toggle-sort'
-# --bind='ctrl-space:half-page-down,alt-space:half-page-up,ctrl-g:jump-accept,alt-<:first,alt->:last,alt-j:preview-down,alt-k:preview-up,alt-n:preview-page-down,alt-p:preview-page-up,alt-a:select-all,alt-w:toggle-preview-wrap,alt-p:toggle-preview,ctrl-s:toggle-sort,ctrl-y:execute-silent(xsel -b<<<{} && dunstify "Lines copied")+abort'
---bind 'ctrl-space:half-page-down,alt-space:half-page-up'
+#+end_src
+
+* Keybindings
+
+#+begin_src conf
+
+# use same mappings as emacs
 --bind 'ctrl-h:backward-delete-char/eof'
 --bind 'ctrl-l:accept'
 --bind 'ctrl-s:jump-accept'
@@ -27,88 +44,18 @@
 --bind 'alt-j:preview-down,alt-k:preview-up'
 # --bind 'alt-h:toggle-preview-ccw,alt-l:toggle-preview-ccw'
 --bind 'alt-n:preview-page-down,alt-p:preview-page-up'
+# <f12>h?
 --bind 'alt-a:select-all'
 --bind 'alt-w:toggle-preview-wrap,alt-p:toggle-preview,alt-s:toggle-sort,alt-q:toggle-search'
 # usa zellij/tmux
---bind 'alt-y:execute-silent(xsel -b<<<{} && dunstify "Lines copied")+abort'
+--bind 'alt-w:execute-silent(wl-copy<<<{} && dunstify "Lines copied")+abort'
+
 # take inspiration from fzf-lua mappings
 # <space><space> to toggle fullscreen?
 
-           # abort                      ctrl-c  ctrl-g  ctrl-q  esc
-           # accept                     enter   double-click
-           # accept-non-empty           (same as accept except that it prevents fzf from exiting without selection)
-           # backward-char              ctrl-b  left
-           # backward-delete-char       ctrl-h  bspace
-           # backward-delete-char/eof   (same as backward-delete-char except aborts fzf if query is empty)
-           # backward-kill-word         alt-bs
-           # backward-word              alt-b   shift-left
-           # beginning-of-line          ctrl-a  home
-           # cancel                     (clear query string if not empty, abort fzf otherwise)
-           # change-preview(...)        (change --preview option)
-           # change-preview-window(...) (change --preview-window option; rotate through the multiple option sets separated by '|')
-           # change-prompt(...)         (change prompt to the given string)
-           # change-query(...)          (change query string to the given string)
-           # clear-screen               ctrl-l
-           # clear-selection            (clear multi-selection)
-           # close                      (close preview window if open, abort fzf otherwise)
-           # clear-query                (clear query string)
-           # delete-char                del
-           # delete-char/eof            ctrl-d (same as delete-char except aborts fzf if query is empty)
-           # deselect
-           # deselect-all               (deselect all matches)
-           # disable-search             (disable search functionality)
-           # down                       ctrl-j  ctrl-n  down
-           # enable-search              (enable search functionality)
-           # end-of-line                ctrl-e  end
-           # execute(...)               (see below for the details)
-           # execute-silent(...)        (see below for the details)
-           # first                      (move to the first match)
-           # forward-char               ctrl-f  right
-           # forward-word               alt-f   shift-right
-           # ignore
-           # jump                       (EasyMotion-like 2-keystroke movement)
-           # jump-accept                (jump and accept)
-           # kill-line
-           # kill-word                  alt-d
-           # last                       (move to the last match)
-           # next-history               (ctrl-n on --history)
-           # next-selected              (move to the next selected item)
-           # page-down                  pgdn
-           # page-up                    pgup
-           # half-page-down
-           # half-page-up
-           # prev-history               (ctrl-p on --history)
-           # prev-selected              (move to the previous selected item)
-           # preview(...)               (see below for the details)
-           # preview-down               shift-down
-           # preview-up                 shift-up
-           # preview-page-down
-           # preview-page-up
-           # preview-half-page-down
-           # preview-half-page-up
-           # preview-bottom
-           # preview-top
-           # print-query                (print query and exit)
-           # put                        (put the character to the prompt)
-           # refresh-preview
-           # rebind(...)                (rebind bindings after unbind)
-           # reload(...)                (see below for the details)
-           # replace-query              (replace query string with the current selection)
-           # select
-           # select-all                 (select all matches)
-           # toggle                     (right-click)
-           # toggle-all                 (toggle all matches)
-           # toggle+down                ctrl-i  (tab)
-           # toggle-in                  (--layout=reverse* ? toggle+up : toggle+down)
-           # toggle-out                 (--layout=reverse* ? toggle+down : toggle+up)
-           # toggle-preview
-           # toggle-preview-wrap
-           # toggle-search              (toggle search functionality)
-           # toggle-sort
-           # toggle+up                  btab    (shift-tab)
-           # unbind(...)                (unbind bindings)
-           # unix-line-discard          ctrl-u
-           # unix-word-rubout           ctrl-w
-           # up                         ctrl-k  ctrl-p  up
-           # yank                       ctrl-y
+--bind 'ctrl-alt-v:preview-half-page-down'
+# --bind 'ctrl-shift-alt-v:preview-half-page-up'
+--bind 'ctrl-v:half-page-down'
+--bind 'alt-v:half-page-up'
+
 #+end_src
