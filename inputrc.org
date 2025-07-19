@@ -5,13 +5,32 @@
 - [ ] m-c-j to activate vim mode doesn't work?
 - [ ] keybinding for pwd|c? and most common longish commands? analysis w/ atuin
 
-#+begin_src conf
+* Options
+https://github.com/mtangh/dot-bash-bashrc/blob/a659ecde4330e31e325bdd4c304cc56b7ed4ee1f/bash.bashrc.d/inputrc.d/default#L1057
+
+#+begin_src readline
 set completion-ignore-case On
 set show-all-if-ambiguous on
+set blink-matching-paren on
+
+set skip-completed-text on
+set show-all-if-unmodified on
+# set editing-mode emacs
+# # set bell-style visible
+# set completion-ignore-case on
+# # set history-size -1
+# set keyseq-timeout 1000
+set colored-completion-prefix     on   # Color the typed completion prefix.
+set colored-stats on
+#+end_src
+
+* Keybindings
+** Bash
+#+begin_src readline
+$if bash
 # "\C-i": menu-complete
 "\C-i": menu-complete
 # https://askubuntu.com/questions/1396132/when-i-paste-in-the-terminal-sometimes-the-contents-are-prefixed-with-the-charac
-"\C-v": ""
 # "\C-v": previous-screen-line
 
 # $if Bash
@@ -32,6 +51,13 @@ set convert-meta on
 
 # doesn't work...
 "\e\C-j": vi-editing-mode
+# mostly for gdb -tui, see: http://sourceware.org/bugzilla/show_bug.cgi?id=11393
+$if mode=vi
+	"\e\C-j": emacs-editing-mode
+$else
+	"\e\C-j": vi-editing-mode
+$endif
+
 
 # kanata s/l=f14=c-x
 "\e[24~": "\C-x"
@@ -39,7 +65,123 @@ set convert-meta on
 # "\e[25~": "\C-u"
 # ctrl-m doesn't work?
 "\C-m": accept-line
+
+#+end_src
+
+"\C-xe":"navi --print\C-j"
+# Add sudo to current command
+# "\C-hs":"\C-asudo \C-e"
+
+# Go to project
+# "\C-xo":"cd $(all_projects | fzf)\C-j"
+
+# Copy lpass password
+# "\C-xp":"$ lpass show -c --password $(lpass ls  | fzf | awk '{print $(NF)}' | sed 's/\]//g')\C-j"
+
+# Kill process
+# "\C-xk":"pgt-kill\C-j"
+
+# Run all tests from project
+# "\C-xa":"be rspec spec\C-j"
+
+# wrap all in $()
+# "\e(": '\C-a$(\C-e)\C-a'
+# "\e)": '\C-a$(\C-e)\C-b'
+
+# "\C-xt": "tmux a || tmux\n"
+
+*** Meta
+#+begin_src readline
+    "\C-x\C-x":     "\C-] [[ $(jobs) ]] || exec ${BASH:-/bin/bash} \n"
+    "\033\007r":    "\C-] tmuxeval \n"
+    "\033\007R":    "\C-] reset; stty -ixon \n"
+    "\C-x\\":       "\C-] nohist \n"
+    "\C-x$":        "\C-a $(\C-e)\C-a"
+    "\C-x<":        "\C-a <(\C-e)\C-a"
+    "\C-x\"":       "\C-a \"\C-e\"\C-a"
+    "\C-x'":        "\C-a '\C-e'\C-a"
+#+end_src
+
+*** Auto-pairs -- let's try if this is more convenient than annoying...
+#+begin_src readline
+"\"": "\C-v\"\C-v\"\C-b"
+"\'": "\C-v\'\C-v\'\C-b"
+"\`": "\C-v\`\C-v\`\C-b"
+
+"(": "\C-v()\C-b"
+"[": "\C-v[]\C-b"
+"{": "\C-v{}\C-b"
+#+end_src
+
+*** Redirections
+#+begin_src readline
+    "\C-x0":        " &>/dev/null "
+    "\C-x1":        " >/dev/null "
+    "\C-x2":        " 2>/dev/null "
+    "\C-x3":        " 2>&1 "
+#+end_src
+
+*** Emacs inspired
+There's also M-w in .bashrc
+
+#+begin_src readline
+# Emacs' find-file
+# "\C-x\C-f": "fd -tf -0 | fzf --read0 --print0 | xargs -r0 nvim\r"
+# "\C-x\C-f": "emacsclient -a \"\" -t -e \"(find-file \\".\\")\"\n"
+"\C-x\C-f":"$(find . 2>/dev/null | fzf)\C-j"
+
+# Like helm show commands
+# "\ex":"$(compgen -ac | fzf)\C-j"
+"\ex":"$(compgen -c | sort -u | grep -v ^_ | fzf --preview='man {}')\C-j"
+
+# Show all available binds
+# "\C-xh":"bind -p|fzf\C-j"
+
+# Some key bindings for interrogating the Readline configuration.
+   # readline configuration debugging
+# usa C-h (f18)
+# "\C-x\C-f":         dump-functions                  # Ctrl-X, Ctrl-F
+# "\C-x\C-m":         dump-macros                     # Ctrl-X, Ctrl-M
+# "\C-x\C-v":         dump-variables                  # Ctrl-X, Ctrl-V
+
+$endif
 #+end_src
 
   append to .bashrc?
 bind -x C-v: jq -Rr @sh<<<"$(wl-paste)"
+"\C-x\C-n": dynamic-complete-history
+
+** psql
+#+begin_src readline
+$if psql
+  "\C-xd": "show databases;"
+$endif
+#+end_src
+
+** gdb
+#+begin_src readline
+$if gdb
+    # serverをつけると履歴に残らなくなる
+    # https://sourceware.org/gdb/onlinedocs/gdb/Server-Prefix.html#Server-Prefix
+    # Up; continue
+    "\e[A": "server continue \C-m"
+    # Down: next
+    "\e[B": "server n \C-m"
+    # Right: step
+    "\e[C": "server s \C-m"
+    # Left; fin
+    "\e[D": "server fin \C-m"
+    # hoge<C-w> で p hoge を実行する
+    # 続けて <C-p><C-w> で pp hoge を実行する
+    "\C-s": "\M-@ \C-ap\C-m"
+    "\M-@": vi-bWord
+$endif
+#+end_src
+# $if java
+#     # Documentation
+#     "\C-xf":        "\C-](find-doc "")\C-b\C-b"
+#     "\C-xs":        "\C-](source )\C-b"
+#
+#     # Loading
+#     "\C-xl":        "\C-](load-file "")\C-b\C-b"
+# $endif

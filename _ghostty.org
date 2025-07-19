@@ -26,9 +26,10 @@ window-padding-y = 0
 # theme=light:rose-pine-dawn,dark:rose-pine
 # theme = dark:catppuccin-frappe,light:catppuccin-latte
 # https://usgraphics.com/products/berkeley-mono
-theme=purplepeter
+# theme=purplepeter
 # theme=vesper
 # theme=Belafonte Night
+theme=Sugarplum
 
 confirm-close-surface=true
 
@@ -48,7 +49,7 @@ confirm-close-surface=true
 window-padding-balance=true
 # copy-on-select=clipboard
 # background-opacity=0.8
-background-opacity=0.9
+background-opacity=0.83
 cursor-style=block
 shell-integration-features=no-cursor,sudo,no-title
 adjust-cell-height=3%
@@ -73,6 +74,9 @@ window-inherit-working-directory=true
 # keybind = shift+ctrl+right_bracket=next_tab
 # keybind = shift+ctrl+,=move_tab:-1
 # keybind = shift+ctrl+.=move_tab:+1
+
+# keybind = cmd+left=text:\x1b[25~
+# keybind = cmd+right=text:\x1b[26~
 
 # basically leader mimics ctrl...
 # I want to have a leader based control system for ghostty (to avoid key collissions with other applications), where <C-s> is used as my leader key for operations

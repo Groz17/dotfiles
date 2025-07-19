@@ -1,0 +1,4 @@
+#+property: header-args :tangle ~/.zshrc
+#+startup: content
+
+https://github.com/glacambre/ileum
