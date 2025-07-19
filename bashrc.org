@@ -126,6 +126,7 @@ alias f="fd"
 alias g="git"
 alias clj='clojure'
 alias gg="lazygit"
+alias py="python"
 alias d="lazydocker"
 alias l="ls"
 alias s="sioyek"
@@ -646,4 +647,16 @@ magit () {
   fi
   emacsclient -t --eval "(magit-status-setup-buffer \"$target\")"
 }
+#+end_src
+
+* Bindings
+#+begin_src bash
+
+if [[ -n $DISPLAY ]]; then
+  copy_line_to_x_clipboard () {
+    printf %s "$READLINE_LINE" | wl-copy
+  }
+  bind -x '"\ew": copy_line_to_x_clipboard'
+fi
+
 #+end_src
