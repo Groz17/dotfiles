@@ -337,6 +337,16 @@ bind = $mainMod SHIFT, Q, killactive,
 bind = $mainMod, Backspace, exit,
 
 #+end_src
+
+*** [[https://www.youtube.com/watch?v=sz6rMLIjSbU][Zoom]]
+#+begin_src conf
+bind = $mainMod, mouse_down, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 * 1.1}')
+bind = $mainMod, mouse_up, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 * 0.9}')
+bind = $mainMod, equal, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 * 1.1}')
+bind = $mainMod, minus, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 * 0.9}')
+#+end_src
+
+
 *** OPEN APPS
 #+begin_src conf
 # prefix bind for opening files like in vim/emacs? use $EDITOR (magari con nvim -c or smth)
@@ -346,10 +356,10 @@ bind = $mainMod, e, exec, emacsclient -c  -a '' -F "'(fullscreen . fullboth)"
 # bind = $mainMod, d, exec, emacsclient -c  -a 'emacs' -F "'(app-launcher)" DT video?
 bind = $mainMod shift, e, exec, emacs -Q
 ### maybe better to put in free workspace?
-bind=super ,equal,exec, emacsclient -e '(full-calc)' -c -a emacs
+# bind=super ,equal,exec, emacsclient -e '(full-calc)' -c -a emacs
 # have To use shift+9...
 # bind=super , (,exec, emacsclient -e '(eshell)' -c -a emacs
-bind=super , minus,exec, emacsclient -e '(eshell)' -c -a emacs
+# bind=super , minus,exec, emacsclient -e '(eshell)' -c -a emacs
 
 # maybe these mappings should go under the terminal/ghostty keybind prefix (use zellij/tmux maybe?) or actually this is better maybe, use something like exwm
 # bind = $mainMod, v, exec, PATH=$HOME/.cargo/bin:$PATH ghostty --fullscreen -e nvim
