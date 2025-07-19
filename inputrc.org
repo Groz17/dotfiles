@@ -30,6 +30,9 @@ set convert-meta on
 # like zsh
 "\C-x\C-k": '\C-a\C-k'
 
+# doesn't work...
+"\e\C-j": vi-editing-mode
+
 # kanata s/l=f14=c-x
 "\e[24~": "\C-x"
 # doesn't work?
