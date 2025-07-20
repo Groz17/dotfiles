@@ -43,11 +43,9 @@ Set programs that you use
 #+begin_src conf
 $terminal = ghostty
 #$fileManager = dolphin
-$fileManager = dired
-# $fileManager = ghostty -e spf
+$fileManager = ghostty -e "emacsclient -t --eval '(dired nil)'"
 # $menu = wofi --show drun
 $menu = rofi -show drun
-#$menu = wofi -show drun
 $browser = floorp || flatpak run one.ablaze.floorp
 
 # open krita/image editing software with clipboard as input? for when commenting screenshotted code?
@@ -344,10 +342,45 @@ bind = $mainMod, mouse_down, exec, hyprctl -q keyword cursor:zoom_factor $(hyprc
 bind = $mainMod, mouse_up, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 * 0.9}')
 bind = $mainMod, equal, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 * 1.1}')
 bind = $mainMod, minus, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 * 0.9}')
+# bind = $mod SHIFT, equal, exec, hyprctl -q keyword cursor:zoom_factor 1
 #+end_src
 
+*** [[https://wiki.hypr.land/Configuring/Binds/#media][Media]]
+#+begin_src conf
+bindel = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindel = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindl = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindel = ,XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+# Requires playerctl
+bindl = , XF86AudioPlay, exec, playerctl play-pause
+bindl = , XF86AudioPrev, exec, playerctl previous
+bindl = , XF86AudioNext, exec, playerctl next
+#+end_src
+*** Brightness
+#+begin_src conf
+bindel = ,XF86MonBrightnessUp, exec, brightnessctl s 10%+
+bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
+#+end_src
 
-*** OPEN APPS
+*** Notifications
+#+begin_src conf
+bind = $mainMod SHIFT, comma, exec, ~/.config/hypr/scripts/notifications
+#+end_src
+
+#+begin_src bash :tangle ~/.config/hypr/scripts/notifications
+#!/usr/bin/env bash
+for i in {1..3}; do dunstctl history-pop;done
+sleep 5
+dunstctl close-all
+#+end_src
+
+*** Bluetooth
+# TODO: fai check/toggle/notify/etc...
+#+begin_src conf
+bind=super shift,b,exec, bash -c "bluetoothctl <<< connect\ $(bluetoothctl <<< devices | awk '/ Soundcore P2 Mini$/{print $2}')"
+#+end_src
+
+*** Apps
 #+begin_src conf
 # prefix bind for opening files like in vim/emacs? use $EDITOR (magari con nvim -c or smth)
 # how to quickly switch between emacs and neovim?
@@ -372,6 +405,13 @@ bind = $mainMod, B, exec, $browser
 # bind = $mainMod, a, exec, ferdium --ozone-platform=wayland --enable-fetures-WaylandWindowDecorations
 # bind = $mainMod, esc, shutdown,
 bind = $mainMod, period, exec, [float] $fileManager
+
+# super shift enter?
+bind = $mainMod, D, exec, $menu
+#+end_src
+
+*** WM
+#+begin_src conf
 # bind = $mainMod, space, togglefloating,
 # bind = $mainMod, g, togglefloating,
 #bind = $mainMod SHIFT, F, togglefloating,
@@ -379,8 +419,6 @@ bind = $mainMod SHIFT, F, fullscreen,
 #maybe o as the vim mapping ^wo?
 # bind = $mainMod, F, fullscreen, 0
 bind = $mainMod, F, fullscreen, 1
-# super shift enter?
-bind = $mainMod, D, exec, $menu
 # similar to alt-tab (same keymap)
 bind = $mainMod, tab, exec, rofi -show window
 # query screen for color
@@ -412,35 +450,8 @@ bind = $mainMod, page_down, workspace, e-1
 # bind = alt, tab, workspace, m+1
 # bind = alt shift, tab, workspace, m-1
 
-###grimblast
-
 # would be nice to show icon if item is multiline?
 
-# lines and width don't work
-bind = $mainMod shift, equal, exec, cliphist list | rofi -dmenu -display-columns 2 -p "Select item to copy" -lines 30 -width 75 | cliphist decode | wl-copy
-# cliphist but for primary selection?
-
-# use grim
-# also works when using transparent window
-### OCR
-bind = $mainMod, o, exec, sh -c 'grimblast save area - | tesseract - - | wl-copy'
-bind = $mainMod SHIFT, o, exec, sh -c 'grimblast save area - | tesseract - - | tr \\n \  | wl-copy'
-
-# edit?
-# add filename?
-# --openfile
-# p->salva in Pictures mnemonic
-bind = SUPER,       p, exec, grimblast --notify save area
-bind = SUPER SHIFT, p, exec, grimblast --notify save active
-# dunno what these do, also clash with kanata terminal keybindings
-# bind = SUPER ALT,   p, exec, grimblast --notify save output
-# bind = SUPER CTRL,  p, exec, grimblast --notify save screen
-# bind = SUPER,       c, exec, grimblast --notify copy area
-# nice dicotomy/mnemonic w y (copy) and p (paste)
-bind = SUPER,       y, exec, grimblast --notify copy area
-bind = SUPER SHIFT, y, exec, grimblast --notify copy active
-# bind = SUPER ALT,   c, exec, grimblast --notify copy output
-# bind = SUPER CTRL,  c, exec, grimblast --notify copy screen
 
 # in attesa di tablet mode
 # it should really support v:count though
@@ -460,8 +471,42 @@ bind = $mainMod SHIFT, h, movewindow, l
 bind = $mainMod SHIFT, j, movewindow, d
 bind = $mainMod SHIFT, l, movewindow, r
 bind = $mainMod SHIFT, k, movewindow, u
+#+end_src
+
+*** Clipboard
+#+begin_src conf
+# lines and width don't work
+bind = $mainMod shift, equal, exec, cliphist list | rofi -dmenu -display-columns 2 -p "Select item to copy" -lines 30 -width 75 | cliphist decode | wl-copy
+# cliphist but for primary selection?
+#+end_src
+
+*** OCR
+#+begin_src conf
+# also works when using transparent window
+bind = $mainMod, o, exec, sh -c 'grimblast --freeze save area - | tesseract - - | wl-copy'
+bind = $mainMod SHIFT, o, exec, sh -c 'grimblast --freeze save area - | tesseract - - | tr \\n \  | wl-copy'
+#+end_src
+
+*** Screenshots
+#+begin_src conf
+# edit?
+# add filename?
+# --openfile
+# p->salva in Pictures mnemonic
+bind = SUPER,       p, exec, grimblast --freeze --notify save area
+bind = SUPER SHIFT, p, exec, grimblast --freeze --notify save active
+# dunno what these do, also clash with kanata terminal keybindings
+# bind = SUPER ALT,   p, exec, grimblast --notify save output
+# bind = SUPER CTRL,  p, exec, grimblast --notify save screen
+# bind = SUPER,       c, exec, grimblast --notify copy area
+# nice dicotomy/mnemonic w y (copy) and p (paste)
+bind = SUPER,       y, exec, grimblast --freeze --notify copy area
+bind = SUPER SHIFT, y, exec, grimblast --freeze --notify copy active
+# bind = SUPER ALT,   c, exec, grimblast --notify copy output
+# bind = SUPER CTRL,  c, exec, grimblast --notify copy screen
 
 #+end_src
+
 
 *** TODO Workspaces (generate code)
 
@@ -517,23 +562,12 @@ bind = $mainMod SHIFT, S, movetoworkspace, special
 # bind = $mainMod, period, togglespecialworkspace, magic
 # bind = $mainMod, comma, movetoworkspace, special:magic
 
-# Scroll through existing workspaces with mainMod + scroll
-bind = $mainMod, mouse_down, workspace, e+1
-bind = $mainMod, mouse_up, workspace, e-1
-
 # Move/resize windows with mainMod + LMB/RMB and dragging
 bindm = $mainMod, mouse:272, movewindow
 bindm = $mainMod, mouse:273, resizewindow
 
-# Laptop multimedia keys for volume and LCD brightness
-bindel = ,XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
-bindel = ,XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-bindel = ,XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-bindel = ,XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-bindel = ,XF86MonBrightnessUp, exec, brightnessctl s 10%+
-bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
+# binds = Control_R&Super_R&Alt_L, J&K&L, exec, kitty
 
-# Requires playerctl
 # go 10 sec forward? for tridactyl yt...
 # bindl = , XF86AudioNext, exec, playerctl next
 # bindl = $mainMod, n, exec, playerctl next
@@ -628,19 +662,7 @@ workspace=1,class:^(emacs)$
 
 #+end_src
 
-** Scripts
 *** Notifications
-
-#+begin_src conf
-bind = $mainMod SHIFT, comma, exec, ~/.config/hypr/scripts/notifications
-#+end_src
-
-#+begin_src bash :tangle ~/.config/hypr/scripts/notifications
-#!/usr/bin/env bash
-for i in {1..3}; do dunstctl history-pop;done
-sleep 5
-dunstctl close-all
-#+end_src
 
 #+begin_src conf
 
@@ -658,7 +680,7 @@ windowrulev2 = rounding 0, floating:0, onworkspace:w[tg1]
 windowrulev2 = bordersize 0, floating:0, onworkspace:f[1]
 windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 #+end_src
-*** SPECIAL WORKSPACES
+*** Special workspaces
 #+begin_src conf
 # just use emacs
 
@@ -674,8 +696,6 @@ windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 # like calc-dispatch in emacs
 # can't use shift + numbers cause those are for workspaces
 # bind=super shift,8,exec, pgrep qalculate-gtk&&hyprctl dispatch togglespecialworkspace calculator||qalculate-gtk&
-# TODO: fai check/toggle/notify/etc...
-bind=super shift,b,exec, bash -c "bluetoothctl <<< connect\ $(bluetoothctl <<< devices | awk '/ Soundcore P2 Mini$/{print $2}')"
 #+end_src
 
 * Hyprlock
