@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
 emacs execute buffer?
+tuned-adm powersaver when battery<20%?
