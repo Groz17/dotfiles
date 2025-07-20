@@ -246,11 +246,6 @@ bind --mode=ex     <C-g> composite text.beginning_of_line ; text.forward_word ; 
 ** PERSONAL SCRIPTS
 
 #+begin_src conf
-" send clipboard to ~/todo?
-" bind <space>a composite js -p tri.excmds.shellescape(JS_ARG).then(url => tri.excmds.exclaim_quiet('sh ~/.config/tridactyl/test ' + url))
-" bind <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
-" use alt mappings?
-" bind <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
 bind --mode=normal <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
 bind --mode=normal <space>A composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append_no_space
 " Clipboard mapping?
@@ -264,14 +259,9 @@ bind <space>C exclaim_quiet bash -c 'clip="$(wl-paste)" && echo "$clip" >> ~/tod
 " bind <space><s-space> followpage prev
 bind --mode=normal <space>s composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/scripts/subs
 
- " TODO: metti i chapters as well
- " "bind yS composite clipboard yank ; exclaim ~/scripts/vimwiki_scripts/clipboard2vimwiki.sh
- ""bind ys composite get_current_url | exclaim ~/.config/tridactyl/scripts/subs
- ""bind yS composite get_current_url | exclaim ~/.config/tridactyl/scripts/subs_playlist
-
 " https://github.com/moyiz/git-dev.nvim
-" bind ;go composite get_current_url | shellescape | js -p tri.excmds.exclaim("kitty -e nvim -c \'GitDevOpen " + JS_ARG + "\'")
-"bind ;go composite get_current_url | shellescape | js -p tri.excmds.exclaim("xdg-open nvim-gitdev://open/?repo=" + JS_ARG)
+# bind <space>go composite get_current_url | shellescape | js -p tri.excmds.exclaim(process.env.TERM_PROGRAM + " -e nvim -c \'GitDevOpen " + JS_ARG + "\'")
+bind <space>go composite get_current_url | shellescape | js -p tri.excmds.exclaim("ghostty -e nvim -c \'GitDevOpen " + JS_ARG + "\'")
 
 bind <a-w> composite get_current_url | exclaim_quiet  ~/scripts/to_markdown/browser/webpage
 
