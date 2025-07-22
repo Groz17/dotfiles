@@ -8,10 +8,6 @@
 # silent option (no verbose when executing?)
 ** TODO TASK LIST
 #+begin_src conf
-# waiting for modes...
-# control_menu(down) <C-j>
-# control_menu(up) <C-k>
-
 toggle_two_page_mode |
 
 #+end_src
@@ -496,12 +492,20 @@ _screenshot2jpg4anki <A-s>
 # add binding to open current pdf in vi-xournalpp
 #+end_src
 
+** MENU
+#+begin_src conf
+[m]control_menu(up) <C-k>
+[m]control_menu(down) <C-j>
+[m]control_menu(select) <C-l>
+# [m]control_menu(left) <C-h>
+# [m]control_menu(righ) <C-l>
+#+end_src
+
 * Prefs
 :PROPERTIES:
 :header-args: :tangle  ~/.config/sioyek/prefs_user.config
 :END:
 
-# vim: set foldenable foldmethod=expr foldexpr=getline(v\:lnum)!~'^#\ -':
 # see:/usr/etc/sioyek/prefs.config
 # https://github.com/ahrm/sioyek/issues/355
 # emacs_mode_menus 1
