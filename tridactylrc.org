@@ -575,6 +575,9 @@ bind --mode=input       <A-f>   text.forward_word
 bind --mode=ex          <C-w>   text.backward_kill_word
 bind --mode=insert      <C-w>   text.backward_kill_word
 bind --mode=input       <C-w>   text.backward_kill_word
+bind --mode=ex          <A-Backspace>   text.backward_kill_word
+bind --mode=insert      <A-Backspace>   text.backward_kill_word
+bind --mode=input       <A-Backspace>   text.backward_kill_word
 
 bind --mode=ex          <C-l>   ex.insert_completion
 bind --mode=ex          <Tab>   ex.insert_completion
