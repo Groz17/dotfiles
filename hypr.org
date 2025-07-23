@@ -24,6 +24,7 @@ source = ~/.config/hypr/myColors.conf
 - [ ] focus pane when moving mouse
 - [ ] also u could use keys like f20 here (no modifier b4)
 - [ ] turn pane into own tab?
+- [ ] support v:count? bindv?
 
 # hyprctl clients -j | jq -r '.[]|(.pid|tostring)+"\t"+.title' | grep -v "$USER"@ | rofi -dmenu  -display-column-separator '\t' -display-columns 2
 
@@ -45,6 +46,7 @@ $terminal = ghostty
 #$fileManager = dolphin
 $fileManager = ghostty -e "emacsclient -t --eval '(dired nil)'"
 # $menu = wofi --show drun
+# in futuro standalone emacs picker (elimina tutte le dipendenze)
 $menu = rofi -show drun
 $browser = floorp || flatpak run one.ablaze.floorp
 
@@ -322,18 +324,6 @@ bind=super ctrl,l,exec, playerctl position 10+
 # See https://wiki.hyprland.org/Configuring/Keywords/
 $mainMod = SUPER # Sets "Windows" key as main modifier
 
-# bind = $mainMod, W, layoutmsg, swapwithmaster master
-bind = $mainMod, W, layoutmsg, layoutmsg, cyclenext
-# maybe use mainmod e to start programs?
-
-# Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-bind = $mainMod, Return, exec, $terminal
-# bind = $mainMod, semicolon, exec, $terminal
-# bind =  shift,space, exec, $terminal
-
-bind = $mainMod SHIFT, Q, killactive,
-bind = $mainMod, Backspace, exit,
-
 #+end_src
 
 *** [[https://www.youtube.com/watch?v=sz6rMLIjSbU][Zoom]]
@@ -351,10 +341,22 @@ bindel = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 bindel = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bindl = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 bindel = ,XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-# Requires playerctl
+
+# usa stessi keybindings di mpv?
 bindl = , XF86AudioPlay, exec, playerctl play-pause
 bindl = , XF86AudioPrev, exec, playerctl previous
 bindl = , XF86AudioNext, exec, playerctl next
+
+# go 10 sec forward? for tridactyl yt...
+# bindl = $mainMod, greater, exec, playerctl next
+# bindl = $mainMod, p, exec, playerctl play-pause
+# bindl = $mainMod, ., exec, playerctl play-pause
+# make these support v:count?
+bindl = $mainMod shift, n, exec, playerctl previous
+# bindl = $mainMod, less, exec, playerctl previous
+
+# bindl = $mainMod shift, n, exec, scripts/active
+
 #+end_src
 *** Brightness
 #+begin_src conf
@@ -382,6 +384,9 @@ bind=super shift,b,exec, bash -c "bluetoothctl <<< connect\ $(bluetoothctl <<< d
 
 *** Apps
 #+begin_src conf
+# Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
+bind = $mainMod, Return, exec, $terminal
+
 # prefix bind for opening files like in vim/emacs? use $EDITOR (magari con nvim -c or smth)
 # how to quickly switch between emacs and neovim?
 # open terminal when exiting or before emacs?
@@ -410,8 +415,25 @@ bind = $mainMod, period, exec, [float] $fileManager
 bind = $mainMod, D, exec, $menu
 #+end_src
 
+*** Hypr Ecosystem
+#+begin_src python
+# query screen for color
+bind = $mainMod, c, exec, hyprpicker -a
+# bind = $mainMod SHIFT, x, exec, hyprlock
+# zzz mnemonic
+# maybe shift? so u don't accidentaly type? test!
+bind = $mainMod , z, exec, hyprlock
+#+end_src
+
 *** WM
 #+begin_src conf
+# bind = $mainMod, W, layoutmsg, swapwithmaster master
+bind = $mainMod, W, layoutmsg, layoutmsg, cyclenext
+# maybe use mainmod e to start programs?
+
+bind = $mainMod SHIFT, Q, killactive,
+bind = $mainMod, Backspace, exit,
+
 # bind = $mainMod, space, togglefloating,
 # bind = $mainMod, g, togglefloating,
 #bind = $mainMod SHIFT, F, togglefloating,
@@ -421,8 +443,6 @@ bind = $mainMod SHIFT, F, fullscreen,
 bind = $mainMod, F, fullscreen, 1
 # similar to alt-tab (same keymap)
 bind = $mainMod, tab, exec, rofi -show window
-# query screen for color
-bind = $mainMod, c, exec, hyprpicker -a
 # bind = $mainMod, P, pseudo,
 # toggle like vim-unimpaired
 # kinda looks like vertical and horizontal but mixed
@@ -435,13 +455,8 @@ bind = $mainMod shift, tab, changegroupactive, b
 bind = $mainMod SHIFT, G, moveoutofgroup
 # bind = $mainMod SHIFT, Tab, bringactivetotop
 # maybe use mod+y (rot13 of l) (general way to remap if a letter is already remapped?)
-# bind = $mainMod SHIFT, x, exec, hyprlock
-# zzz mnemonic
-# maybe shift? so u don't accidentaly type? test!
-bind = $mainMod , z, exec, hyprlock
 # bind = $mainMod shift, z, exec, shutdown now
 bind = $mainMod , delete, exec, shutdown now
-##bind = $mainMod, G, hyprlock
 bind = $mainMod, page_up, workspace, e+1
 # use sudo instead of wiki password? gpg?
 # bind = $mainMod,I, exec, sudo -c ''
@@ -510,6 +525,8 @@ bind = SUPER SHIFT, y, exec, grimblast --freeze --notify copy active
 
 *** TODO Workspaces (generate code)
 
+# goto last workspace? mod<c-^>
+
 ,#+begin_src emacs-lisp :results output :tangle no
 (dotimes (i 10)
   (let ((num (1+ i)))
@@ -568,23 +585,64 @@ bindm = $mainMod, mouse:273, resizewindow
 
 # binds = Control_R&Super_R&Alt_L, J&K&L, exec, kitty
 
-# go 10 sec forward? for tridactyl yt...
-# bindl = , XF86AudioNext, exec, playerctl next
-# bindl = $mainMod, n, exec, playerctl next
-# usa stessi keybindings di mpv?
-# bindl = $mainMod, greater, exec, playerctl next
-# bindl = $mainMod, p, exec, playerctl play-pause
-# bindl = , XF86AudioPause, exec, playerctl play-pause
-# bindl = $mainMod, ., exec, playerctl play-pause
-# bindl = , XF86AudioPlay, exec, playerctl play-pause
-# bindl = , XF86AudioPrev, exec, playerctl previous
-# make these support v:count?
-bindl = $mainMod shift, n, exec, playerctl previous
-# bindl = $mainMod, less, exec, playerctl previous
+#+end_src
+*** Notes
+#+begin_src conf
 
-# bindl = $mainMod shift, n, exec, scripts/active
+# TODO:
+# bind = $mainMod shift, return, exec, [float] $terminal
+bind = $mainMod , slash, exec, [float] $terminal
+
+# like vim/noice binding but for your shell
+# how to hide prompt? or just put the shell as a title...
+# bind = $mainMod , y, exec, [float;size 10% 10;center]$terminal
+# close after successfull command? dunstify?
+# bind = $mainMod shift,semicolon, exec, [float;size 50% 10%;center]STARSHIP_CONFIG= $terminal -e bash -c 'read -ep "Run: " cmd; eval "$cmd"; sleep 5; exit'
+# windowrulev2 = float,class:^(ex)$
+
+# open neovim in file w/ keymaps? like pressing <super>n<space>fp to go plugins or smth?
+# substitute with org-capture?
+bind = $mainMod , t, exec, [float] $terminal -e nvim -u ~/scripts/hyrp_float.vim -c 'norm!\ Gzt2o' ~/todo/todo.txt
+
+bind = $mainMod shift , t, exec, [float] $terminal -e nvim -u ~/.config/nvim/hyrp_float.vim -c 'norm!\ Gzto' ~/todo/todo.txt
+# for language learning? arabic/spanish (like anki)... I want this at startup
+# bind = $mainMod , a, exec, ~/scripts/DailyRandomAnki
+# bind = $mainMod , m, exec, ~/scripts/songs
+# write scripts here and tangle them
+
+# TODO: add v:count hyprland
+# metti in kanata?
+bind = $mainMod , n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'norm 1 Qd'"
+# hyprctl activewindow -j | jq .title?
+bind = $mainMod shift, n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'let @+=\"## \" ..input(\">\")..\"\n\"..@+|norm 1 Qy'"
+#funge da term: bind = $mainMod shift, n, exec, hyprctl dispatch exec 'PATH=$HOME/.cargo/bin:$PATH ghostty -e "nvim -c '\''let @+=\"# \" ..input(\">\")..@+|norm 1 Qy'\''"'
+# resize terminal for input?
+bind = $mainMod shift, slash, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'let @+=input(\">\")|norm 1 Qd'"
 
 #+end_src
+
+*** Songs
+#+begin_src conf
+bind = $mainMod , m, exec, ~/.config/hypr/scripts/songs
+#+end_src
+
+
+#+begin_src bash :tangle ~/.config/hypr/scripts/songs
+#!/usr/bin/env bash
+music_dir=~/Music
+
+# remember just one dash for rofi
+# TODO: show album art?
+# mapfile -t songs < <(find "$music_dir" -type f -exec file -i00 {} \; | gawk 'BEGIN{RS="\x00/";FS="\x00"}$2~/^audio/{print NR==1?$1:"/"$1}'| rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator /)
+mapfile -t songs < <(fd . "$music_dir" -tf -X file -i00 {} \; | gawk 'BEGIN{RS="\x00/";FS="\x00"}$2~/^audio/{print NR==1?$1:"/"$1}'| rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator /)
+
+if [[ ${#songs[@]} -ne 0 ]]; then
+  for song in "${songs[@]}"; do
+    printf '%s\n' "${song}"
+  done | mpv --playlist=/dev/stdin --no-video --no-terminal
+fi
+#+end_src
+
 
 ** [[https://wiki.hyprland.org/Configuring/Window-Rules/][WINDOWS]] AND [[https://wiki.hyprland.org/Configuring/Workspace-Rules/][WORKSPACES]]
 #+begin_src conf
@@ -601,62 +659,12 @@ windowrulev2 = suppressevent maximize, class:.**
 # Fix some dragging issues with XWayland
 windowrulev2 = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
 
-# bind = $mainMod , semicolon, exec, [float] ghostty
-# TODO:
-# bind = $mainMod shift, return, exec, [float] $terminal
-bind = $mainMod , slash, exec, [float] $terminal
-# bind = $mainMod , a, exec, [workspace 2 silent; float; move 0 0] $terminal
-# how to make the current terminal floating?
-
-# like vim/noice binding but for your shell
-# how to hide prompt? or just put the shell as a title...
-# bind = $mainMod , y, exec, [float;size 10% 10;center]$terminal
-# close after successfull command?
-bind = $mainMod shift,semicolon, exec, [float;size 50% 10%;center]$terminal
-# windowrulev2 = float,class:^(ex)$
-
 windowrulev2 = float,class:^(pulsemixer)$
 windowrulev2 = size 700 400,class:^(pulsemixer)$
 windowrulev2 = move 100%-800 100%-500,class:^(pulsemixer)$
 windowrulev2 = opacity 0.9,class:^(pulsemixer)$
 # bind = $mainMod, A, exec, $terminal --class=pulsemixer sh -c 'pulsemixer' 
 # bind = $mainMod, m, exec, $terminal --class=pulsemixer -e sh -c 'pulsemixer' 
-
-# how to escape dollar sign?
-# bind = $mainMod , t, exec, [float] $terminal -e nvim +$$ ~/todo
-# bind = $mainMod , t, exec, [float] $terminal -e nvim -c TransparentEnable ~/todo
-# not sure why but backslashes necessary... they get interpreted by the shell? exec?
-# just use a prompt and append that line
-# bind = $mainMod , t, exec, [float] $terminal -e nvim --clean -c 'hi\ Normal\ guibg=none\|inoremap\<S-space\>\ \<cmd\>up\<cr\>\<esc\>\|nnoremap\<S-space\>\ \<cmd\>up\<cr\>\<esc\>\|$\|exe\ \"norm\!\ o\\\<cr\>\\\<esc\>zt\"\|startinsert' ~/todo
-# open neovim in file w/ keymaps? like pressing <super>n<space>fp to go plugins or smth?
-# substitute with org-capture?
-bind = $mainMod , t, exec, [float] $terminal -e nvim -u ~/scripts/hyrp_float.vim -c 'norm!\ Gzt2o' ~/todo/todo.txt
-# bind = $mainMod , t, exec, [float] $terminal -e emacsclient -t -e '\(execute-kbd-macro "Gzt2o"\)'  ~/todo/todo.txt 
-
-# doesn't pick up aliases
-# how to go to last line
-# bind = $mainMod , t, exec, [float] $terminal -e emacsclient -t  ~/todo/todo.txt -e '\(end-of-buffer\)'
-# bind = $mainMod , t, exec, [float] $terminal -e emacsclient -t  ~/todo/todo.txt
-bind = $mainMod shift , t, exec, [float] $terminal -e nvim -u ~/.config/nvim/hyrp_float.vim -c 'norm!\ Gzto' ~/todo/todo.txt
-# for language learning? arabic/spanish (like anki)... I want this at startup
-# bind = $mainMod , a, exec, ~/scripts/DailyRandomAnki
-# bind = $mainMod , m, exec, ~/scripts/songs
-# write scripts here and tangle them
-bind = $mainMod , m, exec, ~/.config/hypr/scripts/songs
-# bind = $mainMod , n, exec, PATH=$HOME/.cargo/bin:$PATH ~/.config/hypr/scripts/send_clipboard
-# TODO: add v:count hyprland
-# metti in kanata?
-bind = $mainMod , n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'norm 1 Qd'"
-# hyprctl activewindow -j | jq .title?
-bind = $mainMod shift, n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'let @+=\"## \" ..input(\">\")..\"\n\"..@+|norm 1 Qy'"
-#funge da term: bind = $mainMod shift, n, exec, hyprctl dispatch exec 'PATH=$HOME/.cargo/bin:$PATH ghostty -e "nvim -c '\''let @+=\"# \" ..input(\">\")..@+|norm 1 Qy'\''"'
-# resize terminal for input?
-bind = $mainMod shift, slash, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'let @+=input(\">\")|norm 1 Qd'"
-
-# left Click?
-# bind = $mainMod , space, exec, [float] $terminal
-
-# goto last workspace? mod<c-^>
 
 workspace=1,class:^(emacs)$
 
