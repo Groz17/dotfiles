@@ -4,6 +4,7 @@
 * TODO TASK LIST
 - [ ] m-c-j to activate vim mode doesn't work?
 - [ ] keybinding for pwd|c? and most common longish commands? analysis w/ atuin
+- [ ] most common actions? like pwd|c
 
 * Options
 https://github.com/mtangh/dot-bash-bashrc/blob/a659ecde4330e31e325bdd4c304cc56b7ed4ee1f/bash.bashrc.d/inputrc.d/default#L1057
@@ -117,7 +118,16 @@ There's also M-w in .bashrc
 # Emacs' find-file
 # "\C-x\C-f": "fd -tf -0 | fzf --read0 --print0 | xargs -r0 nvim\r"
 # "\C-x\C-f": "emacsclient -a \"\" -t -e \"(find-file \\".\\")\"\n"
-"\C-x\C-f":"$(find . 2>/dev/null | fzf)\C-j"
+# "\C-x\C-f":"$(find . 2>/dev/null | fzf)\C-j"
+"\C-x\C-f":"\"$(fd -tf . 2>/dev/null | fzf)\"\C-j"
+# TODO: multiple outputs?
+# "\C-x\C-f":"\"$(fd -tf -0 . 2>/dev/null | fzf --read0 --print0 | xargs -0n1 printf ' %q')\"\C-j"
+# example:
+# nvim$(fd -0 . 2>/dev/null | fzf --read0 --print0 | xargs -0 printf ' %q')
+
+# uppercase f and d for project? and/or binding to cd to project root
+"\C-xd":"\"$(fd -td . 2>/dev/null | fzf)\"\C-j"
+"\C-x\C-j":"emacsclient -t --eval '(dired \".\")'\C-j"
 
 # Like helm show commands
 # "\ex":"$(compgen -ac | fzf)\C-j"
