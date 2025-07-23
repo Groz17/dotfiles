@@ -6,12 +6,11 @@
 # Additionally, each config option is also explained in detail
 # on Ghostty's website, at https://ghostty.org/docs/config.
 
-
 *  TODO TASK LIST
 - [ ] split docker container pane same cwd?
 - [ ] window-save-state?
 
-*  Prefs
+* Prefs
 #+begin_src conf
 
 # font-family = Iosevka
@@ -67,13 +66,13 @@ window-inherit-working-directory=true
 # split-divider-color=yellow
 #+end_src
 
-*  Keybinds 
+* Keybinds 
 #+begin_src conf
 
-# keybind = shift+ctrl+left_bracket=previous_tab
-# keybind = shift+ctrl+right_bracket=next_tab
-# keybind = shift+ctrl+,=move_tab:-1
-# keybind = shift+ctrl+.=move_tab:+1
+# previous_tab
+# next_tab
+# move_tab:-1
+# move_tab:+1
 
 # keybind = cmd+left=text:\x1b[25~
 # keybind = cmd+right=text:\x1b[26~
@@ -84,8 +83,8 @@ window-inherit-working-directory=true
 
 ## fix stuff
 # keybind=ctrl+m=text:\x0D
-keybind=ctrl+i=text:\x09
-keybind=ctrl+[=text:\x1B
+# keybind=ctrl+i=text:\x09
+# keybind=ctrl+[=text:\x1B
 # keybind=ctrl+Return=text:\x0D+control?
 
 # General
@@ -204,12 +203,12 @@ keybind = super+alt+^=goto_tab:1
 # search scrollback with leader+/
 #+end_src
 
-*  Commands 
+* Commands 
 #+begin_src conf
 
 #+end_src
 
-*  Shaders 
+* Shaders 
 #+begin_src conf
 
 # how to reload those?
