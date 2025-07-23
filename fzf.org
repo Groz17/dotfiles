@@ -3,64 +3,8 @@
 
 # how to automatically put fzf window at the top of the screen?
 
-* Options
-** NOTE
-Most long options have the opposite version with --no- prefix.
-
-** SEARCH
-** INPUT/OUTPUT
-** GLOBAL STYLE
-#+begin_src conf
---color=fg:-1,bg:-1,hl:bold:cyan
---color=fg+:-1,bg+:-1,hl+:bold:cyan
---color=border:white,preview-border:white
---color=marker:bold:cyan,prompt:bold:red,pointer:bold:red
---color=gutter:-1,info:bold:red,spinner:cyan,header:white
-#+end_src
-** DISPLAY MODE
-#+begin_src
---height 50% 
-#+end_src
-** LAYOUT
-#+begin_src
---border=sharp
---margin=0
---padding=0
---reverse 
---border 
-#+end_src
-** LIST SECTION
-#+begin_src
---no-wrap
---multi 
---cycle 
-#+end_src
-** INPUT SECTION
-#+begin_src
---preview-window='right:nowrap'  
---preview='[[ $(file --mime {}) =~ directory ]] && eza --tree --color=always {} | head -200 || ([[ $(file --mime {}) =~ binary ]] && echo {} is a binary file) || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' 
-# --preview='[[ $(file --mime {}) =~ directory ]] && eza --tree --color=always {} | head -200 || ([[ $(file --mime {}) =~ binary ]] && echo {} is a binary file) || (nvcat -n {} || cat {}) 2> /dev/null | head -300' 
-#+end_src
-** PREVIEW WINDOW
-** HEADER
-** SCRIPTING
-** ADVANCED
-** DIRECTORY TRAVERSAL
-** HISTORY
-#+begin_src
-# --history=$BACKUP_DIR/fzf/data/history
---history-size=10000 
-#+end_src
-** OTHERS
-#+begin_src
-# --no-unicode
---no-mouse 
-#+end_src
-
 * Keybindings
 #+begin_src conf
-
-
 # use same mappings as emacs
 --bind 'ctrl-h:backward-delete-char/eof'
 --bind 'ctrl-l:accept'
@@ -84,3 +28,58 @@ Most long options have the opposite version with --no- prefix.
 --bind 'alt-v:half-page-up'
 
 #+end_src
+* Options
+** NOTE
+Most long options have the opposite version with --no- prefix.
+
+** SEARCH
+** INPUT/OUTPUT
+** GLOBAL STYLE
+#+begin_src conf
+--color=fg:-1,bg:-1,hl:bold:cyan
+--color=fg+:-1,bg+:-1,hl+:bold:cyan
+--color=border:white,preview-border:white
+--color=marker:bold:cyan,prompt:bold:red,pointer:bold:red
+--color=gutter:-1,info:bold:red,spinner:cyan,header:white
+#+end_src
+** DISPLAY MODE
+#+begin_src conf
+--height 50% 
+#+end_src
+** LAYOUT
+#+begin_src conf
+--border=sharp
+--margin=0
+--padding=0
+--reverse 
+--border 
+#+end_src
+** LIST SECTION
+#+begin_src conf
+--no-wrap
+--multi 
+--cycle 
+#+end_src
+** INPUT SECTION
+#+begin_src conf
+--preview-window='right:nowrap'  
+--preview='[[ $(file --mime {}) =~ directory ]] && eza --tree --color=always {} | head -200 || ([[ $(file --mime {}) =~ binary ]] && echo {} is a binary file) || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' 
+# --preview='[[ $(file --mime {}) =~ directory ]] && eza --tree --color=always {} | head -200 || ([[ $(file --mime {}) =~ binary ]] && echo {} is a binary file) || (nvcat -n {} || cat {}) 2> /dev/null | head -300' 
+#+end_src
+** PREVIEW WINDOW
+** HEADER
+** SCRIPTING
+** ADVANCED
+** DIRECTORY TRAVERSAL
+** HISTORY
+#+begin_src conf
+# --history=~/.local/state/fzf_history
+--history=/tmp/fzf_history
+--history-size=10000 
+#+end_src
+** OTHERS
+#+begin_src conf
+# --no-unicode
+--no-mouse 
+#+end_src
+
