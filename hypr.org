@@ -11,6 +11,8 @@ source = ~/.config/hypr/myColors.conf
 :END:
 
 ** TODO TASK LIST
+- [ ] one-shot emacs/neovim keybinding, like C-c r for eradio?
+- [ ] bindsym $mod+s sticky toggle
 - [ ] add search image in clipboard? after using grim...
 - [ ] hyprshot don't save to clipboard
 - [ ] move to workspace without going there
@@ -248,6 +250,8 @@ animations {
 # windowrulev2 = bordersize 0, floating:0, onworkspace:f[1]
 # windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 
+# windowrulev2 = float, class:.*
+
 # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
 dwindle {
     pseudotile = true # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
@@ -352,8 +356,15 @@ bindl = , XF86AudioNext, exec, playerctl next
 # bindl = $mainMod, p, exec, playerctl play-pause
 # bindl = $mainMod, ., exec, playerctl play-pause
 # make these support v:count?
+# previous first in playlist? <S-BS>?
 bindl = $mainMod shift, n, exec, playerctl previous
 # bindl = $mainMod, less, exec, playerctl previous
+
+bind = $mainMod, a, exec, echo '{ "command": ["set_property", "af","lowpass=f=400"] }' | socat - /tmp/mpvsocket
+bind = $mainMod shift, a, exec, echo '{ "command": ["set_property", "af",""] }' | socat - /tmp/mpvsocket
+
+
+bind = $mainMod, s, exec, dunstify "$(timeout 10 flatpak run com.github.marinm.songrec recognize -d Webcam\ C270\ Mono || echo song not found)"
 
 # bindl = $mainMod shift, n, exec, scripts/active
 
@@ -408,6 +419,7 @@ bind = $mainMod, B, exec, $browser
  # a for apps
  # use emacs
 # bind = $mainMod, a, exec, ferdium --ozone-platform=wayland --enable-fetures-WaylandWindowDecorations
+
 # bind = $mainMod, esc, shutdown,
 bind = $mainMod, period, exec, [float] $fileManager
 
@@ -430,6 +442,9 @@ bind = $mainMod , z, exec, hyprlock
 # bind = $mainMod, W, layoutmsg, swapwithmaster master
 bind = $mainMod, W, layoutmsg, layoutmsg, cyclenext
 # maybe use mainmod e to start programs?
+
+# https://www.reddit.com/r/hyprland/comments/17nhidq/comment/mrovcx0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+bind = $mainMod, minus, exec, $(hyprctl activewindow -j | jq '.floating') && hyprctl dispatch cyclenext tiled || hyprctl dispatch cyclenext floating
 
 bind = $mainMod SHIFT, Q, killactive,
 bind = $mainMod, Backspace, exit,
@@ -491,7 +506,7 @@ bind = $mainMod SHIFT, k, movewindow, u
 *** Clipboard
 #+begin_src conf
 # lines and width don't work
-bind = $mainMod shift, equal, exec, cliphist list | rofi -dmenu -display-columns 2 -p "Select item to copy" -lines 30 -width 75 | cliphist decode | wl-copy
+bind = $mainMod shift, equal, exec, cliphist list | rofi -dmenu -display-columns 2 -p "Select item to copy" -lines 30 -width 75 | cut -f1 | cliphist decode | wl-copy
 # cliphist but for primary selection?
 #+end_src
 
@@ -522,6 +537,14 @@ bind = SUPER SHIFT, y, exec, grimblast --freeze --notify copy active
 
 #+end_src
 
+*** TODO Recording
+**** Audio
+#+begin_src conf
+#+end_src
+
+**** Video
+#+begin_src conf
+#+end_src
 
 *** TODO Workspaces (generate code)
 
@@ -574,8 +597,8 @@ submap=reset
 # Example special workspace (scratchpad)
 # bind = $mainMod, S, togglespecialworkspace, magic
 # bind = $mainMod SHIFT, S, movetoworkspace, special:magic
-bind = $mainMod, S, togglespecialworkspace
-bind = $mainMod SHIFT, S, movetoworkspace, special
+# bind = $mainMod, S, togglespecialworkspace
+# bind = $mainMod SHIFT, S, movetoworkspace, special
 # bind = $mainMod, period, togglespecialworkspace, magic
 # bind = $mainMod, comma, movetoworkspace, special:magic
 
@@ -607,7 +630,6 @@ bind = $mainMod , t, exec, [float] $terminal -e nvim -u ~/scripts/hyrp_float.vim
 bind = $mainMod shift , t, exec, [float] $terminal -e nvim -u ~/.config/nvim/hyrp_float.vim -c 'norm!\ Gzto' ~/todo/todo.txt
 # for language learning? arabic/spanish (like anki)... I want this at startup
 # bind = $mainMod , a, exec, ~/scripts/DailyRandomAnki
-# bind = $mainMod , m, exec, ~/scripts/songs
 # write scripts here and tangle them
 
 # TODO: add v:count hyprland
@@ -634,7 +656,7 @@ music_dir=~/Music
 # remember just one dash for rofi
 # TODO: show album art?
 # mapfile -t songs < <(find "$music_dir" -type f -exec file -i00 {} \; | gawk 'BEGIN{RS="\x00/";FS="\x00"}$2~/^audio/{print NR==1?$1:"/"$1}'| rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator /)
-mapfile -t songs < <(fd . "$music_dir" -tf -X file -i00 {} \; | gawk 'BEGIN{RS="\x00/";FS="\x00"}$2~/^audio/{print NR==1?$1:"/"$1}'| rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator /)
+mapfile -t songs < <(fd . "$music_dir" -tf -X file -i00 {} \; | gawk 'BEGIN{RS="\x00/";FS="\x00"}$2~/^audio|video/{print NR==1?$1:"/"$1}'| rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator /)
 
 if [[ ${#songs[@]} -ne 0 ]]; then
   for song in "${songs[@]}"; do
@@ -794,8 +816,8 @@ can u use source code (maybe elisp) to pick random image?
 # preload=~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper.jpg
 # wallpaper=,~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper.jpg
 # preload=~/Pictures/Wallpapers/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper_purple.jpg
-preload=~/Pictures/Wallpapers/kanagawa-inverted-darker.jpg
-wallpaper=,~/Pictures/Wallpapers/kanagawa-inverted-darker.jpg
+preload=~/Pictures/Wallpapers/image0-EA27E.jpg
+wallpaper=,~/Pictures/Wallpapers/image0-EA27E.jpg
 # preload=~/Pictures/RxlwP.png
 # wallpaper=,~/Pictures/RxlwP.png
 #+end_src
