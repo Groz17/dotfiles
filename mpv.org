@@ -229,7 +229,8 @@ reset-on-next-file=pause
 
 ** Video
 #+begin_src mpv :tangle ~/.config/mpv/mpv.conf
-  #
+# for org-mpv-notes
+--keep-open=yes
 #+end_src
 ** Audio
 #+begin_src mpv :tangle ~/.config/mpv/mpv.conf
