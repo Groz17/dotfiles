@@ -56,7 +56,7 @@ crea tutti o i piu importanti prefix in emacs like (place keys considering impor
   also for every two keypress prefix use a letter, like q (macro key in vim) for C-x C-k (macro key in emacs), etc...
 
 * SETTINGS
-#+begin_src lisp
+#+begin_src kanata-kbd
 
 (defcfg
 ;;obiettivo finale
@@ -101,13 +101,13 @@ make ansi and iso defsrc?
 ;; maybe lftl ctrl and mrgt shift and mmid alt? layers ofc
 
 (deflayer base
- @esc
- @grv @d1 @d2 @d3 @d4 @d5 @d6 @d7 @d8 @d9 @- @= @bspc
- @tab  @q    @w    @e    @r    @t          @y    @u    @i    @o    @p    @[ @]
-  @caps @a @s @d   @f   @g          @h    @j   @k   @l  @; @' @\ @ret
-  @< @lpar @z    @x    @c    @v    @b          @n    @m    @,    @.    @/    @rpar
-@lctl @lmet   @lalt                            @spc                @ralt @menu @rctl
-   @mlft @mmid @mrgt ;;SUB
+  @esc 
+  @grv  @d1   @d2   @d3   @d4   @d5   @d6   @d7 @d8 @d9 @- @= @bspc
+  @tab  @q    @w    @e    @r    @t    @y    @u  @i  @o  @p @[ @]   
+  @caps @a    @s    @d    @f    @g    @h    @j  @k  @l  @; @' @\    @ret
+  @<    @lpar @z    @x    @c    @v    @b    @n  @m  @,  @. @/ @rpar
+  @lctl @lmet @lalt @spc  @ralt @menu @rctl
+  @mlft @mmid @mrgt ;;SUB
 )
 
 #+end_src
@@ -319,7 +319,7 @@ mlft mlft
   ;;e (tap-hold 175 200 e (tap-hold-press-timeout 0 200 e f11 (macro S-e)))
 
   ;; i (tap-hold-press-timeout 175 150 i  (macro S-i))
-  i (tap-hold 175 175 i (tap-hold-press-timeout 0 100 i (multi lmet lalt) (macro S-i)))
+  i (tap-hold 175 175 i (tap-hold-press-timeout 0 150 i (multi lmet lalt) (macro S-i)))
   ;;i (tap-hold 175 175 i (tap-hold-press-timeout 0 100 i i (macro S-i)))
   ;;i (tap-hold 175 200 i (tap-hold-press-timeout 0 200 i (layer-while-held symbols) (macro S-i)))
   ;;i (tap-hold 175 200 i (tap-hold-press-timeout 0 200 i f11 (macro S-i)))
@@ -354,7 +354,7 @@ mlft mlft
   ;; l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l f13 (macro S-l)))
   ;;l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l (macro C-x) (macro S-l)))
   ;; l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l f15 (macro S-l)))
-  l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l f12 (macro S-l)))
+  l (tap-hold 150 175 l (tap-hold-press-timeout 0 150 l f12 (macro S-l)))
 
   ;;l (multi f24 (tap-hold-press-timeout 200 300 l l (macro S-l)))
   ;;l (tap-hold-press-timeout 200 200 l l (macro S-l))
@@ -393,7 +393,7 @@ mlft mlft
   ;; maybe you could also change the behaviour of fd/fs/fa/etc... (basically left half of keyboard) and same thing with j and jk/jl...
   ;; change this out for the list:https://github.com/jtroo/kanata/blob/main/cfg_samples/home-row-mod-advanced.kbd
   ;; symbol laeyer?
-  f (tap-hold 175 175 f (tap-hold-press-timeout 0 100 f lalt (macro S-f)))
+  f (tap-hold 175 175 f (tap-hold-press-timeout 0 150 f lalt (macro S-f)))
   ;; usa release e press solo x escape...
   ;;f (tap-hold 175 150 f (tap-hold-press-timeout 0 200 f (layer-while-held symbols_for_f) (macro S-f)))
   ;;f (tap-hold 175 150 f (tap-hold-press-timeout 0 200 f lalt (macro S-f)))
@@ -556,7 +556,9 @@ u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
 
   ;; g (tap-hold-press-timeout 175 200 g g (macro S-g))
    ;;g (tap-hold 150 200 g (tap-hold-press-timeout 0 150 g (macro C-h) (macro S-g)))
+;; fai che quando g e premuto, h diventa ctrl e viceversa (for emacs help mappings)
    g (tap-hold 150 200 g (tap-hold-press-timeout 0 150 g f18 (macro S-g)))
+
   ;;g (tap-hold 150 175 g (tap-hold-press-timeout 0 75 g (layer-while-held nav) (macro S-g)))
   ;; h (tap-hold-press-timeout 200 200 h h (macro S-h))
   ;; for emacs
@@ -591,7 +593,7 @@ u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
   n (tap-hold 150 175 n (tap-hold-press-timeout 0 124 n n (macro S-n)))
   ;;n (tap-hold-press-timeout 175 175 n n (macro S-n))
 
-  t (tap-hold-press-timeout 175 175 t t (macro S-t))
+  t (tap-hold 150 175 t (tap-hold-press-timeout 0 124 t t (macro S-t)))
   y (tap-hold-press-timeout 175 175 y y (macro S-y))
 
    
@@ -833,12 +835,12 @@ _ (macro S--)
 
 #|
 (deflayer function
-  _    _    _    _    _    _          _    _    _    _    _    _ _
-  _    _    f7   f8   f9   f12        _    _    _    _    _    _
-  _    prnt f4   f5   f6   f11        _    vold volu mute _    _  _
-  _    _    f1   f2   f3   f10        _    brdn bru  _    _    _
-        _ _ _    _                   _                    _
-            _ _ _ 
+  _ _    _  _  _  _   _ _    _    _    _ _ _
+  _ _    f7 f8 f9 f12 _ _    _    _    _ _
+  _ prnt f4 f5 f6 f11 _ vold volu mute _ _ _
+  _ _    f1 f2 f3 f10 _ brdn bru  _    _ _
+  _ _    _  _  _  _  
+  _ _    _ 
 )
 |#
 
@@ -848,13 +850,13 @@ _ (macro S--)
 ;; magari usalo anche x emacs (fallo simmetrico)
 ;; also use shift-arrow for orgs emacs
 (deflayer nav
-_
-_ _ _ _ _ _ _ _ _ _ _ _ _
-     _    _    _    _    _    _   _    _    _    _    _ _
-  _    _    _    _    _    _    _    left down up rght    _  _  _ _
-  _   _ _    _    _    _    _    _    ret   _    _    _    _
-  _ _ _ _             _              _   _
-   _ _ _  ;;SUB
+  _
+  _ _ _ _     _ _ _ _    _    _  _    _ _
+  _ _ _ _     _ _ _ _    _    _  _    _
+  _ _ _ _     _ _ _ left down up rght _ _ _ _
+  _ _ _ _     _ _ _ _    ret  _  _    _ _
+  _ _ _ _     _ _ _
+  _ _ _ ;;SUB
 )
 
 ;; (deflayer nav_sx
