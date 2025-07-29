@@ -83,12 +83,11 @@ set editorcmd emacsclient -a \"\" -c -e '(progn (find-file "%f") (forward-line (
 * BINDS
 #+begin_src conf
 " bind --mode=$mode $key $excmd
-bind gp focusinput -p
 bind i mode ignore
 " metti fra le prime cosi runna subito"
 bind --mode=ignore <esc> composite mode normal
 
-" bind --mode=browser <C-.> jsua browser.sidebarAction.open(); tri.excmds.sidebaropen("https://mail.google.com/mail/mu")
+bind --mode=browser <f12>m jsua browser.sidebarAction.open(); tri.excmds.sidebaropen("https://mail.google.com/mail/mu")
 
 " it works: zoom -0.05 true
 " maybe consider swap mappigs? j -> down -> zoomin?
@@ -167,7 +166,7 @@ bind --mode=input <C-c><C-c> editor
 bind --mode=input <F12><C-c> composite sanitise tridactyllocal; winclose
 
 bind --mode=insert <C-g> composite unfocus | mode normal
-bind --mode=visual <A-w> composite js document.getSelection().toString() | clipboard yank
+# bind --mode=visual <A-w> composite js document.getSelection().toString() | clipboard yank
 bind --mode=insert <F12>h js document.activeElement.select()
 
 bind --mode=browser <C-g> escapehatch
@@ -213,6 +212,11 @@ unbind --mode=normal <F12>
 bind <F12>0 winclose 
 bind <F12>k tabclose
 bind <F12>o fillcmdline t
+# bind <F12>h js document.execCommand('selectAll', false, null)
+# TODO: falla anche per input/ex/insert (hard on chatgpt website?)
+bind <F12>h js window.getSelection().selectAllChildren(document.body);
+
+
 
 ""bind <Escape><C-s> fillcmdline find
 ""bind <C-s><C-s> findnext
@@ -233,7 +237,7 @@ bind <C-/> undo
 bind --mode=ex     <C-n> ex.next_completion
 bind --mode=ex     <C-p> ex.prev_completion
 bind --mode=ex     <C-y> ex.insert_completion
-bind --mode=ex     <C-e> ex.deselect_completion
+# bind --mode=ex     <C-e> ex.deselect_completion
 bind --mode=ex     <Tab> ex.complete
 bind --mode=ex     <C-g> composite text.beginning_of_line ; text.forward_word ; text.kill_word
 
@@ -255,19 +259,18 @@ bind --mode=normal <space>A composite get_current_url | shellescape | exclaim_qu
 bind --mode=normal <space>c exclaim_quiet bash -c 'clip="$(wl-paste)" && echo >> ~/todo/todo.txt && echo "$clip" >> ~/todo/todo.txt && notify-send "Sent Clipboard" "$clip"'
 " bind <space>C exclaim_quiet sh -c 'echo "$(wl-paste)" >> ~/todo && notify-send "Sent Clipboard (No Newline)"'
 bind <space>C exclaim_quiet bash -c 'clip="$(wl-paste)" && echo "$clip" >> ~/todo/todo.txt && notify-send "Sent Clipboard (No Newline)" "$clip"'
-" bind <space><space> followpage next
-" bind <space><s-space> followpage prev
+
 bind --mode=normal <space>s composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/scripts/subs
 
 " https://github.com/moyiz/git-dev.nvim
 # bind <space>go composite get_current_url | shellescape | js -p tri.excmds.exclaim(process.env.TERM_PROGRAM + " -e nvim -c \'GitDevOpen " + JS_ARG + "\'")
 bind <space>go composite get_current_url | shellescape | js -p tri.excmds.exclaim("ghostty -e nvim -c \'GitDevOpen " + JS_ARG + "\'")
 
-bind <a-w> composite get_current_url | exclaim_quiet  ~/scripts/to_markdown/browser/webpage
+# bind <a-w> composite get_current_url | exclaim_quiet  ~/scripts/to_markdown/browser/webpage
 
 " add another mapping that prepends the url (source)
 " would be cool to send the selection to todo and the title (with # prefixed) + selection to tips
-bind <a-c> composite js -s ~/.config/tridactyl/scripts/selection_html.js ; exclaim_quiet  ~/.config/tridactyl/scripts/to-markdown
+bind --mode=visual <a-w> composite js -s ~/.config/tridactyl/scripts/selection_html.js ; exclaim_quiet  ~/.config/tridactyl/scripts/to-markdown
 bind >2 composite get_current_url | exclaim /home/giorgio/scripts/browser/2pdf
 
 bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
@@ -277,7 +280,7 @@ bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replac
 
 " usa exclaim_quiet per non avere output nella command line
 bind <space>d composite get_current_url | exclaim_quiet ~/.config/tridactyl/scripts/download
-bind <space><space> composite get_current_url | yank ; exclaim_quiet hyprctl dispatch exec '[float] ghostty -e "nvim -c '\''norm 1 Qd'\''"'
+bind <space><space> composite get_current_url | yank ; exclaim_quiet hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qd"'
 bind <space><S-space> composite js "# [" + document.title + "](" + document.URL + ")" | yank ; exclaim_quiet ~/.config/tridactyl/scripts/data
 
 #+end_src
@@ -285,7 +288,7 @@ bind <space><S-space> composite js "# [" + document.title + "](" + document.URL 
 #+begin_src bash :tangle ~/.config/tridactyl/scripts/data
 #!/usr/bin/env bash
 for id in $(cliphist list|head -2|cut -f1); do cliphist decode $id;echo; done | wl-copy
-hyprctl dispatch exec '[float] ghostty -e "nvim -c '\''norm 1 Qy'\''"'
+hyprctl dispatch exec '[float] ghostty -e nvim -c "norm 1 Qy"'
 #+end_src
 
 #+begin_src conf
@@ -294,11 +297,6 @@ hyprctl dispatch exec '[float] ghostty -e "nvim -c '\''norm 1 Qy'\''"'
 
 bind yp composite get_current_url | exclaim_quiet ~/.config/nvim/scripts/clone_from_browser
 
-" v -> veloce
-" bind <a-v> exclaim ~/bin/tabs_stat.sh
-bind <a-v> exclaim_quiet ~/scripts/tabs_stat.sh
-" x -> vicino a z usata per Copylinks++
-" bind <a-x> exclaim ~/bin/filtra_tabs.sh
 " magari usa un unico binding per copiare url da website e filtrarli...
 bind <a-x> exclaim_quiet ~/scripts/filtra_tabs.sh
 
@@ -496,7 +494,8 @@ bind --mode=ex <c-g> ex.hide_and_clear
 
 bind --mode=ex <c-j> ex.next_completion
 bind --mode=ex <c-k> ex.prev_completion
-"<C-Enter>: string = "ex.execute_ex_on_completion"
+bind --mode=ex <C-Enter> ex.execute_ex_on_completion
+": string = ""
 "unbind --mode=ex <Tab>
 "unbind --mode=ex <c-a>
 unbind --mode=ex <c-f>
@@ -513,8 +512,8 @@ bind --mode=ex <c-Enter> ex.next_completion ; ex.accept_line
 " bindurl chatgpt\.com/ <c-c> js tri.excmds.yank(document.querySelector('.player-timedtext').innerText.replace("\n", ""))
 " bindurl chatgpt\.com/ <cr> <s-cr>
 
-bind --mode=insert  <c-c><c-c>  ex.accept_line
-bind --mode=input   <c-c><c-c>  ex.accept_line
+# bind --mode=insert  ?  ex.accept_line
+# bind --mode=input   ?  ex.accept_line
 
 "insert mode is entered by clicking on text areas while input mode is entered by using gi
 "readline ftw
@@ -660,7 +659,10 @@ bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replac
 set keyboardlayoutbase qwerty
 set keyboardlayoutforce true
 
-" Commands
+#+end_src
+* Commands
+#+begin_src conf
+
 
 " delete w command before?"
 command w saveas ~/Downloads/firefox
@@ -673,11 +675,11 @@ command wayback composite get_current_url | tabopen wb
 " From https://github.com/jeremiahlee/page-translator
 command translate js let googleTranslateCallback = document.createElement('script'); googleTranslateCallback.innerHTML = "function googleTranslateElementInit(){ new google.translate.TranslateElement(); }"; document.body.insertBefore(googleTranslateCallback, document.body.firstChild); let googleTranslateScript = document.createElement('script'); googleTranslateScript.charset="UTF-8"; googleTranslateScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit&tl=&sl=&hl="; document.body.insertBefore(googleTranslateScript, document.body.firstChild);
 
+#+end_src
+
 " Isolate Facebook in its own container
 set auconcreatecontainer true
 autocontain facebook\.com facebook
-
-#+end_src
 
 * QUICKMARKS
 Use searchurls when you need to insert some (small) input, quickmarks otherwise (like for forums)
@@ -910,6 +912,7 @@ set searchurls.qwant https://www.qwant.com/?q=
 #+end_src
 
 * [[https://github.com/tridactyl/tridactyl/wiki/Video-mode][Video Mode]]
+bind --mode=video <space> keyfeed <space>
 ** Enter and exit the mode
 #+begin_src conf
 alias video_mode composite mode video ; video_mark_init
