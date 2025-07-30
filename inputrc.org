@@ -105,10 +105,10 @@ $endif
 
 *** Redirections
 #+begin_src readline
-    "\C-x0":        " &>/dev/null "
-    "\C-x1":        " >/dev/null "
-    "\C-x2":        " 2>/dev/null "
-    "\C-x3":        " 2>&1 "
+"\C-x0": " &>/dev/null "
+"\C-x1": " >/dev/null "
+"\C-x2": " 2>/dev/null "
+"\C-x3": " 2>&1 "
 #+end_src
 
 *** Emacs inspired
@@ -127,7 +127,7 @@ There's also M-w in .bashrc
 
 # uppercase f and d for project? and/or binding to cd to project root
 "\C-xd":"\"$(fd -td . 2>/dev/null | fzf)\"\C-j"
-"\C-x\C-j":"emacsclient -t --eval '(dired \".\")'\C-j"
+"\C-x\C-j":"emacsclient -a '' -t --eval '(dired \".\")'\C-j"
 
 # Like helm show commands
 # "\ex":"$(compgen -ac | fzf)\C-j"
