@@ -280,7 +280,10 @@ bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replac
 
 " usa exclaim_quiet per non avere output nella command line
 bind <space>d composite get_current_url | exclaim_quiet ~/.config/tridactyl/scripts/download
-bind <space><space> composite get_current_url | yank ; exclaim_quiet hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qd"'
+"bind <space><space> composite get_current_url | yank ; exclaim_quiet hyprctl dispatch exec '[float\;size 30% 30%] ghostty -e nvim -c "norm 1 Qd"'
+bind <space><space> jsb tri.native.run(`echo '${document.location.href}' | wl-copy && hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qd"'`)
+" bind <space><space> js let url = document.location.href; tri.excmds.yank(url); tri.native.run(`hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qd"'`)
+
 bind <space><S-space> composite js "# [" + document.title + "](" + document.URL + ")" | yank ; exclaim_quiet ~/.config/tridactyl/scripts/data
 
 #+end_src
