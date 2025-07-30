@@ -1,7 +1,12 @@
-#+property: header-args :tangle ~/.config/REAPER/Scripts/reaper-keys/internal/definitions/bindings.lua
+#+property: header-args
 #+startup: content
 
-* Global
+* Keybindings
+:PROPERTIES:
+:header-args: :tangle ~/.config/REAPER/Scripts/reaper-keys/internal/definitions/bindings.lua :mkdirp yes
+:END:
+
+** Global
 #+begin_src lua
 ---@type Definition
 local global = { -- applies both to main and midi
@@ -62,10 +67,13 @@ local global = { -- applies both to main and midi
     command = {
         ["<M-x>"] = "ShowActionList",
         ["<CM-x>"] = "ShowBindingList",
+        -- ["<F18>b"] = "ShowBindingList", (doesn't work...)
         ["<ESC>"] = "Reset",
+        ["<C-g>"] = "Reset",
         ["<S-<ESC>>"] = "ClearTimeSelection",
 
         ["<return>"] = "StartStop",
+        -- ["<SPC>"] = "StartStop",
         ["tt"] = "PlayFromTimeSelectionStart",
         ["<C-T>"] = "PlayAndSkipTimeSelection",
         ["<M-t>"] = "PlayFromMousePosition",
@@ -86,6 +94,7 @@ local global = { -- applies both to main and midi
         ["<S-left>"] = "PrevRegion",
         ["<C-r>"] = "Redo",
         ["u"] = "Undo",
+        ["<C-/>"] = "Undo",
         ["R"] = "ToggleRecord",
         ["<C-z>"] = "ZoomUndo",
         ["<C-Z>"] = "ZoomRedo",
@@ -103,6 +112,17 @@ local global = { -- applies both to main and midi
         ["<CM-f>"] = "MidiLearnLastTouchedFxParam",
         ["<CM-m>"] = "ModulateLastTouchedFxParam",
         ["<C-m>"] = "TapTempo",
+
+	-- : with tab completion? to use tabnew (or NextTab ig) and others
+	-- gi for input?
+        ["gt"] = "NextTab",
+        ["gT"] = "PrevTab",
+        ["<F12>"] = { "+emacs", {
+            ["t"] = { "+tabs", {
+		 ["0"] = "CloseProject",
+            } }
+        } },
+	
 
         ['"'] = { "+snapshots", {
             ["j"] = "RecallNextSnapshot",
@@ -139,6 +159,7 @@ local global = { -- applies both to main and midi
             F = "ResetFeedbackWindow",
             M = "ToggleMasterMonoStereo",
         } },
+	-- use emacs as file explorer?
         ["i"] = { "+insert", {
             ["f"] = "InsertMediaFile",
             ["m"] = "InsertMidiItem",
@@ -152,6 +173,7 @@ local global = { -- applies both to main and midi
             ["4"] = "InsertTrackFromTemplateSlot4",
         } },
         ["<SPC>"] = { "+leader commands", {
+        -- ["<F12>"] = { "+leader commands", {
             N = "ShowNotesWindow",
             n = { "+notes", {
                 i = "ShowNotesItem",
@@ -417,7 +439,7 @@ local global = { -- applies both to main and midi
 
 #+end_src
 
-* Main
+** Main
 #+begin_src lua
 ---@type Definition
 local main = {
@@ -555,7 +577,7 @@ local main = {
 }
 
 #+end_src
-* Midi
+** Midi
 #+begin_src lua
 ---@type Definition
 local midi = {
@@ -614,4 +636,99 @@ local midi = {
 }
 
 return { ["global"] = global, ["main"] = main, ["midi"] = midi }
+#+end_src
+
+* Prefs
+:PROPERTIES:
+:header-args: :tangle ~/.config/REAPER/Scripts/reaper-keys/internal/definitions/config.lua :mkdirp yes
+:END:
+
+#+begin_src lua
+
+local os_default_fonts = {
+    windows = "Lucida Console",
+    osx = "Andale Mono",
+    linux = "Open Sans Mono",
+}
+local os = reaper.GetOS()
+local font_name = (os:match("Win") and os_default_fonts.windows)
+    or (os:match("OSX") and os_default_fonts.osx)
+    or os_default_fonts.linux
+
+-- All colors are in RGBA format
+local gui = {
+    -- the factor to scale all elements (font size, element sizes...)
+    -- will be multiplied by 2 if HiDPI (MacOS Retina only) mode is detected
+    gui_scale = 1.6,
+
+    action_type_colors = {
+        command = { 0.82, 0.09, 0.9, 0.9 },
+        track_motion = { 0.6, 0.52, 0.6, 0.82 },
+        track_selector = { 0.62, 0.96, 0.6, 0.46 },
+        track_operator = { 0.05, 0.82, 0.93, 1.0 },
+        visual_track_command = { 0.67, 0.23, 0.42, 0.38 },
+        timeline_motion = { 0.46, 0.59, 0.64, 0.05 },
+        timeline_selector = { 0.45, 0.63, 0.981, 0.9 },
+        timeline_operator = { 0.23, 0.0, 0.78, 0.17 },
+        visual_timeline_command = { 0.43, 0.86, 0.77, 0.08 },
+    },
+
+    feedback = {
+        show_after = .1, -- seconds
+        elements = {
+            column_padding = 20,
+            row_padding = 0,
+            padding = 5,
+            mode_line_h = 10,
+        },
+        fonts = {
+            feedback_main = { font_name, 18 },
+            feedback_key = { font_name, 18 },
+            feedback_arrow = { font_name, 20 },
+            feedback_folder = { font_name, 18, "b" },
+        },
+        colors = {
+            visual_timeline = { 0.43, 0.38, 0.52, 0.77 },
+            extra_info = { 1, 1, 1, .4 },
+            visual_track = { 0.94, 0.99, 0.62, 0.66 },
+            key = { 0.52, 0.99, 0.98, 0.72 },
+            arrow = { 0.38, 0.46, 0.32, 0.7 },
+            folder = { 0.66, 0.43, 0.76, 0.78 },
+        },
+    },
+    binding_list = {
+        fonts = {
+            binding_list_main = { font_name, 18 },
+            binding_list_label = { font_name, 14 },
+        },
+        colors = {
+            selection = { 0.4, 0.26, 0.46, 0.8 },
+            count = { 0.77, 0.82, 0.432, 0.95 },
+            query = { 0.36, 0.62, 0.85, 0.13 },
+            action_name = { 0.06, 0.7, 0.72, 0.72 },
+            matched_key = { 0.75, 0.74, 0.5, 0.85 },
+            bindings = {
+                main = { 0.66, 0.48, 0.02, 0.51 },
+                midi = { 0.624, 0.293, 0.84, 0.06 },
+                global = { 0.66, 0.398, 0.415, 0.64 },
+            }
+        },
+    }
+}
+
+local general = {
+    show_start_up_message = false,
+    dock_feedback_window = true,
+    show_feedback_window = true,
+    search_for_custom_config = false,
+    profile = false,
+    -- should operators in visual modes reset the selection or have it persist?
+    persist_visual_timeline_selection = true,
+    persist_visual_track_selection = false,
+    allow_timeline_movement_in_visual_mode = true,
+    log_level = 'error', -- trace debug info warn user error fatal
+    repeatable_commands_action_type_match = { 'command', 'operator', 'meta_command', }
+}
+
+return { ["general"] = general, ["gui"] = gui }
 #+end_src
