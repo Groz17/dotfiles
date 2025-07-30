@@ -46,10 +46,10 @@ Set programs that you use
 #+begin_src conf
 $terminal = ghostty
 #$fileManager = dolphin
-$fileManager = ghostty -e "emacsclient -t --eval '(dired nil)'"
+$fileManager = ghostty -e emacsclient -t --eval '(dired nil)'
 # $menu = wofi --show drun
 # in futuro standalone emacs picker (elimina tutte le dipendenze)
-$menu = rofi -show drun
+$menu = rofi -show drun -show-icons
 $browser = floorp || flatpak run one.ablaze.floorp
 
 # open krita/image editing software with clipboard as input? for when commenting screenshotted code?
@@ -67,14 +67,26 @@ search for others w/ llm or configs
   # find themes
   exec-once = hyprctl setcursor Bibata-Modern-Classic 24
 #+end_src
+
+**** File synchronization
+# exec-once=syncthing --no-browser # file synchronization
   
 **** Status bar
 #+begin_src conf
-exec-once = waybar & swaync & hypridle
+exec-once = waybar &
 #+end_src  
+
+**** Idle manager
+(lock screen after X minutes, turn off screen after Y minutes)
+
+#+begin_src conf
+exec-once = hypridle &
+#+end_src  
+
 **** Notification daemon
 #+begin_src conf
-  #exec-once = swaync
+#exec-once = swaync
+# dunst
 #+end_src  
 **** Clipboard
 #+begin_src conf
@@ -91,7 +103,7 @@ exec-once = /usr/lib/geoclue-2.0/demos/agent
 exec-once = darkman run
 #+end_src  
 
-**** Wallpaper
+**** Wallpaper manager
 how to zoom wallpaper?
 #+begin_src conf
 exec-once = hyprpaper
@@ -174,6 +186,10 @@ general {
     layout = dwindle
 }
 
+debug {
+disable_logs = false
+}
+
 # https://wiki.hyprland.org/Configuring/Variables/#decoration
 decoration {
     rounding = 15
@@ -192,9 +208,9 @@ decoration {
 
     # https://wiki.hyprland.org/Configuring/Variables/#blur
     blur {
-        # enabled = true
         enabled = false
-        size = 3
+        size = 7
+	passes=4
         passes = 1
 
         vibrancy = 0.1696
@@ -364,10 +380,22 @@ bind = $mainMod, a, exec, echo '{ "command": ["set_property", "af","lowpass=f=40
 bind = $mainMod shift, a, exec, echo '{ "command": ["set_property", "af",""] }' | socat - /tmp/mpvsocket
 
 
-bind = $mainMod, s, exec, dunstify "$(timeout 10 flatpak run com.github.marinm.songrec recognize -d Webcam\ C270\ Mono || echo song not found)"
-
 # bindl = $mainMod shift, n, exec, scripts/active
+bind = $mainMod, s, exec, ~/.config/hypr/scripts/recognize_song
+#+end_src
+#+begin_src bash :tangle ~/.config/hypr/scripts/recognize_song
+#!/usr/bin/env bash
+dunstify "Recognizing song..."
+song="$(timeout 10 flatpak run com.github.marinm.songrec recognize -d Webcam\ C270\ Mono --json)"
+if [ -n "$song" ]; then
+	artist="$(jq -r '.track.urlparams | .["{trackartist}"]' <<<"$song" | sed 's/+/ /g')"
+	title="$(jq -r '.track.urlparams | .["{tracktitle}"]' <<<"$song" | sed 's/+/ /g')"
 
+	dunstify "Title: $title" "Artist: $artist"
+	wl-copy <<<"$artist - $title"
+else
+	dunstify "song not found"
+fi
 #+end_src
 *** Brightness
 #+begin_src conf
@@ -401,9 +429,11 @@ bind = $mainMod, Return, exec, $terminal
 # prefix bind for opening files like in vim/emacs? use $EDITOR (magari con nvim -c or smth)
 # how to quickly switch between emacs and neovim?
 # open terminal when exiting or before emacs?
+# bind = $mainMod, e, exec, [float;fullscreen] emacsclient -c  -a ''
 bind = $mainMod, e, exec, emacsclient -c  -a '' -F "'(fullscreen . fullboth)"
+
 # bind = $mainMod, d, exec, emacsclient -c  -a 'emacs' -F "'(app-launcher)" DT video?
-bind = $mainMod shift, e, exec, emacs -Q
+bind = $mainMod shift, e, exec, [float;fullscreen]emacs -Q
 ### maybe better to put in free workspace?
 # bind=super ,equal,exec, emacsclient -e '(full-calc)' -c -a emacs
 # have To use shift+9...
@@ -425,6 +455,8 @@ bind = $mainMod, period, exec, [float] $fileManager
 
 # super shift enter?
 bind = $mainMod, D, exec, $menu
+# bind = $mainMod, D, exec, rofimoji
+# bind = $mod, L, exec, pkill rofi || rofi -show power-menu -modi power-menu:rofi-power-menu # We can use rofi for power management as well
 #+end_src
 
 *** Hypr Ecosystem
@@ -444,7 +476,8 @@ bind = $mainMod, W, layoutmsg, layoutmsg, cyclenext
 # maybe use mainmod e to start programs?
 
 # https://www.reddit.com/r/hyprland/comments/17nhidq/comment/mrovcx0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-bind = $mainMod, minus, exec, $(hyprctl activewindow -j | jq '.floating') && hyprctl dispatch cyclenext tiled || hyprctl dispatch cyclenext floating
+# basically same key as windows/super (invert)
+bind = $mainMod SHIFT, backslash, exec, $(hyprctl activewindow -j | jq '.floating') && hyprctl dispatch cyclenext tiled || hyprctl dispatch cyclenext floating
 
 bind = $mainMod SHIFT, Q, killactive,
 bind = $mainMod, Backspace, exit,
@@ -472,10 +505,9 @@ bind = $mainMod SHIFT, G, moveoutofgroup
 # maybe use mod+y (rot13 of l) (general way to remap if a letter is already remapped?)
 # bind = $mainMod shift, z, exec, shutdown now
 bind = $mainMod , delete, exec, shutdown now
-bind = $mainMod, page_up, workspace, e+1
+# restart binding
 # use sudo instead of wiki password? gpg?
 # bind = $mainMod,I, exec, sudo -c ''
-bind = $mainMod, page_down, workspace, e-1
 # need to use emacs completions
 # bind = alt, tab, workspace, m+1
 # bind = alt shift, tab, workspace, m-1
@@ -506,7 +538,7 @@ bind = $mainMod SHIFT, k, movewindow, u
 *** Clipboard
 #+begin_src conf
 # lines and width don't work
-bind = $mainMod shift, equal, exec, cliphist list | rofi -dmenu -display-columns 2 -p "Select item to copy" -lines 30 -width 75 | cut -f1 | cliphist decode | wl-copy
+bind = $mainMod shift, equal, exec, cliphist list | rofi -dmenu -display-columns 2 -p "Select item to copy" -lines 30 -width 75 | cut -f1 | xargs cliphist decode | wl-copy
 # cliphist but for primary selection?
 #+end_src
 
@@ -634,12 +666,12 @@ bind = $mainMod shift , t, exec, [float] $terminal -e nvim -u ~/.config/nvim/hyr
 
 # TODO: add v:count hyprland
 # metti in kanata?
-bind = $mainMod , n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'norm 1 Qd'"
+bind = $mainMod , n, exec, [float;size 30% 30%] PATH=$HOME/.cargo/bin:$PATH kitty -e nvim -c 'norm 1 Qd'
 # hyprctl activewindow -j | jq .title?
-bind = $mainMod shift, n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'let @+=\"## \" ..input(\">\")..\"\n\"..@+|norm 1 Qy'"
+bind = $mainMod shift, n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e nvim -c 'let @+=\"## \" ..input(\">\")..\"\n\"..@+|norm 1 Qy'
 #funge da term: bind = $mainMod shift, n, exec, hyprctl dispatch exec 'PATH=$HOME/.cargo/bin:$PATH ghostty -e "nvim -c '\''let @+=\"# \" ..input(\">\")..@+|norm 1 Qy'\''"'
 # resize terminal for input?
-bind = $mainMod shift, slash, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e "nvim -c 'let @+=input(\">\")|norm 1 Qd'"
+bind = $mainMod shift, slash, exec, [float;size 30% 30%] PATH=$HOME/.cargo/bin:$PATH $terminal -e nvim -c 'let @+=input(">")|norm 1 Qd'
 
 #+end_src
 
@@ -690,10 +722,13 @@ windowrulev2 = opacity 0.9,class:^(pulsemixer)$
 
 workspace=1,class:^(emacs)$
 
+# windowrulev2 = idleinhibit fullscreen, class:.* # if a window is fullscreen, don't idle
+# windowrulev2 = opacity 0.8, class:($terminal) # set opacity to 0.8 for terminal, a variable we defined in hyprland.conf
+
 #+end_src
 
 *** Notifications
-
+# copy notification to clipboard binding?
 #+begin_src conf
 
 
@@ -733,32 +768,228 @@ windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 :header-args: :tangle  ~/.config/hypr/hyprlock.conf
 :END:
 
-cosa succede se lo schermo e gia dark? notifica in qlk modo
 #+begin_src conf
-general {
-    ignore_empty_input=false
-}
+# BACKGROUND
 background {
     monitor =
-        color = rgba(25, 20, 20, 1.0)
-        blur_passes = 2
+        # color = rgba(25, 20, 20, 1.0)
+        # blur_passes = 2
+    path = ~/Pictures/Wallpapers/kanagawa.jpg
+    blur_passes = 1
+    contrast = 0.8916
+    brightness = 0.8172
+    vibrancy = 0.1696
+    vibrancy_darkness = 0.0
 }
 
+# GENERAL
+general {
+    no_fade_in = false
+    grace = 0
+    ignore_empty_input=false
+}
+
+# INPUT FIELD
 input-field {
     monitor =
         size = 20%, 5%
-        outline_thickness = 3
-        inner_color = rgba(0, 0, 0, 0.0) # no fill
+    # size = 240, 60
+    outline_thickness = 3
+    dots_size = 0.2 # Scale of input-field height, 0.2 - 0.8
+    dots_spacing = 0.2 # Scale of dots' absolute size, 0.0 - 1.0
+    dots_center = true
+    outer_color = rgba(0, 0, 0, 0)
+    inner_color = rgba(0, 0, 0, 0.8) # no fill
+    font_color = rgb(200, 200, 200)
         outer_color = rgba(33ccffee) rgba(00ff99ee) 45deg
         check_color=rgba(00ff99ee) rgba(ff6633ee) 120deg
         fail_color=rgba(ff6633ee) rgba(ff0066ee) 40deg
         font_color = rgb(143, 143, 143)
-# fade_on_empty = false
-        rounding = 15
+
+    fade_on_empty = false
+    font_family = JetBrains Mono Nerd Font Mono
+    placeholder_text = <i><span foreground="##fdd6ff">Input Password...</span></i>
+    hide_input = false
+    position = 0, 240
+    halign = center
+    valign = center
+
         position = 0, -20
-        halign = center
-        valign = center
+        rounding = 15
 }
+
+# TIME
+label {
+    monitor =
+    # rotate = 270
+    text = cmd[update:1000] echo "$(date +"%-I:%M%p")"
+    color = rgb(255,70,0)
+    font_size = 100
+    font_family = JetBrains Mono Nerd Font Mono ExtraBold
+    position = 0, 180
+    # position = -500, 270
+    halign = center
+    valign = bottom
+}
+
+# Proverbs
+label {
+    monitor =
+    text = cmd[update:3600000] echo "<span background='##0f2222' foreground='##00ff70'>$(fortune jp|sed 's/\.$//')</span>"
+    color = rgba(255, 153, 28, 1.0)
+    font_size = 37
+    font_family = JetBrains Mono Nerd Font Mono ExtraBold
+    position = 0, -120
+    halign = center
+    valign = top
+}
+#+end_src
+
+** Proverbs
+#+begin_src example :tangle no
+光陰矢の如し (Kōin ya no gotoshi)
+Time flies like an arrow.
+%
+明日は明日の風が吹く (Ashita wa ashita no kaze ga fuku)
+Tomorrow’s wind will blow tomorrow.
+%
+井の中の蛙大海を知らず (I no naka no kawazu taikai o shirazu)
+A frog in a well knows nothing of the sea.
+%
+千里の道も一歩から (Senri no michi mo ippo kara)
+A journey of a thousand miles begins with a single step.
+%
+見ぬが花 (Minu ga hana)
+Not seeing is a flower.
+%
+花より団子 (Hana yori dango)
+Dumplings over flowers.
+%
+ちりも積もれば山となる (Chiri mo tsumoreba yama to naru)
+Even dust, when piled up, becomes a mountain.
+%
+雨後の筍 (Ugo no takenoko)
+Bamboo shoots after rain, referring to sudden, rapid growth.
+%
+魚心あれば水心 (Uogokoro areba mizugokoro)
+If the fish is kind to the water, the water is kind to the fish.
+%
+同じ釜の飯を食う (Onaji kama no meshi o kuu)
+To eat from the same rice pot.
+%
+三人寄れば文殊の知恵 (Sannin yoreba monju no chie)
+When three gather, wisdom appears.
+%
+鯛も一人はうまからず (Tai mo hitori wa umakarazu)
+Even sea bream tastes bland when eaten alone.
+%
+八方美人 (Happō bijin)
+A person who tries to please everyone and ends up pleasing no one.
+%
+遠くの親類より近くの他人 (Tōku no shinrui yori chikaku no tanin)
+A nearby stranger is better than a distant relative.
+%
+泣きっ面に蜂 (Nakittsura ni hachi)
+A bee to a crying face; adding insult to injury.
+%
+一期一会 (Ichigo ichie)
+One time, one meeting.
+%
+花鳥風月 (Kachō fūgetsu)
+Flower, bird, wind, moon; discovering yourself through nature.
+%
+因果応報 (Inga ōhō)
+Cause brings result.
+%
+灯台下暗し (Tōdai moto kurashi)
+It is dark under the lighthouse.
+%
+十人十色 (Jūnin toiro)
+Ten people, ten colors.
+%
+虎穴に入らずんば虎子を得ず (Koketsu ni irazunba koji o ezu)
+You cannot catch a tiger cub without entering its cave.
+%
+温故知新 (Onko chishin)
+Study the old to know the new.
+%
+自業自得 (Jigō jitoku)
+You reap what you sow.
+%
+切磋琢磨 (Sessatakuma)
+Mutual improvement through friendly rivalry.
+%
+七転び八起き (Nana korobi ya oki)
+Fall seven times, get up eight.
+%
+雨降って地固まる (Ame futte ji katamaru)
+After rain, the ground hardens.
+%
+苦あれば楽あり (Ku areba raku ari)
+Where there is hardship, there is ease.
+%
+石の上にも三年 (Ishi no ue nimo san‑nen)
+Sit on a stone for three years; patience pays.
+%
+継続は力なり (Keizoku wa chikara nari)
+Continuity is power.
+%
+三日坊主 (Mikka bōzu)
+A three‑day monk; someone who gives up quickly.
+%
+習うより慣れよ (Narau yori nareyo)
+Better to grow accustomed than merely to learn.
+%
+雨垂れ石を穿つ (Amadare ishi o ugatsu)
+Dripping water penetrates stone.
+%
+背水の陣 (Haisui no jin)
+Fighting with your back to the river; a do‑or‑die position.
+%
+馬鹿は死ななきゃ治らない (Baka wa shinanakya naoranai)
+Only death cures stupidity.
+%
+自ら墓穴を掘る (Mizukara boketsu o horu)
+To dig your own grave.
+%
+死人に口なし (Shinin ni kuchinashi)
+Dead men tell no tales.
+%
+危機一髪 (Kiki ippatsu)
+A hair’s breadth from danger.
+%
+九死一生 (Kyūshi isshō)
+Narrowly escaping death.
+%
+会者定離 (Esha jōri)
+Those who meet must part.
+%
+儚い命 (Hakanai inochi)
+A fleeting life.
+%
+猫に小判 (Neko ni koban)
+Giving gold coins to a cat; offering something valuable to someone who does not appreciate it.
+%
+馬の耳に念仏 (Uma no mimi ni nenbutsu)
+Buddhist sutras to a horse’s ear; preaching to the deaf.
+%
+出る杭は打たれる (Deru kui wa utareru)
+The nail that sticks out gets hammered.
+%
+開いた口が塞がらない (Aita kuchi ga fusagaranai)
+Cannot close your gaping mouth; you are speechless with shock.
+%
+月とすっぽん (Tsuki to suppon)
+The moon and a soft‑shelled turtle; two things that are worlds apart.
+%
+藪から棒 (Yabu kara bō)
+A stick from a thicket; something completely out of the blue.
+%
+猿も木から落ちる (Saru mo ki kara ochiru)
+Even monkeys fall from trees; everyone makes mistakes.
+%
+蛙の子は蛙 (Kaeru no ko wa kaeru)
+A frog’s child is a frog; like parent, like child.
 #+end_src
 * Hypridle
 :PROPERTIES:
@@ -766,7 +997,7 @@ input-field {
 :END:
 
 #+begin_src conf
-
+# hyprctl dispatch dpms on  
 general {
     lock_cmd = pidof hyprlock || hyprlock       # avoid starting multiple hyprlock instances.
     # before_sleep_cmd = loginctl lock-session    # lock before suspend.
@@ -820,4 +1051,5 @@ preload=~/Pictures/Wallpapers/image0-EA27E.jpg
 wallpaper=,~/Pictures/Wallpapers/image0-EA27E.jpg
 # preload=~/Pictures/RxlwP.png
 # wallpaper=,~/Pictures/RxlwP.png
+# ipc = off
 #+end_src
