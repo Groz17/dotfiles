@@ -291,7 +291,7 @@ bind <space><S-space> composite js "# [" + document.title + "](" + document.URL 
 #+begin_src bash :tangle ~/.config/tridactyl/scripts/data
 #!/usr/bin/env bash
 for id in $(cliphist list|head -2|cut -f1); do cliphist decode $id;echo; done | wl-copy
-hyprctl dispatch exec '[float] ghostty -e nvim -c "norm 1 Qy"'
+hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qy"'
 #+end_src
 
 #+begin_src conf
@@ -581,16 +581,16 @@ bind --mode=ex          <A-Backspace>   text.backward_kill_word
 bind --mode=insert      <A-Backspace>   text.backward_kill_word
 bind --mode=input       <A-Backspace>   text.backward_kill_word
 
-bind --mode=ex          <C-l>   ex.insert_completion
+bind --mode=ex          <A-i>   ex.insert_completion
 bind --mode=ex          <Tab>   ex.insert_completion
 "bind --mode=ex          <C-e>   ex.deselect_completion
 
 " bind --mode=insert <C-j> !s xdotool key Down
 " bind --mode=insert <C-k> !s xdotool key Up
 
-"bind --mode=ex      <c-l>  ex.accept_line
-"bind --mode=insert  <c-l>  ex.accept_line
-"bind --mode=input   <c-l>  ex.accept_line
+bind --mode=ex      <c-l>  ex.accept_line
+bind --mode=insert  <c-l>  ex.accept_line
+bind --mode=input   <c-l>  ex.accept_line
 
 #+end_src
 
