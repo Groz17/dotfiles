@@ -1,4 +1,4 @@
-#+property: header-args :tangle ~/.config/kanata/config.kbd
+#+property: header-args :tangle ~/.config/kanata/config.kbd :comments org
 #+startup: content
 ;; two/multiple keys to activate layer?
 ;; config.kbd beautifier?
@@ -18,9 +18,7 @@ basically i want:
 - [ ] press and hold release after X time: behaviour (for which-key)
 - [ ] use touchpad for localleader?
 
-- [ ] kanata syntax highlighting? at least in emacs?
 - [ ] cancel control if C-c C key follows a [^[:alpha:]]
-- [ ] layers for arabic/cyrillic?
 - [ ] if u manage to make shift+1,2,3,4 useless, make sure to bind that to f keys for emacs (macros)
 - [ ] key that repeats two times the shifted version of char, for stuff like &&, etc...
 - [ ] hold keys for stuff like \ and C-z for emacs (from insert mode normal command?)
@@ -28,9 +26,6 @@ basically i want:
 - [ ] fai che 2 pressi funga lo stesso , tipo c-xc-s c-xc-c
 - [ ] makes it so trackpoint creates a layer and g (or maybe space)-> left click, h-> right, b-> middle
 - [ ] maybe also prefix for lsp, etc...?
-- [ ] ctrl for every mapping and adjacent keys become ctrl/alt?
-- [ ] use er/ui for emacs modifiers in neovim, like M-o should be eo
-- [ ] bind ctrl+m to enter/Return globally?
 - [ ] also touchpad for C-u?
 - [ ] use super + q for macros (bind to f23 and wtype in hyprland?)
 - [ ] disaccoppia ctrl+<symbol> to ctrl+<symbol> when held, like ctrl-h in emacs (works for prefix keymaps)
@@ -57,7 +52,7 @@ crea tutti o i piu importanti prefix in emacs like (place keys considering impor
   also for every two keypress prefix use a letter, like q (macro key in vim) for C-x C-k (macro key in emacs), etc...
 
 * SETTINGS
-#+begin_src kanata-kbd
+#+begin_src kbd
 
 (defcfg
 ;;obiettivo finale
@@ -86,7 +81,7 @@ conditinally tangle:
 , #+begin_src python :tangle (when (not (string-match  "Battery status not available" (battery))) "laptop.sh")
 
 make ansi and iso defsrc?
-#+begin_src lisp
+#+begin_src kbd
 
 ;; e un bene che bspc sia in una posizione scomodina (non vuoi favoreggiare sbagli)
 (defsrc
@@ -114,7 +109,7 @@ make ansi and iso defsrc?
 #+end_src
 
 * VARIABLES
-#+begin_src lisp
+#+begin_src kbd
 (defvar
   tt 300
   ht 330
@@ -124,7 +119,9 @@ make ansi and iso defsrc?
 #+end_src
 
 * ALIAS
-#+begin_src lisp
+
+z=f13, x=f14, c=f15, ...
+#+begin_src kbd
 
 (defalias
 
@@ -252,7 +249,7 @@ make ansi and iso defsrc?
 
 #+end_src
 ** MOUSE
-#+begin_src lisp :tangle (if (string-match  "Power N/A, battery unknown (N/A% load, remaining time N/A)"(battery)) "no" (substring(cdr(assoc "header-args"(symbol-value 'org-keyword-properties)))8))
+#+begin_src kbd :tangle (if (string-match  "Power N/A, battery unknown (N/A% load, remaining time N/A)"(battery)) "no" (cdr (assq :tangle (org-babel-parse-header-arguments (cdr (assoc "header-args" org-keyword-properties))))))
 ;; how to make touchpad work?
 
 ;; maybe define these just for neovim since u aint gonna use the mouse (define env var in neovim like IS_NEO?)
@@ -296,14 +293,14 @@ mmid mmid
 
 #+end_src
 
-#+begin_src lisp :tangle (if (string-match  "Power N/A, battery unknown (N/A% load, remaining time N/A)"(battery)) (substring(cdr(assoc "header-args"(symbol-value 'org-keyword-properties)))8) "no")
+#+begin_src kbd :tangle (if (string-match  "Power N/A, battery unknown (N/A% load, remaining time N/A)"(battery)) (cdr (assq :tangle (org-babel-parse-header-arguments (cdr (assoc "header-args" org-keyword-properties))))) "no")
 mmid mmid
 mrgt mrgt
 mlft mlft
 #+end_src
 
-** Terminal prefix
-#+begin_src lisp
+** Terminal
+#+begin_src kbd
    ;; use e/i 'cause middle finger is the strongest ig
    ;; crea modifiers nuovi with super + combinazione di altri modifiers: super+{cltrl,alt,shift} 2^3 insieme delle parti (except shift only for hyprland)
    ;; can also do super+modifiers+symbols (for neovim/emacs/editor leader...)
@@ -324,6 +321,9 @@ mlft mlft
   ;;i (tap-hold 175 200 i (tap-hold-press-timeout 0 200 i (layer-while-held symbols) (macro S-i)))
   ;;i (tap-hold 175 200 i (tap-hold-press-timeout 0 200 i f11 (macro S-i)))
 
+#+end_src
+
+#+begin_src kbd
 ;; ───────────────────────────── HRM ──────────────────────────────
 ;; from left to right asdf
 
@@ -370,7 +370,7 @@ mlft mlft
   ;;l (tap-hold 175 200 l (tap-hold-press-timeout 0 200 l (layer-while-held symbols) (macro S-l)))
 #+end_src
 ** Ctrl
-#+begin_src lisp
+#+begin_src kbd
   ;;d (multi f24 (tap-hold-press-timeout 200 250 d lctl (macro S-d)))
   ;; make lctl sticky (for ctrl-h backspace)
 ;; if d and m pressed at the same time-> double ctrl, for things like c-cr (c-c-m)
@@ -385,7 +385,7 @@ mlft mlft
   ;;k (tap-hold 175 200 k (tap-hold-press-timeout 0 200 k (layer-while-held ctrl_for_k) (macro S-k)))
 #+end_src
 ** Alt
-#+begin_src lisp
+#+begin_src kbd
 
   ;;f (multi f24 (tap-hold-press-timeout 200 250 f lalt (macro S-f)))
   ;;f (multi f24 (tap-hold-press-timeout 200 250 f (layer-while-held symbols) (macro S-f)))
@@ -415,7 +415,7 @@ mlft mlft
 #+end_src
 
 ** Super
-#+begin_src lisp
+#+begin_src kbd
    ;;spc   (tap-hold 200 250 spc lmet)
    ;; spotlight behaviour (maybe use f15 or smth for neovim)
    ;;spc   (tap-hold 200 250 (tap-dance 300 (spc (macro M-d))) lmet)
@@ -437,7 +437,8 @@ spc (tap-hold-press-timeout 0 200 spc lmet (multi S-spc))
 #+end_src
 
 ** VCS
-  #+begin_src lisp
+Not sure...
+  #+begin_src kbd
   ;;v (tap-hold 150 175 v (tap-hold-press-timeout 0 75 v (macro C-\) (macro S-v)))
   ;;v (tap-hold 150 175 v (tap-hold-press-timeout 0 75 v (multi lctl u lalt) (macro S-v)))
   ;; seems (i'm hopeful) that c-x c-y c-z can be done with c-x c-y z
@@ -445,21 +446,43 @@ spc (tap-hold-press-timeout 0 200 spc lmet (multi S-spc))
   n (tap-hold 150 200 n (tap-hold-press-timeout 0 150 n f14 (macro S-n)))
   #+end_src
 
-#+begin_src lisp
+** One-shot (C-c ...)
+x and , harder to press than c and m (one-shot bindings should be less frequent than localleader bindings)
+#+begin_src elisp
 
-;; ───────────────────────────── register ──────────────────────────────
-;;per vim
-r (tap-hold 175 175 r (tap-hold-press-timeout 0 100 r (macro C-r) (macro S-r)))
-;; work on autorepeat? like if over>250 UU?
-;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (macro C-r) (macro S-u)))
-;; for emacs (4 is the default)
-;;maybe C-u for emacs? when held?
-u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
-;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (multi lctl u) (macro S-u)))
-;; r (tap-hold-press-timeout 0 200 r r (macro S-r))
-;; u (tap-hold-press-timeout 200 200 u u (macro S-u))
+  ;; basically d and f are ctrl and alt, and x is c, c is ctrl alt (fusion of d and f) and v is alt
+  ;;x (tap-hold-press-timeout 175 175 x (multi lctl u lctl) (macro S-x))
+  ;;x (tap-hold-press-timeout 175 175 x (multi lctl c lctl x lctl) (macro S-x))
+  ;; basically x is for snacks keymaps (ks mnemonic)
+  ;; maybe map to c-c c-x? it's in the middle of c-x and c-c
+  ;;x (tap-hold-press-timeout 175 175 x f14 (macro S-x))
+  x (tap-hold 150 175 x (tap-hold-press-timeout 0 124 x x (macro S-x)))
+  ;;, (tap-hold-press-timeout 190 157 , (multi lctl c lctl x) (macro S-,))
+  ;; , (tap-hold-press-timeout 190 157 , f14 (macro S-,))
+  , (tap-hold-press-timeout 190 157 , , (macro S-,))
+#+end_src
 
-;; ───────────────────────────── window ────────────────────────────
+** Localleader (C-c c-...)
+or find strategy to add ending control... maybe tap dance? or if they're pressed at the same time (q->C-x C-k,q & p->C-x C-k C-)
+#+begin_src kbd
+   ;; u could maybe use this for hyper/super in emacs since u run it as a GUI
+  ;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (multi lmet lalt) (macro S-c)))
+  ;; nice position so u can use ctrl-x arrow in emacs
+  
+;; for C-u use macros , v:count like for C-u,C-u,C-u
+
+;; bind to C-c C-, C-c C-c would be very comfortable with mc
+  c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c f15 (macro S-c)))
+ m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m f15 (macro S-m)))
+ ;; m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m (multi lctl c lctl) (macro S-m)))
+  ;; c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (multi lctl c lctl) (macro S-c)))
+
+
+#+end_src
+
+** Window
+
+#+begin_src kbd
 
 ;; so i can preserve C-\ input in emacs
    a (tap-hold 175 175 a (tap-hold-press-timeout 0 175 a f16 (macro S-a)))
@@ -484,6 +507,22 @@ u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
   ;; ; (multi f24(tap-hold-press-timeout 0 150 ; ; (macro S-;)))
 ;; magari usa ` top left key?
    ;; ; (tap-hold 175 100 ; (tap-hold-press-timeout 0 30 ; (layer-switch nav_sx) (macro S-;)))
+#+end_src
+
+#+begin_src kbd
+
+;; ───────────────────────────── register ──────────────────────────────
+;;per vim
+r (tap-hold 175 175 r (tap-hold-press-timeout 0 100 r (macro C-r) (macro S-r)))
+;; work on autorepeat? like if over>250 UU?
+;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (macro C-r) (macro S-u)))
+;; for emacs (4 is the default)
+;;maybe C-u for emacs? when held?
+u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
+;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (multi lctl u) (macro S-u)))
+;; r (tap-hold-press-timeout 0 200 r r (macro S-r))
+;; u (tap-hold-press-timeout 200 200 u u (macro S-u))
+
 
 ;; ───────────────────────────── accents ────────────────────────────
   ;;w (tap-hold-press-timeout 200 200 w (multi C-w) (macro S-w))
@@ -510,48 +549,8 @@ u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
 
 
 ;; ───────────────────────────── navigation ────────────────────────────
-;; ───────────────────────────── one-shot mappings ────────────────────────────
-;; c and m cause u don't worry about using met lalt with other modifiers (as opposed to a/; to be able to use C-c C-x for emacs)
-;; this way C-c and C-x are both close to cntrl (i don't think there's mappings that use alt after those... so don't worry 'bout that)
-
-  ;; per ghostty/terminale
-  ;; magari usa a e ; for that (o switch con s e l del WM)
-  ;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (macro lctl lsft lalt) (macro S-c)))
-   ;; c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (layer-while-held symbols) (macro S-c)))
-   ;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 100 c Home (macro S-c)))
-   ;;c (tap-hold 175 250 c (tap-hold-press-timeout 0 200 c (multi lctl c) (macro S-c)))
-  ;;c (tap-hold 150 175 c (tap-hold-press-timeout 0 230 c (macro C-c) (macro S-c)))
-   ;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c c (macro S-c)))
-   ;; u could maybe use this for hyper/super in emacs since u run it as a GUI
-  ;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (multi lmet lalt) (macro S-c)))
-  ;; nice position so u can use ctrl-x arrow in emacs
-  ;; layer toggle?
-  ;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (layer-switch nav) (macro S-c)))
-  ;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (layer-while-held nav) (macro S-c)))
-  ;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (multi lctl u lctl lalt) (macro S-c)))
- ;;  c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (macro C-c) (macro S-c)))
- ;; z=f13, x=f14, c=f15
-  ;; for emacs to insert mode mappings (evil in general)
-  ;; near ctrl (d) so i can easily do something like c-t
-  ;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (macro C-z) (macro S-c)))
-  
-;; for C-u use macros , v:count like for C-u,C-u,C-u
-
-  c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c f15 (macro S-c)))
- m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m f15 (macro S-m)))
-  ;; c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (multi lctl c lctl) (macro S-c)))
- ;; m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m (multi lctl c lctl) (macro S-m)))
- ;; c (tap-hold 175 200 c (multi lctl c lctl)) ;; works
-  ;; c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (multi lctl c lctl) (macro S-c)))
- ;; m (tap-hold 175 200 m (multi lctl c lctl)) ;; works
 
 
-  ;;m (tap-hold-press-timeout 200 200 m m (macro S-m))
-  ;; m (tap-hold 100 150 m (tap-hold-press-timeout 0 75 m Home (macro S-m)))
-  ;;m (tap-hold 100 175 m (tap-hold-press-timeout 0 100 m (multi lctl c) (macro S-m)))
-  ;;m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m (multi lmet lalt) (macro S-m)))
-  ;;m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m (macro C-c) (macro S-m)))
-  ;;m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m (multi lctl u lctl lalt) (macro S-m)))
 
 ;; ───────────────────────────── toggle ───────────────────────────────
   ;;z (tap-hold-press-timeout 175 175 z z (macro S-z))
@@ -612,17 +611,6 @@ u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
   y (tap-hold-press-timeout 175 175 y y (macro S-y))
 
    
-  ;; basically d and f are ctrl and alt, and x is c, c is ctrl alt (fusion of d and f) and v is alt
-  ;;x (tap-hold-press-timeout 175 175 x (multi lctl u lctl) (macro S-x))
-  ;;x (tap-hold-press-timeout 175 175 x (multi lctl c lctl x lctl) (macro S-x))
-  ;; basically x is for snacks keymaps (ks mnemonic)
-  ;; maybe map to c-c c-x? it's in the middle of c-x and c-c
-  ;;x (tap-hold-press-timeout 175 175 x f14 (macro S-x))
-  ;;x (tap-hold-press-timeout 175 175 x x (macro S-x))
-  x (tap-hold 150 175 x (tap-hold-press-timeout 0 124 x x (macro S-x)))
-  ;;, (tap-hold-press-timeout 190 157 , (multi lctl c lctl x) (macro S-,))
-  ;; , (tap-hold-press-timeout 190 157 , f14 (macro S-,))
-  , (tap-hold-press-timeout 190 157 , , (macro S-,))
 
   ;; magai usa l...
   ' (tap-hold-press-timeout 200 157 ' ' (macro S-'))
@@ -679,7 +667,7 @@ d0 (tap-hold-press-timeout 175 175 0 0 0)
    v:count?
    also S-9 and S-0 could be an idea (like emacs c-x())
    better to toggle though
-#+begin_src lisp
+#+begin_src kbd
 ;; - (tap-hold-press-timeout 175 175 rpt-any - (macro S--))
 - (tap-hold-press-timeout 175 175 (dynamic-macro-record 0) - (macro S--))
 = (tap-hold-press-timeout 175 175 dynamic-macro-record-stop = (macro S-=))
@@ -700,7 +688,7 @@ d0 (tap-hold-press-timeout 175 175 0 0 0)
 #+end_src
 
 * LAYERS
-#+begin_src lisp
+#+begin_src kbd
 
 ;; defvar and defalias diff?
 (defvar
@@ -892,7 +880,7 @@ also use alt and altgr... (by themselves+chords)
  find unusual combinations lik hj/jh/etc... (also three (maybe more) letters like kl; ) (the letters don't have to be adiacent)
  double chord taps?
  how to repeat chords w/ rpt-any
-#+begin_src lisp
+#+begin_src kbd
 
 (defchordsv2
 ;;(f d) esc 150 first-release ()
@@ -921,7 +909,6 @@ also use alt and altgr... (by themselves+chords)
 ;;(j k l) (macro S-f13) 250 first-release ()
 ;; flash f13?
 
-;; use for c-c local mappings
 ;; (c m) (switch ((input-history real c 1)) (macro S-5) break() \ break) 150 all-released ()
 ;; (z .) (switch ((input-history real z 1)) \ break() grave break) 150 all-released ()
 ;; (/ .) (switch ((input-history real . 1)) \ break() grave break) 150 all-released ()
@@ -957,14 +944,14 @@ also use alt and altgr... (by themselves+chords)
 #+end_src
 ** Quick accents
 In the future use picker like on phone?
-#+begin_src lisp
+#+begin_src kbd
 (a caps)  (unicode à) 100 first-release ()
 (a ')  (unicode á) 100 first-release ()
 
 ;;(e `)  è 100 first-release ()
 ;;(e ')  é 100 first-release ()
 ;;(e `)  (unicode è) 100 first-release ()
-;; caps doesn't get translated otherwise
+;; caps doesn't get translated otherwise (is there a function that translates?)
 (e caps)  (unicode è) 100 first-release ()
 (e ')  (unicode é) 100 first-release ()
 
