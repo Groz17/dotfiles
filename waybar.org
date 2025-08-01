@@ -1,6 +1,6 @@
 * Config
 :PROPERTIES:
-:header-args: :tangle ~/.config/waybar/config.jsonc :comments link
+:header-args: :tangle ~/.config/waybar/config.jsonc
 :END:
 
 ** Bar
@@ -8,13 +8,13 @@
 // show if muted
 {
   "layer": "top",
-    "position": "top",
-    "spacing": 0,
-    "height": 0,
-    "margin-top": 0,
-    "margin-right": 0,
-    "margin-bottom": 0,
-    "margin-left": 0,
+  "position": "top",
+  "spacing": 0,
+  "height": 0,
+  "margin-top": 0,
+  "margin-right": 0,
+  "margin-bottom": 0,
+  "margin-left": 0,
 #+end_src
 
 ** Modules
@@ -23,24 +23,21 @@
 #+begin_src conf
 "modules-left": [
   "hyprland/workspaces",
-"mpris"
+  "mpris"
   // "custom/vpn"
 ],
 
-"modules-center": [
-  "clock",
-"privacy"
-],
+"modules-center": ["clock", "privacy"],
 
 "modules-right": [
   "bluetooth",
-"tray",
-// "cpu_text",
-"cpu",
-"memory",
-"battery",
-"network",
-"pulseaudio"
+  "tray",
+  // "cpu_text",
+  "cpu",
+  "memory",
+  "battery",
+  "network",
+  "pulseaudio"
 ],
 #+end_src
 
@@ -57,11 +54,11 @@
 
 *** Built-in
 #+begin_src conf
-    "privacy": {
-      "icon-spacing": 4,
-      "icon-size": 18,
-      "transition-duration": 250,
-      "modules": [
+  "privacy": {
+    "icon-spacing": 4,
+    "icon-size": 18,
+    "transition-duration": 250,
+    "modules": [
       {
 	"type": "screenshare",
 	"tooltip": true,
@@ -72,9 +69,9 @@
 	"tooltip": true,
 	"tooltip-icon-size": 24
       }
-      ],
-      "ignore-monitor": true,
-      "ignore": [
+    ],
+    "ignore-monitor": true,
+    "ignore": [
       {
 	"type": "audio-in",
 	"name": "cava"
@@ -83,140 +80,140 @@
 	"type": "screenshare",
 	"name": "obs"
       }
-      ]
+    ]
+  },
+  "tray": {
+    "spacing": 10,
+    "tooltip": false
+  },
+
+  "clock": {
+    "format": "{:%I:%M %p - %a, %d %b %Y}",
+    "tooltip": false
+  },
+
+  "cpu": {
+    "format": "cpu {usage}%",
+    "interval": 2,
+
+    "states": {
+      "critical": 90
+    }
+  },
+
+  "memory": {
+    "format": "mem {percentage}%",
+    "interval": 2,
+
+    "states": {
+      "critical": 80
+    }
+  },
+
+  "battery": {
+    "format": "bat {capacity}%",
+    "interval": 5,
+    // "states": {
+    //     "warning": 20,
+    //     "critical": 10
+    // },
+    "tooltip": false,
+
+    "states": {
+      // "good": 95,
+      "warning": 30,
+      "critical": 15
     },
-    "tray": {
-      "spacing": 10,
-      "tooltip": false
+    //"format": "{capacity}% {icon}",
+    "format-full": "{capacity}% {icon}",
+    "format-charging": "{capacity}% ",
+    "format-plugged": "{capacity}% ",
+    "format-alt": "{time} {icon}",
+    // "format-good": "", // An empty format will hide the module
+    // "format-full": "",
+    "format-icons": ["", "", "", "", ""]
+  },
+
+  "network": {
+    "format-wifi": "wifi {bandwidthDownBits}",
+    "format-ethernet": "enth {bandwidthDownBits}",
+    "format-disconnected": "no network",
+    "interval": 5,
+    "tooltip": false
+  },
+
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "warp-on-scroll": false,
+    "format": "{name}: {icon}",
+    "format-icons": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "urgent": "",
+      // would be cool it just coloured the corresponding icon... or the background or line at the top...
+      //"focused": "",
+      "active": "",
+      "default": ""
+    }
+  },
+  "mpris": {
+    // "format": "{player_icon}  {title} - {artist} [{position} / {length}]",
+    "format": "🎵  {title} - {artist} [{position} / {length}]",
+    "format-paused": "{player_icon}  {title} - {artist} [{position} / {length}]",
+
+    "player-icons": {
+      "default": "󰝚 ",
+      "spotify": "<span foreground='#a6e3a1'>󰓇 </span>",
+      "firefox": "<span foreground='#f38ba8'>󰗃 </span>",
+      "mpv": ""
+    },
+    "status-icons": {
+      "paused": "<span color='#b4befe'>\u200A\u200A󰏤\u2009\u2009</span>"
     },
 
-    "clock": {
-      "format": "{:%I:%M %p - %a, %d %b %Y}",
-      "tooltip": false
+    "tooltip-format": "Playing: {title} - {artist}",
+    "tooltip-format-paused": "Paused: {title} - {artist}",
+    //min-length": 5,
+    //max-length": 70,
+
+    "ignored-players": ["firefox"],
+    "interval": 1
+  },
+  // https://man.archlinux.org/man/extra/waybar/waybar-bluetooth.5.en
+  "bluetooth": {
+    // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
+    "format": " {status}",
+    // hide no-controller?
+    "format-disabled": "", // an empty format will hide the module
+    "format-connected": " {num_connections} connected",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
+  },
+  "pulseaudio": {
+    // "scroll-step": 1, // %, can be a float
+    "format": "{icon}  | {format_source}",
+    "format-bluetooth": "{icon}  | {format_source}",
+    "format-bluetooth-muted": "  | {format_source}",
+    "format-muted": "  | {format_source}",
+    "format-source": "",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""]
     },
-
-    "cpu": {
-      "format": "cpu {usage}%",
-      "interval": 2,
-
-      "states": {
-	"critical": 90
-      }
-    },
-
-    "memory": {
-      "format": "mem {percentage}%",
-      "interval": 2,
-
-      "states": {
-	"critical": 80
-      }
-    },
-
-    "battery": {
-      "format": "bat {capacity}%",
-      "interval": 5,
-      // "states": {
-      //     "warning": 20,
-      //     "critical": 10
-      // },
-      "tooltip": false,
-
-      "states": {
-	// "good": 95,
-	"warning": 30,
-	"critical": 15
-      },
-      //"format": "{capacity}% {icon}",
-      "format-full": "{capacity}% {icon}",
-      "format-charging": "{capacity}% ",
-      "format-plugged": "{capacity}% ",
-      "format-alt": "{time} {icon}",
-      // "format-good": "", // An empty format will hide the module
-      // "format-full": "",
-      "format-icons": ["", "", "", "", ""]
-    },
-
-    "network": {
-      "format-wifi" : "wifi {bandwidthDownBits}",
-      "format-ethernet": "enth {bandwidthDownBits}",
-      "format-disconnected" : "no network",
-      "interval": 5,
-      "tooltip": false
-    },
-
-    "hyprland/workspaces": {
-      "disable-scroll": true,
-      "all-outputs": true,
-      "warp-on-scroll": false,
-      "format": "{name}: {icon}",
-      "format-icons": {
-	"1": "",
-	"2": "",
-	"3": "",
-	"4": "",
-	"5": "",
-	"urgent": "",
-	// would be cool it just coloured the corresponding icon... or the background or line at the top...
-	//"focused": "",
-	"active": "",
-	"default": ""
-      }
-    },
-    "mpris": {
-      // "format": "{player_icon}  {title} - {artist} [{position} / {length}]",
-      "format": "🎵  {title} - {artist} [{position} / {length}]",
-      "format-paused": "{player_icon}  {title} - {artist} [{position} / {length}]",
-
-      "player-icons": {
-	"default": "󰝚 ",
-	"spotify": "<span foreground='#a6e3a1'>󰓇 </span>",
-	"firefox": "<span foreground='#f38ba8'>󰗃 </span>",
-	"mpv": "",
-      },
-      "status-icons": {
-	"paused": "<span color='#b4befe'>\u200A\u200A󰏤\u2009\u2009</span>"
-      },
-
-      "tooltip-format": "Playing: {title} - {artist}",
-      "tooltip-format-paused": "Paused: {title} - {artist}",
-      //min-length": 5,
-      //max-length": 70,
-
-      "ignored-players": ["firefox"],
-      "interval":1,
-    },
-    // https://man.archlinux.org/man/extra/waybar/waybar-bluetooth.5.en
-    "bluetooth": {
-      // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
-      "format": " {status}",
-      // hide no-controller?
-      "format-disabled": "", // an empty format will hide the module
-      "format-connected": " {num_connections} connected",
-      "tooltip-format": "{controller_alias}\t{controller_address}",
-      "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-      "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
-    },
-    "pulseaudio": {
-      // "scroll-step": 1, // %, can be a float
-      "format": "{icon}  | {format_source}",
-      "format-bluetooth": "{icon}  | {format_source}",
-      "format-bluetooth-muted": "  | {format_source}",
-      "format-muted": "  | {format_source}",
-      "format-source": "",
-      "format-source-muted": "",
-      "format-icons": {
-	"headphone": "",
-	"hands-free": "",
-	"headset": "",
-	"phone": "",
-	"portable": "",
-	"car": "",
-	"default": ["", "", ""]
-      },
-      "tooltip-format": "{volume}% | {desc}",
-      "on-click": "pactl set-sink-mute @DEFAULT_SINK@ 'toggle'"
-    },
+    "tooltip-format": "{volume}% | {desc}",
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ 'toggle'"
+  }
 }
 #+end_src
 
