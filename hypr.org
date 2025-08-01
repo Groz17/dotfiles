@@ -44,6 +44,7 @@ monitor=,preferred,auto,auto, transform, 0
 Set programs that you use
 
 #+begin_src conf
+# usa ENV vars?
 $terminal = ghostty
 #$fileManager = dolphin
 $fileManager = ghostty -e emacsclient -t --eval '(dired nil)'
@@ -51,6 +52,9 @@ $fileManager = ghostty -e emacsclient -t --eval '(dired nil)'
 # in futuro standalone emacs picker (elimina tutte le dipendenze)
 $menu = rofi -show drun -show-icons
 $browser = floorp || flatpak run one.ablaze.floorp
+
+#$email 
+#$pass
 
 # open krita/image editing software with clipboard as input? for when commenting screenshotted code?
 #+end_src
@@ -353,6 +357,7 @@ bind = $mainMod, mouse_up, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl
 bind = $mainMod, equal, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 * 1.1}')
 bind = $mainMod, minus, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 * 0.9}')
 # bind = $mod SHIFT, equal, exec, hyprctl -q keyword cursor:zoom_factor 1
+bind = $mainMod , mouse:274, exec, hyprctl -q keyword cursor:zoom_factor 1 # middle button
 #+end_src
 
 *** [[https://wiki.hypr.land/Configuring/Binds/#media][Media]]
@@ -424,13 +429,27 @@ bind=super shift,b,exec, bash -c "bluetoothctl <<< connect\ $(bluetoothctl <<< d
 *** Apps
 #+begin_src conf
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-bind = $mainMod, Return, exec, $terminal
+# bind = $mainMod, Return, exec, $terminal
+bind = $mainMod, RETURN, exec, emacsclient -n -e '(progn (select-frame-set-input-focus (selected-frame)) (vterm))'
+
 
 # prefix bind for opening files like in vim/emacs? use $EDITOR (magari con nvim -c or smth)
 # how to quickly switch between emacs and neovim?
 # open terminal when exiting or before emacs?
 # bind = $mainMod, e, exec, [float;fullscreen] emacsclient -c  -a ''
 bind = $mainMod, e, exec, emacsclient -c  -a '' -F "'(fullscreen . fullboth)"
+# bind = $mainMod SHIFT, E, exec, emacsclient --eval "(emacs-everywhere)"
+
+# bind = $mainMod, P, exec, emacsclient -n -e '(progn (select-frame-set-input-focus (selected-frame)) (pass))'
+
+# bind = $mainMod, E, exec, emacsclient -c -a ""
+# bind = $mainMod, F, exec, emacsclient -n -e '(progn (select-frame-set-input-focus (selected-frame)) (dired "~/"))'
+# bind = $mainMod, B, exec, emacsclient ~/org/roam/personal/Bookmarks/Sites.org
+# bind = $mainMod, N, exec, emacsclient ~/org/notes.org
+# bind = $mainMod, Z, exec, emacsclient -n -e '(progn (select-frame-set-input-focus (selected-frame)) (elfeed))'
+# bind = $mainMod CONTROL, M, exec, emacsclient -n -e '(progn (select-frame-set-input-focus (selected-frame)) (emms))'
+
+
 
 # bind = $mainMod, d, exec, emacsclient -c  -a 'emacs' -F "'(app-launcher)" DT video?
 bind = $mainMod shift, e, exec, [float;fullscreen]emacs -Q
@@ -451,7 +470,9 @@ bind = $mainMod, B, exec, $browser
 # bind = $mainMod, a, exec, ferdium --ozone-platform=wayland --enable-fetures-WaylandWindowDecorations
 
 # bind = $mainMod, esc, shutdown,
-bind = $mainMod, period, exec, [float] $fileManager
+# bind = $mainMod, period, exec, [float] $fileManager
+# crea submap per emacs bindings for email, dired, etc...
+#bind = $mainMod CTRL, x, d, exec, [float] $fileManager
 
 # super shift enter?
 bind = $mainMod, D, exec, $menu
@@ -697,6 +718,11 @@ if [[ ${#songs[@]} -ne 0 ]]; then
 fi
 #+end_src
 
+*** Global Keybinds 
+https://wiki.hypr.land/Configuring/Binds/#global-keybinds
+for reaper record?
+bind = SUPER, F10, sendshortcut, SUPER, F4, class:^(com\.obsproject\.Studio)$
+emacs emms
 
 ** [[https://wiki.hyprland.org/Configuring/Window-Rules/][WINDOWS]] AND [[https://wiki.hyprland.org/Configuring/Workspace-Rules/][WORKSPACES]]
 #+begin_src conf
