@@ -1,4 +1,3 @@
-#+property: header-args
 #+startup: content
 
 * Keybindings
@@ -67,13 +66,14 @@ local global = { -- applies both to main and midi
     command = {
         ["<M-x>"] = "ShowActionList",
         ["<CM-x>"] = "ShowBindingList",
-        -- ["<F18>b"] = "ShowBindingList", (doesn't work...)
+	-- (doesn't work...)
+        ["<F18>b"] = "ShowBindingList", 
         ["<ESC>"] = "Reset",
         ["<C-g>"] = "Reset",
         ["<S-<ESC>>"] = "ClearTimeSelection",
 
-        ["<return>"] = "StartStop",
-        -- ["<SPC>"] = "StartStop",
+        -- ["<return>"] = "StartStop",
+        ["<SPC>"] = "StartStop",
         ["tt"] = "PlayFromTimeSelectionStart",
         ["<C-T>"] = "PlayAndSkipTimeSelection",
         ["<M-t>"] = "PlayFromMousePosition",
@@ -172,8 +172,9 @@ local global = { -- applies both to main and midi
             ["3"] = "InsertTrackFromTemplateSlot3",
             ["4"] = "InsertTrackFromTemplateSlot4",
         } },
-        ["<SPC>"] = { "+leader commands", {
-        -- ["<F12>"] = { "+leader commands", {
+        -- ["<SPC>"] = { "+leader commands", {
+	-- to pause/stop 😀
+        ["<F12>"] = { "+leader commands", {
             N = "ShowNotesWindow",
             n = { "+notes", {
                 i = "ShowNotesItem",
