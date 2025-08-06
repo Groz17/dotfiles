@@ -139,6 +139,7 @@ alias V="nvim -c TransparentEnable"
 alias userctl="systemctl --user"
 
 alias rtfm='ranger /usr/share/doc/arch-wiki/html/en'
+# alias cb='flatpak run app.getclipboard.Clipboard'
 
 function WTF {
       # wtf -t comp $(cat /usr/share/games/bsdgames/acronyms.comp | cut -f1 | shuf -n1)
@@ -564,6 +565,17 @@ eval "$(zoxide init --cmd j bash)"
 
 * Functions
 #+begin_src bash
+
+c() {
+  if [ -t 0 ]; then
+    # stdin is a terminal: act as paste (output clipboard)
+    wl-paste
+  else
+    # stdin is piped: act as copy (input to clipboard)
+    wl-copy
+  fi
+}
+
 
 html2pdf() {
 	typst compile <(rdrview -H "$1" | pandoc -f html -t typst) /dev/stdout | zathura -
