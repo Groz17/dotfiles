@@ -7,10 +7,7 @@
 
 # silent option (no verbose when executing?)
 ** TODO TASK LIST
-#+begin_src conf
-toggle_two_page_mode |
-
-#+end_src
+- [ ] tangle scripts
 ** NAVIGATION AND ZOOM
 #+begin_src conf
 goto_beginning;goto_top_of_page gg
@@ -148,6 +145,8 @@ move_visual_mark_down <down>
 ## lock horizontal scroll, useful when using laptop touchpads
 # toggle_horizontal_scroll_lock <unbound>
 # toggle_horizontal_scroll_lock zw
+
+toggle_two_page_mode |
 
 #+end_src
 ** SEARCH
@@ -296,10 +295,11 @@ external_search s
 # open_selected_url Q
 
 # Toggle dark mode (inverted colors)
-# toggle_dark_mode <f8>
 # toggle_dark_mode zb
 # should automatically do it w/ darkman
-# toggle_dark_mode C
+# like pdf-view in emacs
+toggle_dark_mode zm
+# <f15>b like in editors?
 
 ## Toggle custom color mode. You can specify the text background color in your `prefs_user.config` file
 ## see https://sioyek-documentation.readthedocs.io/en/latest/configuration.html#custom-background-color-and-custom-text-color
@@ -493,22 +493,38 @@ _screenshot2jpg4anki <A-s>
 #+end_src
 
 ** MENU
+[[Feature request]: classic Emacs-style kbd to edit typed words in the command line, bookmark list, toc, etc. · Issue #921 · ahrm/sioyek](https://github.com/ahrm/sioyek/issues/921)
 #+begin_src conf
 [m]control_menu(up) <C-k>
 [m]control_menu(down) <C-j>
 [m]control_menu(select) <C-l>
+[m]control_menu(page_down) <C-v>
+[m]control_menu(page_up) <A-v>
+[m]control_menu(menu_begin) <A-S-,>
 # [m]control_menu(left) <C-h>
 # [m]control_menu(righ) <C-l>
+
+[m]control_menu(move_to_begin) <C-a>
+[m]control_menu(move_to_end) <C-e>
+# [m]control_menu(delete_to_end) <C-k>
+[m]control_menu(cursor_forward) <C-f>
+[m]control_menu(select_forward) <C-S-F>
+[m]control_menu(cursor_backward) <C-b>
+[m]control_menu(delete_prev_char) <C-h>
+[m]control_menu(delete_prev_word) <C-w>
+[m]control_menu(select_backward) <C-S-B>
+[m]control_menu(delete_next_char) <C-d>
+[m]control_menu(move_word_forward) <A-f>
+[m]control_menu(select_word_forward) <A-S-F>
+[m]control_menu(move_word_backward) <A-b>
+[m]control_menu(select_word_backward) <A-S-B>
+
 #+end_src
 
 * Prefs
 :PROPERTIES:
 :header-args: :tangle  ~/.config/sioyek/prefs_user.config
 :END:
-
-# see:/usr/etc/sioyek/prefs.config
-# https://github.com/ahrm/sioyek/issues/355
-# emacs_mode_menus 1
 
 super_fast_search 1
 show_close_portal_in_statusbar 1
