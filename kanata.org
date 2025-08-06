@@ -426,8 +426,7 @@ C-x is also useful for readline
   ;;l (tap-hold 175 200 l (tap-hold-press-timeout 0 200 l f11 (macro S-l)))
   ;;l (tap-hold 175 200 l (tap-hold-press-timeout 0 200 l (layer-while-held symbols) (macro S-l)))
 #+end_src
-** One-shot (C-c ...)
-x and , harder to press than c and m (one-shot bindings should be less frequent than localleader bindings)
+
 #+begin_src elisp
 
   ;; basically d and f are ctrl and alt, and x is c, c is ctrl alt (fusion of d and f) and v is alt
@@ -442,20 +441,16 @@ x and , harder to press than c and m (one-shot bindings should be less frequent 
   , (tap-hold-press-timeout 190 157 , , (macro S-,))
 #+end_src
 
-** Localleader (C-c c-...)
-or find strategy to add ending control... maybe tap dance? or if they're pressed at the same time (q->C-x C-k,q & p->C-x C-k C-)
+** One-shot/localleader (C-c ...)
 #+begin_src kbd
-   ;; u could maybe use this for hyper/super in emacs since u run it as a GUI
-  ;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (multi lmet lalt) (macro S-c)))
-  ;; nice position so u can use ctrl-x arrow in emacs
-  
+;; u could maybe use this for hyper/super in emacs since u run it as a GUI
+;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (multi lmet lalt) (macro S-c)))
+;; nice position so u can use ctrl-x arrow in emacs
+
 ;; for C-u use macros , v:count like for C-u,C-u,C-u
 
-;; bind to C-c C-, C-c C-c would be very comfortable with mc
-  c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c f15 (macro S-c)))
- m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m f15 (macro S-m)))
- ;; m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m (multi lctl c lctl) (macro S-m)))
-  ;; c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (multi lctl c lctl) (macro S-c)))
+c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c f15 (macro S-c)))
+m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m f15 (macro S-m)))
 
 
 #+end_src
