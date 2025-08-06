@@ -134,9 +134,6 @@ alias x="xournalpp"
 alias excalidraw="firefoxpwa site launch  01JQHQYS8VXCZZWMQMBN3HA1N2"
 alias a="apy"
 
-alias c="wl-copy"
-alias p="wl-paste"
-
 # alias aider="~/pip/aider/bin/aider"
 alias V="nvim -c TransparentEnable"
 alias userctl="systemctl --user"
@@ -544,7 +541,8 @@ fi
 fi # (include guard) end of main content
 
 #+end_src
-** Direnv
+
+* Direnv
 #+begin_src bash
 
 # Make sure it appears even after rvm, git-prompt and other shell extensions that manipulate the prompt.
@@ -566,14 +564,6 @@ eval "$(zoxide init --cmd j bash)"
 
 * Functions
 #+begin_src bash
-nj(){
-    read -p 'Insert dir name: >' name
-    dir="$HOME/java/$name"
-    mkdir -p "$dir"
-    nvim "$dir/Main.java"
-    git -C "$dir" init
-
-}
 
 html2pdf() {
 	typst compile <(rdrview -H "$1" | pandoc -f html -t typst) /dev/stdout | zathura -
@@ -626,7 +616,7 @@ dired () {
         echo "Not a directory: '$target'" >&2
         return 1
     fi
-    emacsclient -t --eval "(progn (dired \"$target\") (wdired-change-to-wdired-mode))"
+    emacsclient -a '' -t --eval "(progn (dired \"$target\") (wdired-change-to-wdired-mode))"
   }
 
 eww () {
