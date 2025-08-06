@@ -95,6 +95,7 @@ exec-once = hypridle &
 **** Clipboard
 #+begin_src conf
   # exec-once = wl-clipbard-history -t
+  # cb?
 exec-once = wl-paste --type text --watch cliphist store
 exec-once = wl-paste --type image --watch cliphist store
 #+end_src  
@@ -115,15 +116,19 @@ exec-once = hyprpaper
 
 *** Favorite apps
 #+begin_src conf
-  # exec-once = ~/scripts/DailyRandomAnki
-  # exec-once = swww-daemon&&~/scripts/DailyRandomAnki
-  # exec-once = swww-daemon && swww img "$DAILY_ANKI_QUESTION_PATH"
+# exec-once = ~/scripts/DailyRandomAnki
+# exec-once = swww-daemon&&~/scripts/DailyRandomAnki
+# exec-once = swww-daemon && swww img "$DAILY_ANKI_QUESTION_PATH"
 
-  # start emacs server
-  # exec-once = /usr/bin/emacs --daemon
-  # so it picks up my config?
-  # exec-once = emacs --with-x-toolkit-lucid --daemon
-  exec-once = emacs --daemon
+# start emacs server
+# exec-once = /usr/bin/emacs --daemon
+# so it picks up my config?
+# exec-once = emacs --with-x-toolkit-lucid --daemon
+exec-once = emacs --daemon
+
+# would be cool it used waybar text (generate w/ org-babel)
+exec-once = [workspace 1 silent] $browser
+# exec-once = [workspace special] $mail
 #+end_src
 
 # not sure if good idea
@@ -383,18 +388,21 @@ bindl = $mainMod shift, n, exec, playerctl previous
 
 bind = $mainMod, a, exec, echo '{ "command": ["set_property", "af","lowpass=f=400"] }' | socat - /tmp/mpvsocket
 bind = $mainMod shift, a, exec, echo '{ "command": ["set_property", "af",""] }' | socat - /tmp/mpvsocket
+#+end_src
 
-
+** Recognize song
+#+begin_src conf
 # bindl = $mainMod shift, n, exec, scripts/active
 bind = $mainMod, s, exec, ~/.config/hypr/scripts/recognize_song
 #+end_src
+
 #+begin_src bash :tangle ~/.config/hypr/scripts/recognize_song
 #!/usr/bin/env bash
 dunstify "Recognizing song..."
 song="$(timeout 10 flatpak run com.github.marinm.songrec recognize -d Webcam\ C270\ Mono --json)"
 if [ -n "$song" ]; then
-	artist="$(jq -r '.track.urlparams | .["{trackartist}"]' <<<"$song" | sed 's/+/ /g')"
-	title="$(jq -r '.track.urlparams | .["{tracktitle}"]' <<<"$song" | sed 's/+/ /g')"
+    artist="$(jq -r '.track.urlparams | .["{trackartist}"]' <<<"$song" | php -r 'echo urldecode(file_get_contents("php://stdin"));')"
+    title="$(jq -r '.track.urlparams | .["{tracktitle}"]' <<<"$song" |  php -r 'echo urldecode(file_get_contents("php://stdin"));')"
 
 	dunstify "Title: $title" "Artist: $artist"
 	wl-copy <<<"$artist - $title"
@@ -429,8 +437,8 @@ bind=super shift,b,exec, bash -c "bluetoothctl <<< connect\ $(bluetoothctl <<< d
 *** Apps
 #+begin_src conf
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-# bind = $mainMod, Return, exec, $terminal
-bind = $mainMod, RETURN, exec, emacsclient -n -e '(progn (select-frame-set-input-focus (selected-frame)) (vterm))'
+bind = $mainMod, Return, exec, $terminal
+# bind = $mainMod, RETURN, exec, emacsclient -n -e '(progn (select-frame-set-input-focus (selected-frame)) (vterm))'
 
 
 # prefix bind for opening files like in vim/emacs? use $EDITOR (magari con nvim -c or smth)
@@ -476,6 +484,7 @@ bind = $mainMod, B, exec, $browser
 
 # super shift enter?
 bind = $mainMod, D, exec, $menu
+# bind = $mainMod, D, exec, [float;size 30% 30%] emacsclient -cF "((visibility . nil))" -e "(app-launcher-run-app)"
 # bind = $mainMod, D, exec, rofimoji
 # bind = $mod, L, exec, pkill rofi || rofi -show power-menu -modi power-menu:rofi-power-menu # We can use rofi for power management as well
 #+end_src
@@ -787,6 +796,7 @@ windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 # like calc-dispatch in emacs
 # can't use shift + numbers cause those are for workspaces
 # bind=super shift,8,exec, pgrep qalculate-gtk&&hyprctl dispatch togglespecialworkspace calculator||qalculate-gtk&
+# windowrulev2 = workspace special:reaper (xprop)
 #+end_src
 
 * Hyprlock
@@ -800,7 +810,7 @@ background {
     monitor =
         # color = rgba(25, 20, 20, 1.0)
         # blur_passes = 2
-    path = ~/Pictures/Wallpapers/kanagawa.jpg
+    path = ~/Pictures/Lock/kanagawa.jpg
     blur_passes = 1
     contrast = 0.8916
     brightness = 0.8172
