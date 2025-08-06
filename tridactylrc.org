@@ -15,7 +15,7 @@
 - [ ] userscript?
 
 * OPTIONS
-#+begin_src conf
+#+begin_src tridactyl
 " Clear the config (is this really necessary?)
 sanitise tridactyllocal tridactylsync
 
@@ -45,7 +45,7 @@ set theme midnight
 #+end_src
  
 ** RSS
-#+begin_src conf
+#+begin_src tridactyl
       #
 # alias save_rss jsb -p tri.native.run("cat >> ~/.config.newsboat/urls", JS_ARG)
    # set rsscmd save_rss %u
@@ -55,7 +55,7 @@ set theme midnight
 proxies: any = o({// "socksName": "socks://hostname:port",// "socks4": "socks4://hostname:port",// "https": "https://username:password@hostname:port"})
 You can add a new proxy with proxyadd proxyname proxyurl
 
-#+begin_src conf
+#+begin_src tridactyl
 
 set completions.Tab.statusstylepretty true
 set modeindicatorshowkeys true
@@ -81,8 +81,9 @@ set editorcmd emacsclient -a \"\" -c -e '(progn (find-file "%f") (forward-line (
 #+end_src
 
 * BINDS
-#+begin_src conf
+#+begin_src tridactyl
 " bind --mode=$mode $key $excmd
+" magari C-z like emacs
 bind i mode ignore
 " metti fra le prime cosi runna subito"
 bind --mode=ignore <esc> composite mode normal
@@ -134,7 +135,7 @@ bind yH composite hint -pipe * innerHTML | yank
 #+end_src
 
 ** Bindurls
-#+begin_src conf
+#+begin_src tridactyl
 "" Make hackernews less noisy
 alias ff_hn_bg hint -Jbc .titleline > a , .subline > a:nth-of-type(4), .morelink, .pagetop a, .titleline a
 alias ff_hn hint -Jc .titleline > a , .subline > a:nth-of-type(4), .morelink, .pagetop a, .titleline a
@@ -154,7 +155,7 @@ bindurl www.startpage.com F hint -Jbc .w-gl__result-second-line-container > a , 
 #+end_src
 
 ** [[https://github.com/yashasolutions/tridactylmode/blob/master/sample-tridactylrc.tri][Emacs-inspired]]
-#+begin_src conf
+#+begin_src tridactyl
 
 unbind <F12>
 
@@ -238,7 +239,7 @@ bind --mode=ex     <C-n> ex.next_completion
 bind --mode=ex     <C-p> ex.prev_completion
 bind --mode=ex     <C-y> ex.insert_completion
 # bind --mode=ex     <C-e> ex.deselect_completion
-bind --mode=ex     <Tab> ex.complete
+# bind --mode=ex     <Tab> ex.complete
 bind --mode=ex     <C-g> composite text.beginning_of_line ; text.forward_word ; text.kill_word
 
 
@@ -249,7 +250,7 @@ bind --mode=ex     <C-g> composite text.beginning_of_line ; text.forward_word ; 
 
 ** PERSONAL SCRIPTS
 
-#+begin_src conf
+#+begin_src tridactyl
 bind --mode=normal <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
 bind --mode=normal <space>A composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append_no_space
 " Clipboard mapping?
@@ -281,8 +282,8 @@ bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replac
 " usa exclaim_quiet per non avere output nella command line
 bind <space>d composite get_current_url | exclaim_quiet ~/.config/tridactyl/scripts/download
 "bind <space><space> composite get_current_url | yank ; exclaim_quiet hyprctl dispatch exec '[float\;size 30% 30%] ghostty -e nvim -c "norm 1 Qd"'
-bind <space><space> jsb tri.native.run(`echo '${document.location.href}' | wl-copy && hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qd"'`)
-" bind <space><space> js let url = document.location.href; tri.excmds.yank(url); tri.native.run(`hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qd"'`)
+" bug mozilla newtab bind <space><space> jsb tri.native.run(`echo '${document.location.href}' | wl-copy && hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qd"'`)
+bind <space><space> js tri.excmds.yank(document.location.href); tri.native.run(`hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qd"'`)
 
 bind <space><S-space> composite js "# [" + document.title + "](" + document.URL + ")" | yank ; exclaim_quiet ~/.config/tridactyl/scripts/data
 
@@ -294,7 +295,7 @@ for id in $(cliphist list|head -2|cut -f1); do cliphist decode $id;echo; done | 
 hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qy"'
 #+end_src
 
-#+begin_src conf
+#+begin_src tridactyl
 
 " crea mapping per inserire plugin in lazy e copiare la configurazione in <plugin_name>lua così da poter usare il plugin subito...
 
@@ -312,8 +313,207 @@ bind <a-l> js -s ~/scripts/to_markdown/browser/urls_linux.js
 
 #+end_src
 
+* SEARCHURLS
+#+begin_src tridactyl
+" use ai to categorize
+" set searchengine g
+
+#+end_src
+# set jsurls.googleloud query => "https://google.com/search?q=" + query.toUpperCase()
+** Wikis
+#+begin_src tridactyl
+set searchurls.wg https//wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
+set searchurls.wa https://wiki.archlinux.org/index.php?title=Special%3ASearch&search=%s
+" set searchurls.wp https://en.wikipedia.org/wiki/Special:Search?search=%s&go=Go
+" set searchurls.wi https://en.wiktionary.org/wiki/Special:Search?search=%s&go=Go
+set searchurls.aw https://wiki.archlinux.org/index.php?search=%s
+set searchurls.w https://en.wikipedia.org/w/index.php?search=%s&title=Special%3ASearch
+set searchurls.wi https://it.wikipedia.org/w/index.php?search=%s&title=Special%3ASearch
+set searchurls.wd  https://en.wiktionary.org/wiki/?search=%s
+
+set searchurls.de  https://devdocs.io/#q=
+
+#+end_src
+
+** News/Media
+#+begin_src tridactyl
+
+#+end_src
+
+** E-commerce
+#+begin_src tridactyl
+
+#+end_src
+
+** Social media
+#+begin_src tridactyl
+
+#+end_src
+
+** LLM
+#+begin_src tridactyl
+#+end_src
+
+** Entertainment
+#+begin_src tridactyl
+
+" set searchurls.alt https://alternativeto.net/browse/search?q=%s
+" set searchurls.af https://www.acronymfinder.com/~/search/af.aspx?string=exact&Acronym=%s
+" set searchurls.ar https://archive.is/search/?q=%s
+" set searchurls.gi https://www.google.ca/search?tbm=isch&safe=off&q=%s
+" set searchurls.gl https://www.google.com/search?btnI=I%27m+Feeling+Lucky&q=%s
+" set searchurls.gm https://www.google.ca/maps?q=%s
+" set searchurls.gn https://news.google.ca/news?hl=en&num=30&q=%s&btnG=Search+News
+" set searchurls.m https://search.marginalia.nu/search?js=&adtech=&profile=&query=%s
+" set searchurls.mc https://www.google.ca/search?num=20&q=%s%20site:metacritic.com
+" set searchurls.ol https://www.onelook.com/?w=%s&ls=b
+" set searchurls.rr https://www.royalroad.com/fictions/search?title=%s
+" set searchurls.su https://summarist.ai/summary/%s
+" set searchurls.th https://www.thesaurus.com/browse/%s
+" set searchurls.tr https://translate.google.com/?op=translate&text=%s&sl=auto&tl=en
+" set searchurls.tu https://translate.google.com/translate?hl=en&u=%s&sl=auto&tl=en
+" set searchurls.tw https://twitter.com/search?q=%s
+" set searchurls.txt https://www.google.ca/search?q=cache:%s&strip=1
+" set searchurls.ud https://www.urbandictionary.com/define.php?term=%s
+" set searchurls.wa https://www.wolframalpha.com/input/?i=%s
+" set searchurls.wb https://web.archive.org/web/*/%s
+" set searchurls.yt https://www.youtube.com/results?search_query=%s
+
+"set searchurls.bl https://www.browserling.com/browse/win/7/chrome/72/%s
+"set searchurls.dv https://www.dividend.com/search?q=%s
+"set searchurls.gd https://drive.google.com/drive/search?q=%s
+"set searchurls.ll https://lucidlife.wordpress.com/?s=%s
+"set searchurls.rd https://www.reddit.com/search?q=%s
+"set searchurls.sd https://slickdeals.net/newsearch.php?rating=2&q=%s
+"set searchurls.st https://stocktwits.com/symbol/%s
+"set searchurls.tv https://www.tradingview.com/chart/?symbol=%s
+"set searchurls.yf https://finance.yahoo.com/quote/%s
+"set searchurls.yt https://www.youtube.com/results?search_query=%s
+
+set searchurls.alt https://alternativeto.net/browse/search/?q=
+set searchurls.af https://www.acronymfinder.com/~/search/af.aspx?string=exact&Acronym=%s
+set searchurls.ar https://archive.is/search/?q=%s
+set searchurls.boardgamegeek https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q=
+set searchurls.boardgameprices https://boardgameprices.com/compare-prices-for?q=
+set searchurls.boardgamepricesuk https://boardgameprices.co.uk/item/search?search=
+set searchurls.booksprice https://booksprice.com/compare.do?inputData=
+set searchurls.bookspriceuk http://booksprice.co.uk/compare.do?inputData=
+set searchurls.chambersbiog https://chambers.co.uk/search/?query=%s&title=biog
+set searchurls.chambersdict https://chambers.co.uk/search/?query=%s&title=21st
+set searchurls.chambersthes https://chambers.co.uk/search/?query=%s&title=thes
+set searchurls.ebay https://www.ebay.com/sch/i.html?_nkw=
+set searchurls.ebayuk https://www.ebay.co.uk/sch/i.html?_nkw=
+set searchurls.etymonline https://www.etymonline.com/search?q=
+set searchurls.goodreads https://www.goodreads.com/search?q=
+set searchurls.hotukdeals https://www.hotukdeals.com/search?q=
+set searchurls.oeis https://oeis.org/search?q=
+set searchurls.powerthesaurus https://www.powerthesaurus.org/_search?q=
+
+" crea binding per scaricare canzone in ~/Music [yt-dlp]
+set searchurls.yt https://www.youtube.com/results?search_query=%s
+" set searchurls.yT https://www.youtube.com/results?search_query=%s&sp=CAM%253D
+set searchurls.ys https://www.youtube.com/results?search_query=%s&sp=CAM%253D
+" qualcosa tipo yt ... m per i risultati con il most viewed filter (o yt ... u per upload date)
+" set searchurls.gh https://github.com/search?q=%s
+
+#+end_src
+
+** GitHub
+#+begin_src tridactyl
+set searchurls.gh https://github.com/search?q=%s
+
+set searchurls.gg https://github.com/search?q=%s&type=code
+" search for vim code
+set searchurls.ggv https://github.com/search?q=%s+lang%3A"Vim+script"+&type=code
+" search for lua code
+set searchurls.ggl https://github.com/search?q=%s+lang%3ALua+&type=code
+" search for elisp code
+set searchurls.gge https://github.com/search?q=%s+lang%3A"Emacs+lisp"+&type=code
+
+" regex
+set searchurls.g/ https://github.com/search?q=%2F%s%2F&type=code
+set searchurls.gr https://github.com/search?q=%s&type=repositories
+set searchurls.gi https://github.com/search?q=%s&type=issues
+set searchurls.gp https://github.com/search?q=%s&type=pullrequests
+set searchurls.gd https://github.com/search?q=%s&type=discussions
+set searchurls.gu https://github.com/search?q=%s&type=users
+set searchurls.gc https://github.com/search?q=%s&type=commits
+set searchurls.gk https://github.com/search?q=%s&type=registrypackages
+set searchurls.gw https://github.com/search?q=%s&type=wikis
+set searchurls.gt https://github.com/search?q=%s&type=topics
+set searchurls.gm https://github.com/search?q=%s&type=marketplace
+
+#+end_src
+
+** Google
+#+begin_src tridactyl
+set searchurls.g https://www.google.ca/search?safe=off&num=20&q=%s
+set searchurls.gc https://www.google.ca/search?q=cache:%s
+set searchurls.gi https://www.google.ca/search?tbm=isch&safe=off&q=%s
+
+" set searchurls.fc https://toolbox.google.com/factcheck/explorer/%s;hl=en
+" set searchurls.g https://www.google.ca/search?safe=off&num=20&q=%s
+" set searchurls.gc https://www.google.ca/search?q=cache:%s
+
+#+end_src
+** Languages
+#+begin_src tridactyl
+
+set searchurls.fc https://toolbox.google.com/factcheck/explorer/%s;hl=en
+" annulla startinsert con questo mapping (visto che la stringa è stata già cercata)
+set searchurls.wr https://www.wordreference.com/enit/%s
+" how to do smth like wr word1 word2 and have tridactyl open two tabs with the wordreference search set to word1 for the first and word2 for the second?
+" for typing mistakes?
+" would be cool to search with wordrefrence with the currently selected word; also the s mapping seems wasted (use for ex. <a-s> or <a-e> (exact) when pressing o to search exactly) and it matches with leap.nvim (think about it...)
+" set searchurls.Wr https://www.wordreference.com/enit/%s
+" set searchurls.WR https://www.wordreference.com/enit/%s
+" set searchurls.wR https://www.wordreference.com/enit/%s
+set searchurls.wrs https://www.wordreference.com/esit/%s
+" set searchurls.wrs https://www.wordreference.com/enes/%s
+" set searchurls.wrs https://www.wordreference.com/ites/%s
+set searchurls.wrS https://www.wordreference.com/esen/%s
+" set searchurls.wrS https://www.wordreference.com/esen/%s
+" set searchurls.wrS https://www.wordreference.com/esit/%s
+set searchurls.wrr https://www.wordreference.com/ruit/%s
+set searchurls.wrR https://www.wordreference.com/ruen/%s
+set searchurls.wra https://www.wordreference.com/enar/%s
+set searchurls.ur https://www.urbandictionary.com/define.php?term=%s
+" set searchurls.a https://www.amazon.it/s?k=%s&__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&ref=nb_sb_noss
+set searchurls.az https://www.amazon.it/s?k=%s&__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&ref=nb_sb_noss
+" fai in modo che digitando rd ti compaia la history di reddit filtrata con quello che stai scrivendo [fallo per tutti le altre "keyword"]
+set searchurls.rd https://www.reddit.com/search?q=%s
+set searchurls.rdn https://www.reddit.com/r/neovim/search/?q=%s&restrict_sr=1
+
+" twitter?
+set searchurls.tw https://twitter.com/search?q=%s&src=typed_query
+
+set searchurls.tr https://www.treccani.it/vocabolario/%s
+
+" google images (would be nice to only have a one-key mapping like o...)
+set searchurls.im  http://www.google.com/search?tbm=isch&q=%s
+" set searchurls.im  https://lens.google.com/search
+#+end_src
+** Search engines
+#+begin_src tridactyl
+set searchurls.googleuk https://www.google.co.uk/search?q=
+set searchurls.yahoo https://search.yahoo.com/search?p=
+set searchurls.twitter https://twitter.com/search?q=
+set searchurls.wikipedia https://en.wikipedia.org/wiki/SpecialSearch/
+set searchurls.amazon https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
+set searchurls.amazonuk https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
+set searchurls.startpage https://startpage.com/do/search?language=english&cat=web&query=
+set searchurls.github https://github.com/search?utf8=✓&q=
+set searchurls.searx https://searx.me/?category_general=on&q=
+set searchurls.cnrtl http//www.cnrtl.fr/lexicographie/
+set searchurls.osm https://www.openstreetmap.org/search?query=
+set searchurls.mdn https://developer.mozilla.org/en-US/search?q=
+set searchurls.gentoo_wiki https://wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
+set searchurls.qwant https://www.qwant.com/?q=
+
+#+end_src
+
 * MOVEMENT
-#+begin_src conf
+#+begin_src tridactyl
 
 " The default jump of 10 is a bit much.
 " bind j scrollline 3
@@ -327,7 +527,7 @@ bind e fillcmdline goto
 #+end_src
 
 ** TAB MANAGEMENT
-#+begin_src conf
+#+begin_src tridactyl
 bind U tabuniq
 
 bind / fillcmdline find
@@ -488,7 +688,7 @@ bind tr fillcmdline tabgrouprename
 #+end_src
 
 * READLINE
-#+begin_src conf
+#+begin_src tridactyl
 
 "bind --mode=hint <A-j> hint.focusNextHint
 "bind --mode=hint <A-k> hint.focusPreviousHint
@@ -502,7 +702,7 @@ bind --mode=ex <C-Enter> ex.execute_ex_on_completion
 "unbind --mode=ex <Tab>
 "unbind --mode=ex <c-a>
 unbind --mode=ex <c-f>
-bind --mode=ex <Tab> ex.complete
+# bind --mode=ex <Tab> ex.complete
 bind --mode=ex <c-n> ex.next_history
 bind --mode=ex <c-p> ex.prev_history
 
@@ -532,18 +732,18 @@ bind --mode=input       <C-f>   text.forward_char
 bind --mode=ex          <C-b>   text.backward_char
 bind --mode=insert      <C-b>   text.backward_char
 bind --mode=input       <C-b>   text.backward_char
-bind --mode=ex          <C-k>   text.kill_line
-bind --mode=insert      <C-k>   text.kill_line
-bind --mode=input       <C-k>   text.kill_line
+# bind --mode=ex          <C-k>   text.kill_line
+# bind --mode=insert      <C-k>   text.kill_line
+# bind --mode=input       <C-k>   text.kill_line
 bind --mode=ex          <A-d>   text.kill_word
 bind --mode=insert      <A-d>   text.kill_word
 bind --mode=input       <A-d>   text.kill_word
 bind --mode=ex          <C-u>   text.backward_kill_line
 bind --mode=insert      <C-u>   text.backward_kill_line
 bind --mode=input       <C-u>   text.backward_kill_line
-bind --mode=ex          <Tab>   text.tab_insert
-bind --mode=insert      <Tab>   text.tab_insert
-bind --mode=input       <Tab>   text.tab_insert
+# bind --mode=ex          <Tab>   text.tab_insert
+# bind --mode=insert      <Tab>   text.tab_insert
+# bind --mode=input       <Tab>   text.tab_insert
 bind --mode=ex          <C-y>   composite getclip selection | text.insert_text
 bind --mode=insert      <C-y>   composite getclip selection | text.insert_text
 bind --mode=input       <C-y>   composite getclip selection | text.insert_text
@@ -582,7 +782,7 @@ bind --mode=insert      <A-Backspace>   text.backward_kill_word
 bind --mode=input       <A-Backspace>   text.backward_kill_word
 
 bind --mode=ex          <A-i>   ex.insert_completion
-bind --mode=ex          <Tab>   ex.insert_completion
+# bind --mode=ex          <Tab>   ex.insert_completion
 "bind --mode=ex          <C-e>   ex.deselect_completion
 
 " bind --mode=insert <C-j> !s xdotool key Down
@@ -596,7 +796,7 @@ bind --mode=input   <c-l>  ex.accept_line
 
 * HINTS
 
-#+begin_src conf
+#+begin_src tridactyl
 "JavaScript hints (grey ones) 
 
 bind <a-r> fillcmdline hint -fr 
@@ -624,9 +824,12 @@ bind yF composite hint -qpipe a href | join | yank
 
 * AUTOCMDS
 ** URL redirects
-#+begin_src conf
+#+begin_src tridactyl
 " autocmd DocStart reddit\.com/.*tl=it urlmodify -Q tl
 autocmd DocStart reddit\.com/.*tl=* urlmodify -Q tl
+
+autocmd DocStart github\.com/.*?tab=readme-ov-file urlmodify -Q tab
+
 " autocmd BeforeRequest *tl=it (u) => ({redirectUrl: e.url.replace("tl=it","")}).
 " autocmd BeforeRequest *://*.reddit.com/* (u) => ({if(u.url.match("[?|&]tl=it")) {redirectUrl: u.url.replace("tl=it","")}}).
 " autocmd DocStart chatgpt\.com kill initiali popup
@@ -658,13 +861,13 @@ bind yn composite js document.location.href.replace(/https?:\/\//,"git@").replac
 #+end_src
 
 * INTERNATIONALISATION
-#+begin_src conf
+#+begin_src tridactyl
 set keyboardlayoutbase qwerty
 set keyboardlayoutforce true
 
 #+end_src
 * Commands
-#+begin_src conf
+#+begin_src tridactyl
 
 
 " delete w command before?"
@@ -686,7 +889,7 @@ autocontain facebook\.com facebook
 
 * QUICKMARKS
 Use searchurls when you need to insert some (small) input, quickmarks otherwise (like for forums)
-#+begin_src conf
+#+begin_src tridactyl
 quickmark a https://www.artstation.com/
 " quickmark g https://github.com/tanath/dotfiles
 quickmark h https://news.ycombinator.com/
@@ -715,209 +918,10 @@ quickmark l  https://chat.mistral.ai/chat?model=codestral
 quickmark p https://www.perplexity.ai
 #+end_src
 
-* SEARCHURLS
-#+begin_src conf
-" use ai to categorize
-" set searchengine g
-
-#+end_src
-# set jsurls.googleloud query => "https://google.com/search?q=" + query.toUpperCase()
-** Wikis
-#+begin_src conf
-set searchurls.wg https//wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
-set searchurls.wa https://wiki.archlinux.org/index.php?title=Special%3ASearch&search=%s
-" set searchurls.wp https://en.wikipedia.org/wiki/Special:Search?search=%s&go=Go
-" set searchurls.wi https://en.wiktionary.org/wiki/Special:Search?search=%s&go=Go
-set searchurls.aw https://wiki.archlinux.org/index.php?search=%s
-set searchurls.w https://en.wikipedia.org/w/index.php?search=%s&title=Special%3ASearch
-set searchurls.wi https://it.wikipedia.org/w/index.php?search=%s&title=Special%3ASearch
-set searchurls.wd  https://en.wiktionary.org/wiki/?search=%s
-
-set searchurls.de  https://devdocs.io/#q=
-
-#+end_src
-
-** News/Media
-#+begin_src conf
-
-#+end_src
-
-** E-commerce
-#+begin_src conf
-
-#+end_src
-
-** Social media
-#+begin_src conf
-
-#+end_src
-
-** LLM
-#+begin_src conf
-#+end_src
-
-** Entertainment
-#+begin_src conf
-
-" set searchurls.alt https://alternativeto.net/browse/search?q=%s
-" set searchurls.af https://www.acronymfinder.com/~/search/af.aspx?string=exact&Acronym=%s
-" set searchurls.ar https://archive.is/search/?q=%s
-" set searchurls.gi https://www.google.ca/search?tbm=isch&safe=off&q=%s
-" set searchurls.gl https://www.google.com/search?btnI=I%27m+Feeling+Lucky&q=%s
-" set searchurls.gm https://www.google.ca/maps?q=%s
-" set searchurls.gn https://news.google.ca/news?hl=en&num=30&q=%s&btnG=Search+News
-" set searchurls.m https://search.marginalia.nu/search?js=&adtech=&profile=&query=%s
-" set searchurls.mc https://www.google.ca/search?num=20&q=%s%20site:metacritic.com
-" set searchurls.ol https://www.onelook.com/?w=%s&ls=b
-" set searchurls.rr https://www.royalroad.com/fictions/search?title=%s
-" set searchurls.su https://summarist.ai/summary/%s
-" set searchurls.th https://www.thesaurus.com/browse/%s
-" set searchurls.tr https://translate.google.com/?op=translate&text=%s&sl=auto&tl=en
-" set searchurls.tu https://translate.google.com/translate?hl=en&u=%s&sl=auto&tl=en
-" set searchurls.tw https://twitter.com/search?q=%s
-" set searchurls.txt https://www.google.ca/search?q=cache:%s&strip=1
-" set searchurls.ud https://www.urbandictionary.com/define.php?term=%s
-" set searchurls.wa https://www.wolframalpha.com/input/?i=%s
-" set searchurls.wb https://web.archive.org/web/*/%s
-" set searchurls.yt https://www.youtube.com/results?search_query=%s
-
-"set searchurls.bl https://www.browserling.com/browse/win/7/chrome/72/%s
-"set searchurls.dv https://www.dividend.com/search?q=%s
-"set searchurls.gd https://drive.google.com/drive/search?q=%s
-"set searchurls.ll https://lucidlife.wordpress.com/?s=%s
-"set searchurls.rd https://www.reddit.com/search?q=%s
-"set searchurls.sd https://slickdeals.net/newsearch.php?rating=2&q=%s
-"set searchurls.st https://stocktwits.com/symbol/%s
-"set searchurls.tv https://www.tradingview.com/chart/?symbol=%s
-"set searchurls.yf https://finance.yahoo.com/quote/%s
-"set searchurls.yt https://www.youtube.com/results?search_query=%s
-
-set searchurls.alt https://alternativeto.net/browse/search/?q=
-set searchurls.af https://www.acronymfinder.com/~/search/af.aspx?string=exact&Acronym=%s
-set searchurls.ar https://archive.is/search/?q=%s
-set searchurls.boardgamegeek https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q=
-set searchurls.boardgameprices https://boardgameprices.com/compare-prices-for?q=
-set searchurls.boardgamepricesuk https://boardgameprices.co.uk/item/search?search=
-set searchurls.booksprice https://booksprice.com/compare.do?inputData=
-set searchurls.bookspriceuk http://booksprice.co.uk/compare.do?inputData=
-set searchurls.chambersbiog https://chambers.co.uk/search/?query=%s&title=biog
-set searchurls.chambersdict https://chambers.co.uk/search/?query=%s&title=21st
-set searchurls.chambersthes https://chambers.co.uk/search/?query=%s&title=thes
-set searchurls.ebay https://www.ebay.com/sch/i.html?_nkw=
-set searchurls.ebayuk https://www.ebay.co.uk/sch/i.html?_nkw=
-set searchurls.etymonline https://www.etymonline.com/search?q=
-set searchurls.goodreads https://www.goodreads.com/search?q=
-set searchurls.hotukdeals https://www.hotukdeals.com/search?q=
-set searchurls.oeis https://oeis.org/search?q=
-set searchurls.powerthesaurus https://www.powerthesaurus.org/_search?q=
-
-" crea binding per scaricare canzone in ~/Music [yt-dlp]
-set searchurls.yt https://www.youtube.com/results?search_query=%s
-" set searchurls.yT https://www.youtube.com/results?search_query=%s&sp=CAM%253D
-set searchurls.ys https://www.youtube.com/results?search_query=%s&sp=CAM%253D
-" qualcosa tipo yt ... m per i risultati con il most viewed filter (o yt ... u per upload date)
-" set searchurls.gh https://github.com/search?q=%s
-
-#+end_src
-
-** GitHub
-#+begin_src conf
-set searchurls.gh https://github.com/search?q=%s
-
-set searchurls.gg https://github.com/search?q=%s&type=code
-" search for vim code
-set searchurls.ggv https://github.com/search?q=%s+lang%3A"Vim+script"+&type=code
-" search for lua code
-set searchurls.ggl https://github.com/search?q=%s+lang%3ALua+&type=code
-" search for elisp code
-set searchurls.gge https://github.com/search?q=%s+lang%3A"Emacs+lisp"+&type=code
-
-" regex
-set searchurls.g/ https://github.com/search?q=%2F%s%2F&type=code
-set searchurls.gr https://github.com/search?q=%s&type=repositories
-set searchurls.gi https://github.com/search?q=%s&type=issues
-set searchurls.gp https://github.com/search?q=%s&type=pullrequests
-set searchurls.gd https://github.com/search?q=%s&type=discussions
-set searchurls.gu https://github.com/search?q=%s&type=users
-set searchurls.gc https://github.com/search?q=%s&type=commits
-set searchurls.gk https://github.com/search?q=%s&type=registrypackages
-set searchurls.gw https://github.com/search?q=%s&type=wikis
-set searchurls.gt https://github.com/search?q=%s&type=topics
-set searchurls.gm https://github.com/search?q=%s&type=marketplace
-
-#+end_src
-
-** Google
-#+begin_src conf
-set searchurls.g https://www.google.ca/search?safe=off&num=20&q=%s
-set searchurls.gc https://www.google.ca/search?q=cache:%s
-set searchurls.gi https://www.google.ca/search?tbm=isch&safe=off&q=%s
-
-" set searchurls.fc https://toolbox.google.com/factcheck/explorer/%s;hl=en
-" set searchurls.g https://www.google.ca/search?safe=off&num=20&q=%s
-" set searchurls.gc https://www.google.ca/search?q=cache:%s
-
-#+end_src
-** Languages
-#+begin_src conf
-
-set searchurls.fc https://toolbox.google.com/factcheck/explorer/%s;hl=en
-" annulla startinsert con questo mapping (visto che la stringa è stata già cercata)
-set searchurls.wr https://www.wordreference.com/enit/%s
-" how to do smth like wr word1 word2 and have tridactyl open two tabs with the wordreference search set to word1 for the first and word2 for the second?
-" for typing mistakes?
-" would be cool to search with wordrefrence with the currently selected word; also the s mapping seems wasted (use for ex. <a-s> or <a-e> (exact) when pressing o to search exactly) and it matches with leap.nvim (think about it...)
-" set searchurls.Wr https://www.wordreference.com/enit/%s
-" set searchurls.WR https://www.wordreference.com/enit/%s
-" set searchurls.wR https://www.wordreference.com/enit/%s
-set searchurls.wrs https://www.wordreference.com/esit/%s
-" set searchurls.wrs https://www.wordreference.com/enes/%s
-" set searchurls.wrs https://www.wordreference.com/ites/%s
-set searchurls.wrS https://www.wordreference.com/esen/%s
-" set searchurls.wrS https://www.wordreference.com/esen/%s
-" set searchurls.wrS https://www.wordreference.com/esit/%s
-set searchurls.wrr https://www.wordreference.com/ruit/%s
-set searchurls.wrR https://www.wordreference.com/ruen/%s
-set searchurls.wra https://www.wordreference.com/enar/%s
-set searchurls.ur https://www.urbandictionary.com/define.php?term=%s
-" set searchurls.a https://www.amazon.it/s?k=%s&__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&ref=nb_sb_noss
-set searchurls.az https://www.amazon.it/s?k=%s&__mk_it_IT=%C3%85M%C3%85%C5%BD%C3%95%C3%91&ref=nb_sb_noss
-" fai in modo che digitando rd ti compaia la history di reddit filtrata con quello che stai scrivendo [fallo per tutti le altre "keyword"]
-set searchurls.rd https://www.reddit.com/search?q=%s
-set searchurls.rdn https://www.reddit.com/r/neovim/search/?q=%s&restrict_sr=1
-
-" twitter?
-set searchurls.tw https://twitter.com/search?q=%s&src=typed_query
-
-set searchurls.tr https://www.treccani.it/vocabolario/%s
-
-" google images (would be nice to only have a one-key mapping like o...)
-set searchurls.im  http://www.google.com/search?tbm=isch&q=%s
-" set searchurls.im  https://lens.google.com/search
-#+end_src
-** Search engines
-#+begin_src conf
-set searchurls.googleuk https://www.google.co.uk/search?q=
-set searchurls.yahoo https://search.yahoo.com/search?p=
-set searchurls.twitter https://twitter.com/search?q=
-set searchurls.wikipedia https://en.wikipedia.org/wiki/SpecialSearch/
-set searchurls.amazon https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
-set searchurls.amazonuk https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
-set searchurls.startpage https://startpage.com/do/search?language=english&cat=web&query=
-set searchurls.github https://github.com/search?utf8=✓&q=
-set searchurls.searx https://searx.me/?category_general=on&q=
-set searchurls.cnrtl http//www.cnrtl.fr/lexicographie/
-set searchurls.osm https://www.openstreetmap.org/search?query=
-set searchurls.mdn https://developer.mozilla.org/en-US/search?q=
-set searchurls.gentoo_wiki https://wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
-set searchurls.qwant https://www.qwant.com/?q=
-
-#+end_src
-
 * [[https://github.com/tridactyl/tridactyl/wiki/Video-mode][Video Mode]]
 bind --mode=video <space> keyfeed <space>
 ** Enter and exit the mode
-#+begin_src conf
+#+begin_src tridactyl
 alias video_mode composite mode video ; video_mark_init
 alias exit_video mode normal
 bind gv video_mode
@@ -932,14 +936,14 @@ autocmd DocLoad ^https://www.youtube.com/watch\? video_mode
 ** Helper command
 They just like =js=, but pre-define some useful functions.
 
-#+begin_src conf
+#+begin_src tridactyl
 alias video_with jse let video; if (document.activeElement.name == 'VIDEO') video = document.activeElement; else video = $all('video').find(v => !v.paused); if (!video) video = $('video'); video;
 alias jse js 'use strict'; function $all(q, root=document) { return Array.from(root.querySelectorAll(q)) }; function $(q, root=document) { return root.querySelector(q) }; let $ex = (s) => tri.controller.acceptExCmd(s) ; let $set = (...args) => tri.config.set(...args);
 alias jsep js -p 'use strict'; function $all(q, root=document) { return Array.from(root.querySelectorAll(q)) }; function $(q, root=document) { return root.querySelector(q) }; let $ex = (s) => tri.controller.acceptExCmd(s) ; let $set = (...args) => tri.config.set(...args);
 #+end_src
 
 ** Basic seeking
-#+begin_src conf
+#+begin_src tridactyl
 set video_seek 5
 " seek forward/backward seconds defined in video_seek
 set videomaps.l jsep $ex('video_with').then(video => {const count = Number(JS_ARG) || 1; const tic = Number(get('video_seek')); video.currentTime += tic * count }); 1;
@@ -965,7 +969,7 @@ number is minute, and hour. If the first number is prefix with =-=,
 =goto= command will count from the end of the video, and the =goby=
 command will count from the current time.
 
-#+begin_src conf
+#+begin_src tridactyl
 set videomaps.gt fillcmdline video_goto
 set videomaps.i fillcmdline video_goto
 set videomaps.I fillcmdline video_goby
@@ -976,7 +980,7 @@ alias video_goto js -d@ let time = JS_ARGS.filter(Boolean); let sign = '+'; if (
 
 E.g:
 
-#+begin_src conf
+#+begin_src tridactyl
 " go to 1m 30s of the video
 video_goto 1 30
 " go to 1h 30m 22s of the video
@@ -996,7 +1000,7 @@ P.S. These commands are not very useful in fact.
 These commands can mark and jump to the timestamps in video, just like
 built-in =markadd= or =markjump=.
 
-#+begin_src conf
+#+begin_src tridactyl
 set videomaps.m gobble 1 video_mark_add
 set videomaps.' gobble 1 video_mark_goto
 set videomaps.ge video_mark_empty
@@ -1029,13 +1033,13 @@ a anonymouse mark is created, the creation of the anonymouse mark will
 be canceled.
 
 ** Misc
-#+begin_src conf
+#+begin_src tridactyl
 set videomaps.f fullscreen
 " set videomaps.🕷🕷INHERITS🕷🕷 nmaps
 #+end_src
 
 * Blacklist
-#+begin_src conf
+#+begin_src tridactyl
 "" Blacklisting figma and others
 "" side note: Shift+Esc will toogle ignore mode
 blacklistadd figma.com
@@ -1047,7 +1051,7 @@ blacklistadd sheets.google.com
 #+end_src
 
 * Alias
-#+begin_src conf
+#+begin_src tridactyl
 
 "" Suspend / "discard" all tabs - handy for stretching out battery life
 alias discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts.map(t=>t.id)))
