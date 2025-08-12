@@ -65,7 +65,8 @@ $endif
 # doesn't work?
 # "\e[25~": "\C-u"
 # ctrl-m doesn't work?
-"\C-m": accept-line
+# "\C-m": accept-line
+"\e[109;5u": accept-line
 
 "\C-xe":"navi --print\C-j"
 #+end_src
