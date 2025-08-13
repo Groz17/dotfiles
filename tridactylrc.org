@@ -7,10 +7,8 @@
 - [ ] add c-r c-{a/l} for current webpage url?
 - [ ] clear cache for current site and all (uppercase)?
 - [ ] configure website keybindings, so u can remove tweaks for yt addon
-- [ ] use c-c for llm confirm
 - [ ] implement youtube keybindings, like h in insert mode=arrow? so u can get rid of  extensions (what about values though?) maybe playerctl?
 - [ ] automatically select first option?
-- [ ] syntax highlighting? for tridactylrc inside orgmode
 - [ ] Make Tridactyl work on addons.mozilla.org (:h fixamo).
 - [ ] userscript?
 
@@ -629,8 +627,10 @@ bind D fillcmdline tabcloseallbykeyword
 " Close current tab and switch to most recent previous tab (modify default behaviour)
 " bind d composite tabclose | tab #
 
-bind gx0 tabcloseallto left
 bind gx$ tabcloseallto right
+" D
+bind gx0 tabcloseallto left
+" <M-->D like <M-->C-k in emacs
 
 bind gP composite clipboard tabopen ; tab #
 
@@ -675,7 +675,7 @@ bind tr fillcmdline tabgrouprename
 
 " bind tl tabgrouplast
 
-  *** TABGROUP
+  ,*** TABGROUP
 " bind ta tgroupswitch emacs
 " bind tr tgroupswitch life
 " bind ts tgroupswitch learn
