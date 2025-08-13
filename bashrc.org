@@ -116,7 +116,7 @@ alias V="SUDO_EDITOR=\"nvim\" sudoedit"
 alias em="emacsclient -c -a ''"
 # cool: https://www.reddit.com/r/emacs/comments/3rxfr5/xclip_copypaste_killyank_and_emacs_in_a_terminal/
 alias e='emacsclient -t -a ""'
-alias E="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
+alias E="SUDO_EDITOR=\"emacsclient -t -a ''\" sudoedit"
 
 alias vinfo='nvim -c "silent only" -c "Vinfo "'
 alias perli='reply'
@@ -174,8 +174,8 @@ export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 export MANPAGER="nvim +Man!"
 
 info() {
-    # emacsclient -t -a "emacs" --eval "'"'(info ''"'"$1"'"'')'"'"
-emacsclient -t -a "emacs" -c --eval "(info \"$1\")"
+# emacsclient -t -a '' --eval "(info \"$1\")"
+emacsclient -t -a '' `command info -w "$1"`
 }
 
 # export MANWIDTH=999
