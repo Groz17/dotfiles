@@ -131,12 +131,9 @@ alias py="python"
 alias l="ls"
 alias s="sioyek"
 alias x="xournalpp"
-alias excalidraw="firefoxpwa site launch  01JQHQYS8VXCZZWMQMBN3HA1N2"
 alias a="apy"
 
-# alias aider="~/pip/aider/bin/aider"
 alias V="nvim -c TransparentEnable"
-alias userctl="systemctl --user"
 
 alias rtfm='ranger /usr/share/doc/arch-wiki/html/en'
 # alias cb='flatpak run app.getclipboard.Clipboard'
@@ -160,7 +157,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/node_modules/.bin:$PATH"
 export PATH="$HOME/scripts:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.config/emacs/bin:$PATH"
 export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 
 # PROMPT_COMMAND='printf "\033]133;A\007"'
@@ -168,15 +164,15 @@ export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 # doesn't work
 # export XDG_SCREENSHOTS_DIR="$HOME/Pictures/Screenshots/"
 
-# export JAVA_HOME=/usr/lib/jvm/java-23-openjdk/
-# export PATH="$PATH:$JAVA_HOME/bin"
 # make it so man with multiple arguments open vim with multiple buffers/quickfix
 export MANPAGER="nvim +Man!"
 
 info() {
-# emacsclient -t -a '' --eval "(info \"$1\")"
 emacsclient -t -a '' `command info -w "$1"`
 }
+# man() {
+#     emacsclient -t -e "(man \"$*\")"
+# }
 
 # export MANWIDTH=999
 export EDITOR="nvim"
@@ -614,6 +610,7 @@ adb shell rm $files
 
 #+end_src
 ** Emacs-inspired
+Magari usa stessi mapping di emacs nel terminal, tipo F15a per agenda?
 #+begin_src bash
 compile () {
     args="${*:-$(emacsclient --eval '(print compile-command nil)' \
