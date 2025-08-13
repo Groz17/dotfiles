@@ -175,11 +175,11 @@ z=f13, x=f14, c=f15, ...
   ;; <   (tap-hold 200 249 bspc S-bspc)
   ;; <   (tap-hold 200 249 mmid S-bspc)
  ;; <   mmid
-   ;; <   (tap-hold 200 249 [ ])
   ;; u can use tap-dance for keys that don't produce symbols
   ;;< (caps-word 10000)
   ;;< (multi f24 (tap-hold-press-timeout 200 175 S-\ lsft (macro S-[)))
 ;;  < (macro S-6) ;; ^ looks like shift symbol
+;; useful for (emacs lisp)
   lsft (multi f24 (tap-hold-press-timeout 200 175 S-9 (macro S-9) (macro S-[)))
   ;;vin   (tap-hold 200 249 bspc (layer-while-held nav))
 
@@ -206,21 +206,8 @@ z=f13, x=f14, c=f15, ...
   ;; i guess also useful for evil in emacs, like for calc
   lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 100 - (multi \) (macro S--)))
 
-
-;; crea layer per unicode chars...(unicode —)
-  ;; ralt (tap-hold 200 200 mmid lalt)
-  ;; ralt (tap-hold 200 200 ] lalt)
-  ;;ralt mrgt
-  ;;ralt (multi f24 (tap-hold-press-timeout 200 200 S-- lalt mrgt))
-  ;;what about plus?
-  ;;ralt S--
-  ;;diff?
-  ;;ralt +
-  ;; = is often used as + for zooming
-  ;;ralt =
   ;; combina bene con - per pipelines
   ;;ralt (macro S-\)
-
 
   ;; basically better position for - and = (this make them work with shift layer)
   ;;ralt (tap-hold 200 175 = (macro S-=))
@@ -239,12 +226,6 @@ z=f13, x=f14, c=f15, ...
   ;; lmet \
   ;; so i can easily do |- in org mode for tables ; also near - for bash commands
   lmet (macro S-\)
-
-  ;;a (multi f24 (tap-hold-press-timeout $tt 250 a (layer-while-held symbols) (macro S-a)))
-  ;;a (multi f24 (tap-hold-press-timeout $tt 200 a a (macro S-a)))
-  ;; can't use such a useful location for arrows
-  ;; a (tap-hold 175 150 a (tap-hold-press-timeout 0 100 a (layer-while-held nav) (macro S-a)))
-  ;; a (tap-hold 175 150 a (tap-hold-press-timeout 0 100 a (macro C-c) (macro S-a)))
 
 #+end_src
 ** MOUSE
@@ -396,35 +377,9 @@ C-x is also useful for readline
   ;; make it press f12 unless released so which-key buffer pops up...
   s (tap-hold 150 175 s (tap-hold-press-timeout 0 230 s f12 (macro S-s)))
 
-  ;;s (tap-hold-press-timeout 200 200 s s (macro S-s))
-  ;;s (tap-hold 175 200 s (tap-hold-press-timeout 0 100 s lalt (macro S-s)))
-  ;; s (tap-hold 150 175 s (tap-hold-press-timeout 0 75 s Home (macro S-s)))
-  ;; magari c-w per neovim?
-  ;; s (tap-hold 150 175 s (tap-hold-press-timeout 0 75 s (macro C-x) (macro S-s)))
-  ;;s (tap-hold 175 100 s (tap-hold-release-timeout 0 200 s (layer-while-held symbols) (macro S-s)))
-  ;;s (tap-hold 175 200 s (tap-hold-press-timeout 0 200 s lmet (macro S-s)))
-  ;; magari usa tasto utile (anche solo in vim) al posto di f11?
-  ;;s (tap-hold 175 200 s (tap-hold-press-timeout 0 200 s f11 (macro S-s)))
-  ;;s (tap-hold 175 200 s (tap-hold-press-timeout 0 200 s (layer-while-held symbols) (macro S-s)))
-
   ;; l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l f13 (macro S-l)))
-  ;;l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l (macro C-x) (macro S-l)))
   ;; l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l f15 (macro S-l)))
   l (tap-hold 150 175 l (tap-hold-press-timeout 0 150 l f12 (macro S-l)))
-
-  ;;l (multi f24 (tap-hold-press-timeout 200 300 l l (macro S-l)))
-  ;;l (multi f24 (tap-hold-press-timeout 200 300 l ralt (macro S-l)))
-  ;;l (tap-hold 175 200 l (tap-hold-press-timeout 0 100 l lalt (macro S-l)))
-  ;; for emacs
-  ;; what about on x/, key? pretty bad imho
-  ;; l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l (macro C-x) (macro S-l)))
-  ;;l (tap-hold 175 200 l (tap-hold-press-timeout 0 200 l ralt (macro S-l)))
-  ;; same bug as k:l (tap-hold 175 200 l (tap-hold-press-timeout 0 200 l lalt (macro S-l)))
-  ;;l (tap-hold 175 200 l (tap-hold-press-timeout 0 200 l lalt (macro S-l)))
-  ;;l (tap-hold 175 200 l (tap-hold-press-timeout 0 200 l lmet (macro S-l)))
-  ;; this f11 is the application-dependant mapping, like for neovim its the picker leader
-  ;;l (tap-hold 175 200 l (tap-hold-press-timeout 0 200 l f11 (macro S-l)))
-  ;;l (tap-hold 175 200 l (tap-hold-press-timeout 0 200 l (layer-while-held symbols) (macro S-l)))
 #+end_src
 
 #+begin_src elisp
@@ -451,22 +406,17 @@ C-x is also useful for readline
 
 c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c f15 (macro S-c)))
 m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m f15 (macro S-m)))
-
-
 #+end_src
 
 ** Window mappings
 
 #+begin_src kbd
-
 ;; so i can preserve C-\ input in emacs
-  ;; magari usa a/; come ctrl-w per windows
-   a (tap-hold 175 175 a (tap-hold-press-timeout 0 175 a f16 (macro S-a)))
-   ; (multi f24 ( tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; f16 (macro S-;))))
+a (tap-hold 175 175 a (tap-hold-press-timeout 0 175 a f16 (macro S-a)))
+; (multi f24 ( tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; f16 (macro S-;))))
 
-  ;; magari crea f16 when it does this char= getchar; exe <cmd>char..<cr> (basically one letter commands) and maybe double quotes two letters?
-  ;; ; (multi f24 ( tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; f14 (macro S-;))))
-
+;; magari crea f16 when it does this char= getchar; exe <cmd>char..<cr> (basically one letter commands) and maybe double quotes two letters?
+;; ; (multi f24 ( tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; f14 (macro S-;))))
 #+end_src
 
 #+begin_src kbd
@@ -486,21 +436,13 @@ u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
 
 ** Picker (window mnemonic)
 #+begin_src kbd
-
 ;; use modifier instead so u can use ^w{h,j,k,l} in terminal & in insert mode
 w (tap-hold 175 200 w (tap-hold-press-timeout 0 100 w f17 (macro S-w)))
-
-;;o (tap-hold-press-timeout 200 200 o (multi C-w) (macro S-o))
-;; o (tap-hold 175 200 o (tap-hold-press-timeout 0 200 o (multi C-w)(macro S-o)))
-;;o (tap-hold 175 230 o (tap-hold-release-timeout 0 200 o (multi C-w)(macro S-o)))
-;;o (tap-hold 175 200 o (tap-hold-press-timeout 0 100 o (multi lctl \ lctl n lctl w) (macro S-o)))
-;;o (tap-hold 175 200 o (tap-hold-press-timeout 0 100 o f19 (macro S-o)))
 o (tap-hold 175 200 o (tap-hold-press-timeout 0 100 o f17 (macro S-o)))
 #+end_src
 
 ** Toggle
 #+begin_src kbd
-
 ;; z inspiration from c-z toggle evil in emacs...
 ;; make this sticky
 ;; basically Toggle cause C-z toggle evil mode in emacs
@@ -518,13 +460,9 @@ h (tap-hold 150 200 h (tap-hold-press-timeout 0 150 h f18 (macro S-h)))
 #+end_src
 
 #+begin_src kbd
-
 p (tap-hold-press-timeout 175 175 p (macro S-p) (macro S-p))
 q (tap-hold-press-timeout 175 175 q (macro S-q) (macro S-q))
 
-;; n (tap-hold 100 150 n (tap-hold-press-timeout 0 75 n ] (macro S-n)))
-;; for neovim mainly terminal mapping ^\^n
-;;n (tap-hold 150 175 n (tap-hold-press-timeout 0 75 n (macro C-\) (macro S-n)))
 ;;n (tap-hold 150 175 n (tap-hold-press-timeout 0 124 n (macro C-c C-v) (macro S-n)))
 b (tap-hold-press-timeout 175 175 b b (macro S-b))
 ;;n (tap-hold-press-timeout 175 175 n n (macro S-n))
@@ -532,26 +470,12 @@ b (tap-hold-press-timeout 175 175 b b (macro S-b))
 t (tap-hold 150 175 t (tap-hold-press-timeout 0 124 t t (macro S-t)))
 y (tap-hold-press-timeout 175 175 y y (macro S-y))
 
-
-
-;; magai usa l...
 ' (tap-hold-press-timeout 200 157 ' ' (macro S-'))
 ;;, (tap-hold-press-timeout 190 157 , (multi lctl u lctl) (macro S-,))
 ;;, (tap-hold-press-timeout 190 157 , (multi lctl c lctl x lctl) (macro S-,))
 
 ` (tap-hold-press-timeout 200 157 ` ` (macro S-`))
 
-;;lpar (multi f24 (tap-hold-press-timeout 200 200 S-9 [ (macro S-[)))
-;;lpar (multi f24 (tap-hold-press-timeout 200 200 S-9 [ (macro S-[)))
-;;lpar (multi f24 (tap-dance 100 ( (tap-hold-press-timeout 200 200 S-9 [ (macro S-[) )[)))
-;;lpar (multi f24 (tap-hold-press-timeout 200 200 ( tap-dance 130 ( S-9 (macro [ [) ))[ (macro S-[)))
-
-;;lpar (tap-dance 300 (tap-hold-press-timeout 200 200 S-9 [ (macro S-[)) [ )
-;;lpar (tap-dance 100 ( (tap-hold-press-timeout 200 100 S-9 [ (macro S-[)) [))
-;;lpar (tap-dance 100 ( (tap-hold-press-timeout 200 100 S-9 [ (macro S-[)) (caps-word-toggle 10000)))
-;;rpar (multi f24 (tap-hold-press-timeout 200 200 S-0 ] (macro S-])))
-
-;; useful for (emacs lisp)
 ;;lpar (multi f24 (tap-hold-press-timeout 200 175 S-9 lsft (macro S-[)))
 ;; for searching... mnemonic: / in Vim
 ISO (multi f24 (tap-hold-press-timeout 200 175 S-9 (macro A-s) (macro S-[)))
@@ -606,17 +530,14 @@ d0 (tap-hold-press-timeout 175 175 0 0 0)
  ;; esc (tap-hold 200 249 (dynamic-macro-play 0) (dynamic-macro-play 0)) ;; usa C-u 0 for emacs
  esc (dynamic-macro-play 0)
 )
-
 #+end_src
 
 * LAYERS
-#+begin_src kbd
-;; how to use autoshift w/ a layer? like G to go to end
-;; implement vim layer? like gg and stuff
-;; notify when layer switching?
-;; magari usalo anche x emacs (fallo simmetrico)
-;; also use shift-arrow for orgs emacs
-#+end_src
+ how to use autoshift w/ a layer? like G to go to end
+ implement vim layer? like gg and stuff
+ notify when layer switching?
+ magari usalo anche x emacs (fallo simmetrico)
+ also use shift-arrow for orgs emacs
 ** Navigation
 #+begin_src kbd
 (deflayer nav
