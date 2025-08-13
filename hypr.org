@@ -445,7 +445,8 @@ bind = $mainMod, Return, exec, $terminal
 # how to quickly switch between emacs and neovim?
 # open terminal when exiting or before emacs?
 # bind = $mainMod, e, exec, [float;fullscreen] emacsclient -c  -a ''
-bind = $mainMod, e, exec, emacsclient -c  -a '' -F "'(fullscreen . fullboth)"
+# bind = $mainMod, e, exec, emacsclient -c  -a '' -F "'(fullscreen . fullboth)"
+bind = $mainMod, e, exec, emacsclient -c  -a ''
 # bind = $mainMod SHIFT, E, exec, emacsclient --eval "(emacs-everywhere)"
 
 # bind = $mainMod, P, exec, emacsclient -n -e '(progn (select-frame-set-input-focus (selected-frame)) (pass))'
@@ -506,13 +507,12 @@ bind = $mainMod, W, layoutmsg, layoutmsg, cyclenext
 # maybe use mainmod e to start programs?
 
 # https://www.reddit.com/r/hyprland/comments/17nhidq/comment/mrovcx0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-# basically same key as windows/super (invert)
+# basically same key as windows/super (invert)... why it goes fullscreen?
 bind = $mainMod SHIFT, backslash, exec, $(hyprctl activewindow -j | jq '.floating') && hyprctl dispatch cyclenext tiled || hyprctl dispatch cyclenext floating
 
 bind = $mainMod SHIFT, Q, killactive,
 bind = $mainMod, Backspace, exit,
 
-# bind = $mainMod, space, togglefloating,
 # bind = $mainMod, g, togglefloating,
 #bind = $mainMod SHIFT, F, togglefloating,
 bind = $mainMod SHIFT, F, fullscreen, 
@@ -520,12 +520,25 @@ bind = $mainMod SHIFT, F, fullscreen,
 # bind = $mainMod, F, fullscreen, 0
 bind = $mainMod, F, fullscreen, 1
 # similar to alt-tab (same keymap)
+# go to previous window map?
 bind = $mainMod, tab, exec, rofi -show window
 # bind = $mainMod, P, pseudo,
 # toggle like vim-unimpaired
 # kinda looks like vertical and horizontal but mixed
 bind = $mainMod, backslash, togglesplit
 # bind = $mainMod, w, togglesplit
+
+bind=SUPER,comma,layoutmsg,cyclenext
+bind=SUPER,period,layoutmsg,cycleprev
+# bind=SUPER,comma,layoutmsg,orientationleft
+# bind=SUPER,g,togglegaps
+# bind=SUPER,Shift,g,gap,-5
+# bind=SUPER,Ctrl,g,gap,+5
+
+# Monitor Management (multi-monitor setups)
+# bind=SUPER,Ctrl,down,focusmonitor,d
+# bind=SUPER,Shift,left,movewindow,mon:l
+
 # bind = $mainMod, G, centerwindow
 bind = $mainMod, G, togglegroup
 bind = $mainMod, tab, changegroupactive, f
