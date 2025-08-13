@@ -171,7 +171,7 @@ z=f13, x=f14, c=f15, ...
   ;;basically\ because evil, universal argument
   ;; maybe this way u can use c-u in insert mode (replicate readline in emacs)
   ;;caps (tap-hold 175 175  grave (tap-hold-press-timeout 0 100 grave (macro \ C-u) (macro S-grave)))
-  caps (tap-hold 175 175  grave (tap-hold-press-timeout 0 100 grave (macro \ ) (macro S-grave)))
+  caps (tap-hold 175 175  grave (tap-hold-press-timeout 0 100 grave (layer-while-held nav) (macro S-grave)))
   ;; <   (tap-hold 200 249 bspc S-bspc)
   ;; <   (tap-hold 200 249 mmid S-bspc)
  ;; <   mmid
@@ -305,7 +305,7 @@ Keys used: d, f (& mirrored) and space (no need for shift because of autoshift)
   ;;d (multi f24 (tap-hold-press-timeout 200 250 d lctl (macro S-d)))
   ;; make lctl sticky (for ctrl-h backspace), like ctrl-h and then press again should repeat?
 ;; if d and m pressed at the same time-> double ctrl, for things like c-cr (c-c-m)
-  d (tap-hold 175 200 d (tap-hold-press-timeout 0 100 d lctl (macro S-d)))
+  d (tap-hold 150 175 d (tap-hold-press-timeout 0 230 d lctl (macro S-d)))
   ;;d (tap-hold 175 200 d (tap-hold-press-timeout 0 200 d (layer-while-held ctrl_for_d) (macro S-d)))
 
   ;;k (multi f24(tap-hold-press-timeout 200 250 k rctl (macro S-k)))
@@ -455,33 +455,18 @@ m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m f15 (macro S-m)))
 
 #+end_src
 
-** Window
+** Window mappings
 
 #+begin_src kbd
 
 ;; so i can preserve C-\ input in emacs
-   a (tap-hold 175 175 a (tap-hold-press-timeout 0 175 a f16 (macro S-a)))
-   ;;a (tap-hold 175 200 a (tap-hold-press-timeout 0 175 a f14 (macro S-a)))
-   ;;a (tap-hold 175 200 a (tap-hold-press-timeout 0 175 a (macro C-c) (macro S-a)))
   ;; magari usa a/; come ctrl-w per windows
-  ;; a (tap-hold 175 175 a (tap-hold-press-timeout 0 100 a (multi lctl w) (macro S-a)))
-  ;;a (tap-hold 175 150 a (tap-hold-press-timeout 0 100 a (multi lmet lalt) (macro S-a)))
-
-  ;;a (multi f24 (tap-hold-press-timeout $tt 200 a (macro cmd-a) (macro S-a)))
-
-  ;; ; (tap-hold 50 10 ; (tap-hold-press-timeout 0 20 ; f14 (macro S-;)))
-  ;; ; (multi f24 ( tap-hold 0 1 ; (tap-hold-press-timeout 0 3 ; (multi lmet lalt) (macro S-;))))
-  ;; magari crea f16 when it does this char= getchar; exe <cmd>char..<cr> (basically one letter commands) and maybe double quotes two letters?
-  ;; ; (multi f24 ( tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; f14 (macro S-;))))
-  ;; ; (multi f24 ( tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; (macro C-c) (macro S-;))))
+   a (tap-hold 175 175 a (tap-hold-press-timeout 0 175 a f16 (macro S-a)))
    ; (multi f24 ( tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; f16 (macro S-;))))
 
-  ;; ; (multi f24(tap-hold-press-timeout 200 200 ; (layer-while-held symbols) (macro S-;)))
-  ;; in realt i numeri li posso fare solo con 1 layer solo
-  ;; for vim quick command mode
-  ;; ; (multi f24(tap-hold-press-timeout 0 150 ; ; (macro S-;)))
-;; magari usa ` top left key?
-   ;; ; (tap-hold 175 100 ; (tap-hold-press-timeout 0 30 ; (layer-switch nav_sx) (macro S-;)))
+  ;; magari crea f16 when it does this char= getchar; exe <cmd>char..<cr> (basically one letter commands) and maybe double quotes two letters?
+  ;; ; (multi f24 ( tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; f14 (macro S-;))))
+
 #+end_src
 
 #+begin_src kbd
@@ -497,121 +482,91 @@ u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
 ;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (multi lctl u) (macro S-u)))
 ;; r (tap-hold-press-timeout 0 200 r r (macro S-r))
 ;; u (tap-hold-press-timeout 200 200 u u (macro S-u))
+#+end_src
 
+** Picker (window mnemonic)
+#+begin_src kbd
 
-;; ───────────────────────────── accents ────────────────────────────
-  ;;w (tap-hold-press-timeout 200 200 w (multi C-w) (macro S-w))
-  ;;w (fork (tap-hold-press-timeout 200 200 w (multi C-w) (macro S-w))) (i want layer behaviour)
-  ;;w (tap-hold 175 200 w (tap-hold-press-timeout 0 200 w (multi C-w)(macro S-w)))
-  ;;w (tap-hold 175 200 w (tap-hold-press-timeout 0 200 w (multi lctl w)(macro S-w)))
-  ;; use modifier instead so u can use ^w{h,j,k,l} in terminal
-   ;; w (tap-hold 175 200 w (tap-hold-press-timeout 0 100 w (multi lctl w)(macro S-w)))
-  ;; (funge nel terminale) (fixa per emacs ) (anche in insert mode)
-  ;;w (tap-hold 175 200 w (tap-hold-press-timeout 0 100 w (multi lctl \ lctl n lctl w)(macro S-w)))
-  ;; w and o or s and l, decide (are there more available keys on any of those setup?)
-  ;;w (tap-hold 175 100 w (tap-hold-release-timeout 0 200 w (layer-while-held symbols) (macro S-w)))
-  ;; for same reason f19 doesn't work...
-   ;;w (tap-hold 175 200 w (tap-hold-press-timeout 0 100 w f19 (macro S-w)))
-   ;; mabye window mnemoNic, idk (for snacsk.nvim)
-   w (tap-hold 175 200 w (tap-hold-press-timeout 0 100 w f17 (macro S-w)))
+;; use modifier instead so u can use ^w{h,j,k,l} in terminal & in insert mode
+w (tap-hold 175 200 w (tap-hold-press-timeout 0 100 w f17 (macro S-w)))
 
-  ;;o (tap-hold-press-timeout 200 200 o (multi C-w) (macro S-o))
-  ;; o (tap-hold 175 200 o (tap-hold-press-timeout 0 200 o (multi C-w)(macro S-o)))
-  ;;o (tap-hold 175 230 o (tap-hold-release-timeout 0 200 o (multi C-w)(macro S-o)))
-  ;;o (tap-hold 175 200 o (tap-hold-press-timeout 0 100 o (multi lctl \ lctl n lctl w) (macro S-o)))
-  ;;o (tap-hold 175 200 o (tap-hold-press-timeout 0 100 o f19 (macro S-o)))
-  o (tap-hold 175 200 o (tap-hold-press-timeout 0 100 o f17 (macro S-o)))
+;;o (tap-hold-press-timeout 200 200 o (multi C-w) (macro S-o))
+;; o (tap-hold 175 200 o (tap-hold-press-timeout 0 200 o (multi C-w)(macro S-o)))
+;;o (tap-hold 175 230 o (tap-hold-release-timeout 0 200 o (multi C-w)(macro S-o)))
+;;o (tap-hold 175 200 o (tap-hold-press-timeout 0 100 o (multi lctl \ lctl n lctl w) (macro S-o)))
+;;o (tap-hold 175 200 o (tap-hold-press-timeout 0 100 o f19 (macro S-o)))
+o (tap-hold 175 200 o (tap-hold-press-timeout 0 100 o f17 (macro S-o)))
+#+end_src
 
+** Toggle
+#+begin_src kbd
 
-;; ───────────────────────────── navigation ────────────────────────────
-
-
-
-;; ───────────────────────────── toggle ───────────────────────────────
-  ;;z (tap-hold-press-timeout 175 175 z z (macro S-z))
-  ;; toggle (C o unimpaired hack, use fake modifier....)
-  ;; z inspiration from c-z toggle evil in emacs...
-  ;; z (tap-hold 150 175 z (tap-hold-press-timeout 0 75 z (macro c o) (macro S-z)))
-  ;; . (tap-hold 150 175 . (tap-hold-press-timeout 0 75 . (macro c o) (macro S-.)))
-  ;; change mapping so u can use in insert mode?
-   ;;z (tap-hold 150 175 z (tap-hold-press-timeout 0 75 z (macro c o) (macro S-z)))
+;; z inspiration from c-z toggle evil in emacs...
 ;; make this sticky
 ;; basically Toggle cause C-z toggle evil mode in emacs
-   z (tap-hold 150 175 z (tap-hold-press-timeout 0 75 z f13 (macro S-z)))
-   . (tap-hold 150 175 . (tap-hold-press-timeout 0 75 . f13 (macro S-.)))
-  ;; use in terminal as well
-  ;; z (tap-hold 150 175 z (tap-hold-press-timeout 0 75 z (macro C-\ C-n c o) (macro S-z)))
-  ;; . (tap-hold 150 175 . (tap-hold-press-timeout 0 75 . (macro C-\ C-n c o) (macro S-.)))
-  ;;z (tap-hold 150 175 z (tap-hold-press-timeout 0 75 z (multi C-\ C-n c o) (macro S-z)))
-  ;;. (tap-hold 150 175 . (tap-hold-press-timeout 0 75 . (macro C-\ C-n c o) (macro S-.)))
-  ;;. (tap-hold-press-timeout 200 157 . . (macro S-.))
+z (tap-hold 150 175 z (tap-hold-press-timeout 0 75 z f13 (macro S-z)))
+. (tap-hold 150 175 . (tap-hold-press-timeout 0 75 . f13 (macro S-.)))
+;; use in terminal as well
+#+end_src
+** Help
+#+begin_src kbd
+;; for emacs
 
-;; ───────────────────────────── others ───────────────────────────────
-
-  ;; g (tap-hold-press-timeout 175 200 g g (macro S-g))
-   ;;g (tap-hold 150 200 g (tap-hold-press-timeout 0 150 g (macro C-h) (macro S-g)))
 ;; fai che quando g e premuto, h diventa ctrl e viceversa (for emacs help mappings)
-   g (tap-hold 150 200 g (tap-hold-press-timeout 0 150 g f18 (macro S-g)))
+g (tap-hold 150 200 g (tap-hold-press-timeout 0 150 g f18 (macro S-g)))
+h (tap-hold 150 200 h (tap-hold-press-timeout 0 150 h f18 (macro S-h)))
+#+end_src
 
-  ;;g (tap-hold 150 175 g (tap-hold-press-timeout 0 75 g (layer-while-held nav) (macro S-g)))
-  ;; h (tap-hold-press-timeout 200 200 h h (macro S-h))
-  ;; for emacs
-  ;;h (tap-hold 150 175 h (tap-hold-press-timeout 0 75 h (macro C-h) (macro S-h)))
-  ;; so i can use c-h to cancel and then c-h letter for help... (use c-s-h -> help in emacs config)
-  ;;h (tap-hold 150 175 h (tap-hold-press-timeout 0 75 h (macro C-S-h) (macro S-h)))
-  ;; scherzo, usa c-h for backspace in insert mode and in normal mode for help ;D
-  ;; no , cosi puoi usare c-h per windows?
-  ;;h (tap-hold 150 175 h (tap-hold-press-timeout 0 75 h (macro C-h) (macro S-h)))
-  ;;h (tap-hold 150 175 h (tap-hold-press-timeout 0 75 h f13 (macro S-h)))
-  h (tap-hold 150 200 h (tap-hold-press-timeout 0 150 h f18 (macro S-h)))
-  ;;h (tap-hold 150 200 h (tap-hold-press-timeout 0 150 h f16 (macro S-h)))
-  
-  p (tap-hold-press-timeout 175 175 p (macro S-p) (macro S-p))
-  q (tap-hold-press-timeout 175 175 q (macro S-q) (macro S-q))
+#+begin_src kbd
 
-  ;; n (tap-hold 100 150 n (tap-hold-press-timeout 0 75 n ] (macro S-n)))
-  ;; for neovim mainly terminal mapping ^\^n
-  ;;n (tap-hold 150 175 n (tap-hold-press-timeout 0 75 n (macro C-\) (macro S-n)))
-  ;;n (tap-hold 150 175 n (tap-hold-press-timeout 0 124 n (macro C-c C-v) (macro S-n)))
-  b (tap-hold-press-timeout 175 175 b b (macro S-b))
-  ;;n (tap-hold-press-timeout 175 175 n n (macro S-n))
+p (tap-hold-press-timeout 175 175 p (macro S-p) (macro S-p))
+q (tap-hold-press-timeout 175 175 q (macro S-q) (macro S-q))
 
-  t (tap-hold 150 175 t (tap-hold-press-timeout 0 124 t t (macro S-t)))
-  y (tap-hold-press-timeout 175 175 y y (macro S-y))
+;; n (tap-hold 100 150 n (tap-hold-press-timeout 0 75 n ] (macro S-n)))
+;; for neovim mainly terminal mapping ^\^n
+;;n (tap-hold 150 175 n (tap-hold-press-timeout 0 75 n (macro C-\) (macro S-n)))
+;;n (tap-hold 150 175 n (tap-hold-press-timeout 0 124 n (macro C-c C-v) (macro S-n)))
+b (tap-hold-press-timeout 175 175 b b (macro S-b))
+;;n (tap-hold-press-timeout 175 175 n n (macro S-n))
 
-   
+t (tap-hold 150 175 t (tap-hold-press-timeout 0 124 t t (macro S-t)))
+y (tap-hold-press-timeout 175 175 y y (macro S-y))
 
-  ;; magai usa l...
-  ' (tap-hold-press-timeout 200 157 ' ' (macro S-'))
-  ;;, (tap-hold-press-timeout 190 157 , (multi lctl u lctl) (macro S-,))
-  ;;, (tap-hold-press-timeout 190 157 , (multi lctl c lctl x lctl) (macro S-,))
 
-  ` (tap-hold-press-timeout 200 157 ` ` (macro S-`))
-  
-  ;;lpar (multi f24 (tap-hold-press-timeout 200 200 S-9 [ (macro S-[)))
-  ;;lpar (multi f24 (tap-hold-press-timeout 200 200 S-9 [ (macro S-[)))
-  ;;lpar (multi f24 (tap-dance 100 ( (tap-hold-press-timeout 200 200 S-9 [ (macro S-[) )[)))
-  ;;lpar (multi f24 (tap-hold-press-timeout 200 200 ( tap-dance 130 ( S-9 (macro [ [) ))[ (macro S-[)))
 
-  ;;lpar (tap-dance 300 (tap-hold-press-timeout 200 200 S-9 [ (macro S-[)) [ )
-  ;;lpar (tap-dance 100 ( (tap-hold-press-timeout 200 100 S-9 [ (macro S-[)) [))
-  ;;lpar (tap-dance 100 ( (tap-hold-press-timeout 200 100 S-9 [ (macro S-[)) (caps-word-toggle 10000)))
-  ;;rpar (multi f24 (tap-hold-press-timeout 200 200 S-0 ] (macro S-])))
+;; magai usa l...
+' (tap-hold-press-timeout 200 157 ' ' (macro S-'))
+;;, (tap-hold-press-timeout 190 157 , (multi lctl u lctl) (macro S-,))
+;;, (tap-hold-press-timeout 190 157 , (multi lctl c lctl x lctl) (macro S-,))
 
-  ;; useful for (emacs lisp)
-  ;;lpar (multi f24 (tap-hold-press-timeout 200 175 S-9 lsft (macro S-[)))
-  ;; for searching... mnemonic: / in Vim
-  ISO (multi f24 (tap-hold-press-timeout 200 175 S-9 (macro A-s) (macro S-[)))
-  ;;lpar (multi f24 (tap-hold-press-timeout 200 175 S-9 (multi lalt s) (macro S-[)))
+` (tap-hold-press-timeout 200 157 ` ` (macro S-`))
+
+;;lpar (multi f24 (tap-hold-press-timeout 200 200 S-9 [ (macro S-[)))
+;;lpar (multi f24 (tap-hold-press-timeout 200 200 S-9 [ (macro S-[)))
+;;lpar (multi f24 (tap-dance 100 ( (tap-hold-press-timeout 200 200 S-9 [ (macro S-[) )[)))
+;;lpar (multi f24 (tap-hold-press-timeout 200 200 ( tap-dance 130 ( S-9 (macro [ [) ))[ (macro S-[)))
+
+;;lpar (tap-dance 300 (tap-hold-press-timeout 200 200 S-9 [ (macro S-[)) [ )
+;;lpar (tap-dance 100 ( (tap-hold-press-timeout 200 100 S-9 [ (macro S-[)) [))
+;;lpar (tap-dance 100 ( (tap-hold-press-timeout 200 100 S-9 [ (macro S-[)) (caps-word-toggle 10000)))
+;;rpar (multi f24 (tap-hold-press-timeout 200 200 S-0 ] (macro S-])))
+
+;; useful for (emacs lisp)
+;;lpar (multi f24 (tap-hold-press-timeout 200 175 S-9 lsft (macro S-[)))
+;; for searching... mnemonic: / in Vim
+ISO (multi f24 (tap-hold-press-timeout 200 175 S-9 (macro A-s) (macro S-[)))
+;;lpar (multi f24 (tap-hold-press-timeout 200 175 S-9 (multi lalt s) (macro S-[)))
 
 ;; / simmetrico di (
-  ;;/ (tap-hold-press-timeout 200 157 / ] (macro S-/))
-  ;; tanto usi rpt-any, giusto? 
-  ;; / (multi f24 (tap-hold-press-timeout 200 200 ( tap-dance 130 ( / (macro ] ]) ))] (macro S-/)))
-  ;; maybe C-s when held for emacs?
-  ;;/ (tap-hold-press-timeout 200 157 / rsft (macro S-/))
-  ;;/ (tap-hold-press-timeout 200 157 / (multi lalt s) (macro S-/))
-  / (tap-hold-press-timeout 200 157 / (macro A-s) (macro S-/))
+;;/ (tap-hold-press-timeout 200 157 / ] (macro S-/))
+;; tanto usi rpt-any, giusto? 
+;; / (multi f24 (tap-hold-press-timeout 200 200 ( tap-dance 130 ( / (macro ] ]) ))] (macro S-/)))
+;; maybe C-s when held for emacs?
+;;/ (tap-hold-press-timeout 200 157 / rsft (macro S-/))
+;;/ (tap-hold-press-timeout 200 157 / (multi lalt s) (macro S-/))
+/ (tap-hold-press-timeout 200 157 / (macro A-s) (macro S-/))
+
+bspc (tap-hold-press-timeout 175 175 bspc bspc (macro S-bspc))
 
 ;; tasti liberiii (maybe use (held) super for hyprland/wm, like associate with workspace name)
 ;; do maybe maths
@@ -629,8 +584,6 @@ d9 (tap-hold-press-timeout 175 175 9 9 (macro S-5))
 ;;d0 (tap-hold-press-timeout 175 175 0 0 f13)
 ;; doesn't work?
 d0 (tap-hold-press-timeout 175 175 0 0 0)
- bspc (tap-hold-press-timeout 175 175 bspc bspc (macro S-bspc))
-
 #+end_src
 ** Macros
    v:count?
@@ -658,177 +611,22 @@ d0 (tap-hold-press-timeout 175 175 0 0 0)
 
 * LAYERS
 #+begin_src kbd
-
-;; defvar and defalias diff?
-(defvar
-;;line (tap-hold 200 200 S-- S-\)
-;;mns (tap-hold 200 200 - =)
-mns -
-;;pls (tap-hold 200 200 S-= S-7)
-pls S-=
-;;per (tap-hold 200 200 S-5 S-grv)
-per S-5
-;;dlr  (tap-hold 200 200 S-4 S-8)
-dlr S-4
-;;crt   (tap-hold 200 200 S-6 S-3)
-crt S-6
-;;ats   (tap-hold 200 200 S-2 S-1)
-ats S-2
-bks \
-ask S-8
-hsh S-3
-pipe S-\
-grv grv
-;; in realta non servono queste
-;;prv [
-prv (macro [ [)
-;; nxt (macro ] ])
-nxt (tap-hold 200 200 (macro ] ]) (macro [ [))
-eql =
-bng S-1
-and S-7
-tld S-grv
-;; und S--
-;;und (tap-hold 200 200 S-- (macro spc S-- spc))
-;; do this for all symbols?
-und (tap-hold-press-timeout 200 200 S-- S-- (macro spc S-- spc))
-tab (tap-hold 200 200 tab S-tab)
-;;non funge
-cwr (caps-word-toggle 10000)
-nwl (tap-hold 200 200 ret S-ret)
-;; j-> ctrl-w?
-hlf (tap-hold 200 200 0 5)
-fst (tap-hold 200 200 1 9)
-snd (tap-hold 200 200 2 8)
-trd (tap-hold 200 200 3 7)
-frt (tap-hold 200 200 4 6)
-;; check tihs out? https://github.com/jtroo/kanata/issues/596
-;; pa (tap-dance 300 (. S-2))
-)
-
-
-;; nice for regex as well
-;; percent mnemonic: m-> match (parenthesis, etc...)
-;; hsh opposto ad ask (vim)
-;; eql opposto a bng
-;; tilde assomiglia a s piu shell
-;; = nel posto di l
-;; - e + ai lati opposti
-  ;;_     $and $tld    _     $mns    $line          $crt    $prv $nxt  $dlr $pipe $grv
-  ;;_    _   $prv $nxt  _    _          _     $mns $bng $ats _ _
-  ;; add space after =, -, etc...
-  ;; $cwr     $mns $pls    esc     _    $line          $pipe    $crt $dlr  $eql $und $grv
-
-  ;;$cwr     $mns $bng    esc     _    _          $tld    $crt $dlr  $eql $nwl $grv
-  ;; hsh e ask diametralment opposti
-;; _   $und _                      _
-  ;;$cwr     $prv $bng    esc     _    _          $tld    $mns $und  $eql $nxt $grv
-  ;; magari implementa numeri usando d (ctrl) f (simboli) + lettera? like dfj for 0, etc...
-  ;; bang mnemonic -> n (lampo)
-  ;; use keylogger in vim to position symbols...
-  ;; _    5   $ats $and    _    _          _     $pls $pipe $ats _ _
-  ;; [    $snd    $trd  _    _    _          $bng $per    $crt  $dlr  $bks    ]
-  ;; dlr->end (e)
-  ;; TODO: ctrl-@ da 2
-  ;; maybe for caps add space, char and space again? like for = in programming (operator in general)
-
-;; 
-;;   ;; bad solution I guess (maybe space hold as shift layer?)
-;; non posso usare ad esempio ctrl-^ (dfi), fixa
-
-  ;; per il momento...  _ (macro C-a)    _    _    (macro S-esc)    (macro C-g)          (macro C-h)    (macro C-j)    (macro C-k)    (macro C-l)    (macro C-;)    (macro C-') (macro C-ret)
-
-;; use ; and , for [ and ] (occurences like for neovim)
-;;$cwr 4     3 2    1     0             $tld    $mns $und  $eql $nxt $grv _
-  ;;$cwr 4     3 2    1     0             $tld    $mns $und  $crt $dlr $grv _
-;; comma-> and mnemonic (same function)
-;; (deflayer symbols
-;; _ _ _ _ _ _ _ _ _ _ _ _
-;; _ 9    8   7  6       5          _     $bng $pipe $hsh $prv _
-;;   $cwr 4     3 2    1     0             $tld    $mns $und  $eql $per $grv _
-;;   [    $pls $trd    $crt  $ats    _           $nxt $dlr    $and  $ask  $bks    ]
-;;                               _   _ _                      _
-;; )
-
-;; magari usa N hold shift per prev
-;; combinazioni rare van bene nello stesso dito (-+ e +-)
-
-  ;;$cwr 3     $bng $crt    $dlr     0             $tld    $mns $und  $eql $pls $grv _
-  ;; dot should be involved for rpt-key? like in vim
-  ;;$cwr $pipe     $bng $crt    $dlr     _             $tld    $mns $und  $eql $cwr $grv _
-;; (unicode €)
-;; (deflayer symbols
-;; _
-;; _ _ _ _ _ _ _ _ _ _ _ _
-;; _ 9    $hsh   $and  6       5          _      $pls $crt $bng $ats _ _
-;;   $cwr $hsh     $ask       $dlr $pls  _             $tld    $mns $und  $eql $cwr $grv _ _
-;;   _  [  $pls $trd    $crt  $ats    _           $nxt $per    $and  $ask  $bks    ]
-;; _ _ _                              _   _ _                      _
-;;                                _ _ $crt 
-;; )
-
-;; magari je to exit neovim window, etc...
-;;(deflayer syms_for_j
-;; _
-;; _ _ _ _ _ _ _ _ _ _ _ _ _
-;; _  _      _     _    _         _           _       _   _   _   _  _
-;;    _   _       _   _      _       _               _      _   ret    _   _   _  _
-;;    _    _  _   _      _    _     _            _   _      _    _    _     _ _ 
-;;     _ _ _                          _   _ _                      _
-;;                                _ _ _ 
-;; )
-
-
-
-(defalias
-+ (macro S-=)
-,* (macro S-8)
-;; how to repeat it?
-bk bspc
-;; _ lo puoi vedere come separatore di numeri, come in java
-_ (macro S--)
-)
-
-  ;;_ _ = @+ - @_ @bk  1 2 3 @* _
-;; (deflayer num
-;; _
-;; _ _ _ _ _ _ _ _ _ _ _ _ _
-;;   _ _ _  _  _  _  _ 6 7 8 9  _
-;; _ 5 4 3 2 1 0  = _ _ _ _ _  
-;;   _ _ _ _  _  _  _  _ -  @+ @* _ _ _
-;; _ _ _        _  @_  _ _
-;;          _ _ _ 
-;; )
-
-(defvar
-  ext (macro S-z S-q)
-  wrt (macro S-z S-z)
-)
-
-#|
-(deflayer function
-  _ _    _  _  _  _   _ _    _    _    _ _ _
-  _ _    f7 f8 f9 f12 _ _    _    _    _ _
-  _ prnt f4 f5 f6 f11 _ vold volu mute _ _ _
-  _ _    f1 f2 f3 f10 _ brdn bru  _    _ _
-  _ _    _  _  _  _  
-  _ _    _ 
-)
-|#
-
 ;; how to use autoshift w/ a layer? like G to go to end
 ;; implement vim layer? like gg and stuff
 ;; notify when layer switching?
 ;; magari usalo anche x emacs (fallo simmetrico)
 ;; also use shift-arrow for orgs emacs
+#+end_src
+** Navigation
+#+begin_src kbd
 (deflayer nav
-  _
-  _ _ _ _     _ _ _ _    _    _  _    _ _
-  _ _ _ _     _ _ _ _    _    _  _    _
-  _ _ _ _     _ _ _ left down up rght _ _ _ _
-  _ _ _ _     _ _ _ _    ret  _  _    _ _
-  _ _ _ _     _ _ _
-  _ _ _
+_
+_ _ _ _     _ _ _ _    _    _  _    _ _
+_ _ _ _     _ _ _ _    _    _  _    _
+_ _ _ _     _ _ _ left down up rght _ _ _ _
+_ _ _ _     _ _ _ _    ret  _  _    _ _
+_ _ _ _     _ _ _
+_ _ _
 )
 
 ;; (deflayer nav_sx
@@ -840,7 +638,6 @@ _ (macro S--)
 ;; _ _ _  _              _              _   _
 ;;    _ _ _ 
 ;; )
-
 #+end_src
 
 * CHORDS
