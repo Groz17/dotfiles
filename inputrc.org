@@ -64,8 +64,7 @@ $endif
 "\e[24~": "\C-x"
 # doesn't work?
 # "\e[25~": "\C-u"
-# ctrl-m doesn't work?
-# "\C-m": accept-line
+# HACK: Fix C-m for ghostty
 "\e[109;5u": accept-line
 
 "\C-xe":"navi --print\C-j"
