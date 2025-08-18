@@ -105,6 +105,7 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 # mine
 alias v="nvim"
 alias V="SUDO_EDITOR=\"nvim\" sudoedit"
+alias t="trans"
 # alias e="emacs"
 # alias em="emacs"
 # alias e="emacs"
@@ -175,7 +176,8 @@ emacsclient -t -a '' `command info -w "$1"`
 # }
 
 # export MANWIDTH=999
-export EDITOR="nvim"
+EDITORS=( emacsclient nvim )
+export EDITOR="${EDITORS[$((RANDOM%${#EDITORS[@]}))]}"
 # usa orgmode
 export FZF_DEFAULT_OPTS_FILE="$HOME"/.config/fzfrc
 export OLLAMA_API_BASE=http://127.0.0.1:11434
