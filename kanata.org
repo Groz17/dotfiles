@@ -354,14 +354,12 @@ spc (tap-hold-press-timeout 0 200 spc lmet (multi S-spc))
   ;;i (tap-hold 175 200 i (tap-hold-press-timeout 0 200 i f11 (macro S-i)))
 
 #+end_src
-** VCS
-Not sure...
+** TODO
   #+begin_src kbd
-  ;;v (tap-hold 150 175 v (tap-hold-press-timeout 0 75 v (macro C-\) (macro S-v)))
-  ;;v (tap-hold 150 175 v (tap-hold-press-timeout 0 75 v (multi lctl u lalt) (macro S-v)))
-  ;; seems (i'm hopeful) that c-x c-y c-z can be done with c-x c-y z
-  v (tap-hold 150 200 v (tap-hold-press-timeout 0 150 v f14 (macro S-v)))
-  n (tap-hold 150 200 n (tap-hold-press-timeout 0 150 n f14 (macro S-n)))
+    ;; v (tap-hold 150 200 v (tap-hold-press-timeout 0 150 v i (macro S-v)))
+    ;; n (tap-hold 150 200 n (tap-hold-press-timeout 0 150 n i (macro S-n)))
+  v (tap-hold-press-timeout 175 175 v v (macro S-v))
+  n (tap-hold-press-timeout 175 175 n n (macro S-n))
   #+end_src
 
 ** C-x emacs
@@ -435,6 +433,7 @@ u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
 #+end_src
 
 ** Picker (window mnemonic)
+Those should be temporary mappings until editor's default mappings are added
 #+begin_src kbd
 ;; use modifier instead so u can use ^w{h,j,k,l} in terminal & in insert mode
 w (tap-hold 175 200 w (tap-hold-press-timeout 0 100 w f17 (macro S-w)))
@@ -459,16 +458,22 @@ g (tap-hold 150 200 g (tap-hold-press-timeout 0 150 g f18 (macro S-g)))
 h (tap-hold 150 200 h (tap-hold-press-timeout 0 150 h f18 (macro S-h)))
 #+end_src
 
+** Translation
 #+begin_src kbd
-p (tap-hold-press-timeout 175 175 p (macro S-p) (macro S-p))
-q (tap-hold-press-timeout 175 175 q (macro S-q) (macro S-q))
+t (tap-hold 150 200 t (tap-hold-press-timeout 0 150 t f14 (macro S-t)))
+y (tap-hold 150 200 y (tap-hold-press-timeout 0 150 y f14 (macro S-y)))
+#+end_src
+
+#+begin_src kbd
+p (tap-hold-press-timeout 175 175 p p (macro S-p))
+q (tap-hold-press-timeout 175 175 q q (macro S-q))
 
 ;;n (tap-hold 150 175 n (tap-hold-press-timeout 0 124 n (macro C-c C-v) (macro S-n)))
 b (tap-hold-press-timeout 175 175 b b (macro S-b))
 ;;n (tap-hold-press-timeout 175 175 n n (macro S-n))
+#+end_src
 
-t (tap-hold 150 175 t (tap-hold-press-timeout 0 124 t t (macro S-t)))
-y (tap-hold-press-timeout 175 175 y y (macro S-y))
+#+begin_src kbd
 
 ' (tap-hold-press-timeout 200 157 ' ' (macro S-'))
 ;;, (tap-hold-press-timeout 190 157 , (multi lctl u lctl) (macro S-,))
@@ -510,9 +515,12 @@ d9 (tap-hold-press-timeout 175 175 9 9 (macro S-5))
 d0 (tap-hold-press-timeout 175 175 0 0 0)
 #+end_src
 ** Macros
+   EXWM would be perfect for these ig
    v:count?
    also S-9 and S-0 could be an idea (like emacs c-x())
    better to toggle though
+   sleep-for?
+   super+q?
 #+begin_src kbd
 ;; - (tap-hold-press-timeout 175 175 rpt-any - (macro S--))
 - (tap-hold-press-timeout 175 175 (dynamic-macro-record 0) - (macro S--))
