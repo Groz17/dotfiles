@@ -169,7 +169,12 @@ export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 export MANPAGER="nvim +Man!"
 
 info() {
-emacsclient -t -a '' `command info -w "$1"`
+path=`command info -w "$1"`
+if [ $path == '*manpages*' ]; then
+emacsclient -t -a '' --eval "(progn (man \"$1\")(delete-window))"
+    else
+emacsclient -t -a ''  "$path"
+      fi
 }
 # man() {
 #     emacsclient -t -e "(man \"$*\")"
