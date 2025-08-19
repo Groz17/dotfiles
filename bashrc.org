@@ -176,7 +176,7 @@ emacsclient -t -a '' `command info -w "$1"`
 # }
 
 # export MANWIDTH=999
-EDITORS=( emacsclient nvim )
+EDITORS=( "emacsclient -nw" nvim )
 export EDITOR="${EDITORS[$((RANDOM%${#EDITORS[@]}))]}"
 # usa orgmode
 export FZF_DEFAULT_OPTS_FILE="$HOME"/.config/fzfrc
