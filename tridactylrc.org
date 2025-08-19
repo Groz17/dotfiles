@@ -666,12 +666,15 @@ bind gs viewsource
 unbind t
 bind tA tabgroupabort
 bind tc fillcmdline tabgroupcreate
+" use tG like for tab-group <c-x>tG
 " bind tx fillcmdline tabgroupclose
 " q perche x e troppo vicino a c e perche q e piu diffile da raggiungere
 bind tq fillcmdline tabgroupclose
 bind ts fillcmdline tabgroupswitch
 bind tm fillcmdline tabgroupmove
 bind tr fillcmdline tabgrouprename
+
+bind t2 fillcmdline tabopen -b
 
 " bind tl tabgrouplast
 
