@@ -72,19 +72,14 @@ Command palette prefix+x?
 # I want to have a leader based control system for ghostty (to avoid key collissions with other applications), where <C-s> is used as my leader key for operations
 # while the meta/alt key is used for movement within the multiplexed terminals
 
-## fix stuff
-# keybind=ctrl+m=text:\x0D
-# keybind=ctrl+i=text:\x09
-# keybind=ctrl+[=text:\x1B
-# keybind=ctrl+Return=text:\x0D+control?
-
 # General
+# same mapping as neovim's :restart?
 keybind=super+alt+r=reload_config
 keybind = super+alt+a=select_all
 keybind = ctrl+shift+c=copy_to_clipboard
 keybind = ctrl+shift+v=paste_from_clipboard
-# like hyprland
-keybind = super+alt+shift+q=close_surface
+# like emacs' <c-x>0
+keybind = super+alt+digit_0=close_surface
 # Currently not working
 keybind = super+alt+shift+i=inspector:toggle
 
