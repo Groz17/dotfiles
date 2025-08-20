@@ -149,7 +149,7 @@ keybind = super+alt+shift+o=previous_tab
 # keybind = super+alt+^=goto_tab:1
 # goto last tab action? w/ $ or smth
 keybind = super+alt+m=move_tab:+1
-keybind = super+alt+->m=move_tab:-1
+# keybind = super+alt+->m=move_tab:-1 (need to use zoom)
 
 # # Prompt navigation
 # like ctrl-p/n 
