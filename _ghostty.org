@@ -12,7 +12,6 @@
 
 * Prefs
 #+begin_src conf
-
 # font-family = Iosevka
 font-family = Aporetic Sans Mono
 # font-family = Adwaita Mono
@@ -61,18 +60,16 @@ window-inherit-working-directory=true
 * Keybinds 
 Command palette prefix+x?
 #+begin_src conf
+keybind=clear
 
-# move_tab:-1
-# move_tab:+1
-
-# keybind = cmd+left=text:\x1b[25~
-# keybind = cmd+right=text:\x1b[26~
 
 # basically leader mimics ctrl...
 # I want to have a leader based control system for ghostty (to avoid key collissions with other applications), where <C-s> is used as my leader key for operations
 # while the meta/alt key is used for movement within the multiplexed terminals
+#+end_src
 
-# General
+** General
+#+begin_src conf
 # same mapping as neovim's :restart?
 keybind=super+alt+r=reload_config
 keybind = super+alt+a=select_all
@@ -83,20 +80,11 @@ keybind = super+alt+digit_0=close_surface
 # Currently not working
 keybind = super+alt+shift+i=inspector:toggle
 
-## keybindings
-# keybind=clear
-# maybe use prefix=home variable?
-# disable home in bash/zsh? for ghostty
-# keybind=homehift+alt+v=new_split:right
-##keybind=homehift+alt+v=new_split:right
-# keybind=cmd+v=new_split:right
-# magari fai keybindings simili per hyprland?
-# keybind=super+alt+v=new_split:right
-# use s/l (like ctrl-x) and 0,1,2,3,... like emacs (tanto userai sempre e solo emacs GUI)
-keybind=super+alt+v=new_split:right
-keybind=super+alt+shift+v=new_split:left
-keybind=super+alt+s=new_split:down
-keybind=super+alt+shift+s=new_split:up
+# probably kanata
+# keybind = super+alt+kp_add=increase_font_size:1
+keybind = super+alt+equal=increase_font_size:1
+# keybind = super+alt++=increase_font_size:1
+keybind = super+alt+-=decrease_font_size:1
 
 # https://www.reddit.com/r/Ghostty/comments/1hy4out/ghostty_config_with_leader_based_bindings/?rdt=56822
 
@@ -114,12 +102,23 @@ keybind = super+alt+shift+w=write_screen_file:open
 # use C-v and A-v like emacs? do these work just shell?
 keybind = super+alt+d=scroll_page_down
 keybind = super+alt+u=scroll_page_up
-#
-# # Tab and splits (panes)
-# keybind = super+alt+t=new_tab
-keybind = super+alt+t=new_tab
-# turn split to tab? like ^wT in vim
-# keybind = super+alt+o=toggle_split_zoom
+
+# keybind = global:super+alt+grave_accent=toggle_quick_terminal
+# # -= Navigation 
+#+end_src
+** Splits
+#+begin_src conf
+# keybind=homehift+alt+v=new_split:right
+##keybind=homehift+alt+v=new_split:right
+# keybind=cmd+v=new_split:right
+# magari fai keybindings simili per hyprland?
+# keybind=super+alt+v=new_split:right
+# use s/l (like ctrl-x) and 0,1,2,3,... like emacs (tanto userai sempre e solo emacs GUI)
+# maybe a/; so u can use ash to select all?
+keybind=super+alt+v=new_split:right
+keybind=super+alt+shift+v=new_split:left
+keybind=super+alt+s=new_split:down
+keybind=super+alt+shift+s=new_split:up
 #
 # keybind = super+alt+equal=equalize_splits
 keybind = super+alt+e=equalize_splits
@@ -129,45 +128,36 @@ keybind = super+alt+.=resize_split:right,10
 # keybind = alt>6=resize_split:up,10
 # keybind = alt>7=resize_split:down,10
 
-# keybind = super+alt+k=increase_font_size:1
-# come pdf bindings
-# keybind = super+alt+alt+k=increase_font_size:1
-# keybind = super+alt+]=increase_font_size:-1
-# kanata help?
-# keybind = super+alt+[=increase_font_size:-1
-# TODO: find cool mappings to be able to use - and +
-# keybind = super+alt+]=increase_font_size:1
-# keybind = super+alt+[=decrease_font_size:1
-# probably kanata
-# keybind = super+alt+kp_add=increase_font_size:1
-keybind = super+alt+equal=increase_font_size:1
-# keybind = super+alt++=increase_font_size:1
-keybind = super+alt+-=decrease_font_size:1
-#
-# keybind = global:super+alt+grave_accent=toggle_quick_terminal
-# # -= Navigation 
-#
 # # Split navigation
 keybind = super+alt+h=goto_split:left
 keybind = super+alt+j=goto_split:bottom
 keybind = super+alt+k=goto_split:top
 keybind = super+alt+l=goto_split:right
+#+end_src
+
+** Tabs
+#+begin_src conf
+
+keybind = super+alt+t=new_tab
+# turn split to tab? like ^wT in vim
+# keybind = super+alt+o=toggle_split_zoom
 #
-# # Tab navigation
-# don't work...
-# keybind = super+alt+(=previous_tab
 keybind = super+alt+o=next_tab
 keybind = super+alt+shift+o=previous_tab
 # like <c-x>t{o,O}
-keybind = super+alt+0=goto_tab:1
-keybind = super+alt+^=goto_tab:1
+# keybind = super+alt+0=goto_tab:1
+# keybind = super+alt+^=goto_tab:1
 # goto last tab action? w/ $ or smth
+keybind = super+alt+m=move_tab:+1
+keybind = super+alt+->m=move_tab:-1
+
 # # Prompt navigation
 # like ctrl-p/n 
 # keybind = super+alt+b=jump_to_prompt:-1
 # keybind = super+alt+f=jump_to_prompt:1
 # keybind = super+alt+p=jump_to_prompt:-1
 # keybind = super+alt+n=jump_to_prompt:1
+
 
 # Elsewhere, Ghostty intros a new performable: keybinding prefix to control if a configured keyboard shortcut “should only consume the input if the action is performed”, as per this given example:
 # keybind = performable:ctrl+c=copy_to_clipboard
