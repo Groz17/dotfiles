@@ -51,7 +51,7 @@ $fileManager = ghostty -e emacsclient -t --eval '(dired nil)'
 # $menu = wofi --show drun
 # in futuro standalone emacs picker (elimina tutte le dipendenze)
 $menu = rofi -show drun -show-icons
-$browser = floorp || flatpak run one.ablaze.floorp
+$browser = floorp || LD_LIBRARY_PATH=/opt/floorp floorp flatpak run one.ablaze.floorp
 
 #$email 
 #$pass
@@ -478,7 +478,6 @@ bind = $mainMod, B, exec, $browser
  # use emacs
 # bind = $mainMod, a, exec, ferdium --ozone-platform=wayland --enable-fetures-WaylandWindowDecorations
 
-# bind = $mainMod, esc, shutdown,
 # bind = $mainMod, period, exec, [float] $fileManager
 # crea submap per emacs bindings for email, dired, etc...
 #bind = $mainMod CTRL, x, d, exec, [float] $fileManager
@@ -546,6 +545,7 @@ bind = $mainMod shift, tab, changegroupactive, b
 bind = $mainMod SHIFT, G, moveoutofgroup
 # bind = $mainMod SHIFT, Tab, bringactivetotop
 # maybe use mod+y (rot13 of l) (general way to remap if a letter is already remapped?)
+# bind = $mainMod, esc, shutdown,
 # bind = $mainMod shift, z, exec, shutdown now
 bind = $mainMod , delete, exec, shutdown now
 # restart binding
@@ -1096,8 +1096,8 @@ can u use source code (maybe elisp) to pick random image?
 # preload=~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper.jpg
 # wallpaper=,~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper.jpg
 # preload=~/Pictures/Wallpapers/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper_purple.jpg
-preload=~/Pictures/Wallpapers/image0-EA27E.jpg
-wallpaper=,~/Pictures/Wallpapers/image0-EA27E.jpg
+preload=~/Pictures/Wallpapers/kanagawa_vaporwave.jpg
+wallpaper=,~/Pictures/Wallpapers/kanagawa_vaporwave.jpg
 # preload=~/Pictures/RxlwP.png
 # wallpaper=,~/Pictures/RxlwP.png
 # ipc = off
