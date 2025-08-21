@@ -720,13 +720,15 @@ bind = $mainMod shift, slash, exec, [float;size 30% 30%] PATH=$HOME/.cargo/bin:$
 
 *** Songs
 #+begin_src conf
+**** Downloaded songs
 bind = $mainMod , m, exec, ~/.config/hypr/scripts/songs
+bind = $mainMod shift, m, exec, ~/.config/hypr/scripts/yt_songs
 #+end_src
 
 
 #+begin_src bash :tangle ~/.config/hypr/scripts/songs
 #!/usr/bin/env bash
-SOCKET=/tmp/pick_song
+SOCKET=/tmp/songs
 [ -e "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
 
 music_dir=~/Music
@@ -736,6 +738,18 @@ find "$music_dir" -type f -exec stat --printf="%w\t%n\n" {} +  | sort -nr | cut 
 rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator / |
 ifne mpv --playlist=/dev/stdin --no-video --no-terminal --input-ipc-server="$SOCKET"
 #+end_src
+
+
+**** Search on YT
+#+begin_src bash :tangle ~/.config/hypr/scripts/yt_songs
+#!/usr/bin/env bash
+SOCKET=/tmp/yt_songs
+[ -e "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
+search="$(rofi -dmenu -l 0 -p 'Search song')"
+[ -z "$search" ] && exit 1;
+yt-dlp -f bestaudio --get-url "ytsearch:$search" | head -n1 | mpv --playlist=/dev/stdin --input-ipc-server="$SOCKET"
+#+end_src
+  
 
 *** Global Keybinds 
 https://wiki.hypr.land/Configuring/Binds/#global-keybinds
