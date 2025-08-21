@@ -13,8 +13,6 @@
 
 * Starship
 #+begin_src shell
-
-
 # Load starship prompt if starship is installed
 if [ -x /usr/bin/starship ]; then
 	__main() {
@@ -60,7 +58,6 @@ alias grubup="sudo update-grub"
 alias fixpacman="sudo rm /var/lib/pacman/db.lck"
 alias tarnow='tar -acf '
 alias untar='tar -zxvf '
-alias wget='wget -c '
 alias rmpkg="sudo pacman -Rdd"
 alias psmem='ps auxf | sort -nr -k 4'
 alias psmem10='ps auxf | sort -nr -k 4 | head -10'
@@ -72,13 +69,8 @@ alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
-# alias grep='ugrep --color=auto'
-# alias fgrep='ugrep -F --color=auto'
-# alias egrep='ugrep -E --color=auto'
 alias hw='hwinfo --short'                          # Hardware Info
 alias big="expac -H M '%m\t%n' | sort -h | nl"     # Sort installed packages according to size in MB (expac must be installed)
-alias gitpkg='pacman -Q | grep -i "\-git" | wc -l' # List amount of -git packages
-alias ip='ip -color'
 
 # Get fastest mirrors
 alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
@@ -86,9 +78,6 @@ alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/p
 alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
 alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
 
-# Help people new to Arch
-alias apt='man pacman'
-alias apt-get='man pacman'
 alias tb='nc termbin.com 9999'
 alias helpme='cht.sh --shell'
 alias pacdiff='sudo -H DIFFPROG=meld pacdiff'
@@ -106,14 +95,6 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 alias v="nvim"
 alias V="SUDO_EDITOR=\"nvim\" sudoedit"
 alias t="trans"
-# alias e="emacs"
-# alias em="emacs"
-# alias e="emacs"
-# alias e="~/.config/emacs/bin/doom run"
-# alias e="emacsclient -c -a emacs"
-# alias E="emacsclient -c -a emacs -nw"
-# alias e="emacsclient -c -a emacs -nw"
-# alias E="emacsclient -c -a emacs"
 alias em="emacsclient -c -a ''"
 # cool: https://www.reddit.com/r/emacs/comments/3rxfr5/xclip_copypaste_killyank_and_emacs_in_a_terminal/
 alias e='emacsclient -t -a ""'
@@ -131,18 +112,16 @@ alias py="python"
 # alias d="lazydocker"
 alias l="ls"
 alias s="sioyek"
-alias x="xournalpp"
 alias a="apy"
 
 alias V="nvim -c TransparentEnable"
 
 alias rtfm='ranger /usr/share/doc/arch-wiki/html/en'
-# alias cb='flatpak run app.getclipboard.Clipboard'
 
 function WTF {
-      # wtf -t comp $(cat /usr/share/games/bsdgames/acronyms.comp | cut -f1 | shuf -n1)
+# wtf -t comp $(cat /usr/share/games/bsdgames/acronyms.comp | cut -f1 | shuf -n1)
 wtf  $(cat /usr/share/misc/acronyms.comp | cut -f1 | shuf -n1)
-      }
+}
 
 export LEDGER_CURRENT_FILE="$HOME/protondrive/ledger/ledger-2017.dat"
 export LEDGER_FILE="$HOME/protondrive/ledger/ledger.dat"
@@ -151,7 +130,6 @@ export LEDGER_PRICE_DB="$HOME/protondrive/ledger/prices/prices.dat"
 # https://www.youtube.com/watch?v=cjoCNRpLanY
 alias ledger="ledger --strict --explicit"
 # LEDGER_CURRENT_FILE=
-
 
 # export XDG_CONFIG_HOME="$HOME"/.config/
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -171,10 +149,10 @@ export MANPAGER="nvim +Man!"
 info() {
 path=`command info -w "$1"`
 if [ $path == '*manpages*' ]; then
-emacsclient -t -a '' --eval "(progn (man \"$1\")(delete-window))"
-    else
-emacsclient -t -a ''  "$path"
-      fi
+  emacsclient -t -a '' --eval "(progn (man \"$1\")(delete-window))"
+else
+  emacsclient -t -a ''  "$path"
+fi
 }
 # man() {
 #     emacsclient -t -e "(man \"$*\")"
@@ -192,6 +170,7 @@ export ELECTRON_OZONE_PLATFORM_HINT=auto
 # export QT_STYLE_OVERRIDE=Adwaita-Dark
 
 #+end_src
+
 * Atuin
 #+begin_src bash
 
@@ -555,6 +534,7 @@ eval "$(direnv hook bash)"
 # Type direnv allow .  and watch direnv loading your new environment. Note that direnv edit . is a handy  short‐ cut that opens the file in your $EDITOR and automatically reloads it if the file's modification time has changed.
 
 #+end_src
+
 # eval "$(pay-respects bash --alias| sed '$s/f/fk/')"
 # eval "$(printf '%s\n'  'r !pay-respects bash --alias' 'v/^alias /d' 's/f/fk' Q | ed -s)"
 # lol eval "$(printf '%s\n'  'r !pay-respects bash --alias' 'v/^alias /d' 's/f/<space>' Q | ed -s)"
@@ -616,6 +596,7 @@ adb shell rm $files
 
 
 #+end_src
+
 ** Emacs-inspired
 Magari usa stessi mapping di emacs nel terminal, tipo F15a per agenda?
 #+begin_src bash
