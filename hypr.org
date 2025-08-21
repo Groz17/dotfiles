@@ -728,8 +728,9 @@ bind = $mainMod shift, m, exec, ~/.config/hypr/scripts/yt_songs
 
 #+begin_src bash :tangle ~/.config/hypr/scripts/songs
 #!/usr/bin/env bash
-SOCKET=/tmp/songs
-[ -e "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
+# how to reference this from config file?
+SOCKET=/tmp/mpvsocket
+[ -S "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
 
 music_dir=~/Music
 
@@ -743,11 +744,13 @@ ifne mpv --playlist=/dev/stdin --no-video --no-terminal --input-ipc-server="$SOC
 **** Search on YT
 #+begin_src bash :tangle ~/.config/hypr/scripts/yt_songs
 #!/usr/bin/env bash
-SOCKET=/tmp/yt_songs
-[ -e "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
+SOCKET=/tmp/mpvsocket
+[ -S "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
 search="$(rofi -dmenu -l 0 -p 'Search song')"
 [ -z "$search" ] && exit 1;
-yt-dlp -f bestaudio --get-url "ytsearch:$search" | head -n1 | mpv --playlist=/dev/stdin --input-ipc-server="$SOCKET"
+url=$(yt-dlp -f bestaudio --get-url "ytsearch:$search"|head -n1)
+<<<"$url" ts "%b %d %H:%M:%S">> ~/.local/share/yt_urls
+mpv --input-ipc-server="$SOCKET" "$url"
 #+end_src
   
 
