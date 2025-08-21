@@ -20,6 +20,8 @@ terminal: "mate-terminal";
 kb-secondary-paste: "";
 kb-page-next: "Control+v";
 kb-page-prev: "Alt+v";
+// doesn't work?
+kb-secondary-copy: "Alt+w"; 
 
 kb-remove-to-eol: "Control+Shift+e";
 /*kb-mode-next: "Shift+Right,Control+Tab,Control+l";*/
