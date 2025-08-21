@@ -730,14 +730,9 @@ music_dir=~/Music
 
 # remember just one dash for rofi
 # TODO: show album art?
-# mapfile -t songs < <(find "$music_dir" -type f -exec file -i00 {} \; | gawk 'BEGIN{RS="\x00/";FS="\x00"}$2~/^audio/{print NR==1?$1:"/"$1}'| rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator /)
-mapfile -t songs < <(fd . "$music_dir" -tf -X file -i00 {} \; | gawk 'BEGIN{RS="\x00/";FS="\x00"}$2~/^audio|video/{print NR==1?$1:"/"$1}'| rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator /)
-
-if [[ ${#songs[@]} -ne 0 ]]; then
-  for song in "${songs[@]}"; do
-    printf '%s\n' "${song}"
-  done | mpv --playlist=/dev/stdin --no-video --no-terminal
-fi
+fd . "$music_dir" -tf |
+rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator / |
+ifne mpv --playlist=/dev/stdin --no-video --no-terminal
 #+end_src
 
 *** Global Keybinds 
