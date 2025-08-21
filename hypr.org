@@ -730,7 +730,7 @@ music_dir=~/Music
 
 # remember just one dash for rofi
 # TODO: show album art?
-fd . "$music_dir" -tf |
+find "$music_dir" -type f -exec stat --printf="%w\t%n\n" {} +  | sort -nr | cut -f 2- |
 rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator / |
 ifne mpv --playlist=/dev/stdin --no-video --no-terminal
 #+end_src
