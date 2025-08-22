@@ -163,6 +163,7 @@ bind -x C-v: jq -Rr @sh<<<"$(wl-paste)"
 f18b bind -p? | fzf? parse?
 
 *** Toggle
+    use one letter options for keybindings... (H->historyexpand)
 # f13g -> extglob
 ** psql
 #+begin_src readline

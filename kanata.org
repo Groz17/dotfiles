@@ -121,6 +121,7 @@ make ansi and iso defsrc?
 * ALIAS
 
 z=f13, x=f14, c=f15, ...
+you could inoremap/abbrev them tbh
 #+begin_src kbd
 
 (defalias
@@ -365,19 +366,19 @@ spc (tap-hold-press-timeout 0 200 spc lmet (multi S-spc))
 ** C-x emacs
 C-x is also useful for readline
 #+begin_src kbd
+;; s (tap-hold 150 175 s (tap-hold-press-timeout 0 75 s f13 (macro S-s)))
+;;s (tap-hold-release 150 175 s (tap-hold-press-timeout 0 75 s (macro C-x) (macro S-s)))
+;; how to activate C-x when pressed and not released?
+;;s (tap-hold 150 175 s (tap-hold-press-timeout 0 230 s (macro C-x) (macro S-s)))
+;;s (tap-hold 150 175 s (tap-hold-press-timeout 0 230 s f15 (macro S-s)))
+;; f15 not recognized in terminal (for readline c-x c-e) (.inpurc line)
+;; make it press f12 unless released so which-key buffer pops up...
+;; make it hyper so u can hold s, sd, etc...
+s (tap-hold 150 175 s (tap-hold-press-timeout 0 230 s f12 (macro S-s)))
 
-  ;; s (tap-hold 150 175 s (tap-hold-press-timeout 0 75 s f13 (macro S-s)))
-  ;;s (tap-hold-release 150 175 s (tap-hold-press-timeout 0 75 s (macro C-x) (macro S-s)))
-  ;; how to activate C-x when pressed and not released?
-  ;;s (tap-hold 150 175 s (tap-hold-press-timeout 0 230 s (macro C-x) (macro S-s)))
-  ;;s (tap-hold 150 175 s (tap-hold-press-timeout 0 230 s f15 (macro S-s)))
-  ;; f15 not recognized in terminal (for readline c-x c-e) (.inpurc line)
-  ;; make it press f12 unless released so which-key buffer pops up...
-  s (tap-hold 150 175 s (tap-hold-press-timeout 0 230 s f12 (macro S-s)))
-
-  ;; l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l f13 (macro S-l)))
-  ;; l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l f15 (macro S-l)))
-  l (tap-hold 150 175 l (tap-hold-press-timeout 0 150 l f12 (macro S-l)))
+;; l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l f13 (macro S-l)))
+;; l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l f15 (macro S-l)))
+l (tap-hold 150 175 l (tap-hold-press-timeout 0 150 l f12 (macro S-l)))
 #+end_src
 
 #+begin_src elisp

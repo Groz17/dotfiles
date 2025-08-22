@@ -551,6 +551,7 @@ bind gE current_url tabopen
 bind {{ composite tabduplicate | followpage prev
 bind }} composite tabduplicate | followpage next
 
+
 " bind <c-^> tab #
 bind ^ tab #
 " why not, faster
@@ -664,6 +665,8 @@ bind gs viewsource
 " would be cool to add tabs to group by regex, like .*youtube.* to youtube group...
 " bind t tabopen
 unbind t
+" like <C-x>tn in emacs
+bind tn tabduplicate 
 bind tA tabgroupabort
 bind tc fillcmdline tabgroupcreate
 " use tG like for tab-group <c-x>tG

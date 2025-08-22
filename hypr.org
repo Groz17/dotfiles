@@ -33,7 +33,7 @@ source = ~/.config/hypr/myColors.conf
 ** [[https://wiki.hyprland.org/Configuring/Monitors/][MONITORS]]
 ruota schermo per prendere appunti?
 
-#+begin_src conf
+#+begin_src hyprlang
 # monitor=,preferred,auto,auto
 # monitor=,preferred,auto,auto, transform, 1
 monitor=,preferred,auto,auto, transform, 0
@@ -43,7 +43,7 @@ monitor=,preferred,auto,auto, transform, 0
 
 Set programs that you use
 
-#+begin_src conf
+#+begin_src hyprlang
 # usa ENV vars?
 $terminal = ghostty
 #$fileManager = dolphin
@@ -66,7 +66,7 @@ should u use & for these exec-onces?
 
 *** Necessary processes
 search for others w/ llm or configs
-#+begin_src conf
+#+begin_src hyprlang
   # exec-once = nm-applet &
   # find themes
   exec-once = hyprctl setcursor Bibata-Modern-Classic 24
@@ -76,31 +76,31 @@ search for others w/ llm or configs
 # exec-once=syncthing --no-browser # file synchronization
   
 **** Status bar
-#+begin_src conf
+#+begin_src hyprlang
 exec-once = waybar &
 #+end_src  
 
 **** Idle manager
 (lock screen after X minutes, turn off screen after Y minutes)
 
-#+begin_src conf
+#+begin_src hyprlang
 exec-once = hypridle &
 #+end_src  
 
 **** Notification daemon
-#+begin_src conf
+#+begin_src hyprlang
 #exec-once = swaync
 # dunst
 #+end_src  
 **** Clipboard
-#+begin_src conf
+#+begin_src hyprlang
   # exec-once = wl-clipbard-history -t
   # cb?
 exec-once = wl-paste --type text --watch cliphist store
 exec-once = wl-paste --type image --watch cliphist store
 #+end_src  
 **** Geolocalization
-#+begin_src conf
+#+begin_src hyprlang
 # exec-once = ags &
 # ags -c config.js
 exec-once = /usr/lib/geoclue-2.0/demos/agent
@@ -110,12 +110,12 @@ exec-once = darkman run
 
 **** Wallpaper manager
 how to zoom wallpaper?
-#+begin_src conf
+#+begin_src hyprlang
 exec-once = hyprpaper
 #+end_src  
 
 *** Favorite apps
-#+begin_src conf
+#+begin_src hyprlang
 # exec-once = ~/scripts/DailyRandomAnki
 # exec-once = swww-daemon&&~/scripts/DailyRandomAnki
 # exec-once = swww-daemon && swww img "$DAILY_ANKI_QUESTION_PATH"
@@ -136,7 +136,7 @@ exec-once = [workspace 1 silent] $browser
 
 ** [[https://wiki.hyprland.org/Configuring/Environment-variables/][ENVIRONMENT VARIABLES]]
 
-#+begin_src conf
+#+begin_src hyprlang
 
 # open in emacs?
 # env = GRIMBLAST_EDITOR,photoflare
@@ -159,7 +159,7 @@ cursor{
 ** [[https://wiki.hyprland.org/Configuring/Permissions/][PERMISSIONS]]
 Please note permission changes here require a Hyprland restart and are not applied on-the-fly for security reasons
 
-#+begin_src conf
+#+begin_src hyprlang
 
 # ecosystem {
 #   enforce_permissions = 1
@@ -170,7 +170,7 @@ Please note permission changes here require a Hyprland restart and are not appli
 # permission = /usr/(bin|local/bin)/hyprpm, plugin, allow
 #+end_src
 ** [[https://wiki.hyprland.org/Configuring/Variables/][LOOK AND FEEL]]
-#+begin_src conf
+#+begin_src hyprlang
 
 # https://wiki.hyprland.org/Configuring/Variables/#general
 general {
@@ -300,7 +300,7 @@ enable_anr_dialog=false
 
 #+end_src
 ** INPUT
-#+begin_src conf
+#+begin_src hyprlang
 
 # https://wiki.hyprland.org/Configuring/Variables/#input
 input {
@@ -340,7 +340,7 @@ device {
 #+end_src
 
 *** 8BITDO CONTROLLER
-#+begin_src conf
+#+begin_src hyprlang
 # modifier: win+ctrl+shift (doesn't work)
 # modifier: win+ctrl (doesn't work) -> ctrl sta per controller
 # bind=super ctrl shift,h,exec, playerctl position 10-
@@ -348,7 +348,7 @@ bind=super ctrl,h,exec, playerctl position 10-
 bind=super ctrl,l,exec, playerctl position 10+
 #+end_src
 ** KEYBINDINGS
-#+begin_src conf
+#+begin_src hyprlang
 
 # See https://wiki.hyprland.org/Configuring/Keywords/
 $mainMod = SUPER # Sets "Windows" key as main modifier
@@ -356,7 +356,7 @@ $mainMod = SUPER # Sets "Windows" key as main modifier
 #+end_src
 
 *** [[https://www.youtube.com/watch?v=sz6rMLIjSbU][Zoom]]
-#+begin_src conf
+#+begin_src hyprlang
 bind = $mainMod, mouse_down, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 * 1.1}')
 bind = $mainMod, mouse_up, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 * 0.9}')
 bind = $mainMod, equal, exec, hyprctl -q keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 * 1.1}')
@@ -366,7 +366,7 @@ bind = $mainMod , mouse:274, exec, hyprctl -q keyword cursor:zoom_factor 1 # mid
 #+end_src
 
 *** [[https://wiki.hypr.land/Configuring/Binds/#media][Media]]
-#+begin_src conf
+#+begin_src hyprlang
 bindel = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 bindel = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bindl = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
@@ -391,7 +391,7 @@ bind = $mainMod shift, a, exec, echo '{ "command": ["set_property", "af",""] }' 
 #+end_src
 
 ** Recognize song
-#+begin_src conf
+#+begin_src hyprlang
 # bindl = $mainMod shift, n, exec, scripts/active
 bind = $mainMod, s, exec, ~/.config/hypr/scripts/recognize_song
 #+end_src
@@ -411,13 +411,13 @@ else
 fi
 #+end_src
 *** Brightness
-#+begin_src conf
+#+begin_src hyprlang
 bindel = ,XF86MonBrightnessUp, exec, brightnessctl s 10%+
 bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
 #+end_src
 
 *** Notifications
-#+begin_src conf
+#+begin_src hyprlang
 bind = $mainMod SHIFT, comma, exec, ~/.config/hypr/scripts/notifications
 #+end_src
 
@@ -430,12 +430,12 @@ dunstctl close-all
 
 *** Bluetooth
 # TODO: fai check/toggle/notify/etc...
-#+begin_src conf
+#+begin_src hyprlang
 bind=super shift,b,exec, bash -c "bluetoothctl <<< connect\ $(bluetoothctl <<< devices | awk '/ Soundcore P2 Mini$/{print $2}')"
 #+end_src
 
 *** Apps
-#+begin_src conf
+#+begin_src hyprlang
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 bind = $mainMod, Return, exec, $terminal
 # bind = $mainMod, RETURN, exec, emacsclient -n -e '(progn (select-frame-set-input-focus (selected-frame)) (vterm))'
@@ -500,7 +500,7 @@ bind = $mainMod , z, exec, hyprlock
 #+end_src
 
 *** WM
-#+begin_src conf
+#+begin_src hyprlang
 # bind = $mainMod, W, layoutmsg, swapwithmaster master
 bind = $mainMod, W, layoutmsg, layoutmsg, cyclenext
 # maybe use mainmod e to start programs?
@@ -579,21 +579,21 @@ bind = $mainMod SHIFT, k, movewindow, u
 #+end_src
 
 *** Clipboard
-#+begin_src conf
+#+begin_src hyprlang
 # lines and width don't work
 bind = $mainMod shift, equal, exec, cliphist list | rofi -dmenu -display-columns 2 -p "Select item to copy" -lines 30 -width 75 | cut -f1 | xargs cliphist decode | wl-copy
 # cliphist but for primary selection?
 #+end_src
 
 *** OCR
-#+begin_src conf
+#+begin_src hyprlang
 # also works when using transparent window
 bind = $mainMod, o, exec, sh -c 'grimblast --freeze save area - | tesseract - - | wl-copy'
 bind = $mainMod SHIFT, o, exec, sh -c 'grimblast --freeze save area - | tesseract - - | tr \\n \  | wl-copy'
 #+end_src
 
 *** Screenshots
-#+begin_src conf
+#+begin_src hyprlang
 # edit?
 # add filename?
 # --openfile
@@ -614,11 +614,11 @@ bind = SUPER SHIFT, y, exec, grimblast --freeze --notify copy active
 
 *** TODO Recording
 **** Audio
-#+begin_src conf
+#+begin_src hyprlang
 #+end_src
 
 **** Video
-#+begin_src conf
+#+begin_src hyprlang
 #+end_src
 
 *** TODO Workspaces (generate code)
@@ -632,7 +632,7 @@ bind = SUPER SHIFT, y, exec, grimblast --freeze --notify copy active
     (princ (format "bind = SUPER SHIFT, %d, moveToWorkspace, %d\n" num num))))
 #+end_src
 
-#+begin_src conf
+#+begin_src hyprlang
 
 # Switch workspaces with mainMod + [0-9]
 bind = $mainMod, 1, workspace, 1
@@ -659,7 +659,7 @@ bind = $mainMod SHIFT, 9, movetoworkspacesilent, 9
 bind = $mainMod SHIFT, 0, movetoworkspacesilent, 10
 #+end_src
 
-#+begin_src conf
+#+begin_src hyprlang
 bind = $mainMod , R, submap, resize
 submap=resize
 binde=,H,resizeactive,-10 0
@@ -685,7 +685,7 @@ bindm = $mainMod, mouse:273, resizewindow
 
 #+end_src
 *** Notes
-#+begin_src conf
+#+begin_src hyprlang
 
 # TODO:
 # bind = $mainMod shift, return, exec, [float] $terminal
@@ -719,12 +719,11 @@ bind = $mainMod shift, slash, exec, [float;size 30% 30%] PATH=$HOME/.cargo/bin:$
 #+end_src
 
 *** Songs
-#+begin_src conf
 **** Downloaded songs
+#+begin_src hyprlang
 bind = $mainMod , m, exec, ~/.config/hypr/scripts/songs
 bind = $mainMod shift, m, exec, ~/.config/hypr/scripts/yt_songs
 #+end_src
-
 
 #+begin_src bash :tangle ~/.config/hypr/scripts/songs
 #!/usr/bin/env bash
@@ -739,7 +738,6 @@ find "$music_dir" -type f -exec stat --printf="%w\t%n\n" {} +  | sort -nr | cut 
 rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator / |
 ifne mpv --playlist=/dev/stdin --no-video --no-terminal --input-ipc-server="$SOCKET"
 #+end_src
-
 
 **** Search on YT
 #+begin_src bash :tangle ~/.config/hypr/scripts/yt_songs
@@ -761,7 +759,7 @@ bind = SUPER, F10, sendshortcut, SUPER, F4, class:^(com\.obsproject\.Studio)$
 emacs emms
 
 ** [[https://wiki.hyprland.org/Configuring/Window-Rules/][WINDOWS]] AND [[https://wiki.hyprland.org/Configuring/Workspace-Rules/][WORKSPACES]]
-#+begin_src conf
+#+begin_src hyprlang
 
 # Example windowrule v1
 # windowrule = float, ^(kitty)$
@@ -791,7 +789,7 @@ workspace=1,class:^(emacs)$
 
 *** Notifications
 # copy notification to clipboard binding?
-#+begin_src conf
+#+begin_src hyprlang
 
 
 # https://www.reddit.com/r/hyprland/comments/1gbbgt8/no_gaps_when_only/
@@ -808,7 +806,7 @@ windowrulev2 = bordersize 0, floating:0, onworkspace:f[1]
 windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 #+end_src
 *** Special workspaces
-#+begin_src conf
+#+begin_src hyprlang
 # just use emacs
 
 # - calculator
@@ -831,7 +829,7 @@ windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 :header-args: :tangle  ~/.config/hypr/hyprlock.conf
 :END:
 
-#+begin_src conf
+#+begin_src hyprlang
 # BACKGROUND
 background {
     monitor =
@@ -1059,7 +1057,7 @@ A frog’s child is a frog; like parent, like child.
 :header-args: :tangle  ~/.config/hypr/hypridle.conf
 :END:
 
-#+begin_src conf
+#+begin_src hyprlang
 # hyprctl dispatch dpms on  
 general {
     lock_cmd = pidof hyprlock || hyprlock       # avoid starting multiple hyprlock instances.
@@ -1102,7 +1100,7 @@ listener {
 :END:
 
 can u use source code (maybe elisp) to pick random image?
-#+begin_src conf
+#+begin_src hyprlang
 # preload=/tmp/anki
 # https://wallpapersafari.com/w/izoh9I/download
 # preload=~/Pictures/om.jpg
@@ -1115,4 +1113,20 @@ wallpaper=,~/Pictures/Wallpapers/kanagawa_vaporwave.jpg
 # preload=~/Pictures/RxlwP.png
 # wallpaper=,~/Pictures/RxlwP.png
 # ipc = off
+#+end_src
+
+* hyprsunset
+#+begin_src hyprlang :tangle ~/.config/hypr/hyprsunset.conf
+max-gamma = 150
+
+profile {
+    time = 7:30
+    identity = true
+}
+
+profile {
+    time = 21:00
+    temperature = 5500
+    gamma = 0.8
+}
 #+end_src
