@@ -162,6 +162,8 @@ bind -x C-v: jq -Rr @sh<<<"$(wl-paste)"
 "\C-x\C-n": dynamic-complete-history
 f18b bind -p? | fzf? parse?
 
+*** Toggle
+# f13g -> extglob
 ** psql
 #+begin_src readline
 $if psql
