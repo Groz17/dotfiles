@@ -390,7 +390,7 @@ bind = $mainMod, a, exec, echo '{ "command": ["set_property", "af","lowpass=f=40
 bind = $mainMod shift, a, exec, echo '{ "command": ["set_property", "af",""] }' | socat - /tmp/mpvsocket
 #+end_src
 
-** Recognize song
+*** Recognize song
 #+begin_src hyprlang
 # bindl = $mainMod shift, n, exec, scripts/active
 bind = $mainMod, s, exec, ~/.config/hypr/scripts/recognize_song
@@ -520,7 +520,8 @@ bind = $mainMod SHIFT, F, fullscreen,
 bind = $mainMod, F, fullscreen, 1
 # similar to alt-tab (same keymap)
 # go to previous window map?
-bind = $mainMod, tab, exec, rofi -show window
+bind = $mainMod shift, tab, exec, rofi -show window
+bind = $mainMod, tab, exec, hyprctl dispatch focuscurrentorlast 
 # bind = $mainMod, P, pseudo,
 # toggle like vim-unimpaired
 # kinda looks like vertical and horizontal but mixed
