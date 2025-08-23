@@ -223,6 +223,7 @@ you could inoremap/abbrev them tbh
   lmet (macro S-\)
 
 #+end_src
+
 ** MOUSE
 #+begin_src kbd :tangle (if (string-match  "Power N/A, battery unknown (N/A% load, remaining time N/A)"(battery)) "no" (cdr (assq :tangle (org-babel-parse-header-arguments (cdr (assoc "header-args" org-keyword-properties))))))
 ;; how to make touchpad work?
@@ -603,6 +604,7 @@ also use alt and altgr... (by themselves+chords)
 ;; (italian) accents (chords bcs vim digraphs kinda work like that)
 
 #+end_src
+
 ** Quick accents
 In the future use picker like on phone?
 #+begin_src kbd

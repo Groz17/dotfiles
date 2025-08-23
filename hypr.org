@@ -58,6 +58,7 @@ $browser = floorp || LD_LIBRARY_PATH=/opt/floorp floorp flatpak run one.ablaze.f
 
 # open krita/image editing software with clipboard as input? for when commenting screenshotted code?
 #+end_src
+
 ** AUTOSTART
 Autostart necessary processes (like notifications daemons, status bars, etc.)
 Or execute your favorite apps at launch
@@ -156,6 +157,7 @@ cursor{
 }
 
 #+end_src
+
 ** [[https://wiki.hyprland.org/Configuring/Permissions/][PERMISSIONS]]
 Please note permission changes here require a Hyprland restart and are not applied on-the-fly for security reasons
 
@@ -169,6 +171,7 @@ Please note permission changes here require a Hyprland restart and are not appli
 # permission = /usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland, screencopy, allow
 # permission = /usr/(bin|local/bin)/hyprpm, plugin, allow
 #+end_src
+
 ** [[https://wiki.hyprland.org/Configuring/Variables/][LOOK AND FEEL]]
 #+begin_src hyprlang
 
@@ -299,6 +302,7 @@ enable_anr_dialog=false
 }
 
 #+end_src
+
 ** INPUT
 #+begin_src hyprlang
 
@@ -348,6 +352,7 @@ device {
 bind=super ctrl,h,exec, playerctl position 10-
 bind=super ctrl,l,exec, playerctl position 10+
 #+end_src
+
 ** KEYBINDINGS
 #+begin_src hyprlang
 
@@ -411,6 +416,7 @@ else
 	dunstify "song not found"
 fi
 #+end_src
+
 *** Brightness
 #+begin_src hyprlang
 bindel = ,XF86MonBrightnessUp, exec, brightnessctl s 10%+
@@ -686,6 +692,7 @@ bindm = $mainMod, mouse:273, resizewindow
 # binds = Control_R&Super_R&Alt_L, J&K&L, exec, kitty
 
 #+end_src
+
 *** Notes
 #+begin_src hyprlang
 
@@ -752,6 +759,7 @@ url=$(yt-dlp -f bestaudio --get-url "ytsearch:$search"|head -n1)
 <<<"$url" ts "%b %d %H:%M:%S">> ~/.local/share/yt_urls
 mpv --input-ipc-server="$SOCKET" "$url"
 #+end_src
+
   
 
 *** Global Keybinds 
@@ -807,6 +815,7 @@ windowrulev2 = rounding 0, floating:0, onworkspace:w[tg1]
 windowrulev2 = bordersize 0, floating:0, onworkspace:f[1]
 windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 #+end_src
+
 *** Special workspaces
 #+begin_src hyprlang
 # just use emacs
@@ -1054,6 +1063,7 @@ Even monkeys fall from trees; everyone makes mistakes.
 蛙の子は蛙 (Kaeru no ko wa kaeru)
 A frog’s child is a frog; like parent, like child.
 #+end_src
+
 * Hypridle
 :PROPERTIES:
 :header-args: :tangle  ~/.config/hypr/hypridle.conf

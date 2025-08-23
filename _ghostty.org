@@ -47,6 +47,7 @@ mouse-hide-while-typing=true
 window-save-state=always
 window-decoration=none
 #+end_src
+
 Dirty hack
 #+begin_src python :var font-size=(if (string-match  "Power N/A, battery unknown (N/A% load, remaining time N/A)"(battery)) 13 11)
 #+end_src
@@ -106,6 +107,7 @@ keybind = super+alt+u=scroll_page_up
 # keybind = global:super+alt+grave_accent=toggle_quick_terminal
 # # -= Navigation 
 #+end_src
+
 ** Splits
 #+begin_src conf
 # keybind=homehift+alt+v=new_split:right

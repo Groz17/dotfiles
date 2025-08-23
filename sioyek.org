@@ -149,6 +149,7 @@ move_visual_mark_down <down>
 toggle_two_page_mode |
 
 #+end_src
+
 ** SEARCH
 #+begin_src conf
 
@@ -176,6 +177,7 @@ overview_next_item <C-g>
 overview_prev_item <C-t>
 
 #+end_src
+
 ** BOOKMARKS
 #+begin_src conf
 # Add a bookmark in the current location (opens a text input where you can specify the bookmark text)
@@ -189,6 +191,7 @@ goto_bookmark gb
 goto_bookmark_g gB
 
 #+end_src
+
 ** HIGHLIGHTS
 #+begin_src conf
 # You can select a piece of text and press the `add_highlight` shortcut followed by a symbol (a character from a-z) to highlight
@@ -229,6 +232,7 @@ goto_prev_highlight gNh
 # goto_prev_highlight_of_type zk
 
 #+end_src
+
 ** MARKS
 #+begin_src conf
 
@@ -242,6 +246,7 @@ set_mark m
 goto_mark `
 
 #+end_src
+
 ** PORTALS
 #+begin_src conf
 # If we are in default state, goto portal state with the current location in document as the portal source
@@ -269,6 +274,7 @@ toggle_window_configuration <C-p>
 #toggle_one_window ap
 
 #+end_src
+
 ** MISC
 #+begin_src conf
 
@@ -442,6 +448,7 @@ reload <C-r>
 #toggle_titlebar <unbound>
 
 #+end_src
+
 ** ANNOTATIONS
 #+begin_src conf
 # add_freetext_bookmark t
@@ -455,6 +462,7 @@ add_freetext_bookmark('0.2 1 0.5 0.5') A
 add_marked_bookmark I
 
 #+end_src
+
 ** FREEHAND
 #+begin_src conf
 # d to delete? also update index/toc/page number?
@@ -469,6 +477,7 @@ clear_current_page_drawings u
 clear_current_document_drawings U
 
 #+end_src
+
 ** CUSTOM COMMANDS
 #+begin_src conf
 ## You can bind custom commands defined in `prefs_user.config` using the same syntax as the built-in commands
@@ -574,6 +583,7 @@ status_bar_color #427b58
 status_bar_text_color #fbf1c7
 
 #+end_src
+
 ** EXTENSIONS
 #+begin_src conf
 new_command _download_paper ~/pip/sioyek/bin/python -m sioyek.paper_downloader download "%{sioyek_path}" "%{paper_name}" "%{selected_text}" [Your Email, If Using Unpaywall]
@@ -596,6 +606,7 @@ new_command _add_text ~/pip/sioyek/bin/python -m sioyek.add_text "%{sioyek_path}
 new_command _add_red_text ~/pip/sioyek/bin/python -m sioyek.add_text "%{sioyek_path}" "%{local_database}" "%{shared_database}" "%{file_path}" "%{selected_rect}" "%{command_text}" fontsize=5 text_color=255,0,0
 
 #+end_src
+
 ** CUSTOM COMMANDS
 #+begin_src conf
 # new_command _test notify-send "%{page_number}"

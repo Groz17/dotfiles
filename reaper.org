@@ -94,6 +94,7 @@ local general = {
 
 return { ["general"] = general, ["gui"] = gui }
 #+end_src
+
 * Keybindings
 :PROPERTIES:
 :header-args: :tangle ~/.config/REAPER/Scripts/reaper-keys/internal/definitions/bindings.lua :mkdirp yes
@@ -672,6 +673,7 @@ local main = {
 }
 
 #+end_src
+
 ** Midi
 #+begin_src lua
 ---@type Definition

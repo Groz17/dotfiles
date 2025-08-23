@@ -15,6 +15,7 @@
 #+begin_src bash
 shopt -s cdspell
 #+end_src
+
 * Keymaps
 #+begin_src bash
 
@@ -787,6 +788,7 @@ fi
 fi # (include guard) end of main content
 
 #+end_src
+
 ** Direnv
 #+begin_src bash
 

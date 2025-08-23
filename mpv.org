@@ -34,6 +34,7 @@ reset-on-next-file=pause
 #+begin_src mpv :tangle ~/.config/mpv/mpv.conf
 #
 #+end_src
+
 ** Audio
 #+begin_src mpv :tangle ~/.config/mpv/mpv.conf
   #
@@ -43,6 +44,7 @@ reset-on-next-file=pause
 #+begin_src mpv :tangle ~/.config/mpv/mpv.conf
   #
 #+end_src
+
 ** Output
 #+begin_src mpv :tangle ~/.config/mpv/mpv.conf
   #
@@ -66,6 +68,7 @@ reset-on-next-file=pause
 #default-bindings start
 
 #+end_src
+
 ** Playback Controls
 
 Basically swap left/right w/ h/l 
@@ -127,6 +130,7 @@ Ctrl+j     add video-zoom  -0.1
 #Alt+BS set video-zoom 0 ; set video-pan-x 0 ; set video-pan-y 0
 
 #+end_src
+
 *** Playback speed
 Basically [],{},BS
 [] are nice to press as mouse button in thinkpad
@@ -158,6 +162,7 @@ Basically [],{},BS
 #Shift+g add sub-scale +0.1                  # increase subtitle font size
 #Shift+f add sub-scale -0.1                  # decrease subtitle font size
 #+end_src
+
 *** Volume
 m to mute
 #+begin_src conf

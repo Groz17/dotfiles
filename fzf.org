@@ -28,6 +28,7 @@
 --bind 'alt-v:half-page-up'
 
 #+end_src
+
 * Options
 ** NOTE
 Most long options have the opposite version with --no- prefix.
@@ -42,10 +43,12 @@ Most long options have the opposite version with --no- prefix.
 --color=marker:bold:cyan,prompt:bold:red,pointer:bold:red
 --color=gutter:-1,info:bold:red,spinner:cyan,header:white
 #+end_src
+
 ** DISPLAY MODE
 #+begin_src conf
 --height 50% 
 #+end_src
+
 ** LAYOUT
 #+begin_src conf
 --border=sharp
@@ -54,18 +57,21 @@ Most long options have the opposite version with --no- prefix.
 --reverse 
 --border 
 #+end_src
+
 ** LIST SECTION
 #+begin_src conf
 --no-wrap
 --multi 
 --cycle 
 #+end_src
+
 ** INPUT SECTION
 #+begin_src conf
 --preview-window='right:nowrap'  
 --preview='[[ $(file --mime {}) =~ directory ]] && eza --tree --color=always {} | head -200 || ([[ $(file --mime {}) =~ binary ]] && echo {} is a binary file) || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' 
 # --preview='[[ $(file --mime {}) =~ directory ]] && eza --tree --color=always {} | head -200 || ([[ $(file --mime {}) =~ binary ]] && echo {} is a binary file) || (nvcat -n {} || cat {}) 2> /dev/null | head -300' 
 #+end_src
+
 ** PREVIEW WINDOW
 ** HEADER
 ** SCRIPTING
@@ -77,6 +83,7 @@ Most long options have the opposite version with --no- prefix.
 --history=/tmp/fzf_history
 --history-size=10000 
 #+end_src
+
 ** OTHERS
 #+begin_src conf
 # --no-unicode

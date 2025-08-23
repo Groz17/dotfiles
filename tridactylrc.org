@@ -41,7 +41,7 @@ set theme midnight
 " set theme quake
 
 #+end_src
- 
+
 ** RSS
 #+begin_src tridactyl
       #
@@ -317,6 +317,7 @@ bind <a-l> js -s ~/scripts/to_markdown/browser/urls_linux.js
 " set searchengine g
 
 #+end_src
+
 # set jsurls.googleloud query => "https://google.com/search?q=" + query.toUpperCase()
 ** Wikis
 #+begin_src tridactyl
@@ -454,6 +455,7 @@ set searchurls.gi https://www.google.ca/search?tbm=isch&safe=off&q=%s
 " set searchurls.gc https://www.google.ca/search?q=cache:%s
 
 #+end_src
+
 ** Languages
 #+begin_src tridactyl
 
@@ -491,6 +493,7 @@ set searchurls.tr https://www.treccani.it/vocabolario/%s
 set searchurls.im  http://www.google.com/search?tbm=isch&q=%s
 " set searchurls.im  https://lens.google.com/search
 #+end_src
+
 ** Search engines
 #+begin_src tridactyl
 set searchurls.googleuk https://www.google.co.uk/search?q=
@@ -872,6 +875,7 @@ set keyboardlayoutbase qwerty
 set keyboardlayoutforce true
 
 #+end_src
+
 * Commands
 #+begin_src tridactyl
 
