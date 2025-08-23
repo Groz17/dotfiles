@@ -29,6 +29,11 @@ window-padding-y = 0
 # theme=Belafonte Night
 theme=Sugarplum
 
+ # TODO: finche non fixo deferred-clipboard in emacs
+clipboard-read=allow
+clipboard-write=allow
+app-notifications=no-clipboard-copy
+
 confirm-close-surface=true
 
 # # Empty values are used to reset config keys to default.
