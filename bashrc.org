@@ -18,14 +18,9 @@ shopt -s cdspell
 
 * Keymaps
 #+begin_src bash
-
 if [[ -n $DISPLAY ]]; then
-  copy_line_to_x_clipboard () {
-    printf %s "$READLINE_LINE" | wl-copy
-  }
-  bind -x '"\ew": copy_line_to_x_clipboard'
+  bind -x '"\ew": printf %s \"$READLINE_LINE\" | wl-copy'
 fi
-
 #+end_src
 
 ** TODO Toggle shopts
