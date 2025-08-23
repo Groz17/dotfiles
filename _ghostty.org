@@ -174,7 +174,6 @@ keybind = super+alt+m=move_tab:+1
 
 * Commands 
 #+begin_src conf
-
 #+end_src
 
 * Shaders 

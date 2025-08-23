@@ -11,7 +11,270 @@
 
 #+end_src
 
-* Starship
+* Options
+#+begin_src bash
+shopt -s cdspell
+#+end_src
+* Keymaps
+#+begin_src bash
+
+if [[ -n $DISPLAY ]]; then
+  copy_line_to_x_clipboard () {
+    printf %s "$READLINE_LINE" | wl-copy
+  }
+  bind -x '"\ew": copy_line_to_x_clipboard'
+fi
+
+#+end_src
+
+** TODO Toggle shopts
+https://github.com/ghostty-org/ghostty/discussions/5851
+Use f13 like for neovim/emacs toggling keymaps
+#+begin_src bash
+# Toggle extglob (enable extended pattern matching)
+# bind '"\C-xe": "\C-u shopt -q extglob && shopt -u extglob || shopt -s extglob\n"'
+#+end_src
+
+* Functions
+#+begin_src bash
+
+c() {
+  if [ -t 0 ]; then
+    # stdin is a terminal: act as paste (output clipboard)
+    wl-paste
+  else
+    # stdin is piped: act as copy (input to clipboard)
+    wl-copy
+  fi
+}
+
+
+html2pdf() {
+	typst compile <(rdrview -H "$1" | pandoc -f html -t typst) /dev/stdout | zathura -
+}
+
+# try the same w/ elisp/clojure
+# ascii_quiz
+aq() {
+for (( ; ; )); do
+	# line="$(nvim -es -V1 <<<'for i in range(0,127) | echo i.."\t"..strtrans(nr2char(i)) | endfor' |& grep -P ^\\d | shuf -n1)" &&
+	line="$(nvim -es -V1 <<<'for i in range(0,127) | echo i.."\t"..keytrans(nr2char(i)) | endfor' |& grep -P ^\\d | shuf -n1)" &&
+        awk '{print $2}' <<<"$line" && read -p $'\e[1mEnter code: > \e[0m' guessed_code 
+
+	correct_code="$(awk '{print $1}' <<<"$line")"
+	[ $correct_code == $guessed_code ] && echo "Correct" || echo "Wrong! ($correct_code)"
+done
+}
+
+J(){
+cd "$(fd -E \\.git -i -td '^'"$(sed 's/[][^\\."+*?()|{}$#&~-]/\\\0/' <<< "$1")"'.*$' ~/vimwiki | ifne sh -c 'awk "{print length,\$0}"|sort -k1,1n |cut -f1 --complement -d " "|fzf -1')"
+}
+
+adbvw() {
+
+adb get-state 2>/dev/null | grep -q "device" || { notify-send "Not connected"; return 1; }
+
+files=$(adb shell find /sdcard/Documents/Obsidian_vault/Data -maxdepth 1 -name '*.md')
+[[ -z "$files" ]] && return 1;
+dir=~/vimwiki/Obsidian_vault/phone
+[ -d "$dir" ] && cd "$dir" || { notify-send "Directory doesn't exist"; return 1; }
+for f in $files; do [[ -f "${f##*/}" ]] && adb pull "$f" "${f##*/}"_$(date +%s) || adb pull "$f" .;done
+# attenzione agli spazi
+adb shell rm $files
+}
+
+
+#+end_src
+
+** Emacs-inspired
+Magari usa stessi mapping di emacs nel terminal, tipo F15a per agenda?
+#+begin_src bash
+compile () {
+    args="${*:-$(emacsclient --eval '(print compile-command nil)' \
+                 | sed 's/^.//;s/.$//')}"  # strip outer quotes
+    emacsclient -t --eval "(compile \"$args\")"
+  }
+
+# similar to vidir
+dired () {
+  target=${1:-$PWD}
+    if [ ! -d "$target" ]; then
+        echo "Not a directory: '$target'" >&2
+        return 1
+    fi
+    emacsclient -a '' -t --eval "(progn (dired \"$target\") (wdired-change-to-wdired-mode))"
+  }
+
+eww () {
+  emacsclient -t --eval "(eww \"$*\")"
+}
+
+agenda () {
+    # emacsclient -t --eval "(progn (org-agenda-list)(kill-buffer "*dashboard*") (delete-other-windows))"
+    # emacsclient -t --eval "(progn (org-agenda-list) (delete-other-windows)(kill-buffer "*dashboard*"))"
+    emacsclient -t --eval "(progn (org-agenda-list) (delete-other-windows))"
+}
+
+magit () {
+  target=${1:-$PWD}
+  if ! git rev-parse --is-inside-work-tree &>/dev/null ; then
+    echo "Not a git repository: '$target'" >&2
+    return 1
+  fi
+  emacsclient -t --eval "(magit-status-setup-buffer \"$target\")"
+}
+#+end_src
+
+* External commands
+** GitHub Copilot
+Would be cool to just put the generating command
+#+begin_src bash
+ghcs() {
+	TARGET="shell"
+	local GH_DEBUG="$GH_DEBUG"
+	local GH_HOST="$GH_HOST"
+
+	read -r -d '' __USAGE <<-EOF
+	Wrapper around \`gh copilot suggest\` to suggest a command based on a natural language description of the desired output effort.
+	Supports executing suggested commands if applicable.
+
+	USAGE
+	  $FUNCNAME [flags] <prompt>
+
+	FLAGS
+	  -d, --debug              Enable debugging
+	  -h, --help               Display help usage
+	      --hostname           The GitHub host to use for authentication
+	  -t, --target target      Target for suggestion; must be shell, gh, git
+	                           default: "$TARGET"
+
+	EXAMPLES
+
+	- Guided experience
+	  $ $FUNCNAME
+
+	- Git use cases
+	  $ $FUNCNAME -t git "Undo the most recent local commits"
+	  $ $FUNCNAME -t git "Clean up local branches"
+	  $ $FUNCNAME -t git "Setup LFS for images"
+
+	- Working with the GitHub CLI in the terminal
+	  $ $FUNCNAME -t gh "Create pull request"
+	  $ $FUNCNAME -t gh "List pull requests waiting for my review"
+	  $ $FUNCNAME -t gh "Summarize work I have done in issues and pull requests for promotion"
+
+	- General use cases
+	  $ $FUNCNAME "Kill processes holding onto deleted files"
+	  $ $FUNCNAME "Test whether there are SSL/TLS issues with github.com"
+	  $ $FUNCNAME "Convert SVG to PNG and resize"
+	  $ $FUNCNAME "Convert MOV to animated PNG"
+	EOF
+
+	local OPT OPTARG OPTIND
+	while getopts "dht:-:" OPT; do
+		if [ "$OPT" = "-" ]; then     # long option: reformulate OPT and OPTARG
+			OPT="${OPTARG%%=*}"       # extract long option name
+			OPTARG="${OPTARG#"$OPT"}" # extract long option argument (may be empty)
+			OPTARG="${OPTARG#=}"      # if long option argument, remove assigning `=`
+		fi
+
+		case "$OPT" in
+			debug | d)
+				GH_DEBUG=api
+				;;
+
+			help | h)
+				echo "$__USAGE"
+				return 0
+				;;
+
+			hostname)
+				GH_HOST="$OPTARG"
+				;;
+
+			target | t)
+				TARGET="$OPTARG"
+				;;
+		esac
+	done
+
+	# shift so that $@, $1, etc. refer to the non-option arguments
+	shift "$((OPTIND-1))"
+
+	TMPFILE="$(mktemp -t gh-copilotXXXXXX)"
+	trap 'rm -f "$TMPFILE"' EXIT
+	if GH_DEBUG="$GH_DEBUG" GH_HOST="$GH_HOST" gh copilot suggest -t "$TARGET" "$@" --shell-out "$TMPFILE"; then
+		if [ -s "$TMPFILE" ]; then
+			FIXED_CMD="$(cat $TMPFILE)"
+			builtin history -s -- $(builtin history 1 | cut -d' ' -f4-); builtin history -s -- "$FIXED_CMD"
+			echo
+			eval -- "$FIXED_CMD"
+		fi
+	else
+		return 1
+	fi
+}
+
+ghce() {
+	local GH_DEBUG="$GH_DEBUG"
+	local GH_HOST="$GH_HOST"
+
+	read -r -d '' __USAGE <<-EOF
+	Wrapper around \`gh copilot explain\` to explain a given input command in natural language.
+
+	USAGE
+	  $FUNCNAME [flags] <command>
+
+	FLAGS
+	  -d, --debug      Enable debugging
+	  -h, --help       Display help usage
+	      --hostname   The GitHub host to use for authentication
+
+	EXAMPLES
+
+	# View disk usage, sorted by size
+	$ $FUNCNAME 'du -sh | sort -h'
+
+	# View git repository history as text graphical representation
+	$ $FUNCNAME 'git log --oneline --graph --decorate --all'
+
+	# Remove binary objects larger than 50 megabytes from git history
+	$ $FUNCNAME 'bfg --strip-blobs-bigger-than 50M'
+	EOF
+
+	local OPT OPTARG OPTIND
+	while getopts "dh-:" OPT; do
+		if [ "$OPT" = "-" ]; then     # long option: reformulate OPT and OPTARG
+			OPT="${OPTARG%%=*}"       # extract long option name
+			OPTARG="${OPTARG#"$OPT"}" # extract long option argument (may be empty)
+			OPTARG="${OPTARG#=}"      # if long option argument, remove assigning `=`
+		fi
+
+		case "$OPT" in
+			debug | d)
+				GH_DEBUG=api
+				;;
+
+			help | h)
+				echo "$__USAGE"
+				return 0
+				;;
+
+			hostname)
+				GH_HOST="$OPTARG"
+				;;
+		esac
+	done
+
+	# shift so that $@, $1, etc. refer to the non-option arguments
+	shift "$((OPTIND-1))"
+
+	GH_DEBUG="$GH_DEBUG" GH_HOST="$GH_HOST" gh copilot explain "$@"
+}
+
+#+end_src
+
+** Starship
 #+begin_src shell
 # Load starship prompt if starship is installed
 if [ -x /usr/bin/starship ]; then
@@ -171,7 +434,7 @@ export ELECTRON_OZONE_PLATFORM_HINT=auto
 
 #+end_src
 
-* Atuin
+** Atuin
 #+begin_src bash
 
 __atuin_bind_ctrl_r=true
@@ -524,8 +787,7 @@ fi
 fi # (include guard) end of main content
 
 #+end_src
-
-* Direnv
+** Direnv
 #+begin_src bash
 
 # Make sure it appears even after rvm, git-prompt and other shell extensions that manipulate the prompt.
@@ -539,259 +801,8 @@ eval "$(direnv hook bash)"
 # eval "$(printf '%s\n'  'r !pay-respects bash --alias' 'v/^alias /d' 's/f/fk' Q | ed -s)"
 # lol eval "$(printf '%s\n'  'r !pay-respects bash --alias' 'v/^alias /d' 's/f/<space>' Q | ed -s)"
 
-
 ** Zoxide
 #+begin_src bash
 # Please ensure that zoxide is initialized right at the end of your shell configuration file (usually ~/.bashrc).
 eval "$(zoxide init --cmd j bash)"
-#+end_src
-
-* Functions
-#+begin_src bash
-
-c() {
-  if [ -t 0 ]; then
-    # stdin is a terminal: act as paste (output clipboard)
-    wl-paste
-  else
-    # stdin is piped: act as copy (input to clipboard)
-    wl-copy
-  fi
-}
-
-
-html2pdf() {
-	typst compile <(rdrview -H "$1" | pandoc -f html -t typst) /dev/stdout | zathura -
-}
-
-# try the same w/ elisp/clojure
-# ascii_quiz
-aq() {
-for (( ; ; )); do
-	# line="$(nvim -es -V1 <<<'for i in range(0,127) | echo i.."\t"..strtrans(nr2char(i)) | endfor' |& grep -P ^\\d | shuf -n1)" &&
-	line="$(nvim -es -V1 <<<'for i in range(0,127) | echo i.."\t"..keytrans(nr2char(i)) | endfor' |& grep -P ^\\d | shuf -n1)" &&
-        awk '{print $2}' <<<"$line" && read -p $'\e[1mEnter code: > \e[0m' guessed_code 
-
-	correct_code="$(awk '{print $1}' <<<"$line")"
-	[ $correct_code == $guessed_code ] && echo "Correct" || echo "Wrong! ($correct_code)"
-done
-}
-
-J(){
-cd "$(fd -E \\.git -i -td '^'"$(sed 's/[][^\\."+*?()|{}$#&~-]/\\\0/' <<< "$1")"'.*$' ~/vimwiki | ifne sh -c 'awk "{print length,\$0}"|sort -k1,1n |cut -f1 --complement -d " "|fzf -1')"
-}
-
-adbvw() {
-
-adb get-state 2>/dev/null | grep -q "device" || { notify-send "Not connected"; return 1; }
-
-files=$(adb shell find /sdcard/Documents/Obsidian_vault/Data -maxdepth 1 -name '*.md')
-[[ -z "$files" ]] && return 1;
-dir=~/vimwiki/Obsidian_vault/phone
-[ -d "$dir" ] && cd "$dir" || { notify-send "Directory doesn't exist"; return 1; }
-for f in $files; do [[ -f "${f##*/}" ]] && adb pull "$f" "${f##*/}"_$(date +%s) || adb pull "$f" .;done
-# attenzione agli spazi
-adb shell rm $files
-}
-
-
-#+end_src
-
-** Emacs-inspired
-Magari usa stessi mapping di emacs nel terminal, tipo F15a per agenda?
-#+begin_src bash
-compile () {
-    args="${*:-$(emacsclient --eval '(print compile-command nil)' \
-                 | sed 's/^.//;s/.$//')}"  # strip outer quotes
-    emacsclient -t --eval "(compile \"$args\")"
-  }
-
-# similar to vidir
-dired () {
-  target=${1:-$PWD}
-    if [ ! -d "$target" ]; then
-        echo "Not a directory: '$target'" >&2
-        return 1
-    fi
-    emacsclient -a '' -t --eval "(progn (dired \"$target\") (wdired-change-to-wdired-mode))"
-  }
-
-eww () {
-  emacsclient -t --eval "(eww \"$*\")"
-}
-
-agenda () {
-    # emacsclient -t --eval "(progn (org-agenda-list)(kill-buffer "*dashboard*") (delete-other-windows))"
-    # emacsclient -t --eval "(progn (org-agenda-list) (delete-other-windows)(kill-buffer "*dashboard*"))"
-    emacsclient -t --eval "(progn (org-agenda-list) (delete-other-windows))"
-}
-
-magit () {
-  target=${1:-$PWD}
-  if ! git rev-parse --is-inside-work-tree &>/dev/null ; then
-    echo "Not a git repository: '$target'" >&2
-    return 1
-  fi
-  emacsclient -t --eval "(magit-status-setup-buffer \"$target\")"
-}
-#+end_src
-
-* Bindings
-#+begin_src bash
-
-if [[ -n $DISPLAY ]]; then
-  copy_line_to_x_clipboard () {
-    printf %s "$READLINE_LINE" | wl-copy
-  }
-  bind -x '"\ew": copy_line_to_x_clipboard'
-fi
-
-#+end_src
-
-* GitHub Copilot
-Would be cool to just put the generating command
-#+begin_src bash
-ghcs() {
-	TARGET="shell"
-	local GH_DEBUG="$GH_DEBUG"
-	local GH_HOST="$GH_HOST"
-
-	read -r -d '' __USAGE <<-EOF
-	Wrapper around \`gh copilot suggest\` to suggest a command based on a natural language description of the desired output effort.
-	Supports executing suggested commands if applicable.
-
-	USAGE
-	  $FUNCNAME [flags] <prompt>
-
-	FLAGS
-	  -d, --debug              Enable debugging
-	  -h, --help               Display help usage
-	      --hostname           The GitHub host to use for authentication
-	  -t, --target target      Target for suggestion; must be shell, gh, git
-	                           default: "$TARGET"
-
-	EXAMPLES
-
-	- Guided experience
-	  $ $FUNCNAME
-
-	- Git use cases
-	  $ $FUNCNAME -t git "Undo the most recent local commits"
-	  $ $FUNCNAME -t git "Clean up local branches"
-	  $ $FUNCNAME -t git "Setup LFS for images"
-
-	- Working with the GitHub CLI in the terminal
-	  $ $FUNCNAME -t gh "Create pull request"
-	  $ $FUNCNAME -t gh "List pull requests waiting for my review"
-	  $ $FUNCNAME -t gh "Summarize work I have done in issues and pull requests for promotion"
-
-	- General use cases
-	  $ $FUNCNAME "Kill processes holding onto deleted files"
-	  $ $FUNCNAME "Test whether there are SSL/TLS issues with github.com"
-	  $ $FUNCNAME "Convert SVG to PNG and resize"
-	  $ $FUNCNAME "Convert MOV to animated PNG"
-	EOF
-
-	local OPT OPTARG OPTIND
-	while getopts "dht:-:" OPT; do
-		if [ "$OPT" = "-" ]; then     # long option: reformulate OPT and OPTARG
-			OPT="${OPTARG%%=*}"       # extract long option name
-			OPTARG="${OPTARG#"$OPT"}" # extract long option argument (may be empty)
-			OPTARG="${OPTARG#=}"      # if long option argument, remove assigning `=`
-		fi
-
-		case "$OPT" in
-			debug | d)
-				GH_DEBUG=api
-				;;
-
-			help | h)
-				echo "$__USAGE"
-				return 0
-				;;
-
-			hostname)
-				GH_HOST="$OPTARG"
-				;;
-
-			target | t)
-				TARGET="$OPTARG"
-				;;
-		esac
-	done
-
-	# shift so that $@, $1, etc. refer to the non-option arguments
-	shift "$((OPTIND-1))"
-
-	TMPFILE="$(mktemp -t gh-copilotXXXXXX)"
-	trap 'rm -f "$TMPFILE"' EXIT
-	if GH_DEBUG="$GH_DEBUG" GH_HOST="$GH_HOST" gh copilot suggest -t "$TARGET" "$@" --shell-out "$TMPFILE"; then
-		if [ -s "$TMPFILE" ]; then
-			FIXED_CMD="$(cat $TMPFILE)"
-			builtin history -s -- $(builtin history 1 | cut -d' ' -f4-); builtin history -s -- "$FIXED_CMD"
-			echo
-			eval -- "$FIXED_CMD"
-		fi
-	else
-		return 1
-	fi
-}
-
-ghce() {
-	local GH_DEBUG="$GH_DEBUG"
-	local GH_HOST="$GH_HOST"
-
-	read -r -d '' __USAGE <<-EOF
-	Wrapper around \`gh copilot explain\` to explain a given input command in natural language.
-
-	USAGE
-	  $FUNCNAME [flags] <command>
-
-	FLAGS
-	  -d, --debug      Enable debugging
-	  -h, --help       Display help usage
-	      --hostname   The GitHub host to use for authentication
-
-	EXAMPLES
-
-	# View disk usage, sorted by size
-	$ $FUNCNAME 'du -sh | sort -h'
-
-	# View git repository history as text graphical representation
-	$ $FUNCNAME 'git log --oneline --graph --decorate --all'
-
-	# Remove binary objects larger than 50 megabytes from git history
-	$ $FUNCNAME 'bfg --strip-blobs-bigger-than 50M'
-	EOF
-
-	local OPT OPTARG OPTIND
-	while getopts "dh-:" OPT; do
-		if [ "$OPT" = "-" ]; then     # long option: reformulate OPT and OPTARG
-			OPT="${OPTARG%%=*}"       # extract long option name
-			OPTARG="${OPTARG#"$OPT"}" # extract long option argument (may be empty)
-			OPTARG="${OPTARG#=}"      # if long option argument, remove assigning `=`
-		fi
-
-		case "$OPT" in
-			debug | d)
-				GH_DEBUG=api
-				;;
-
-			help | h)
-				echo "$__USAGE"
-				return 0
-				;;
-
-			hostname)
-				GH_HOST="$OPTARG"
-				;;
-		esac
-	done
-
-	# shift so that $@, $1, etc. refer to the non-option arguments
-	shift "$((OPTIND-1))"
-
-	GH_DEBUG="$GH_DEBUG" GH_HOST="$GH_HOST" gh copilot explain "$@"
-}
-
 #+end_src

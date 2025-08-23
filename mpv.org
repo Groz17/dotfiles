@@ -1,5 +1,53 @@
 #+startup: content
 Mirror config for emms???
+
+* Prefs
+:PROPERTIES:
+:header-args: :tangle  ~/.config/mpv/mpv.conf
+:END:
+** Subtitles
+#+begin_src conf
+# yt subtitles
+
+sub-auto=fuzzy
+slang=en
+ytdl-raw-options=ignore-config=,sub-format=en,write-sub=
+# ytdl-raw-options=ignore-config=,sub-lang=en,write-auto-sub=
+# keep-open=yes
+# {https://www.funkyspacemonkey.com/mpv-youtube-dl-stop-wasting-resources}
+# [1080p] 
+# ytdl-format=bestvideo[height<=?1080]+bestaudio/best
+# mpv --profile=1080p youtube-link
+# https://github.com/pystardust/ytfzf/issues/372
+# script-opts=ytdl_hook-ytdl_path=yt-dlp
+input-ipc-server=/tmp/mpvsocket
+# for https://github.com/marzzzello/mpv_thumbnail_script
+osc=no
+# not needed in new mpv version {https://github.com/yt-dlp/yt-dlp/issues/6496}
+ytdl=no
+# How to do this only for videos but not audio?
+# save-position-on-quit
+reset-on-next-file=pause
+#+end_src
+
+** Video
+#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
+#
+#+end_src
+** Audio
+#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
+  #
+#+end_src
+
+** Input
+#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
+  #
+#+end_src
+** Output
+#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
+  #
+#+end_src
+
 * Keys
 :PROPERTIES:
 :header-args: :tangle ~/.config/mpv/input.conf
@@ -195,52 +243,4 @@ c cycle sub                            # cycle through subtitles
 #+begin_src conf
 
 y run "/bin/sh" "-c" "printf %s ${=time-pos} | wl-copy"
-#+end_src
-
-
-* Prefs
-:PROPERTIES:
-:header-args: :tangle  ~/.config/mpv/mpv.conf
-:END:
-** Subtitles
-#+begin_src conf
-# yt subtitles
-
-sub-auto=fuzzy
-slang=en
-ytdl-raw-options=ignore-config=,sub-format=en,write-sub=
-# ytdl-raw-options=ignore-config=,sub-lang=en,write-auto-sub=
-# keep-open=yes
-# {https://www.funkyspacemonkey.com/mpv-youtube-dl-stop-wasting-resources}
-# [1080p] 
-# ytdl-format=bestvideo[height<=?1080]+bestaudio/best
-# mpv --profile=1080p youtube-link
-# https://github.com/pystardust/ytfzf/issues/372
-# script-opts=ytdl_hook-ytdl_path=yt-dlp
-input-ipc-server=/tmp/mpvsocket
-# for https://github.com/marzzzello/mpv_thumbnail_script
-osc=no
-# not needed in new mpv version {https://github.com/yt-dlp/yt-dlp/issues/6496}
-ytdl=no
-# How to do this only for videos but not audio?
-# save-position-on-quit
-reset-on-next-file=pause
-#+end_src
-
-** Video
-#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
-#
-#+end_src
-** Audio
-#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
-  #
-#+end_src
-
-** Input
-#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
-  #
-#+end_src
-** Output
-#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
-  #
 #+end_src
