@@ -104,9 +104,10 @@ exec-once = wl-paste --type image --watch cliphist store
 #+begin_src hyprlang
 # exec-once = ags &
 # ags -c config.js
-exec-once = /usr/lib/geoclue-2.0/demos/agent
+# exec-once = /usr/lib/geoclue-2.0/demos/agent
 # exec-once = /usr/lib/geoclue-2.0/demos/agent && gammastep
-exec-once = darkman run
+# exec-once = darkman run
+exec-once = hyprsunset
 #+end_src  
 
 **** Wallpaper manager
