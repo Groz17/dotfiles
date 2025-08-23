@@ -173,36 +173,30 @@ you could inoremap/abbrev them tbh
   ;; maybe this way u can use c-u in insert mode (replicate readline in emacs)
   ;;caps (tap-hold 175 175  grave (tap-hold-press-timeout 0 100 grave (macro \ C-u) (macro S-grave)))
   caps (tap-hold 175 175  grave (tap-hold-press-timeout 0 100 grave (layer-while-held nav) (macro S-grave)))
-  ;; <   (tap-hold 200 249 bspc S-bspc)
-  ;; <   (tap-hold 200 249 mmid S-bspc)
- ;; <   mmid
-  ;; u can use tap-dance for keys that don't produce symbols
-  ;;< (caps-word 10000)
-  ;;< (multi f24 (tap-hold-press-timeout 200 175 S-\ lsft (macro S-[)))
+  ;;< (tap-hold-press-timeout 200 175 S-\ lsft (macro S-[))
 ;;  < (macro S-6) ;; ^ looks like shift symbol
 ;; useful for (emacs lisp)
-  lsft (multi f24 (tap-hold-press-timeout 200 175 S-9 (macro S-9) (macro S-[)))
+  lsft (tap-hold-press-timeout 200 175 S-9 (macro S-9) (macro S-[))
   ;;vin   (tap-hold 200 249 bspc (layer-while-held nav))
 
-  rpar (multi f24 (tap-hold-press-timeout 200 175 S-0 rsft (macro S-])))
-  ;;rpar (multi f24 (tap-hold-press-timeout 200 200 ( tap-dance 130 ( S-0 (macro ] ])))] (macro S-])))
+  rpar (tap-hold-press-timeout 200 175 S-0 rsft (macro S-]))
   ;; capsline?
   ;;rpar (tap-dance 100 ( (tap-hold-press-timeout 200 100 S-0 ] (macro S-])) (caps-word-toggle 10000)))
   cwr (caps-word-toggle 10000)
   ;; lalt (tap-hold 200 200 mmid lalt)
   ;; lalt mlft
-  ;;lalt (multi f24 (tap-hold-press-timeout 200 200 mlft lalt bspc))
-  ;; lalt (multi f24 (tap-hold-press-timeout 200 200 - lalt mlft))
+  ;;lalt (tap-hold-press-timeout 200 200 mlft lalt bspc)
+  ;; lalt (tap-hold-press-timeout 200 200 - lalt mlft)
   ;; comfortable (u also use left thumb for space)
   ;; do em dash/ dash / en? others? also underscore?
   ;;lalt (tap-hold 200 200 - (unicode —))
-  ;;lalt (multi f24 (tap-hold-press-timeout 200 175 - (layer-while-held symbols) (unicode —)))
+  ;;lalt ((tap-hold-press-timeout 200 175 - (layer-while-held symbols) (unicode —)))
   ;;combina bene con caps-word...
   ;; lalt (tap-hold 200 175 - (macro S--))
   ;; to easily press -> or smth...
   ;; maybe _ when holding so same speed as for -?
-  ;;lalt (multi f24 (tap-hold-press-timeout 200 175 - (multi - lsft) (macro S--)))
-  ;;lalt (multi f24 (tap-hold-press-timeout 200 175 - (macro S-\)  (macro S--)))
+  ;;lalt (tap-hold-press-timeout 200 175 - (multi - lsft) (macro S--))
+  ;;lalt (tap-hold-press-timeout 200 175 - (macro S-\)  (macro S--))
   ;; doesn't work with \| tough
   ;; i guess also useful for evil in emacs, like for calc
   lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 100 - (multi \) (macro S--)))
@@ -242,7 +236,7 @@ you could inoremap/abbrev them tbh
 ;; mlft (tap-hold 175 100 [ (tap-hold-release-timeout 0 100 [ (layer-while-held num) mlft))
 mlft (tap-hold 175 100 [ (tap-hold-release-timeout 0 100 [ [ mlft))
 ;;tap:- hold:_ double-tap:= (it all makes sense)
-;; mlft (multi f24 (tap-dance 230 ( (tap-hold-press-timeout 200 175 - - S-- ) =)))
+;; mlft (tap-dance 230 ( (tap-hold-press-timeout 200 175 - - S-- ) =))
  ;; mlft (tap-hold 175 100 bspc (tap-hold-release-timeout 0 200 [ (layer-while-held symbols) mlft))
 ;; mlft mlft
 ;;mlft (tap-hold 175 150 - (tap-hold-release-timeout 0 100 - [ -))
@@ -284,13 +278,13 @@ mlft mlft
 Keys used: d, f (& mirrored) and space (no need for shift because of autoshift)
 *** Ctrl
 #+begin_src kbd
-  ;;d (multi f24 (tap-hold-press-timeout 200 250 d lctl (macro S-d)))
+  ;;d (tap-hold-press-timeout 200 250 d lctl (macro S-d))
   ;; make lctl sticky (for ctrl-h backspace), like ctrl-h and then press again should repeat?
 ;; if d and m pressed at the same time-> double ctrl, for things like c-cr (c-c-m)
   d (tap-hold 150 175 d (tap-hold-press-timeout 0 230 d lctl (macro S-d)))
   ;;d (tap-hold 175 200 d (tap-hold-press-timeout 0 200 d (layer-while-held ctrl_for_d) (macro S-d)))
 
-  ;;k (multi f24(tap-hold-press-timeout 200 250 k rctl (macro S-k)))
+  ;;k (tap-hold-press-timeout 200 250 k rctl (macro S-k))
   ;; k (tap-hold 0 200 k (tap-hold-release-timeout 0 200 k rctl (macro S-k)))
   ;; weird bug, same as d but behaves differently:
     ;; k (tap-hold 175 200 k (tap-hold-press-timeout 0 200 k lctl (macro S-k)))
@@ -300,8 +294,8 @@ Keys used: d, f (& mirrored) and space (no need for shift because of autoshift)
 *** Alt
 #+begin_src kbd
 
-  ;;f (multi f24 (tap-hold-press-timeout 200 250 f lalt (macro S-f)))
-  ;;f (multi f24 (tap-hold-press-timeout 200 250 f (layer-while-held symbols) (macro S-f)))
+  ;;f (tap-hold-press-timeout 200 250 f lalt (macro S-f))
+  ;;f (tap-hold-press-timeout 200 250 f (layer-while-held symbols) (macro S-f))
   ;; short timeout only for d? switch operator?
   ;;f (tap-hold 175 100 f (tap-hold-release-timeout 0 200 f (layer-while-held symbols) (macro S-f)))
   ;; f (tap-hold 90 90 f (tap-hold-press-timeout 0 200 f (layer-while-held alt_for_f) (macro S-f)))
@@ -316,8 +310,8 @@ Keys used: d, f (& mirrored) and space (no need for shift because of autoshift)
   ;;f (tap-hold 175 150 f (tap-hold-press-timeout 0 200 f (layer-while-held alt_for_f) (macro S-f)))
 
   ;; j (tap-hold-press-timeout 200 200 j (layer-while-held symbols) (macro S-j))
-  ;;j (multi f24 (tap-hold-press-timeout 200 200 j j (macro S-j)))
-  ;;j (multi f24 (tap-hold-press-timeout 200 200 j alt (macro S-j)))
+  ;;j (tap-hold-press-timeout 200 200 j j (macro S-j))
+  ;;j (tap-hold-press-timeout 200 200 j alt (macro S-j))
   ;; j (tap-hold 150 150 j (tap-hold-press-timeout 0 200 j (layer-while-held syms_for_j) (macro S-j)))
   ;; try jj double tap as enter?
   j (tap-hold 175 200 j (tap-hold-press-timeout 0 100 j lalt (macro S-j)))
@@ -410,12 +404,10 @@ m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m f15 (macro S-m)))
 ** Window mappings
 
 #+begin_src kbd
+;; magari crea f16 when it does this char= getchar; exe <cmd>char..<cr> (basically one letter commands) and maybe double quotes two letters?
 ;; so i can preserve C-\ input in emacs
 a (tap-hold 175 175 a (tap-hold-press-timeout 0 175 a f16 (macro S-a)))
-; (multi f24 ( tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; f16 (macro S-;))))
-
-;; magari crea f16 when it does this char= getchar; exe <cmd>char..<cr> (basically one letter commands) and maybe double quotes two letters?
-;; ; (multi f24 ( tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; f14 (macro S-;))))
+; (tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; f16 (macro S-;)))
 #+end_src
 
 #+begin_src kbd
@@ -482,15 +474,12 @@ b (tap-hold-press-timeout 175 175 b b (macro S-b))
 
 ` (tap-hold-press-timeout 200 157 ` ` (macro S-`))
 
-;;lpar (multi f24 (tap-hold-press-timeout 200 175 S-9 lsft (macro S-[)))
 ;; for searching... mnemonic: / in Vim
-ISO (multi f24 (tap-hold-press-timeout 200 175 S-9 (macro A-s) (macro S-[)))
-;;lpar (multi f24 (tap-hold-press-timeout 200 175 S-9 (multi lalt s) (macro S-[)))
+ISO (tap-hold-press-timeout 200 175 S-9 (macro A-s) (macro S-[))
 
 ;; / simmetrico di (
 ;;/ (tap-hold-press-timeout 200 157 / ] (macro S-/))
 ;; tanto usi rpt-any, giusto? 
-;; / (multi f24 (tap-hold-press-timeout 200 200 ( tap-dance 130 ( / (macro ] ]) ))] (macro S-/)))
 ;; maybe C-s when held for emacs?
 ;;/ (tap-hold-press-timeout 200 157 / rsft (macro S-/))
 ;;/ (tap-hold-press-timeout 200 157 / (multi lalt s) (macro S-/))
