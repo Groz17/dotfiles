@@ -81,8 +81,8 @@ conditinally tangle:
 , #+begin_src python :tangle (when (not (string-match  "Battery status not available" (battery))) "laptop.sh")
 
 make ansi and iso defsrc?
-#+begin_src kbd
 
+#+begin_src kbd
 ;; e un bene che bspc sia in una posizione scomodina (non vuoi favoreggiare sbagli)
 (defsrc
   esc 
@@ -105,7 +105,6 @@ make ansi and iso defsrc?
   @lctl @lmet @lalt @spc @ralt @menu @rctl
   @mlft @mmid @mrgt
 )
-
 #+end_src
 
 * VARIABLES
@@ -122,6 +121,7 @@ make ansi and iso defsrc?
 
 z=f13, x=f14, c=f15, ...
 you could inoremap/abbrev them tbh
+
 #+begin_src kbd
 
 (defalias
@@ -274,91 +274,131 @@ mrgt mrgt
 mlft mlft
 #+end_src
 
+** Macros
+EXWM would be perfect for these ig
+v:count?
+also S-9 and S-0 could be an idea (like emacs c-x())
+better to toggle though
+sleep-for?
+super+q?
+
+#+begin_src kbd
+;; - (tap-hold-press-timeout 175 175 rpt-any - (macro S--))
+- (tap-hold-press-timeout 175 175 (dynamic-macro-record 0) - (macro S--))
+= (tap-hold-press-timeout 175 175 dynamic-macro-record-stop = (macro S-=))
+;;grv (tap-hold 200 249 grv (macro S-grv)) ;; usa C-u 0 for emacs (comes before vim)
+;; remember u can also use keys like FAVORITES (from mapping.txt)
+;; grv (tap-hold 200 249 f14 (macro S-grv)) ;; usa C-u 0 for emacs (comes before vim)
+grv (tap-hold 200 249 (dynamic-macro-play 0) (macro S-grv)) ;; usa C-u 0 for emacs
+
+;; double shift/caps tab?
+;; map it to disable/toggle kanata (for when you pass pc to other)
+;; esc caps
+;; esc (tap-hold 200 249 (dynamic-macro-play 0) (macro S-grv)) ;; usa C-u 0 for emacs
+;; how to repeat?
+;; esc (tap-hold 200 249 (dynamic-macro-play 0) (dynamic-macro-play 0)) ;; usa C-u 0 for emacs
+esc (dynamic-macro-play 0)
+)
+#+end_src
+
 ** HRM
 Keys used: d, f (& mirrored) and space (no need for shift because of autoshift)
-*** Ctrl
-#+begin_src kbd
-  ;;d (tap-hold-press-timeout 200 250 d lctl (macro S-d))
-  ;; make lctl sticky (for ctrl-h backspace), like ctrl-h and then press again should repeat?
-;; if d and m pressed at the same time-> double ctrl, for things like c-cr (c-c-m)
-  d (tap-hold 150 175 d (tap-hold-press-timeout 0 230 d lctl (macro S-d)))
-  ;;d (tap-hold 175 200 d (tap-hold-press-timeout 0 200 d (layer-while-held ctrl_for_d) (macro S-d)))
-
-  ;;k (tap-hold-press-timeout 200 250 k rctl (macro S-k))
-  ;; k (tap-hold 0 200 k (tap-hold-release-timeout 0 200 k rctl (macro S-k)))
-  ;; weird bug, same as d but behaves differently:
-    ;; k (tap-hold 175 200 k (tap-hold-press-timeout 0 200 k lctl (macro S-k)))
-  k (tap-hold 175 200 k (tap-hold-press-timeout 0 100 k rctl (macro S-k)))
-  ;;k (tap-hold 175 200 k (tap-hold-press-timeout 0 200 k (layer-while-held ctrl_for_k) (macro S-k)))
-#+end_src
-*** Alt
-#+begin_src kbd
-
-  ;;f (tap-hold-press-timeout 200 250 f lalt (macro S-f))
-  ;;f (tap-hold-press-timeout 200 250 f (layer-while-held symbols) (macro S-f))
-  ;; short timeout only for d? switch operator?
-  ;;f (tap-hold 175 100 f (tap-hold-release-timeout 0 200 f (layer-while-held symbols) (macro S-f)))
-  ;; f (tap-hold 90 90 f (tap-hold-press-timeout 0 200 f (layer-while-held alt_for_f) (macro S-f)))
-  ;; maybe you could also change the behaviour of fd/fs/fa/etc... (basically left half of keyboard) and same thing with j and jk/jl...
-  ;; change this out for the list:https://github.com/jtroo/kanata/blob/main/cfg_samples/home-row-mod-advanced.kbd
-  ;; symbol laeyer?
-  f (tap-hold 175 175 f (tap-hold-press-timeout 0 150 f lalt (macro S-f)))
-  ;; usa release e press solo x escape...
-  ;;f (tap-hold 175 150 f (tap-hold-press-timeout 0 200 f (layer-while-held symbols_for_f) (macro S-f)))
-  ;;f (tap-hold 175 150 f (tap-hold-press-timeout 0 200 f lalt (macro S-f)))
-  ;;f (tap-hold 175 150 f (tap-hold-press-timeout 0 200 f (layer-while-held symbols) (macro S-f)))
-  ;;f (tap-hold 175 150 f (tap-hold-press-timeout 0 200 f (layer-while-held alt_for_f) (macro S-f)))
-
-  ;; j (tap-hold-press-timeout 200 200 j (layer-while-held symbols) (macro S-j))
-  ;;j (tap-hold-press-timeout 200 200 j j (macro S-j))
-  ;;j (tap-hold-press-timeout 200 200 j alt (macro S-j))
-  ;; j (tap-hold 150 150 j (tap-hold-press-timeout 0 200 j (layer-while-held syms_for_j) (macro S-j)))
-  ;; try jj double tap as enter?
-  j (tap-hold 175 200 j (tap-hold-press-timeout 0 100 j lalt (macro S-j)))
-  ;;j (tap-hold 130 130 j (tap-hold-press-timeout 0 200 j (layer-while-held syms_for_j) (macro S-j)))
-  ;;j (tap-hold 175 100 j (tap-hold-press-timeout 0 200 j (layer-while-held alt_for_j) (macro S-j)))
-  ;;j (tap-hold 100 200 j (tap-hold-press-timeout 0 200 j j (macro S-j)))
-
-#+end_src
+Order tap-hold section based on keyboard location (space, zxcv, asdfg, qwert)
+Keep in mind there's also shift, caps, tab, ISO key, etc...
+There's also modifier+function keys btw
 
 *** Super
 #+begin_src kbd
 spc (tap-hold-press-timeout 0 200 spc lmet (multi S-spc))
 #+end_src
 
-** Terminal
+*** Ctrl
 #+begin_src kbd
-   ;; use e/i 'cause middle finger is the strongest ig
-   ;; crea modifiers nuovi with super + combinazione di altri modifiers: super+{cltrl,alt,shift} 2^3 insieme delle parti (except shift only for hyprland)
-   ;; can also do super+modifiers+symbols (for neovim/emacs/editor leader...)
-   ;; e (tap-hold 175 150 e (tap-hold-press-timeout 0 100 e (multi lmet lalt) (macro S-e)))
-   ;;lmet lctl so i can press lmet+lctl+lalt easily w/ w+d
-   e (tap-hold 175 175 e (tap-hold-press-timeout 0 100 e (multi lmet lalt) (macro S-e)))
-   ;;e (tap-hold 175 175 e (tap-hold-press-timeout 0 100 e e (macro S-e)))
+;; make lctl sticky (for ctrl-h backspace), like ctrl-h and then press again should repeat?
+;; if d and m pressed at the same time-> double ctrl, for things like c-cr (c-c-m)
+d (tap-hold 150 175 d (tap-hold-press-timeout 0 230 d lctl (macro S-d)))
 
-  ;;e (tap-hold-press-timeout 200 200 e e (macro S-e))
-  ;;e (tap-hold 175 200 e (tap-hold-press-timeout 0 200 e lmet (macro S-e)))
-   ;; i think c and m are better for symbols than e and i since you use two fingers instead of 1... 
-   ;;e (tap-hold 175 200 e (tap-hold-press-timeout 0 200 e (layer-while-held symbols) (macro S-e)))
-  ;;e (tap-hold 175 200 e (tap-hold-press-timeout 0 200 e f11 (macro S-e)))
+k (tap-hold 175 200 k (tap-hold-press-timeout 0 100 k rctl (macro S-k)))
+#+end_src
 
-  ;; i (tap-hold-press-timeout 175 150 i  (macro S-i))
-  i (tap-hold 175 175 i (tap-hold-press-timeout 0 150 i (multi lmet lalt) (macro S-i)))
-  ;;i (tap-hold 175 175 i (tap-hold-press-timeout 0 100 i i (macro S-i)))
-  ;;i (tap-hold 175 200 i (tap-hold-press-timeout 0 200 i (layer-while-held symbols) (macro S-i)))
-  ;;i (tap-hold 175 200 i (tap-hold-press-timeout 0 200 i f11 (macro S-i)))
+*** Alt
+#+begin_src kbd
+;; change this out for the list:https://github.com/jtroo/kanata/blob/main/cfg_samples/home-row-mod-advanced.kbd
+f (tap-hold 175 175 f (tap-hold-press-timeout 0 150 f lalt (macro S-f)))
+;; usa release e press solo x escape...
+
+;; j (tap-hold 150 150 j (tap-hold-press-timeout 0 200 j (layer-while-held syms_for_j) (macro S-j)))
+j (tap-hold 175 200 j (tap-hold-press-timeout 0 100 j lalt (macro S-j)))
 
 #+end_src
+
+** Toggle
+#+begin_src kbd
+;; z inspiration from c-z toggle evil in emacs...
+;; make this sticky
+;; basically Toggle cause C-z toggle evil mode in emacs
+z (tap-hold 150 175 z (tap-hold-press-timeout 0 75 z f13 (macro S-z)))
+. (tap-hold 150 175 . (tap-hold-press-timeout 0 75 . f13 (macro S-.)))
+#+end_src
+
 ** TODO
-  #+begin_src kbd
-    ;; v (tap-hold 150 200 v (tap-hold-press-timeout 0 150 v i (macro S-v)))
-    ;; n (tap-hold 150 200 n (tap-hold-press-timeout 0 150 n i (macro S-n)))
-  v (tap-hold-press-timeout 175 175 v v (macro S-v))
-  n (tap-hold-press-timeout 175 175 n n (macro S-n))
-  #+end_src
+#+begin_src kbd
+;; v (tap-hold 150 200 v (tap-hold-press-timeout 0 150 v i (macro S-v)))
+;; n (tap-hold 150 200 n (tap-hold-press-timeout 0 150 n i (macro S-n)))
+v (tap-hold-press-timeout 175 175 v v (macro S-v))
+n (tap-hold-press-timeout 175 175 n n (macro S-n))
+#+end_src
+
+** Terminal
+#+begin_src kbd
+;; use e/i 'cause middle finger is the strongest ig
+;; crea modifiers nuovi with super + combinazione di altri modifiers: super+{cltrl,alt,shift} 2^3 insieme delle parti (except shift only for hyprland)
+;; can also do super+modifiers+symbols (for neovim/emacs/editor leader...)
+;; e (tap-hold 175 150 e (tap-hold-press-timeout 0 100 e (multi lmet lalt) (macro S-e)))
+;;lmet lctl so i can press lmet+lctl+lalt easily w/ w+d
+e (tap-hold 175 175 e (tap-hold-press-timeout 0 100 e (multi lmet lalt) (macro S-e)))
+
+i (tap-hold 175 175 i (tap-hold-press-timeout 0 150 i (multi lmet lalt) (macro S-i)))
+#+end_src
+
+** One-shot/localleader (C-c ...)
+#+begin_src kbd
+;; u could maybe use this for hyper/super in emacs since u run it as a GUI
+;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (multi lmet lalt) (macro S-c)))
+;; nice position so u can use ctrl-x arrow in emacs
+
+;; for C-u use macros , v:count like for C-u,C-u,C-u
+
+c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c f15 (macro S-c)))
+m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m f15 (macro S-m)))
+#+end_src
+
+** Window mappings
+
+#+begin_src kbd
+;; magari crea f16 when it does this char= getchar; exe <cmd>char..<cr> (basically one letter commands) and maybe double quotes two letters?
+;; so i can preserve C-\ input in emacs
+a (tap-hold 175 175 a (tap-hold-press-timeout 0 175 a f16 (macro S-a)))
+; (tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; f16 (macro S-;)))
+#+end_src
+
+#+begin_src kbd
+
+;; ───────────────────────────── register ──────────────────────────────
+;; one-shot modifier for ctrl-u universal arg?
+;;per vim
+r (tap-hold 175 175 r (tap-hold-press-timeout 0 100 r (macro C-r) (macro S-r)))
+;; work on autorepeat? like if over>250 UU?
+;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (macro C-r) (macro S-u)))
+;; for emacs (4 is the default)
+;;maybe C-u for emacs? when held?
+u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
+;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (multi lctl u) (macro S-u)))
+#+end_src
 
 ** C-x emacs
 C-x is also useful for readline
+
 #+begin_src kbd
 ;; s (tap-hold 150 175 s (tap-hold-press-timeout 0 75 s f13 (macro S-s)))
 ;;s (tap-hold-release 150 175 s (tap-hold-press-timeout 0 75 s (macro C-x) (macro S-s)))
@@ -389,59 +429,6 @@ l (tap-hold 150 175 l (tap-hold-press-timeout 0 150 l f12 (macro S-l)))
   , (tap-hold-press-timeout 190 157 , , (macro S-,))
 #+end_src
 
-** One-shot/localleader (C-c ...)
-#+begin_src kbd
-;; u could maybe use this for hyper/super in emacs since u run it as a GUI
-;;c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c (multi lmet lalt) (macro S-c)))
-;; nice position so u can use ctrl-x arrow in emacs
-
-;; for C-u use macros , v:count like for C-u,C-u,C-u
-
-c (tap-hold 175 200 c (tap-hold-press-timeout 0 200 c f15 (macro S-c)))
-m (tap-hold 175 200 m (tap-hold-press-timeout 0 200 m f15 (macro S-m)))
-#+end_src
-
-** Window mappings
-
-#+begin_src kbd
-;; magari crea f16 when it does this char= getchar; exe <cmd>char..<cr> (basically one letter commands) and maybe double quotes two letters?
-;; so i can preserve C-\ input in emacs
-a (tap-hold 175 175 a (tap-hold-press-timeout 0 175 a f16 (macro S-a)))
-; (tap-hold 0 150 ; (tap-hold-press-timeout 0 100 ; f16 (macro S-;)))
-#+end_src
-
-#+begin_src kbd
-
-;; ───────────────────────────── register ──────────────────────────────
-;;per vim
-r (tap-hold 175 175 r (tap-hold-press-timeout 0 100 r (macro C-r) (macro S-r)))
-;; work on autorepeat? like if over>250 UU?
-;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (macro C-r) (macro S-u)))
-;; for emacs (4 is the default)
-;;maybe C-u for emacs? when held?
-u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
-;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (multi lctl u) (macro S-u)))
-;; r (tap-hold-press-timeout 0 200 r r (macro S-r))
-;; u (tap-hold-press-timeout 200 200 u u (macro S-u))
-#+end_src
-
-** Picker (window mnemonic)
-Those should be temporary mappings until editor's default mappings are added
-#+begin_src kbd
-;; use modifier instead so u can use ^w{h,j,k,l} in terminal & in insert mode
-w (tap-hold 175 200 w (tap-hold-press-timeout 0 100 w f17 (macro S-w)))
-o (tap-hold 175 200 o (tap-hold-press-timeout 0 100 o f17 (macro S-o)))
-#+end_src
-
-** Toggle
-#+begin_src kbd
-;; z inspiration from c-z toggle evil in emacs...
-;; make this sticky
-;; basically Toggle cause C-z toggle evil mode in emacs
-z (tap-hold 150 175 z (tap-hold-press-timeout 0 75 z f13 (macro S-z)))
-. (tap-hold 150 175 . (tap-hold-press-timeout 0 75 . f13 (macro S-.)))
-;; use in terminal as well
-#+end_src
 ** Help
 #+begin_src kbd
 ;; for emacs
@@ -449,6 +436,15 @@ z (tap-hold 150 175 z (tap-hold-press-timeout 0 75 z f13 (macro S-z)))
 ;; fai che quando g e premuto, h diventa ctrl e viceversa (for emacs help mappings)
 g (tap-hold 150 200 g (tap-hold-press-timeout 0 150 g f18 (macro S-g)))
 h (tap-hold 150 200 h (tap-hold-press-timeout 0 150 h f18 (macro S-h)))
+#+end_src
+
+** Picker (window mnemonic)
+Those should be temporary mappings until editor's default mappings are added
+
+#+begin_src kbd
+;; use modifier instead so u can use ^w{h,j,k,l} in terminal & in insert mode
+w (tap-hold 175 200 w (tap-hold-press-timeout 0 100 w f17 (macro S-w)))
+o (tap-hold 175 200 o (tap-hold-press-timeout 0 100 o f17 (macro S-o)))
 #+end_src
 
 ** Translation
@@ -469,9 +465,6 @@ b (tap-hold-press-timeout 175 175 b b (macro S-b))
 #+begin_src kbd
 
 ' (tap-hold-press-timeout 200 157 ' ' (macro S-'))
-;;, (tap-hold-press-timeout 190 157 , (multi lctl u lctl) (macro S-,))
-;;, (tap-hold-press-timeout 190 157 , (multi lctl c lctl x lctl) (macro S-,))
-
 ` (tap-hold-press-timeout 200 157 ` ` (macro S-`))
 
 ;; for searching... mnemonic: / in Vim
@@ -489,6 +482,7 @@ bspc (tap-hold-press-timeout 175 175 bspc bspc (macro S-bspc))
 
 ;; tasti liberiii (maybe use (held) super for hyprland/wm, like associate with workspace name)
 ;; do maybe maths
+;; maybe function keys when held? but what about shifted fun keys?
 d1 (tap-hold-press-timeout 175 175 1 1 (macro S-1))
 d2 (tap-hold-press-timeout 175 175 2 2 (macro S-2))
 d3 (tap-hold-press-timeout 175 175 3 3 (macro S-3))
@@ -504,39 +498,17 @@ d9 (tap-hold-press-timeout 175 175 9 9 (macro S-5))
 ;; doesn't work?
 d0 (tap-hold-press-timeout 175 175 0 0 0)
 #+end_src
-** Macros
-   EXWM would be perfect for these ig
-   v:count?
-   also S-9 and S-0 could be an idea (like emacs c-x())
-   better to toggle though
-   sleep-for?
-   super+q?
-#+begin_src kbd
-;; - (tap-hold-press-timeout 175 175 rpt-any - (macro S--))
-- (tap-hold-press-timeout 175 175 (dynamic-macro-record 0) - (macro S--))
-= (tap-hold-press-timeout 175 175 dynamic-macro-record-stop = (macro S-=))
-  ;;grv (tap-hold 200 249 grv (macro S-grv)) ;; usa C-u 0 for emacs (comes before vim)
-  ;; remember u can also use keys like FAVORITES (from mapping.txt)
-  ;; grv (tap-hold 200 249 f14 (macro S-grv)) ;; usa C-u 0 for emacs (comes before vim)
- grv (tap-hold 200 249 (dynamic-macro-play 0) (macro S-grv)) ;; usa C-u 0 for emacs
-
-  ;; double shift/caps tab?
-  ;; map it to disable/toggle kanata (for when you pass pc to other)
-  ;; esc caps
- ;; esc (tap-hold 200 249 (dynamic-macro-play 0) (macro S-grv)) ;; usa C-u 0 for emacs
-;; how to repeat?
- ;; esc (tap-hold 200 249 (dynamic-macro-play 0) (dynamic-macro-play 0)) ;; usa C-u 0 for emacs
- esc (dynamic-macro-play 0)
-)
-#+end_src
 
 * LAYERS
- how to use autoshift w/ a layer? like G to go to end
- implement vim layer? like gg and stuff
- notify when layer switching?
- magari usalo anche x emacs (fallo simmetrico)
- also use shift-arrow for orgs emacs
+how to use autoshift w/ a layer? like G to go to end
+implement vim layer? like gg and stuff
+notify when layer switching?
+magari usalo anche x emacs (fallo simmetrico)
+also use shift-arrow for orgs emacs
+
 ** Navigation
+Also toggle layer activation?
+
 #+begin_src kbd
 (deflayer nav
 _
