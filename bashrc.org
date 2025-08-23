@@ -96,8 +96,7 @@ compile () {
     emacsclient -t --eval "(compile \"$args\")"
   }
 
-# similar to vidir
-dired () {
+edir () {
   target=${1:-$PWD}
     if [ ! -d "$target" ]; then
         echo "Not a directory: '$target'" >&2
