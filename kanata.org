@@ -299,7 +299,6 @@ grv (tap-hold 200 249 (dynamic-macro-play 0) (macro S-grv)) ;; usa C-u 0 for ema
 ;; how to repeat?
 ;; esc (tap-hold 200 249 (dynamic-macro-play 0) (dynamic-macro-play 0)) ;; usa C-u 0 for emacs
 esc (dynamic-macro-play 0)
-)
 #+end_src
 
 ** HRM
@@ -498,6 +497,7 @@ d9 (tap-hold-press-timeout 175 175 9 9 (macro S-5))
 ;;d0 (tap-hold-press-timeout 175 175 0 0 f13)
 ;; doesn't work?
 d0 (tap-hold-press-timeout 175 175 0 0 0)
+)
 #+end_src
 
 * LAYERS
