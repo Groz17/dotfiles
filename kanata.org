@@ -199,7 +199,8 @@ you could inoremap/abbrev them tbh
   ;;lalt (tap-hold-press-timeout 200 175 - (macro S-\)  (macro S--))
   ;; doesn't work with \| tough
   ;; i guess also useful for evil in emacs, like for calc
-  lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 100 - (multi \) (macro S--)))
+  ;; lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 100 - (multi \) (macro S--)))
+  lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 100 - (layer-while-held audio) (macro S--)))
 
   ;; combina bene con - per pipelines
   ;;ralt (macro S-\)
@@ -530,6 +531,20 @@ _ _ _
 ;; _ _ _  _              _              _   _
 ;;    _ _ _ 
 ;; )
+#+end_src
+
+** TODO Audio
+MediaMute: i (i looks like a mic)
+#+begin_src kbd
+(deflayer audio
+_
+_ _ _ _     _ _ _ _    _    _  _    _ _
+_ _ _ _     _ _ _ _    _    _  _    _
+_ _ _ _     _ _ _ MediaTrackPrevious VolumeDown VolumeUp MediaTrackNext _ _ _ _
+_ _ _ _     _ _ _ _    VolumeMute  _  _    _ _
+_ _ _ MediaPlayPause     _ _ _
+_ _ _
+)
 #+end_src
 
 * CHORDS

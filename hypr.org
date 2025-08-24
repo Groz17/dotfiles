@@ -385,9 +385,6 @@ bindl = , XF86AudioPrev, exec, playerctl previous
 bindl = , XF86AudioNext, exec, playerctl next
 
 # go 10 sec forward? for tridactyl yt...
-# bindl = $mainMod, greater, exec, playerctl next
-# bindl = $mainMod, p, exec, playerctl play-pause
-# bindl = $mainMod, ., exec, playerctl play-pause
 # make these support v:count?
 # previous first in playlist? <S-BS>?
 bindl = $mainMod shift, n, exec, playerctl previous
