@@ -19,7 +19,7 @@ shopt -s cdspell
 * Keymaps
 #+begin_src bash
 if [[ -n $DISPLAY ]]; then
-  bind -x '"\ew": printf %s \"$READLINE_LINE\" | wl-copy'
+  bind -x '"\ew": printf %s "$READLINE_LINE" | wl-copy'
 fi
 #+end_src
 
