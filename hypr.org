@@ -420,6 +420,42 @@ else
 fi
 #+end_src
 
+**** Songs
+add lyrics script?
+***** Downloaded songs
+#+begin_src hyprlang
+bind = $mainMod , m, exec, ~/.config/hypr/scripts/songs
+bind = $mainMod shift, m, exec, ~/.config/hypr/scripts/yt_songs
+#+end_src
+
+#+begin_src bash :tangle ~/.config/hypr/scripts/songs
+#!/usr/bin/env bash
+# how to reference this from config file?
+SOCKET=/tmp/mpvsocket
+[ -S "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
+
+music_dir=~/Music
+
+# TODO: show album art? (preview)
+find "$music_dir" -type f -exec stat --printf="%w\t%n\n" {} +  | sort -nr | cut -f 2- |
+rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator / |
+ifne mpv --playlist=/dev/stdin --no-video --no-terminal --input-ipc-server="$SOCKET"
+#+end_src
+
+***** Search on YT
+#+begin_src bash :tangle ~/.config/hypr/scripts/yt_songs
+#!/usr/bin/env bash
+SOCKET=/tmp/mpvsocket
+[ -S "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
+search="$(rofi -dmenu -l 0 -p 'Search song')"
+[ -z "$search" ] && exit 1;
+# sort by views?
+url=$(yt-dlp -f bestaudio --get-url "ytsearch:$search"|head -n1)
+<<<"$url" ts "%b %d %H:%M:%S">> ~/.local/share/yt_urls
+mpv --input-ipc-server="$SOCKET" "$url"
+#+end_src
+
+  
 *** Brightness
 #+begin_src hyprlang
 bindel = ,XF86MonBrightnessUp, exec, brightnessctl s 10%+
@@ -698,7 +734,6 @@ bindm = $mainMod, mouse:273, resizewindow
 
 *** Notes
 #+begin_src hyprlang
-
 # TODO:
 # bind = $mainMod shift, return, exec, [float] $terminal
 bind = $mainMod , slash, exec, [float] $terminal
@@ -727,43 +762,8 @@ bind = $mainMod shift, n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e
 #funge da term: bind = $mainMod shift, n, exec, hyprctl dispatch exec 'PATH=$HOME/.cargo/bin:$PATH ghostty -e "nvim -c '\''let @+=\"# \" ..input(\">\")..@+|norm 1 Qy'\''"'
 # resize terminal for input?
 bind = $mainMod shift, slash, exec, [float;size 30% 30%] PATH=$HOME/.cargo/bin:$PATH $terminal -e nvim -c 'let @+=input(">")|norm 1 Qd'
-
 #+end_src
 
-*** Songs
-**** Downloaded songs
-#+begin_src hyprlang
-bind = $mainMod , m, exec, ~/.config/hypr/scripts/songs
-bind = $mainMod shift, m, exec, ~/.config/hypr/scripts/yt_songs
-#+end_src
-
-#+begin_src bash :tangle ~/.config/hypr/scripts/songs
-#!/usr/bin/env bash
-# how to reference this from config file?
-SOCKET=/tmp/mpvsocket
-[ -S "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
-
-music_dir=~/Music
-
-# TODO: show album art? (preview)
-find "$music_dir" -type f -exec stat --printf="%w\t%n\n" {} +  | sort -nr | cut -f 2- |
-rofi -sort -i -normalize-match -multi-select -dmenu -p "Search Song" -display-columns 5,6 -display-column-separator / |
-ifne mpv --playlist=/dev/stdin --no-video --no-terminal --input-ipc-server="$SOCKET"
-#+end_src
-
-**** Search on YT
-#+begin_src bash :tangle ~/.config/hypr/scripts/yt_songs
-#!/usr/bin/env bash
-SOCKET=/tmp/mpvsocket
-[ -S "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
-search="$(rofi -dmenu -l 0 -p 'Search song')"
-[ -z "$search" ] && exit 1;
-url=$(yt-dlp -f bestaudio --get-url "ytsearch:$search"|head -n1)
-<<<"$url" ts "%b %d %H:%M:%S">> ~/.local/share/yt_urls
-mpv --input-ipc-server="$SOCKET" "$url"
-#+end_src
-
-  
 
 *** Global Keybinds 
 https://wiki.hypr.land/Configuring/Binds/#global-keybinds
