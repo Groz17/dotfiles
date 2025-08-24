@@ -539,7 +539,7 @@ MediaMute: i (i looks like a mic)
 (deflayer audio
 _
 _ _ _ _     _ _ _ _    _    _  _    _ _
-_ _ _ _     _ _ _ _    _    _  _    _
+_ _ _ _     _ _ _ _    _    f24  _    _
 _ _ _ _     _ _ _ MediaTrackPrevious VolumeDown VolumeUp MediaTrackNext _ _ _ _
 _ _ _ _     _ _ _ _    VolumeMute  _  _    _ _
 _ _ _ MediaPlayPause     _ _ _

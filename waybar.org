@@ -23,7 +23,8 @@
 #+begin_src conf
 "modules-left": [
   "hyprland/workspaces",
-  "mpris"
+  "mpris",
+"custom/mpv-repeat"
   // "custom/vpn"
 ],
 
@@ -160,9 +161,16 @@
       "default": ""
     }
   },
+
+"custom/mpv-repeat": {
+    "exec": "echo '{ \"command\": [\"get_property\", \"loop-file\"] }' | socat - /tmp/mpvsocket | jq -r 'if .data == \"inf\" then \"{\\\"text\\\":\\\"🔁\\\"}\" else \"{\\\"text\\\":\\\"\\\"}\" end'",
+    "interval": 2,
+    "return-type": "json"
+},
   "mpris": {
+  // loop-status?🔁
     // "format": "{player_icon}  {title} - {artist} [{position} / {length}]",
-    "format": "🎵  {title} - {artist} [{position} / {length}]",
+    "format": "🎵  {title} - {artist} [{position} / {length}] ",
     "format-paused": "{player_icon}  {title} - {artist} [{position} / {length}]",
 
     "player-icons": {
@@ -290,7 +298,8 @@ tooltip {
     color: #f0d1ff;
 }
 
-#mpris {
+#mpris,
+#custom-mpv-repeat {
     background-color: #5a3a7e;
     border: 2px solid #7a4a9e;
     color: #f0d1ff;

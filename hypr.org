@@ -390,11 +390,16 @@ bindl = , XF86AudioNext, exec, playerctl next
 bindl = $mainMod shift, n, exec, playerctl previous
 # bindl = $mainMod, less, exec, playerctl previous
 
+# bind= , f24, exec, echo '{ "command": ["set_property", "loop-file", "inf"] }' | socat - /tmp/mpvsocket
+bind= , f24, exec,echo '{"command":["set_property","loop-file","'"$(echo '{"command":["get_property","loop-file"]}' | socat - /tmp/mpvsocket | grep -q inf && echo no || echo inf)"'"]}' | socat - /tmp/mpvsocket
+#+end_src
+**** Audio effects
+#+begin_src hyprlang
 bind = $mainMod, a, exec, echo '{ "command": ["set_property", "af","lowpass=f=400"] }' | socat - /tmp/mpvsocket
 bind = $mainMod shift, a, exec, echo '{ "command": ["set_property", "af",""] }' | socat - /tmp/mpvsocket
 #+end_src
 
-*** Recognize song
+**** Recognize song
 #+begin_src hyprlang
 # bindl = $mainMod shift, n, exec, scripts/active
 bind = $mainMod, s, exec, ~/.config/hypr/scripts/recognize_song
