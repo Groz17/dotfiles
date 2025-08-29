@@ -6,6 +6,7 @@
 ;; use touchpad for \ (in the middle)?
 ;; would be cool to try using space/touchpad to mean <c-o> (for vim insert mode)
 ;;write diff between pc and laptop?
+;; check if tangled code is valid kanata when saving?
 
 
 * TODO TASK LIST
@@ -286,6 +287,7 @@ super+q?
 
 #+begin_src kbd
 ;; - (tap-hold-press-timeout 175 175 rpt-any - (macro S--))
+;; in tridactyl: bind f12( -?
 - (tap-hold-press-timeout 175 175 (dynamic-macro-record 0) - (macro S--))
 = (tap-hold-press-timeout 175 175 dynamic-macro-record-stop = (macro S-=))
 ;;grv (tap-hold 200 249 grv (macro S-grv)) ;; usa C-u 0 for emacs (comes before vim)
@@ -535,6 +537,7 @@ _ _ _
 
 ** TODO Audio
 MediaMute: i (i looks like a mic)
+Add missing keys w/ playerctl/mpv ipc... (stop, etc...)
 #+begin_src kbd
 (deflayer audio
 _
