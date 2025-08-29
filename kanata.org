@@ -284,6 +284,8 @@ also S-9 and S-0 could be an idea (like emacs c-x())
 better to toggle though
 sleep-for?
 super+q?
+useful for repetitive password insertions 😁 (ssh)
+show macro content
 
 #+begin_src kbd
 ;; - (tap-hold-press-timeout 175 175 rpt-any - (macro S--))
