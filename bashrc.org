@@ -31,6 +31,7 @@ Use f13 like for neovim/emacs toggling keymaps
 # bind '"\C-xe": "\C-u shopt -q extglob && shopt -u extglob || shopt -s extglob\n"'
 # bind -x '"\C-x/": "shopt -q extglob && shopt -u extglob || shopt -s extglob"'
 # bind -x '"\C-x*": "shopt -q globstar && shopt -u globstar || shopt -s globstar"'
+# stty wrap?
 #+end_src
 
 * Functions
