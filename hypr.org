@@ -428,7 +428,7 @@ bind = $mainMod , m, exec, ~/.config/hypr/scripts/songs
 bind = $mainMod shift, m, exec, ~/.config/hypr/scripts/yt_songs
 #+end_src
 
-#+begin_src bash :tangle ~/.config/hypr/scripts/songs
+#+begin_src bash :tangle ~/.config/hypr/scripts/songs :tangle-mode +x
 #!/usr/bin/env bash
 # how to reference this from config file?
 SOCKET=/tmp/mpvsocket
@@ -443,7 +443,7 @@ ifne mpv --playlist=/dev/stdin --no-video --no-terminal --input-ipc-server="$SOC
 #+end_src
 
 ***** Search on YT
-#+begin_src bash :tangle ~/.config/hypr/scripts/yt_songs
+#+begin_src bash :tangle ~/.config/hypr/scripts/yt_songs :tangle-mode +x
 #!/usr/bin/env bash
 SOCKET=/tmp/mpvsocket
 [ -S "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
@@ -467,7 +467,7 @@ bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
 bind = $mainMod SHIFT, comma, exec, ~/.config/hypr/scripts/notifications
 #+end_src
 
-#+begin_src bash :tangle ~/.config/hypr/scripts/notifications
+#+begin_src bash :tangle ~/.config/hypr/scripts/notifications :tangle-mode +x
 #!/usr/bin/env bash
 for i in {1..3}; do dunstctl history-pop;done
 sleep 5
