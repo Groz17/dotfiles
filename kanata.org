@@ -576,6 +576,7 @@ also use alt and altgr... (by themselves+chords)
 ;; (j k) ret 250 first-release ()
 ;; I keep it just for c-cr and c-a-cr, otherwise use c-m,c-a-m and c-s-m
 
+(lsft rsft) (caps-word 10000) 250 first-release ()
 
 ;; changing timeout or firstall doesn't seem to change for modifiers... (wanna use djk)
 ;; (j k) (switch ((input-history real k 1)) ret break() (multi lctl alt) break) 30 first-release ()
