@@ -451,6 +451,7 @@ search="$(rofi -dmenu -l 0 -p 'Search song')"
 [ -z "$search" ] && exit 1;
 # sort by views?
 url=$(yt-dlp -f bestaudio --get-url "ytsearch:$search"|head -n1)
+[ -z "$url" ] && exit 1;
 <<<"$url" ts "%b %d %H:%M:%S">> ~/.local/share/yt_urls
 mpv --input-ipc-server="$SOCKET" "$url"
 #+end_src
