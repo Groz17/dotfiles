@@ -201,7 +201,7 @@ you could inoremap/abbrev them tbh
   ;; doesn't work with \| tough
   ;; i guess also useful for evil in emacs, like for calc
   ;; lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 100 - (multi \) (macro S--)))
-  lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 100 - (layer-while-held audio) (macro S--)))
+  lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 230 - (layer-while-held audio) (macro S--)))
 
   ;; combina bene con - per pipelines
   ;;ralt (macro S-\)
@@ -542,13 +542,13 @@ MediaMute: i (i looks like a mic)
 Add missing keys w/ playerctl/mpv ipc... (stop, etc...)
 #+begin_src kbd
 (deflayer audio
-_
-_ _ _ _     _ _ _ _    _    _  _    _ _
-_ _ _ _     _ _ _ _    _    f24  MediaTrackPrevious    _
-_ _ _ _     _ _ _ f22 VolumeDown VolumeUp f23 _ _ _ _
-_ _ _ _     _ _ _ _    VolumeMute  _  _    _ _
-_ _ MediaTrackNext MediaPlayPause     _ _ _
-_ _ _
+  _
+  _ _ _              _              _ _   _ _   _          _        _                  _ _
+  _ _ _              _              _ _   _ _   _          f24      MediaTrackPrevious _
+  _ _ _              f20            _ f21 _ f22 VolumeDown VolumeUp f23                _ _ _ _
+  _ _ _              _              _ _   _ _   VolumeMute _        _                  _ _
+  _ _ MediaTrackNext MediaPlayPause _ _   _
+  _ _ _             
 )
 #+end_src
 

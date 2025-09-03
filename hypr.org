@@ -373,6 +373,7 @@ bind = $mainMod , mouse:274, exec, hyprctl -q keyword cursor:zoom_factor 1 # mid
 #+end_src
 
 *** [[https://wiki.hypr.land/Configuring/Binds/#media][Media]]
+Using f2\d keys?
 #+begin_src hyprlang
 bindel = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 bindel = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
@@ -394,19 +395,19 @@ bindl = $mainMod shift, n, exec, playerctl previous
 bind= , f22, exec, playerctl position 3-
 bind= , f23, exec, playerctl position 3+
 
-# bind= , f24, exec, echo '{ "command": ["set_property", "loop-file", "inf"] }' | socat - /tmp/mpvsocket
-bind= , f24, exec,echo '{"command":["set_property","loop-file","'"$(echo '{"command":["get_property","loop-file"]}' | socat - /tmp/mpvsocket | grep -q inf && echo no || echo inf)"'"]}' | socat - /tmp/mpvsocket
+# uppercase O for playlist?
+bind= , f24, exec, playerctl loop $( [ "$(playerctl loop)" = "None" ] && printf Track || printf None )
 #+end_src
 **** Audio effects
+Make this work w/ mpris/playerctl?
 #+begin_src hyprlang
-bind = $mainMod, a, exec, echo '{ "command": ["set_property", "af","lowpass=f=400"] }' | socat - /tmp/mpvsocket
-bind = $mainMod shift, a, exec, echo '{ "command": ["set_property", "af",""] }' | socat - /tmp/mpvsocket
+bind = , f21, exec, echo '{ "command": ["get_property", "af"] }' | socat - /tmp/mpvsocket | jq -er '.data[]?' || { echo '{ "command": ["set_property", "af","lowpass=f=400"] }' | socat - /tmp/mpvsocket ; false ;}  && echo '{ "command": ["set_property", "af",""] }' | socat - /tmp/mpvsocket 
 #+end_src
+
 
 **** Recognize song
 #+begin_src hyprlang
-# bindl = $mainMod shift, n, exec, scripts/active
-bind = $mainMod, s, exec, ~/.config/hypr/scripts/recognize_song
+bind = , f20, exec, ~/.config/hypr/scripts/recognize_song
 #+end_src
 
 #+begin_src bash :tangle ~/.config/hypr/scripts/recognize_song :tangle-mode +x
