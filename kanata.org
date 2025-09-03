@@ -321,19 +321,19 @@ spc (tap-hold-press-timeout 0 200 spc lmet (multi S-spc))
 #+begin_src kbd
 ;; make lctl sticky (for ctrl-h backspace), like ctrl-h and then press again should repeat?
 ;; if d and m pressed at the same time-> double ctrl, for things like c-cr (c-c-m)
-d (tap-hold 150 175 d (tap-hold-press-timeout 0 230 d lctl (macro S-d)))
+d (tap-hold 175 175 d (tap-hold-press-timeout 0 230 d lctl (macro S-d)))
 
-k (tap-hold 175 200 k (tap-hold-press-timeout 0 100 k rctl (macro S-k)))
+k (tap-hold 175 175 k (tap-hold-press-timeout 0 230 k rctl (macro S-k)))
 #+end_src
 
 *** Alt
 #+begin_src kbd
 ;; change this out for the list:https://github.com/jtroo/kanata/blob/main/cfg_samples/home-row-mod-advanced.kbd
-f (tap-hold 175 175 f (tap-hold-press-timeout 0 150 f lalt (macro S-f)))
+f (tap-hold 175 175 f (tap-hold-press-timeout 0 230 f lalt (macro S-f)))
 ;; usa release e press solo x escape...
 
 ;; j (tap-hold 150 150 j (tap-hold-press-timeout 0 200 j (layer-while-held syms_for_j) (macro S-j)))
-j (tap-hold 175 200 j (tap-hold-press-timeout 0 100 j lalt (macro S-j)))
+j (tap-hold 175 175 j (tap-hold-press-timeout 0 230 j lalt (macro S-j)))
 
 #+end_src
 
