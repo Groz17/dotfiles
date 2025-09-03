@@ -544,10 +544,10 @@ Add missing keys w/ playerctl/mpv ipc... (stop, etc...)
 (deflayer audio
 _
 _ _ _ _     _ _ _ _    _    _  _    _ _
-_ _ _ _     _ _ _ _    _    f24  _    _
-_ _ _ _     _ _ _ MediaTrackPrevious VolumeDown VolumeUp MediaTrackNext _ _ _ _
+_ _ _ _     _ _ _ _    _    f24  MediaTrackPrevious    _
+_ _ _ _     _ _ _ f22 VolumeDown VolumeUp f23 _ _ _ _
 _ _ _ _     _ _ _ _    VolumeMute  _  _    _ _
-_ _ _ MediaPlayPause     _ _ _
+_ _ MediaTrackNext MediaPlayPause     _ _ _
 _ _ _
 )
 #+end_src

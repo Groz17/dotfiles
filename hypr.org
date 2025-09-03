@@ -390,6 +390,10 @@ bindl = , XF86AudioNext, exec, playerctl next
 bindl = $mainMod shift, n, exec, playerctl previous
 # bindl = $mainMod, less, exec, playerctl previous
 
+
+bind= , f22, exec, playerctl position 3-
+bind= , f23, exec, playerctl position 3+
+
 # bind= , f24, exec, echo '{ "command": ["set_property", "loop-file", "inf"] }' | socat - /tmp/mpvsocket
 bind= , f24, exec,echo '{"command":["set_property","loop-file","'"$(echo '{"command":["get_property","loop-file"]}' | socat - /tmp/mpvsocket | grep -q inf && echo no || echo inf)"'"]}' | socat - /tmp/mpvsocket
 #+end_src
@@ -405,7 +409,7 @@ bind = $mainMod shift, a, exec, echo '{ "command": ["set_property", "af",""] }' 
 bind = $mainMod, s, exec, ~/.config/hypr/scripts/recognize_song
 #+end_src
 
-#+begin_src bash :tangle ~/.config/hypr/scripts/recognize_song
+#+begin_src bash :tangle ~/.config/hypr/scripts/recognize_song :tangle-mode +x
 #!/usr/bin/env bash
 dunstify "Recognizing song..."
 song="$(timeout 10 flatpak run com.github.marinm.songrec recognize -d Webcam\ C270\ Mono --json)"
