@@ -3,7 +3,7 @@
 
 * TODO TASK LIST
 - [ ] m-c-j to activate vim mode doesn't work?
-- [ ] keybinding for pwd|c? and most common longish commands? analysis w/ atuin
+- [ ] keybinding for most common longish commands? analysis w/ atuin
 - [ ] most common actions? like pwd|c
 
 * Options
