@@ -1,0 +1,21 @@
+#+property: header-args :tangle ~/.config/git/config :mkdirp yes
+#+startup: content
+
+* User
+These values are set in ~/.gitconfig_local
+
+#+begin_src gitconfig :prologue "[include]"
+path = ~/.gitconfig_local
+#+end_src
+
+* Core
+#+begin_src gitconfig :prologue "[core]"
+editor = nvim
+autocrlf = input
+; pager = delta --dark
+pager = delta
+excludesFile = ~/.gitignore
+; hooksPath = ~/.githooks
+#+end_src
+
+* Alias
