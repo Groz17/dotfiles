@@ -5,11 +5,18 @@
 :header-args: :tangle ~/.config/git/config :mkdirp yes
 :END:
 
-** User
-These values are set in ~/.gitconfig_local
+** Include
+For [user], [github]
 
 #+begin_src gitconfig :prologue "[include]"
-path = ~/.gitconfig_local
+path = ~/.config/git/local
+; path = delta_config
+#+end_src
+
+** IncludeIf
+#+begin_src gitconfig
+; [includeIf "gitdir:~/work"]
+; path = ~/.config/git/work
 #+end_src
 
 ** Core
@@ -18,7 +25,7 @@ editor = nvim
 autocrlf = input
 ; pager = delta --dark
 pager = delta
-; hooksPath = ~/.githooks
+; hooksPath = ~/.config/git/hooks
 #+end_src
 
 ** Init
@@ -45,6 +52,14 @@ l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --
 
 C = clone
 
+dirdiff = difftool --ignore-submodules --dir-diff --no-symlinks --tool=vimdirdiff
+# list branches sorted by last modified
+b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+smartlog = log --graph --pretty=format:'commit: %C(bold red)%h%Creset %C(red)<%H>%Creset %C(bold magenta)%d %Creset%ndate: %C(bold yellow)%cd %Creset%C(yellow)%cr%Creset%nauthor: %C(bold blue)%an%Creset %C(blue)<%ae>%Creset%n%C(cyan)%s%n%Creset'
+sl = !git smartlog
+me = !git smartlog --author=\"$(git config user.name)\"
+
+
 #+end_src
 
 ** Grep
@@ -53,7 +68,118 @@ patternType = perl
 lineNumber = true
 #+end_src
 
+** Blame
+#+begin_src gitconfig :prologue "[blame]"
+date = human
+; date = relative
+#+end_src
+
+** Commit
+#+begin_src gitconfig :prologue "[commit]"
+; gpgsign = true
+; 	template = ~/.config/git/COMMIT_TEMPLATE
+#+end_src
+
+** Diff
+#+begin_src gitconfig :prologue "[diff]"
+; ediff?
+tool = nvimdiff
+trustExitCode = true
+colorMoved = default
+renameLimit = 5394
+#+end_src
+
+** Delta
+#+begin_src gitconfig :prologue "[delta]"
+navigate = true  # use n and N to move between diff sections
+; line-numbers = true    # Don't do this.. messes up diffs in magit
+side-by-side = true
+; syntax-theme = tokyonight_moon
+; syntax-theme = Dracula
+#+end_src
+
+
+** Difftool
+#+begin_src gitconfig :prologue "[difftool]"
+prompt=false
+#+end_src
+
+** Merge
+#+begin_src gitconfig :prologue "[merge]"
+tool = nvimdiff2
+conflictstyle = diff3
+; ff = false
+#+end_src
+
+** Mergetool
+#+begin_src gitconfig :prologue "[mergetool]"
+prompt=true
+; keepBackup = false
+#+end_src
+
+** Pull
+#+begin_src gitconfig :prologue "[pull]"
+; ff = only
+#+end_src
+
+** Color
+#+begin_src gitconfig :prologue "[color]"
+; ui = true
+#+end_src
+
+** Url
+#+begin_src gitconfig
+[url "git@github.com:"]
+insteadOf = https://github.com/
+#+end_src
+
+** LFS
+#+begin_src gitconfig
+; [filter "lfs"]
+; clean = git-lfs clean -- %f
+; smudge = git-lfs smudge -- %f
+; process = git-lfs filter-process
+; required = true
+#+end_src
+
+** Advice
+#+begin_src gitconfig :prologue "[advice]"
+; detached = head
+#+end_src
+
+** GC
+Never garbage collect commits/blobs that are unreachable
+The cost of keeping this data around is negligble compared losing data
+
+#+begin_src gitconfig :prologue "[gc]"
+reflogExpire = never
+reflogExpireUnreachable = never
+#+end_src
+
+** Credential
+#+begin_src gitconfig :prologue "[credential]"
+helper = cache
+credentialStore = gpg
+#+end_src
+
+** Interactive
+delta github
+#+begin_src gitconfig :prologue "[interactive]"
+diffFilter = delta --color-only
+#+end_src
+
+** Safe
+#+begin_src gitconfig :prologue "[safe]"
+; directory=
+#+end_src
+
+* Commit template
+:PROPERTIES:
+:header-args: :tangle ~/.config/git/COMMIT_TEMPLATE :mkdirp yes
+:END:
+
 * Gitignore
 :PROPERTIES:
 :header-args: :tangle ~/.config/git/ignore :mkdirp yes
 :END:
+
