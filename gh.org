@@ -1,0 +1,3 @@
+aliases:
+    co: pr checkout
+    homework: issue list --assignee @me
