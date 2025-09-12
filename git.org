@@ -1,0 +1,38 @@
+#+startup: content
+
+* Gitconfig
+:PROPERTIES:
+:header-args: :tangle ~/.config/git/config :mkdirp yes
+:END:
+
+** User
+These values are set in ~/.gitconfig_local
+
+#+begin_src gitconfig :prologue "[include]"
+path = ~/.gitconfig_local
+#+end_src
+
+** Core
+#+begin_src gitconfig :prologue "[core]"
+editor = nvim
+autocrlf = input
+; pager = delta --dark
+pager = delta
+; hooksPath = ~/.githooks
+#+end_src
+
+** Alias
+#+begin_src gitconfig :prologue "[alias]"
+a = add
+c = commit --verbose
+cm = commit -m
+
+C = clone
+
+#+end_src
+
+
+* Gitignore
+:PROPERTIES:
+:header-args: :tangle ~/.config/git/ignore :mkdirp yes
+:END:
