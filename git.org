@@ -21,16 +21,37 @@ pager = delta
 ; hooksPath = ~/.githooks
 #+end_src
 
+** Init
+#+begin_src gitconfig :prologue "[init]"
+defaultBranch = main
+#+end_src
+
+
 ** Alias
 #+begin_src gitconfig :prologue "[alias]"
+s = status
+
 a = add
+
 c = commit --verbose
 cm = commit -m
+
+d = diff
+
+g = grep
+
+lol = log --oneline
+l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
 
 C = clone
 
 #+end_src
 
+** Grep
+#+begin_src gitconfig :prologue "[grep]"
+patternType = perl
+lineNumber = true
+#+end_src
 
 * Gitignore
 :PROPERTIES:
