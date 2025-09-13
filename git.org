@@ -13,35 +13,34 @@ path = ~/.config/git/local
 ; path = delta_config
 #+end_src
 
-** IncludeIf
-#+begin_src gitconfig
-; [includeIf "gitdir:~/work"]
-; path = ~/.config/git/work
-#+end_src
-
 ** Core
 #+begin_src gitconfig :prologue "[core]"
+# use $EDITOR?
 editor = nvim
+compression=9
 autocrlf = input
 ; pager = delta --dark
 pager = delta
 ; hooksPath = ~/.config/git/hooks
+; ~/.config/git/ignore
 #+end_src
 
 ** Init
 #+begin_src gitconfig :prologue "[init]"
 defaultBranch = main
+; init.templatedir
 #+end_src
 
 
 ** Alias
+I'll use hg aliases whenever possible
+
 #+begin_src gitconfig :prologue "[alias]"
-s = status
+st = status
 
 a = add
 
-c = commit --verbose
-cm = commit -m
+ci = commit --verbose
 
 d = diff
 
@@ -50,7 +49,7 @@ g = grep
 lol = log --oneline
 l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
 
-C = clone
+c = clone
 
 dirdiff = difftool --ignore-submodules --dir-diff --no-symlinks --tool=vimdirdiff
 # list branches sorted by last modified
@@ -59,6 +58,21 @@ smartlog = log --graph --pretty=format:'commit: %C(bold red)%h%Creset %C(red)<%H
 sl = !git smartlog
 me = !git smartlog --author=\"$(git config user.name)\"
 
+# Save a repo as a tarball
+export = archive -o latest.tar.gz -9 --prefix=latest/
+
+# Which files are receiving the most "love"
+churn = !git log --all -M -C --name-only --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print "count,file"} {print $1 "," $2}'
+
+# Thin out older metadata within the repository, reduceses filesystem footprint
+trim = !git reflog expire --expire=now --all && git gc --prune=now
+
+# what would be merged
+in = log HEAD..@{upstream}
+
+# what would be pushed
+out = log @{upstream}..HEAD
+out = log @{u}..
 
 #+end_src
 
@@ -124,13 +138,38 @@ prompt=true
 
 ** Color
 #+begin_src gitconfig :prologue "[color]"
-; ui = true
+ui = true
+
+[color "branch"]
+    current = yellow reverse
+    local = yello
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = red
 #+end_src
 
 ** Url
 #+begin_src gitconfig
 [url "git@github.com:"]
 insteadOf = https://github.com/
+
+[url "https://github.com/"]
+    insteadOf = gh:
+
+[url "https://gist.github.com/"]
+    insteadOf = gist:
+
+[url "https://bitbucket.org/"]
+    insteadOf = bb:
 #+end_src
 
 ** LFS
@@ -171,6 +210,12 @@ diffFilter = delta --color-only
 ** Safe
 #+begin_src gitconfig :prologue "[safe]"
 ; directory=
+#+end_src
+
+** IncludeIf
+#+begin_src gitconfig
+; [includeIf "gitdir:~/work"]
+; path = ~/.config/git/work
 #+end_src
 
 * Commit template
