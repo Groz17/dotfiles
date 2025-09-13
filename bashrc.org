@@ -425,6 +425,7 @@ EDITORS=( "emacsclient -nw" nvim )
 export EDITOR="${EDITORS[$((RANDOM%${#EDITORS[@]}))]}"
 # usa orgmode
 export FZF_DEFAULT_OPTS_FILE="$HOME"/.config/fzfrc
+export W3M_DIR="$HOME/.config/w3m/"
 export OLLAMA_API_BASE=http://127.0.0.1:11434
 # export INPUTRC="$HOME"/.config/inputrc
 # export GPG_TTY=$(tty)
