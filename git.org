@@ -13,6 +13,13 @@ path = ~/.config/git/local
 ; path = delta_config
 #+end_src
 
+** User
+#+begin_src gitconfig :prologue "[user]"
+;gpgSign = true   # Preferred method for sign-off (less verbose than `git config commit.gpgsign`)
+;signinkey=
+useConfigOnly=true
+#+end_src
+
 ** Core
 #+begin_src gitconfig :prologue "[core]"
 # use $EDITOR?
@@ -22,7 +29,12 @@ autocrlf = input
 ; pager = delta --dark
 pager = delta
 ; hooksPath = ~/.config/git/hooks
-; ~/.config/git/ignore
+; already the default
+excludesfile= ~/.config/git/ignore
+
+; fsmonitor=true
+; untrackedCache=true
+
 #+end_src
 
 ** Init
@@ -30,7 +42,6 @@ pager = delta
 defaultBranch = main
 ; init.templatedir
 #+end_src
-
 
 ** Alias
 I'll use hg aliases whenever possible
@@ -40,7 +51,7 @@ st = status
 
 a = add
 
-ci = commit --verbose
+ci = commit
 
 d = diff
 
@@ -92,6 +103,8 @@ date = human
 #+begin_src gitconfig :prologue "[commit]"
 ; gpgsign = true
 ; 	template = ~/.config/git/COMMIT_TEMPLATE
+template = ~/.config/git/message
+verbose=true
 #+end_src
 
 ** Diff
@@ -99,8 +112,12 @@ date = human
 ; ediff?
 tool = nvimdiff
 trustExitCode = true
-colorMoved = default
+; colorMoved = default
+colorMoved = plain
+mnemonicPrefix=true
+renames=true
 renameLimit = 5394
+algorith=histogram
 #+end_src
 
 ** Delta
@@ -121,7 +138,9 @@ prompt=false
 ** Merge
 #+begin_src gitconfig :prologue "[merge]"
 tool = nvimdiff2
-conflictstyle = diff3
+ conflictstyle = diff3
+; zealous
+;conflictstyle = zdiff3
 ; ff = false
 #+end_src
 
@@ -131,9 +150,45 @@ prompt=true
 ; keepBackup = false
 #+end_src
 
+** Fetch
+#+begin_src gitconfig :prologue "[pull]"
+; prune=true
+; pruneTags=true
+; all=true
+#+end_src
+
 ** Pull
 #+begin_src gitconfig :prologue "[pull]"
 ; ff = only
+; rebase=true
+#+end_src
+
+** Push
+#+begin_src gitconfig :prologue "[push]"
+default=simple
+; autoSetupRemote=true
+; followTags=true
+#+end_src
+
+** Branch
+#+begin_src gitconfig :prologue "[branch]"
+sort = committerdate
+#+end_src
+
+** Rerere
+#+begin_src gitconfig :prologue "[rerere]"
+enabled=true
+autoupdate=true
+#+end_src
+
+** Tag
+#+begin_src gitconfig :prologue "[tag]"
+sort = version:refname
+#+end_src
+
+** Column
+#+begin_src gitconfig :prologue "[column]"
+ui=auto
 #+end_src
 
 ** Color
@@ -142,7 +197,7 @@ ui = true
 
 [color "branch"]
     current = yellow reverse
-    local = yello
+    local = yellow
     remote = green
 
 [color "diff"]
@@ -186,6 +241,11 @@ insteadOf = https://github.com/
 ; detached = head
 #+end_src
 
+** Help
+#+begin_src gitconfig :prologue "[help]"
+autocorrect=prompt
+#+end_src
+
 ** GC
 Never garbage collect commits/blobs that are unreachable
 The cost of keeping this data around is negligble compared losing data
@@ -207,12 +267,20 @@ delta github
 diffFilter = delta --color-only
 #+end_src
 
+** Rebase
+#+begin_src gitconfig :prologue "[rebase]"
+; autoSquash=true
+; autoStash=true
+; updateRefs=true
+#+end_src
+
 ** Safe
 #+begin_src gitconfig :prologue "[safe]"
 ; directory=
 #+end_src
 
 ** IncludeIf
+Is it possible to tangle at end of file with directive?
 #+begin_src gitconfig
 ; [includeIf "gitdir:~/work"]
 ; path = ~/.config/git/work
@@ -220,8 +288,35 @@ diffFilter = delta --color-only
 
 * Commit template
 :PROPERTIES:
-:header-args: :tangle ~/.config/git/COMMIT_TEMPLATE :mkdirp yes
+:header-args: :tangle ~/.config/git/message :mkdirp yes
 :END:
+
+# :header-args: :tangle ~/.config/git/COMMIT_TEMPLATE :mkdirp yes
+
+#+begin_src text
+# Title: Summary, imperative, start upper case, don't end with a period
+# No more than 50 chars. #### 50 chars is here:  #
+
+# Remember blank line between title and body.
+
+# Body: Explain *what* and *why* (not *how*). Include task ID (Jira issue).
+# Wrap at 72 chars. ################################## which is here:  #
+
+# At the end: Include Co-authored-by for all contributors. 
+# Include at least one empty line before it. Format: 
+# Co-authored-by: name <user@users.noreply.github.com>
+#
+# How to Write a Git Commit Message:
+# https://chris.beams.io/posts/git-commit/
+#
+# 1. Separate subject from body with a blank line
+# 2. Limit the subject line to 50 characters
+# 3. Capitalize the subject line
+# 4. Do not end the subject line with a period
+# 5. Use the imperative mood in the subject line
+# 6. Wrap the body at 72 characters
+# 7. Use the body to explain what and why vs. how
+#+end_src
 
 * Gitignore
 :PROPERTIES:
