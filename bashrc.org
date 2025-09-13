@@ -367,7 +367,10 @@ alias perli='reply'
 
 
 alias f="fd"
-alias g="git"
+# Kinda like :Git in fugitive
+g () {
+    if [[ $# -gt 0 ]]; then git "$@"; else git status; fi
+}
 alias clj='clojure'
 alias gg="lazygit"
 alias py="python"
@@ -807,3 +810,4 @@ eval "$(direnv hook bash)"
 # Please ensure that zoxide is initialized right at the end of your shell configuration file (usually ~/.bashrc).
 eval "$(zoxide init --cmd j bash)"
 #+end_src
+
