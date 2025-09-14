@@ -85,6 +85,9 @@ in = log HEAD..@{upstream}
 out = log @{upstream}..HEAD
 out = log @{u}..
 
+# List contributors with number of commits.
+contributors = shortlog --summary --numbered
+
 #+end_src
 
 ** Grep
@@ -120,6 +123,12 @@ renameLimit = 5394
 algorith=histogram
 #+end_src
 
+#+begin_src gitconfig
+[diff "bin"]
+	# Use `hexdump` to diff binary files.
+	textconv = hexdump -v -C
+#+end_src
+
 ** Delta
 #+begin_src gitconfig :prologue "[delta]"
 navigate = true  # use n and N to move between diff sections
@@ -142,6 +151,8 @@ tool = nvimdiff2
 ; zealous
 ;conflictstyle = zdiff3
 ; ff = false
+# Include summaries of merged commits in newly created merge commit messages
+; log = true
 #+end_src
 
 ** Mergetool
@@ -173,6 +184,7 @@ default=simple
 ** Branch
 #+begin_src gitconfig :prologue "[branch]"
 sort = committerdate
+; sort = -committerdate
 #+end_src
 
 ** Rerere
@@ -243,7 +255,7 @@ insteadOf = https://github.com/
 
 ** Help
 #+begin_src gitconfig :prologue "[help]"
-autocorrect=prompt
+autoCorrect=prompt
 #+end_src
 
 ** GC
