@@ -165,6 +165,7 @@ f18b bind -p? | fzf? parse?
 *** Toggle
     use one letter options for keybindings... (H->historyexpand)
 # f13g -> extglob
+push/popd and other "toggle" commands?
 ** psql
 #+begin_src readline
 $if psql

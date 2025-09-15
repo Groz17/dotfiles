@@ -182,7 +182,6 @@ you could inoremap/abbrev them tbh
 
   rpar (tap-hold-press-timeout 200 175 S-0 rsft (macro S-]))
   ;; capsline?
-  ;;rpar (tap-dance 100 ( (tap-hold-press-timeout 200 100 S-0 ] (macro S-])) (caps-word-toggle 10000)))
   cwr (caps-word-toggle 10000)
   ;; lalt (tap-hold 200 200 mmid lalt)
   ;; lalt mlft
@@ -544,10 +543,10 @@ Add missing keys w/ playerctl/mpv ipc... (stop, etc...)
 (deflayer audio
   _
   _ _ _              _              _ _   _ _   _          _        _                  _ _
-  _ _ _              _              _ _   _ _   _          f24      MediaTrackPrevious _
+  _ _ _              _              _ _   _ _   f19          f24      MediaTrackPrevious _
   _ _ _              f20            _ f21 _ f22 VolumeDown VolumeUp f23                _ _ _ _
-  _ _ _              _              _ _   _ _   VolumeMute _        _                  _ _
-  _ _ MediaTrackNext MediaPlayPause _ _   _
+  _ _ _              _              _ _   _ MediaTrackNext   VolumeMute _        _                  _ _
+  _ _ _ MediaPlayPause _ _   _
   _ _ _             
 )
 #+end_src
@@ -567,8 +566,8 @@ also use alt and altgr... (by themselves+chords)
 ;;(f d) esc 150 first-release ()
 ;; use also to toggle another layer
 ;; (lsft rsft) lrld 250 first-release ()
-  ;; probably better to use lmet mapping?
-    ;; use same mapping as :restart?
+;; probably better to use lmet mapping?
+;; use same mapping as :restart?
 ;;(f 5) lrld 250 first-release ()
 ;; how to make it silent in vim?
 ;; questi accordi non fanno funzionare alt-ctl e potenzialmente shift per una mano
@@ -576,6 +575,7 @@ also use alt and altgr... (by themselves+chords)
 ;; (j k) ret 250 first-release ()
 ;; I keep it just for c-cr and c-a-cr, otherwise use c-m,c-a-m and c-s-m
 
+;; would be nice if it worked with <C-h>
 (lsft rsft) (caps-word 10000) 250 first-release ()
 
 ;; changing timeout or firstall doesn't seem to change for modifiers... (wanna use djk)

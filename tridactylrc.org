@@ -288,7 +288,7 @@ bind <space><S-space> composite js "# [" + document.title + "](" + document.URL 
 
 #+end_src
 
-#+begin_src bash :tangle ~/.config/tridactyl/scripts/data
+#+begin_src bash :tangle ~/.config/tridactyl/scripts/data :tangle-mode +x
 #!/usr/bin/env bash
 for id in $(cliphist list|head -2|cut -f1); do cliphist decode $id;echo; done | wl-copy
 hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qy"'

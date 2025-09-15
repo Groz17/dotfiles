@@ -185,8 +185,8 @@
 
     "tooltip-format": "Playing: {title} - {artist}",
     "tooltip-format-paused": "Paused: {title} - {artist}",
-    //min-length": 5,
-    //max-length": 70,
+        // how to fit at most to next section?
+    "max-length": 70,
 
     "ignored-players": ["firefox"],
     "interval": 1,
@@ -205,30 +205,27 @@
     "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
   },
-  "pulseaudio": {
-    // "scroll-step": 1, // %, can be a float
-    "format": "{icon}  | {format_source}",
-    "format-bluetooth": "{icon}  | {format_source}",
-    "format-bluetooth-muted": "  | {format_source}",
-    "format-muted": "  | {format_source}",
-    "format-source": "",
-    "format-source-muted": "",
-    "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["", "", ""]
-    },
-    "tooltip-format": "{volume}% | {desc}",
-    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ 'toggle'"
-  }
+"pulseaudio": {
+	"format": "{volume}% {icon}",
+	"format-bluetooth": "{volume}% {icon}",
+	"format-muted": "",
+	"format-icons": {
+		"alsa_output.pci-0000_00_1f.3.analog-stereo": "",
+		"alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "",
+		"headphones": "",
+		"handsfree": "",
+		"headset": "",
+		"phone": "",
+		"phone-muted": "",
+		"portable": "",
+		"car": "",
+		"default": ["", ""]
+	},
+	"scroll-step": 1,
+	"on-click": "pavucontrol"
+},
 }
 #+end_src
-
-
 
 * Style
 :PROPERTIES:
@@ -345,5 +342,4 @@ tooltip {
     border: 2px solid #e1c3f0;
     color: #d35dae;
 }
-
 #+end_src

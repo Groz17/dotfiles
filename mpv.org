@@ -83,6 +83,8 @@ l seek  5
 h seek -5
 H seek -30
 L seek 30
+n playlist-next
+p playlist-prev
 
 # i cycle-values vf "sub,lavfi=negate" ""
 # t script-message-to seek_to toggle-seeker
