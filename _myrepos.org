@@ -1,0 +1,18 @@
+#+property: header-args :tangle ~/.mrconfig
+#+startup: content
+
+mr status doesn't work?
+
+#+begin_src mrconfig
+[DEFAULT]
+pre_pull = echo ${MR_REPO}
+
+[dotfiles]
+checkout = git clone 'git@github.com:Groz17/dotfiles' 'dotfiles'
+
+[.config/nvim]
+checkout = git clone 'git@github.com:Groz17/nvim.git' 'nvim'
+
+[.config/emacs]
+checkout = git clone 'git@github.com:Groz17/emacs.git' 'emacs'
+#+end_src
