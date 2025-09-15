@@ -177,7 +177,7 @@ you could inoremap/abbrev them tbh
   ;;< (tap-hold-press-timeout 200 175 S-\ lsft (macro S-[))
 ;;  < (macro S-6) ;; ^ looks like shift symbol
 ;; useful for (emacs lisp)
-  lsft (tap-hold-press-timeout 200 175 S-9 (macro S-9) (macro S-[))
+  lsft (tap-hold-press-timeout 200 175 (macro S-6) (macro S-9) (macro S-[))
   ;;vin   (tap-hold 200 249 bspc (layer-while-held nav))
 
   rpar (tap-hold-press-timeout 200 175 S-0 rsft (macro S-]))
