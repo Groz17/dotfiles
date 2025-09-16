@@ -83,14 +83,19 @@ keybind = ctrl+shift+c=copy_to_clipboard
 keybind = ctrl+shift+v=paste_from_clipboard
 # like emacs' <c-x>0
 keybind = super+alt+digit_0=close_surface
+keybind = super+alt+slash=undo
 # Currently not working
 keybind = super+alt+shift+i=inspector:toggle
+
+keybind = super+alt+x=toggle_command_palette
 
 # probably kanata
 # keybind = super+alt+kp_add=increase_font_size:1
 keybind = super+alt+equal=increase_font_size:1
 # keybind = super+alt++=increase_font_size:1
 keybind = super+alt+-=decrease_font_size:1
+# like emacs' <c-x>+
+keybind = super+alt+shift+equal=reset_font_size
 
 # https://www.reddit.com/r/Ghostty/comments/1hy4out/ghostty_config_with_leader_based_bindings/?rdt=56822
 
@@ -106,10 +111,13 @@ keybind = super+alt+shift+w=write_screen_file:open
 
 # Scroll
 # use C-v and A-v like emacs? do these work just shell?
-keybind = super+alt+d=scroll_page_down
-keybind = super+alt+u=scroll_page_up
+keybind = super+alt+d=scroll_page_fractional:0.5
+keybind = super+alt+u=scroll_page_fractional:-0.5
+keybind = super+alt+shift+,=scroll_to_top
+keybind = super+alt+shift+.=scroll_to_bottom
 
 # keybind = global:super+alt+grave_accent=toggle_quick_terminal
+keybind = super+alt+comma=open_config
 # # -= Navigation 
 #+end_src
 
