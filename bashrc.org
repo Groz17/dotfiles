@@ -355,6 +355,8 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 
 # mine
 alias v="nvim"
+alias vi="vim -i NONE"
+alias vim="vim -i NONE"
 alias V="SUDO_EDITOR=\"nvim\" sudoedit"
 alias t="trans"
 alias em="emacsclient -c -a ''"
@@ -430,7 +432,7 @@ export EDITOR="${EDITORS[$((RANDOM%${#EDITORS[@]}))]}"
 export FZF_DEFAULT_OPTS_FILE="$HOME"/.config/fzfrc
 export W3M_DIR="$HOME/.config/w3m/"
 export OLLAMA_API_BASE=http://127.0.0.1:11434
-# export INPUTRC="$HOME"/.config/inputrc
+# export INPUTRC="$HOME/.config/readline/inputrc"
 # export GPG_TTY=$(tty)
 export ELECTRON_OZONE_PLATFORM_HINT=auto
 # export QT_STYLE_OVERRIDE=Adwaita-Dark
@@ -811,3 +813,4 @@ eval "$(direnv hook bash)"
 eval "$(zoxide init --cmd j bash)"
 #+end_src
 
+bash_profile?
