@@ -1,0 +1,9 @@
+#+property: header-args :tangle ~/.docker/config.json :mkdirp yes
+HACK: (follow xdg)
+
+"detachKeys": "ctrl-z,z"
+#+begin_src json
+{
+    "detachKeys": "ctrl-q,ctrl-q"
+}
+#+end_src
