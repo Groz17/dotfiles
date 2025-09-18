@@ -516,6 +516,7 @@ set searchurls.rdn https://www.reddit.com/r/neovim/search/?q=%s&restrict_sr=1
 
 " twitter?
 set searchurls.tw https://twitter.com/search?q=%s&src=typed_query
+set searchurls.dh    https://hub.docker.com/search?q=%s&type=image
 
 set searchurls.tr https://www.treccani.it/vocabolario/%s
 
