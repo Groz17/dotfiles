@@ -94,6 +94,7 @@ exec-once = hypridle &
 #exec-once = swaync
 # dunst
 #+end_src  
+
 **** Clipboard
 #+begin_src hyprlang
   # exec-once = wl-clipbard-history -t
@@ -101,7 +102,8 @@ exec-once = hypridle &
 exec-once = wl-paste --type text --watch cliphist store
 exec-once = wl-paste --type image --watch cliphist store
 #+end_src  
-**** Geolocalization
+
+**** CTM
 #+begin_src hyprlang
 # exec-once = ags &
 # ags -c config.js
