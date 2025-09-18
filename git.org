@@ -106,7 +106,7 @@ date = human
 #+begin_src gitconfig :prologue "[commit]"
 ; gpgsign = true
 ; 	template = ~/.config/git/COMMIT_TEMPLATE
-template = ~/.config/git/message
+; template = ~/.config/git/message
 verbose=true
 #+end_src
 
