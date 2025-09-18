@@ -44,9 +44,8 @@ set theme midnight
 
 ** RSS
 #+begin_src tridactyl
-      #
 # alias save_rss jsb -p tri.native.run("cat >> ~/.config.newsboat/urls", JS_ARG)
-   # set rsscmd save_rss %u
+# set rsscmd save_rss %u
 #+end_src
 
 ** Proxy
@@ -149,7 +148,6 @@ bindurl ^https://duckduckgo.com f hint -Jc [data-testid="result-title-a"]
 bindurl ^https://duckduckgo.com F hint -Jbc [data-testid="result-title-a"]
 bindurl www.startpage.com f hint -Jc .w-gl__result-second-line-container > a , .pagination__num , .next, .prev
 bindurl www.startpage.com F hint -Jbc .w-gl__result-second-line-container > a , .pagination__num , .next, .prev
- 
 #+end_src
 
 ** [[https://github.com/yashasolutions/tridactylmode/blob/master/sample-tridactylrc.tri][Emacs-inspired]]
@@ -716,7 +714,7 @@ bind t2 fillcmdline tabopen -b
 
 " bind tl tabgrouplast
 
-  ,*** TABGROUP
+,*** TABGROUP
 " bind ta tgroupswitch emacs
 " bind tr tgroupswitch life
 " bind ts tgroupswitch learn
