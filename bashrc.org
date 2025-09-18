@@ -373,6 +373,11 @@ alias f="fd"
 g () {
     if [[ $# -gt 0 ]]; then git "$@"; else git status; fi
 }
+
+d () {
+    if [[ $# -gt 0 ]]; then docker "$@"; else docker ps; fi
+}
+
 alias clj='clojure'
 alias gg="lazygit"
 alias py="python"
