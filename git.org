@@ -226,8 +226,8 @@ ui = true
 
 ** Url
 #+begin_src gitconfig
-[url "git@github.com:"]
-insteadOf = https://github.com/
+; [url "git@github.com:"]
+; insteadOf = https://github.com/
 
 [url "https://github.com/"]
     insteadOf = gh:
