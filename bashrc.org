@@ -375,7 +375,7 @@ g () {
 }
 
 mr () {
-    if [[ $# -gt 0 ]]; then mr "$@"; else mr status; fi
+    if [[ $# -gt 0 ]]; then command mr "$@"; else command mr status; fi
 }
 
 d () {
