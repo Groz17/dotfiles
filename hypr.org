@@ -36,7 +36,9 @@ ruota schermo per prendere appunti?
 #+begin_src hyprlang
 # monitor=,preferred,auto,auto
 # monitor=,preferred,auto,auto, transform, 1
-monitor=,preferred,auto,auto, transform, 0
+# monitor=HDMI-A-2,preferred,auto,1, mirror, 0
+monitor=,preferred,auto,auto, mirror, 0
+# monitor=,preferred,auto,auto, transform, 0
 #+end_src
 
 ** [[https://wiki.hyprland.org/Configuring/Keywords/][MY PROGRAMS]]
