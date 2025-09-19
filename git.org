@@ -107,6 +107,7 @@ date = human
 ; gpgsign = true
 ; 	template = ~/.config/git/COMMIT_TEMPLATE
 ; template = ~/.config/git/message
+; maybe for only < 50 files?
 verbose=true
 #+end_src
 

@@ -32,6 +32,7 @@ theme=Sugarplum
  # TODO: finche non fixo deferred-clipboard in emacs
 clipboard-read=allow
 clipboard-write=allow
+# copy-on-select=clipboard
 app-notifications=no-clipboard-copy
 
 confirm-close-surface=true
@@ -41,7 +42,6 @@ confirm-close-surface=true
 # resize-overlay-duration = 4s 200ms
 
 window-padding-balance=true
-# copy-on-select=clipboard
 # background-opacity=0.8
 background-opacity=0.83
 cursor-style=block
