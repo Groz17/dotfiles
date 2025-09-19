@@ -374,6 +374,10 @@ g () {
     if [[ $# -gt 0 ]]; then git "$@"; else git status; fi
 }
 
+mr () {
+    if [[ $# -gt 0 ]]; then mr "$@"; else mr status; fi
+}
+
 d () {
     if [[ $# -gt 0 ]]; then docker "$@"; else docker ps; fi
 }
