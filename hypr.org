@@ -74,6 +74,7 @@ search for others w/ llm or configs
   # find themes
   exec-once = hyprctl setcursor Bibata-Modern-Classic 24
   # exec-once = eval $(ssh-agent)
+  # exec-once=/opt/urserver/urserver --daemon
 #+end_src
 
 **** File synchronization
@@ -410,7 +411,9 @@ bind= , f24, exec, playerctl loop $( [ "$(playerctl loop)" = "None" ] && printf 
 **** Audio effects
 Make this work w/ mpris/playerctl?
 #+begin_src hyprlang
-bind = , f21, exec, echo '{ "command": ["get_property", "af"] }' | socat - /tmp/mpvsocket | jq -er '.data[]?' || { echo '{ "command": ["set_property", "af","lowpass=f=400"] }' | socat - /tmp/mpvsocket ; false ;}  && echo '{ "command": ["set_property", "af",""] }' | socat - /tmp/mpvsocket 
+bind = , f21, exec, echo '{ "command": ["get_property", "af"] }' | socat - /tmp/mpvsocket | jq -er '.data[]?' ||\
+    { echo '{ "command": ["set_property", "af","lowpass=f=400"] }' | socat - /tmp/mpvsocket ; false ;}  &&\
+    echo '{ "command": ["set_property", "af",""] }' | socat - /tmp/mpvsocket 
 #+end_src
 
 
@@ -492,7 +495,9 @@ dunstctl close-all
 *** Bluetooth
 # TODO: fai check/toggle/notify/etc...
 #+begin_src hyprlang
-bind=super shift,b,exec, bash -c "bluetoothctl <<< connect\ $(bluetoothctl <<< devices | awk '/ Soundcore P2 Mini$/{print $2}')"
+bind=super shift,b,exec, bash -c "bluetoothctl info ||\
+    { bluetoothctl <<< connect\ $(bluetoothctl <<< devices | awk '/ Soundcore P2 Mini$/{print $2}') ;} &&\
+    bluetoothctl disconnect"
 #+end_src
 
 *** Apps
@@ -568,7 +573,9 @@ bind = $mainMod, W, layoutmsg, layoutmsg, cyclenext
 
 # https://www.reddit.com/r/hyprland/comments/17nhidq/comment/mrovcx0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 # basically same key as windows/super (invert)... why it goes fullscreen?
-bind = $mainMod SHIFT, backslash, exec, $(hyprctl activewindow -j | jq '.floating') && hyprctl dispatch cyclenext tiled || hyprctl dispatch cyclenext floating
+bind = $mainMod SHIFT, backslash, exec, $(hyprctl activewindow -j | jq '.floating') &&\
+    hyprctl dispatch cyclenext tiled ||\
+    hyprctl dispatch cyclenext floating
 
 bind = $mainMod SHIFT, Q, killactive,
 bind = $mainMod, Backspace, exit,
@@ -643,7 +650,8 @@ bind = $mainMod SHIFT, k, movewindow, u
 *** Clipboard
 #+begin_src hyprlang
 # lines and width don't work
-bind = $mainMod shift, equal, exec, cliphist list | rofi -dmenu -display-columns 2 -p "Select item to copy" -lines 30 -width 75 | cut -f1 | xargs cliphist decode | wl-copy
+bind = $mainMod shift, equal, exec, cliphist list |\
+    rofi -dmenu -display-columns 2 -p "Select item to copy" -lines 30 -width 75 | cut -f1 | xargs cliphist decode | wl-copy
 # cliphist but for primary selection?
 #+end_src
 
@@ -764,7 +772,7 @@ bind = $mainMod , slash, exec, [float] $terminal
 # substitute with org-capture?
 bind = $mainMod , t, exec, [float] $terminal -e nvim -u ~/scripts/hyrp_float.vim -c 'norm!\ Gzt2o' ~/todo/todo.txt
 
-bind = $mainMod shift , t, exec, [float] $terminal -e nvim -u ~/.config/nvim/hyrp_float.vim -c 'norm!\ Gzto' ~/todo/todo.txt
+bind = $mainMod shift , t, exec, [float] $terminal -e nvim -u ~/scripts/hyrp_float.vim -c 'norm!\ Gzto' ~/todo/todo.txt
 # for language learning? arabic/spanish (like anki)... I want this at startup
 # bind = $mainMod , a, exec, ~/scripts/DailyRandomAnki
 # write scripts here and tangle them
@@ -774,7 +782,6 @@ bind = $mainMod shift , t, exec, [float] $terminal -e nvim -u ~/.config/nvim/hyr
 bind = $mainMod , n, exec, [float;size 30% 30%] PATH=$HOME/.cargo/bin:$PATH kitty -e nvim -c 'norm 1 Qd'
 # hyprctl activewindow -j | jq .title?
 bind = $mainMod shift, n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e nvim -c 'let @+=\"## \" ..input(\">\")..\"\n\"..@+|norm 1 Qy'
-#funge da term: bind = $mainMod shift, n, exec, hyprctl dispatch exec 'PATH=$HOME/.cargo/bin:$PATH ghostty -e "nvim -c '\''let @+=\"# \" ..input(\">\")..@+|norm 1 Qy'\''"'
 # resize terminal for input?
 bind = $mainMod shift, slash, exec, [float;size 30% 30%] PATH=$HOME/.cargo/bin:$PATH $terminal -e nvim -c 'let @+=input(">")|norm 1 Qd'
 #+end_src
@@ -1133,15 +1140,8 @@ can u use source code (maybe elisp) to pick random image?
 #+begin_src hyprlang
 # preload=/tmp/anki
 # https://wallpapersafari.com/w/izoh9I/download
-# preload=~/Pictures/om.jpg
-# wallpaper=,~/Pictures/om.jpg
-# preload=~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper.jpg
-# wallpaper=,~/Pictures/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper.jpg
-# preload=~/Pictures/Wallpapers/Beautiful Mountain Nature Colorful Scenery Minimalist 4k Wallpaper_purple.jpg
 preload=~/dotfiles/wallpapers/kanagawa_vaporwave.jpg
 wallpaper=,~/dotfiles/wallpapers/kanagawa_vaporwave.jpg
-# preload=~/Pictures/RxlwP.png
-# wallpaper=,~/Pictures/RxlwP.png
 # ipc = off
 #+end_src
 
