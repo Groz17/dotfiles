@@ -3,6 +3,8 @@
 :header-args: :tangle ~/.config/waybar/config.jsonc
 :END:
 
+disk percentage?
+
 ** Bar
 #+begin_src conf
 // show if muted
