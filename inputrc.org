@@ -70,7 +70,7 @@ $endif
 # HACK: Fix C-m for ghostty
 "\e[109;5u": accept-line
 
-"\C-xe":"navi --print\C-j"
+# "\C-xe":"navi --print\C-j"
 #+end_src
 
 # Add sudo to current command
