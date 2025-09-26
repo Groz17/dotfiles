@@ -336,11 +336,11 @@ touchdevice  {
 }
 
 # https://wiki.hyprland.org/Configuring/Variables/#gestures
-gestures {
+# gestures {
     # off
-    workspace_swipe = true
-    workspace_swipe_fingers = 3
-}
+    # workspace_swipe = true
+    # workspace_swipe_fingers = 3
+# }
 
 # Example per-device config
 # See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more
@@ -425,7 +425,8 @@ bind = , f20, exec, ~/.config/hypr/scripts/recognize_song
 #+begin_src bash :tangle ~/.config/hypr/scripts/recognize_song :tangle-mode +x
 #!/usr/bin/env bash
 dunstify "Recognizing song..."
-song="$(timeout 10 flatpak run com.github.marinm.songrec recognize -d Webcam\ C270\ Mono --json)"
+[[ `hostnamectl -j|jq -r .Chassis` == "Desktop" ]] && { desktop_device="-d Webcam\ C270\ Mono"; deskop_command="flatpak run com.github.marinm."; }
+song="$(timeout 10 ${desktop_command:-songrec} recognize ${desktop_device:+$desktop_device} --json)"
 if [ -n "$song" ]; then
     artist="$(jq -r '.track.urlparams | .["{trackartist}"]' <<<"$song" | php -r 'echo urldecode(file_get_contents("php://stdin"));')"
     title="$(jq -r '.track.urlparams | .["{tracktitle}"]' <<<"$song" |  php -r 'echo urldecode(file_get_contents("php://stdin"));')"
@@ -770,9 +771,8 @@ bind = $mainMod , slash, exec, [float] $terminal
 
 # open neovim in file w/ keymaps? like pressing <super>n<space>fp to go plugins or smth?
 # substitute with org-capture?
-bind = $mainMod , t, exec, [float] $terminal -e nvim -u ~/scripts/hyrp_float.vim -c 'norm!\ Gzt2o' ~/todo/todo.txt
+bind = $mainMod , w, exec, [float] $terminal -e nvim ~/vimwiki/Personal/diary/`date +%F`.md -c 'norm! Go' -cstartinsert -c 'norm! zt'
 
-bind = $mainMod shift , t, exec, [float] $terminal -e nvim -u ~/scripts/hyrp_float.vim -c 'norm!\ Gzto' ~/todo/todo.txt
 # for language learning? arabic/spanish (like anki)... I want this at startup
 # bind = $mainMod , a, exec, ~/scripts/DailyRandomAnki
 # write scripts here and tangle them
