@@ -251,11 +251,8 @@ bind --mode=normal <space>a composite get_current_url | shellescape | exclaim_qu
 bind --mode=normal <space>A composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append_no_space
 " Clipboard mapping?
 " bind <space>c exclaim_quiet sh -c 'printf '\n%s\n' "$(wl-paste)" >> ~/todo && notify-send "Sent Clipboard"'
-" bind <space>c exclaim_quiet sh -c 'echo >> ~/todo && echo "$(wl-paste)" >> ~/todo && notify-send "Sent Clipboard"'
-" bind <space>c exclaim_quiet sh -c 'echo >> ~/todo && clip="$(wl-paste)" && echo "$clip" >> ~/todo && notify-send "Sent Clipboard"'
-bind --mode=normal <space>c exclaim_quiet bash -c 'clip="$(wl-paste)" && echo >> ~/todo/todo.txt && echo "$clip" >> ~/todo/todo.txt && notify-send "Sent Clipboard" "$clip"'
-" bind <space>C exclaim_quiet sh -c 'echo "$(wl-paste)" >> ~/todo && notify-send "Sent Clipboard (No Newline)"'
-bind <space>C exclaim_quiet bash -c 'clip="$(wl-paste)" && echo "$clip" >> ~/todo/todo.txt && notify-send "Sent Clipboard (No Newline)" "$clip"'
+bind --mode=normal <space>c exclaim_quiet bash -c 'clip="$(wl-paste)" && echo >> ~/vimwiki/Personal/diary/`date +%F`.md && echo "$clip" >> ~/vimwiki/Personal/diary/`date +%F`.md && notify-send "Clipboard in diary" "$clip"'
+bind <space>C exclaim_quiet bash -c 'clip="$(wl-paste)" && echo "$clip" >> ~/vimwiki/Personal/diary/`date +%F`.md && notify-send "Clipboard in diary (No Newline)" "$clip"'
 
 bind --mode=normal <space>s composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/scripts/subs
 
