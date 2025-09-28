@@ -425,16 +425,24 @@ bind = , f20, exec, ~/.config/hypr/scripts/recognize_song
 #+begin_src bash :tangle ~/.config/hypr/scripts/recognize_song :tangle-mode +x
 #!/usr/bin/env bash
 dunstify "Recognizing song..."
-[[ `hostnamectl -j|jq -r .Chassis` == "Desktop" ]] && { desktop_device="-d Webcam\ C270\ Mono"; deskop_command="flatpak run com.github.marinm."; }
-song="$(timeout 10 ${desktop_command:-songrec} recognize ${desktop_device:+$desktop_device} --json)"
-if [ -n "$song" ]; then
-    artist="$(jq -r '.track.urlparams | .["{trackartist}"]' <<<"$song" | php -r 'echo urldecode(file_get_contents("php://stdin"));')"
-    title="$(jq -r '.track.urlparams | .["{tracktitle}"]' <<<"$song" |  php -r 'echo urldecode(file_get_contents("php://stdin"));')"
 
-	dunstify "Title: $title" "Artist: $artist"
-	wl-copy <<<"$artist - $title"
+cmd=(songrec)
+args=(recognize --json)
+
+if [[ $(hostnamectl -j | jq -r .Chassis 2>/dev/null) == "desktop" ]]; then
+  cmd=(flatpak run com.github.marinm.songrec)
+  args+=(-d "Webcam C270 Mono")
+fi
+
+# Run the recognition command
+song_json="$(timeout 13 "${cmd[@]}" "${args[@]}" 2>/dev/null)"
+if [[ -n "$song_json" && "$song_json" != "null" ]]; then
+    artist="$(jq -r '.track.urlparams | .["{trackartist}"]' <<<"$song_json" | php -r 'echo urldecode(file_get_contents("php://stdin"));')"
+    title="$(jq -r '.track.urlparams | .["{tracktitle}"]' <<<"$song_json" |  php -r 'echo urldecode(file_get_contents("php://stdin"));')"
+  dunstify "Title: $title" "Artist: $artist"
+  printf "%s - %s\n" "$artist" "$title" | wl-copy
 else
-	dunstify "song not found"
+  dunstify "Song not found"
 fi
 #+end_src
 
@@ -587,10 +595,10 @@ bind = $mainMod SHIFT, F, fullscreen,
 #maybe o as the vim mapping ^wo?
 # bind = $mainMod, F, fullscreen, 0
 bind = $mainMod, F, fullscreen, 1
-# similar to alt-tab (same keymap)
 # go to previous window map?
-bind = $mainMod shift, tab, exec, rofi -show window
-bind = $mainMod, tab, exec, hyprctl dispatch focuscurrentorlast 
+# like in windows win+tab
+bind = $mainMod, tab, exec, rofi -show window
+# bind = $mainMod, tab, exec, hyprctl dispatch focuscurrentorlast 
 # bind = $mainMod, P, pseudo,
 # toggle like vim-unimpaired
 # kinda looks like vertical and horizontal but mixed
