@@ -4,6 +4,8 @@
 - [ ] find readline configs? or copy your telescope.nvim config...
 - [ ] search for emacs/readline/vim bindings... stuff like c-v for example
 - [ ] take from readline and also give to readline/emacs?
+- [ ] Installati più recente
+- [ ] Usati più spesso
   
 * Keys
 #+begin_src conf
