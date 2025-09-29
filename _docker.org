@@ -1,4 +1,4 @@
-#+property: header-args :tangle ~/.docker/config.json :mkdirp yes
+#+property: header-args :tangle ~/.config/docker/config.json :mkdirp yes
 HACK: (follow xdg)
 
 "detachKeys": "ctrl-z,z"
