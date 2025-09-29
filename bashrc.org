@@ -438,7 +438,10 @@ fi
 EDITORS=( "emacsclient -nw" nvim )
 export EDITOR="${EDITORS[$((RANDOM%${#EDITORS[@]}))]}"
 # usa orgmode
+# put in profile
 export FZF_DEFAULT_OPTS_FILE="$HOME"/.config/fzfrc
+export KUBECONFIG="$HOME"/.config/kube
+export DOCKER_CONFIG="$HOME"/.config/docker/config.json
 export W3M_DIR="$HOME/.config/w3m/"
 export OLLAMA_API_BASE=http://127.0.0.1:11434
 # export INPUTRC="$HOME/.config/readline/inputrc"
