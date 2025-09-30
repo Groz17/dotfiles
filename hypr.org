@@ -70,11 +70,10 @@ should u use & for these exec-onces?
 *** Necessary processes
 search for others w/ llm or configs
 #+begin_src hyprlang
-  # exec-once = nm-applet &
-  # find themes
-  exec-once = hyprctl setcursor Bibata-Modern-Classic 24
-  # exec-once = eval $(ssh-agent)
-  # exec-once=/opt/urserver/urserver --daemon
+# exec-once = nm-applet &
+# find themes
+exec-once = hyprctl setcursor Bibata-Modern-Classic 24
+# exec-once=/opt/urserver/urserver --daemon
 #+end_src
 
 **** File synchronization
@@ -147,10 +146,6 @@ exec-once = emacs --daemon
 #+begin_src hyprlang
 env = XCURSOR_SIZE,24
 env = HYPRCURSOR_SIZE,24
-cursor{
-    inactive_timeout=1
-}
-
 #+end_src
 
 
@@ -197,6 +192,11 @@ general {
 debug {
 disable_logs = false
 }
+
+cursor{
+    inactive_timeout=1
+}
+
 
 # https://wiki.hyprland.org/Configuring/Variables/#decoration
 decoration {
