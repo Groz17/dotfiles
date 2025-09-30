@@ -2,6 +2,12 @@
 
 "detachKeys": "ctrl-z,z"
 
+{
+	"auths": {},
+	"currentContext": "default"
+}
+
+
 "HttpHeaders": {
 "MyHeader": "MyValue"
 },
