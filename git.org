@@ -336,3 +336,18 @@ Is it possible to tangle at end of file with directive?
 :header-args: :tangle ~/.config/git/ignore :mkdirp yes
 :END:
 
+#+begin_src gitconfig
+# vim: ft=gitignore:
+# magari rimuovi _global dal filename?
+
+# Direnv files
+.direnv
+.envrc
+
+# Editor specific files and folders
+.idea
+.vscode
+# nvim.lua?
+*.swp
+*.swo
+#+end_src
