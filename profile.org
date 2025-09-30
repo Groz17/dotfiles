@@ -12,15 +12,16 @@ export XDG_CACHE_HOME=$HOME/.cache
 
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 # export GNUPGHOME="$XDG_DATA_HOME"/gnupg
-export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 export W3M_DIR="$XDG_DATA_HOME"/w3m
-export FZF_DEFAULT_OPTS_FILE="$XDG_DATA_HOME"/fzfrc
 export KUBECONFIG="$XDG_DATA_HOME"/kube
+
+export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+export FZF_DEFAULT_OPTS_FILE="$XDG_CONFIG_HOME"/fzfrc
 export ZDOTDIR="$XDG_CONFIG_HOME"/zsh
 # export INPUTRC="$HOME/.config/readline/inputrc"
 #+end_src
 
-* Programs
+* Preferred programs
 #+begin_src sh
 EDITORS=( "emacsclient -nw" nvim )
 export EDITOR="${EDITORS[$((RANDOM%${#EDITORS[@]}))]}"
@@ -48,3 +49,13 @@ export PATH="$HOME/node_modules/.bin:$PATH"
 export PATH="$HOME/scripts:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 #+end_src
+
+# Language
+#export LANG='en_AU.UTF-8'
+#export LC_ALL=$LANG
+#export LC_COLLATE=$LANG
+#export LC_CTYPE=$LANG
+#export LC_MESSAGES=$LANG
+#export LC_MONETARY=$LANG
+#export LC_NUMERIC=$LANG
+#export LC_TIME=$LANG
