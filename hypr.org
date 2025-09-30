@@ -135,7 +135,7 @@ exec-once = hyprpaper
 exec-once = emacs --daemon
 
 # would be cool it used waybar text (generate w/ org-babel)
-exec-once = [workspace 1 silent] $browser
+# exec-once = [workspace 1 silent] $browser
 # exec-once = [workspace special] $mail
 #+end_src
 
@@ -145,25 +145,14 @@ exec-once = [workspace 1 silent] $browser
 ** [[https://wiki.hyprland.org/Configuring/Environment-variables/][ENVIRONMENT VARIABLES]]
 
 #+begin_src hyprlang
-
-# open in emacs?
-# env = GRIMBLAST_EDITOR,photoflare
-env = XDG_SCREENSHOTS_DIR,$HOME/Pictures/Screenshots
-# Optionally, customize slurp's appearance
-env = SLURP_ARGS, -d -b -B F050F022 -b 10101022 -c ff00ff
-# Can fix high cpu loads on some machines
-env = GRIMBLAST_HIDE_CURSOR, 0
-
 env = XCURSOR_SIZE,24
 env = HYPRCURSOR_SIZE,24
-env = PATH,$HOME/.cargo/bin:$PATH
-
-
 cursor{
     inactive_timeout=1
 }
 
 #+end_src
+
 
 ** [[https://wiki.hyprland.org/Configuring/Permissions/][PERMISSIONS]]
 Please note permission changes here require a Hyprland restart and are not applied on-the-fly for security reasons
