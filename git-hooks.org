@@ -9,6 +9,6 @@ read -r -n1 -p 'Tangle all org files? [y|n] ' < /dev/tty
 
 [[ $REPLY = 'n' ]] && exit 1
 
-nvim -Rc 'argdo exe "norm \<C-c>\<C-v>\<C-t>"' -cqa -- *.org 
+nvim -Resc 'argdo exe "norm \<C-c>\<C-v>\<C-t>"' -- *.org 
 printf "\nTangled all org files"
 #+end_src
