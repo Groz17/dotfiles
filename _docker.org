@@ -1,9 +1,14 @@
 #+property: header-args :tangle ~/.config/docker/config.json :mkdirp yes
-HACK: (follow xdg)
 
 "detachKeys": "ctrl-z,z"
+
+"HttpHeaders": {
+"MyHeader": "MyValue"
+},
 #+begin_src json
 {
-    "detachKeys": "ctrl-q,ctrl-q"
+  "psFormat": "table {{.ID}}\\t{{.Image}}\\t{{.Command}}\\t{{.Labels}}",
+  "imagesFormat": "table {{.ID}}\\t{{.Repository}}\\t{{.Tag}}\\t{{.CreatedAt}}",
+  "detachKeys": "ctrl-q,ctrl-q"
 }
 #+end_src

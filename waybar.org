@@ -4,6 +4,7 @@
 :END:
 
 disk percentage?
+notifiche ricevute?
 
 ** Bar
 #+begin_src conf
@@ -137,6 +138,7 @@ disk percentage?
     "format-icons": ["", "", "", "", ""]
   },
 
+// stato della connessione
   "network": {
     "format-wifi": "wifi {bandwidthDownBits}",
     "format-ethernet": "enth {bandwidthDownBits}",

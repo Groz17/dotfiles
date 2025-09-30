@@ -169,6 +169,7 @@ f18b bind -p? | fzf? parse?
     use one letter options for keybindings... (H->historyexpand)
     extdebug
 # f13g -> extglob
+# f13w -> setterm -linewrap off
 push/popd and other "toggle" commands?
 ** psql
 #+begin_src readline

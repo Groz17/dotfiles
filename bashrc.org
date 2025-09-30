@@ -369,7 +369,7 @@ alias perli='reply'
 
 
 alias f="fd"
-# Kinda like :Git in fugitive
+# Kinda like :Git in fugitive and localectl
 g () {
     if [[ $# -gt 0 ]]; then git "$@"; else git status; fi
 }
