@@ -1,0 +1,14 @@
+* post-merge
+:PROPERTIES:
+:header-args: :tangle ./.git/hooks/post-merge :tangle-mode +x
+:END:
+
+#+begin_src bash
+#!/usr/bin/env bash
+read -r -n1 -p 'Tangle all org files? [y|n] ' < /dev/tty
+
+[[ $REPLY = 'n' ]] && exit 1
+
+nvim -Rc 'argdo exe "norm \<C-c>\<C-v>\<C-t>"' -cqa -- *.org 
+printf "\nTangled all org files"
+#+end_src
