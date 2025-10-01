@@ -14,6 +14,7 @@
 * Options
 #+begin_src bash
 shopt -s cdspell
+# shopt -s checkwinsize
 #+end_src
 
 * Keymaps
@@ -36,6 +37,7 @@ Use f13 like for neovim/emacs toggling keymaps
 #+end_src
 
 * Aliases
+TODO: Add completions
 #+begin_src shell
 # Advanced command-not-found hook
 # source /usr/share/doc/find-the-command/ftc.bash
