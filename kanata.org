@@ -102,7 +102,7 @@ make ansi and iso defsrc?
   @grv  @d1   @d2   @d3  @d4   @d5   @d6   @d7 @d8 @d9 @- @= @bspc
   @tab  @q    @w    @e   @r    @t    @y    @u  @i  @o  @p @[ @]   
   @caps @a    @s    @d   @f    @g    @h    @j  @k  @l  @; @' @\    @ret
-  @lsft @ISO  @z    @x   @c    @v    @b    @n  @m  @,  @. @/ @rpar
+  @lsft @ISO  @z    @x   @c    @v    @b    @n  @m  @,  @. @/ @rsft
   @lctl @lmet @lalt @spc @ralt @menu @rctl
   @mlft @mmid @mrgt
 )
@@ -180,7 +180,7 @@ you could inoremap/abbrev them tbh
   lsft (tap-hold-press-timeout 200 175 (macro S-6) (macro S-9) (macro S-[))
   ;;vin   (tap-hold 200 249 bspc (layer-while-held nav))
 
-  rpar (tap-hold-press-timeout 200 175 S-0 rsft (macro S-]))
+  rsft (tap-hold-press-timeout 200 175 S-0 rsft (macro S-]))
   ;; capsline?
   cwr (caps-word-toggle 10000)
   ;; lalt (tap-hold 200 200 mmid lalt)
