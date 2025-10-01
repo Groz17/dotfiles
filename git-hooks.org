@@ -9,6 +9,6 @@ read -r -n1 -p 'Tangle pulled files? [y|n] ' < /dev/tty
 
 [[ $REPLY = 'n' ]] && { printf '\n'; exit 1; }
 
-git diff --name-only -z @{u} @~ | xargs -0r nvim -Resc 'argdo exe "norm \<C-c>\<C-v>\<C-t>"' --
+git diff --name-only -z @{u} @~ -- '*.org' | xargs -0r nvim -Resc 'argdo exe "norm \<C-c>\<C-v>\<C-t>"' --
 printf "\nTangled all org files\n"
 #+end_src
