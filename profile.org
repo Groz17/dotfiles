@@ -1,5 +1,6 @@
 #+property: header-args :tangle ~/.profile
-* XDG
+* Environment variables
+** XDG
 Use =xdg-ninja=
 #+begin_src sh
 export XDG_DATA_HOME=$HOME/.local/share
@@ -21,7 +22,7 @@ export ZDOTDIR="$XDG_CONFIG_HOME"/zsh
 # export INPUTRC="$HOME/.config/readline/inputrc"
 #+end_src
 
-* Preferred programs
+** Preferred programs
 #+begin_src sh
 EDITORS=( "emacsclient -nw" nvim )
 export EDITOR="${EDITORS[$((RANDOM%${#EDITORS[@]}))]}"
@@ -41,7 +42,7 @@ export ELECTRON_OZONE_PLATFORM_HINT=auto
 # env = GRIMBLAST_HIDE_CURSOR, 0
 #+end_src
 
-* PATH
+** PATH
 #+begin_src sh
 export PATH="${CARGO_HOME}/bin:$PATH"
 export PATH="${XDG_DATA_HOME}/nvim/mason/bin:$PATH"
@@ -60,3 +61,17 @@ export PATH="${XDG_DATA_HOME}/npm/bin:$PATH
 #export LC_MONETARY=$LANG
 #export LC_NUMERIC=$LANG
 #export LC_TIME=$LANG
+
+* SSH_AGENT
+
+#+begin_src sh
+if [ -z "$SSH_AUTH_SOCK" ]; then
+   # Check for a currently running instance of the agent
+   RUNNING_AGENT="`ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]'`"
+   if [ "$RUNNING_AGENT" = "0" ]; then
+        # Launch a new instance of the agent
+        ssh-agent -s &> .ssh/ssh-agent
+   fi
+   eval `cat .ssh/ssh-agent`
+fi
+#+end_src
