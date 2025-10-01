@@ -1,10 +1,5 @@
 * post-merge
-:PROPERTIES:
-:header-args: :tangle ./.git/hooks/post-merge :tangle-mode +x
-:END:
-
-#+begin_src bash
-#!/usr/bin/env bash
+#+begin_src bash :tangle ./.git/hooks/post-merge :shebang "#!/usr/bin/env bash"
 read -r -n1 -p 'Tangle pulled files? [y|n] ' < /dev/tty
 
 [[ $REPLY = 'n' ]] && { printf '\n'; exit 1; }
