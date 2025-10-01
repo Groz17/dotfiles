@@ -862,7 +862,12 @@ windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 :header-args: :tangle  ~/.config/hypr/hyprlock.conf
 :END:
 
-#+begin_src hyprlang
+#+name: font-size
+#+begin_src bash :tangle no :noweb yes
+<<chassis()>> | grep -x desktop && echo 'font_size = 37' || echo 'font_size = 30'
+#+end_src
+
+#+begin_src hyprlang :noweb yes
 # BACKGROUND
 background {
     monitor =
@@ -931,7 +936,7 @@ label {
     monitor =
     text = cmd[update:3600000] echo "<span background='##0f2222' foreground='##00ff70'>$(fortune jp|sed 's/\.$//')</span>"
     color = rgba(255, 153, 28, 1.0)
-    font_size = 37
+    <<font-size()>>
     font_family = JetBrains Mono Nerd Font Mono ExtraBold
     position = 0, -120
     halign = center
