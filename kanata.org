@@ -178,7 +178,6 @@ you could inoremap/abbrev them tbh
   ;;< (tap-hold-press-timeout 200 175 S-\ lsft (macro S-[))
 ;;  < (macro S-6) ;; ^ looks like shift symbol
 ;; useful for (emacs lisp)
-  lsft (tap-hold-press-timeout 200 175 (macro S-6) (macro S-9) (macro S-[))
   ;;vin   (tap-hold 200 249 bspc (layer-while-held nav))
 
   rsft (tap-hold-press-timeout 200 175 S-0 rsft (macro S-]))
@@ -225,6 +224,16 @@ you could inoremap/abbrev them tbh
   lmet (macro S-\)
 
 #+end_src
+
+#+name: ISO
+#+begin_src bash :noweb yes :tangle no
+[[ <<chassis()>> = "desktop" ]] && echo '9' || echo '6'
+#+end_src
+
+#+begin_src conf :noweb yes
+lsft (tap-hold-press-timeout 200 175 (macro S-<<ISO()>>) (macro S-9) (macro S-[))
+#+end_src
+
 
 ** MOUSE
 #+begin_src kbd :tangle (if (string-match  "Power N/A, battery unknown (N/A% load, remaining time N/A)"(battery)) "no" (cdr (assq :tangle (org-babel-parse-header-arguments (cdr (assoc "header-args" org-keyword-properties))))))
