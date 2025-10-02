@@ -1,1 +1,1 @@
-0 * * * * DISPLAY=:0 dunstify "Take a break"
+0 0 * * * find ~/tmp -mindepth 1 -path ~/tmp/.old -prune -o -exec mv -t ~/tmp/.old {} +

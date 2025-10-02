@@ -1127,6 +1127,11 @@ listener {
 #     timeout = 1800                                # 30min
 #     on-timeout = systemctl suspend                # suspend pc
 # }
+listener {
+    timeout = 3600
+    on-timeout = DISPLAY=:0 dunstify "Take a break"
+
+}
 #+end_src
 
 * Hyprpaper
