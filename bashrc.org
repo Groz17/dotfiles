@@ -103,7 +103,8 @@ alias d='f(){ if [[ $# -gt 0 ]]; then docker "$@"; else docker ps; fi; unset -f 
 #+end_src
 
 ** Distro-specific
-#+begin_src shell
+*** Arch
+#+begin_src shell :tangle (if (string-prefix-p "arch" (org-sbe "distro")) "~/.bashrc" "no")
 alias upd='/usr/bin/garuda-update'
 [ ! -x /usr/bin/yay ] && [ -x /usr/bin/paru ] && alias yay='paru'
 alias fixpacman="sudo rm /var/lib/pacman/db.lck"
@@ -124,7 +125,11 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 
 # Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
+#+end_src
 
+*** Fedora
+#+begin_src shell :tangle (if (string-prefix-p "fedora" (org-sbe "distro")) "~/.bashrc" "no")
+# alias
 #+end_src
 
 * Functions

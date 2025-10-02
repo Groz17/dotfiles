@@ -1,4 +1,9 @@
 #+name: chassis
 #+begin_src bash
-hostnamectl -j | jq -r .Chassis 2>/dev/null
+hostnamectl chassis
+#+end_src
+
+#+name: distro
+#+begin_src bash
+hostnamectl -j | jq -r .DefaultHostname
 #+end_src
