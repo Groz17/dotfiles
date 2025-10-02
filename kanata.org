@@ -14,6 +14,7 @@ org-babel for kanata/config files in general?
 
 basically i want: 
 - [ ] press fast and release: that letter
+- [ ] block keyboard input
 - [ ] press and hold: another behaviour
 - [ ] press and hold release before X time: shifted version
 - [ ] press and hold release after X time: behaviour (for which-key)
