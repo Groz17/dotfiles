@@ -12,11 +12,17 @@ export XDG_CACHE_HOME=$HOME/.cache
 # env = XDG_SCREENSHOTS_DIR,$HOME/Pictures/Screenshots
 
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export GOPATH="$XDG_DATA_HOME"/go
+export NODE_REPL_HISTORY="$XDG_STATE_HOME"/node_repl_history
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc 
+
 # export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export W3M_DIR="$XDG_DATA_HOME"/w3m
+export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel 
+export SQLITE_HISTORY="$XDG_CACHE_HOME"/sqlite_history
 export KUBECONFIG="$XDG_DATA_HOME"/kube
-
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+export ANDROID_USER_HOME="$XDG_DATA_HOME"/android
 export FZF_DEFAULT_OPTS_FILE="$XDG_CONFIG_HOME"/fzfrc
 export ZDOTDIR="$XDG_CONFIG_HOME"/zsh
 # export INPUTRC="$HOME/.config/readline/inputrc"

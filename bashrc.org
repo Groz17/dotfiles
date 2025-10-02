@@ -83,7 +83,7 @@ alias E="SUDO_EDITOR=\"emacsclient -t -a ''\" sudoedit"
 alias vinfo='nvim -c "silent only" -c "Vinfo "'
 alias perli='reply'
 
-
+alias adb='HOME="$XDG_DATA_HOME"/android adb'
 alias clj='clojure'
 alias gg="lazygit"
 alias py="python"
