@@ -1,6 +1,11 @@
 #+property: header-args :tangle ~/.config/zsh/.zshrc :mkdirp yes
 #+startup: content
 
+* Aliases
+#+begin_src zsh :noweb yes
+<<sh.org:aliases()>>
+#+end_src
+
 https://github.com/glacambre/ileum
 
 autoload -U compinit
