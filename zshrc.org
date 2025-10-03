@@ -9,6 +9,11 @@ http://www.acm.uiuc.edu/workshops/zsh/alias.html
 <<sh.org:aliases()>>
 #+end_src
 
+* External commands
+#+begin_src zsh :noweb yes
+<<sh.org:commands(shell="zsh")>>
+#+end_src
+
 https://github.com/glacambre/ileum
 
 autoload -U compinit
