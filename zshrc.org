@@ -1,6 +1,9 @@
 #+property: header-args :tangle ~/.config/zsh/.zshrc :mkdirp yes
 #+startup: content
 
+https://grml.org/zsh/zsh-lovers.html#_aliases
+http://www.acm.uiuc.edu/workshops/zsh/alias.html
+
 * Aliases
 #+begin_src zsh :noweb yes
 <<sh.org:aliases()>>
