@@ -13,6 +13,7 @@ export XDG_SCREENSHOTS_DIR=${XDG_SCREENSHOTS_DIR:="$HOME/Pictures/Screenshots"}
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export GOPATH="$XDG_DATA_HOME"/go
 export NODE_REPL_HISTORY="$XDG_STATE_HOME"/node_repl_history
+export PYTHON_HISTORY="$XDG_STATE_HOME"/python_history
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc 
 
 # export GNUPGHOME="$XDG_DATA_HOME"/gnupg
