@@ -22,6 +22,7 @@ shopt -s cdspell
 if [[ -n $DISPLAY ]]; then
   bind -x '"\ew": printf %s "$READLINE_LINE" | wl-copy -n'
   bind -x '"\C-xp": pwd | perl -pe "s/\Q$ENV{HOME}\E/~/" | wl-copy -n'
+  # bind -x '"...": exec zsh
 fi
 #+end_src
 
