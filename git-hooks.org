@@ -1,6 +1,6 @@
 * post-merge
 #+begin_src bash :tangle ./.git/hooks/post-merge :shebang "#!/usr/bin/env bash"
-read -r -n1 -p 'Tangle pulled files? [y|n] ' < /dev/tty
+read -r -n1 -p $'\nTangle pulled files? [y|n] ' < /dev/tty
 
 [[ $REPLY = 'n' ]] && { printf '\n'; exit 1; }
 
