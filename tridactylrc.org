@@ -466,6 +466,7 @@ set searchurls.gk https://github.com/search?q=%s&type=registrypackages
 set searchurls.gw https://github.com/search?q=%s&type=wikis
 set searchurls.gt https://github.com/search?q=%s&type=topics
 set searchurls.gm https://github.com/search?q=%s&type=marketplace
+set searchurls.gG https://gist.github.com/search?q=%s
 
 #+end_src
 
