@@ -107,7 +107,7 @@ alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 *** Fedora
 #+name: distro-aliases-fedora
 #+begin_src sh :results output :prologue "cat << 'EOF'" :epilogue EOF
-alias fedora_test="fedora_test"
+# alias fedora_test="echo fedora_test"
 #+end_src
 
 * External commands
