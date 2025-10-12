@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-nvim --headless -c 'argdo lua require("orgmode").action("org_mappings.org_babel_tangle")' -cqa *.org
+# nvim --headless -c 'argdo lua require("orgmode").action("org_mappings.org_babel_tangle")' -cqa *.org
+nvim -Resc 'argdo exe "norm \<C-c>\<C-v>\<C-t>"' -- *.org

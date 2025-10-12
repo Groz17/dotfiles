@@ -1,9 +1,14 @@
 * post-merge
 #+begin_src bash :tangle ./.git/hooks/post-merge :shebang "#!/usr/bin/env bash"
-read -r -n1 -p $'\nTangle pulled files? [y|n] ' < /dev/tty
+tmpfile=$(mktemp)
+trap 'rm -f "$tmpfile"' EXIT
 
-[[ $REPLY = 'n' ]] && { printf '\n'; exit 1; }
+if ! git diff --exit-code -z --name-only ORIG_HEAD @ -- '*.org' > "$tmpfile"; then
 
-git diff -z --name-only ORIG_HEAD @ -- '*.org' | xargs -0r nvim -Resc 'argdo exe "norm \<C-c>\<C-v>\<C-t>"' --
-printf "\nTangled all org files\n"
+ read -r -n1 -p $'\nTangle pulled files? [y|n] ' < /dev/tty
+ [[ $REPLY = 'n' ]] && { printf '\n'; exit 1; }
+
+ xargs -0r -a "$tmpfile" nvim -Resc 'argdo exe "norm \<C-c>\<C-v>\<C-t>"' --
+ printf "\nTangled all org files\n"
+fi
 #+end_src
