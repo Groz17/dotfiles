@@ -5,10 +5,10 @@ trap 'rm -f "$tmpfile"' EXIT
 
 if ! git diff --exit-code -z --name-only ORIG_HEAD @ -- '*.org' > "$tmpfile"; then
 
- read -r -n1 -p $'\nTangle pulled files? [y|n] ' < /dev/tty
+ read -r -n1 -p $'\nTangle pulled org files? [y|n] ' < /dev/tty
  [[ $REPLY = 'n' ]] && { printf '\n'; exit 1; }
 
  xargs -0r -a "$tmpfile" nvim -Resc 'argdo exe "norm \<C-c>\<C-v>\<C-t>"' --
- printf "\nTangled all org files\n"
+ printf "\nTangled!\n"
 fi
 #+end_src

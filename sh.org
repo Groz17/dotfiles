@@ -1,7 +1,12 @@
 * Aliases
 TODO: Add completions
+
+two problems: first, every distro-specific alias block i add, i need to 
+name. secondly, i need to update the distro-aliases block to include its
+name in there...                                                        
+
 #+name: aliases
-#+begin_src sh :results output :prologue "cat << 'EOF'" :epilogue EOF
+#+begin_src sh :results output :noweb yes :prologue "cat << 'EOF'" :epilogue EOF
 # Advanced command-not-found hook
 # source /usr/share/doc/find-the-command/ftc.bash
 
@@ -62,11 +67,21 @@ alias f="fd"
 alias g='f(){ if [[ $# -gt 0 ]]; then git "$@"; else git status; fi; unset -f f; };f'
 alias mr='f(){ (cd ~; if [[ $# -gt 0 ]]; then command mr "$@"; else command mr status; fi); unset -f f; }; f'
 alias d='f(){ if [[ $# -gt 0 ]]; then docker "$@"; else docker ps; fi; unset -f f; }; f'
+
+<<distro-aliases()>>
 #+end_src
 
 ** Distro-specific
+#+name: distro-aliases
+#+begin_src emacs-lisp :exports none :results raw
+(let* ((distro (string-trim (org-sbe "distro")))
+       (block-name (concat "distro-aliases-" distro)))
+  (org-babel-ref-resolve block-name))
+#+end_src
+
 *** Arch
-#+begin_src shell :tangle (if (string-prefix-p "arch" (org-sbe "distro")) "~/.bashrc" "no")
+#+name: distro-aliases-arch
+#+begin_src sh :results output :prologue "cat << 'EOF'" :epilogue EOF
 alias upd='/usr/bin/garuda-update'
 [ ! -x /usr/bin/yay ] && [ -x /usr/bin/paru ] && alias yay='paru'
 alias fixpacman="sudo rm /var/lib/pacman/db.lck"
@@ -90,8 +105,9 @@ alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 #+end_src
 
 *** Fedora
-#+begin_src shell :tangle (if (string-prefix-p "fedora" (org-sbe "distro")) "~/.bashrc" "no")
-# alias
+#+name: distro-aliases-fedora
+#+begin_src sh :results output :prologue "cat << 'EOF'" :epilogue EOF
+alias fedora_test="fedora_test"
 #+end_src
 
 * External commands
