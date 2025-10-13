@@ -1,5 +1,6 @@
 #+property: header-args :tangle ~/.config/zsh/.zshrc :mkdirp yes
 #+startup: content
+put common headers in just one file? tangle org mode...
 
 
 https://grml.org/zsh/zsh-lovers.html#_aliases
@@ -7,18 +8,11 @@ http://www.acm.uiuc.edu/workshops/zsh/alias.html
 
   # bind -x '"...": exec zsh
 
-put common headers in just one file? tangle org mode...
-* Aliases
-#+begin_src zsh :noweb yes
-<<sh.org:aliases()>>
-#+end_src
-
-* External commands
-#+begin_src zsh :noweb yes
-<<sh.org:commands(shell="zsh")>>
-#+end_src
-
 https://github.com/glacambre/ileum
+
+#+begin_src zsh :noweb yes
+bindkey -e
+#+end_src
 
 autoload -U compinit
 compinit
@@ -48,3 +42,14 @@ setopt COMPLETE_IN_WORD
 
 # autoload -U colors
 #colors
+
+* Aliases
+#+begin_src zsh :noweb yes
+<<sh.org:aliases()>>
+#+end_src
+
+* External commands
+#+begin_src zsh :noweb yes
+<<sh.org:commands(shell="zsh")>>
+#+end_src
+
