@@ -1,7 +1,8 @@
 #+property: header-args :tangle ~/.config/zsh/.zshrc :mkdirp yes
 #+startup: content
 put common headers in just one file? tangle org mode...
-
+https://github.com/zimfw/completion/blob/master/init.zsh
+zmodload -F zsh/datetime +p:EPOCHREALTIME
 
 https://grml.org/zsh/zsh-lovers.html#_aliases
 http://www.acm.uiuc.edu/workshops/zsh/alias.html
@@ -10,11 +11,13 @@ http://www.acm.uiuc.edu/workshops/zsh/alias.html
 
 https://github.com/glacambre/ileum
 
-#+begin_src zsh :noweb yes
+#+begin_src zsh
 bindkey -e
+autoload -Uz compinit && compinit
+autoload -Uz promptinit && promptinit
+# prompt adam1  # Or any theme
 #+end_src
 
-autoload -U compinit
 compinit
 
 #allow tab completion in the middle of a word
@@ -25,11 +28,6 @@ setopt COMPLETE_IN_WORD
 ## restart running processes on exit
 #setopt HUP
 
-## history
-#setopt APPEND_HISTORY
-## for sharing history between zsh processes
-#setopt INC_APPEND_HISTORY
-#setopt SHARE_HISTORY
 
 ## never ever beep ever
 #setopt NO_BEEP
@@ -43,6 +41,117 @@ setopt COMPLETE_IN_WORD
 # autoload -U colors
 #colors
 
+* [[https://github.com/zimfw/environment/blob/master/init.zsh][Options]]
+# setopt CORRECT
+# magicequalsubst
+# nonomatch
+# notify
+# numericglobsort
+# promptsubst
+
+## history
+#setopt APPEND_HISTORY
+## for sharing history between zsh processes
+#setopt INC_APPEND_HISTORY
+#setopt SHARE_HISTORY
+
+Generic options and environment settings
+
+** Changing directories
+#+begin_src zsh
+
+# Perform cd to a directory if the typed command is invalid, but is a directory.
+setopt AUTO_CD
+
+# Make cd push the old directory to the directory stack.
+setopt AUTO_PUSHD
+
+autoload -Uz is-at-least && if is-at-least 5.8; then
+    # Don't print the working directory after a cd.
+    setopt CD_SILENT
+fi
+
+# Don't push multiple copies of the same directory to the stack.
+setopt PUSHD_IGNORE_DUPS
+
+# Don't print the directory stack after pushd or popd.
+setopt PUSHD_SILENT
+
+# Have pushd without arguments act like `pushd ${HOME}`.
+setopt PUSHD_TO_HOME
+
+#+end_src
+
+** Expansion and globbing
+#+begin_src zsh
+# Treat `#`, `~`, and `^` as patterns for filename globbing.
+setopt EXTENDED_GLOB
+#+end_src
+
+** History
+ #+begin_src zsh
+ # The file to save the history in.
+ if (( ! ${+HISTFILE} )) typeset -g HISTFILE=${ZDOTDIR:-${HOME}}/.zhistory
+
+    # The maximum number of events stored internally and saved in the history file.
+    # The former is greater than the latter in case user wants HIST_EXPIRE_DUPS_FIRST.
+    HISTSIZE=20000
+    SAVEHIST=10000
+
+    # Don't display duplicates when searching the history.
+    setopt HIST_FIND_NO_DUPS
+
+    # Don't enter immediate duplicates into the history.
+    setopt HIST_IGNORE_DUPS
+
+    # Remove commands from the history that begin with a space.
+    setopt HIST_IGNORE_SPACE
+
+    # Don't execute the command directly upon history expansion.
+    setopt HIST_VERIFY
+
+    # Cause all terminals to share the same history 'session'.
+    setopt SHARE_HISTORY
+ #+end_src
+
+** Input/output
+ #+begin_src zsh
+ # Allow comments starting with `#` in the interactive shell.
+ setopt INTERACTIVE_COMMENTS
+
+ # Disallow `>` to overwrite existing files. Use `>|` or `>!` instead.
+ setopt NO_CLOBBER
+ #+end_src
+
+** Job control
+ #+begin_src zsh
+ # List jobs in verbose format by default.
+ setopt LONG_LIST_JOBS
+
+ # Prevent background jobs being given a lower priority.
+ setopt NO_BG_NICE
+
+ # Prevent status report of jobs on shell exit.
+ setopt NO_CHECK_JOBS
+
+ # Prevent SIGHUP to jobs on shell exit.
+ setopt NO_HUP
+ #+end_src
+
+* Keymaps
+#+begin_src zsh
+zle -N copy-line-to-clipboard; copy-line-to-clipboard() { print -n -- "$BUFFER" | wl-copy }
+bindkey '\ew' copy-line-to-clipboard
+
+zle -N copy-pwd-to-clipboard; copy-pwd-to-clipboard() { print -n -- "${PWD/#$HOME/\~}" | wl-copy }
+bindkey '^Xp' copy-pwd-to-clipboard
+
+zle -N exec-bash; exec-bash() { BUFFER='exec bash'; zle accept-line }
+bindkey '^X^' exec-bash
+
+bindkey -s '\e[24~' '^X'
+#+end_src
+
 * Aliases
 #+begin_src zsh :noweb yes
 <<sh.org:aliases()>>
@@ -53,3 +162,82 @@ setopt COMPLETE_IN_WORD
 <<sh.org:commands(shell="zsh")>>
 #+end_src
 
+* [[https://superuser.com/questions/1563825/is-there-a-zsh-equivalent-to-the-bash-help-builtin][Is there a zsh equivalent to the bash `help` builtin? - Super User]]
+#+begin_src zsh
+unalias run-help
+autoload run-help
+HELPDIR=/usr/share/zsh/"${ZSH_VERSION}"/help
+alias help=run-help
+#+end_src
+
+* zinit
+** Bootstrap
+#+begin_src zsh
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
+#+end_src
+
+** Plugins
+#+begin_src zsh
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+
+zinit light Aloxaf/fzf-tab
+#+end_src
+
+** Snippets
+#+begin_src zsh
+# zinit snippet OMZP::git
+# zinit snippet OMZP::sudo
+# zinit snippet OMZP::tmuxinator
+# zinit snippet OMZP::docker
+# zinit snippet OMZP::command-not-found
+#+end_src
+
+* Completion styling
+#+begin_src zsh
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+zstyle ':completion:*:*:docker:*' option-stacking yes
+zstyle ':completion:*:*:docker-*:*' option-stacking yes
+#+end_src
+
+* [[Bottom padding][https://www.reddit.com/r/zsh/comments/1iyajgx/i_added_bottom_padding_to_my_zsh_terminal_so/]]
+#+begin_src zsh
+# Add padding only at initial prompt, not during editing
+function _bottom_padding_precmd() {
+  # Only add padding when not in history or other widgets
+  if [[ -z $WIDGET ]]; then
+    local padding=$((LINES/2))
+    for ((i=0; i<padding; i++)); do echo; done
+    echo -ne "\033[${padding}A"
+  fi
+}
+# Add to precmd functions but make sure it runs only once
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _bottom_padding_precmd
+#+end_src

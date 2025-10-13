@@ -20,9 +20,10 @@ shopt -s cdspell
 * Keymaps
 #+begin_src bash
 if [[ -n $DISPLAY ]]; then
-  bind -x '"\ew": printf %s "$READLINE_LINE" | wl-copy -n'
-  bind -x '"\C-xp": pwd | perl -pe "s/\Q$ENV{HOME}\E/~/" | wl-copy -n'
-  # bind -x '"...": exec zsh
+  bind -x '"\ew": printf %s "$READLINE_LINE" | wl-copy'
+  bind -x '"\C-xp": "printf %s \"${PWD/#$HOME/\~}\" | wl-copy"'
+  # ^ like in Vim
+  bind -x '"\C-x^": exec zsh'
 fi
 #+end_src
 
