@@ -61,6 +61,7 @@ lol = log --oneline
 l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
 
 c = clone
+review = "!git fetch origin && git difftool -d origin/HEAD...HEAD"
 
 dirdiff = difftool --ignore-submodules --dir-diff --no-symlinks --tool=vimdirdiff
 # list branches sorted by last modified
