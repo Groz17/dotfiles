@@ -43,11 +43,18 @@ Use f13 like for neovim/emacs toggling keymaps
 #+end_src
 
 * Functions
-#+begin_src bash
+#+begin_src bash :var distro=(org-sbe "distro")
 
 function WTF {
 # wtf -t comp $(cat /usr/share/games/bsdgames/acronyms.comp | cut -f1 | shuf -n1)
-wtf  $(cat /usr/share/misc/acronyms.comp | cut -f1 | shuf -n1)
+# wtf  $(cat /usr/share/misc/acronyms.comp | cut -f1 | shuf -n1)
+# case "$distro" in
+#   arch) acronyms_location=
+#   fedora)
+#   *)
+#   esac
+
+wtf  $(cat /usr/share/wtf/acronyms.comp | cut -f1 | shuf -n1)
 }
 
 
