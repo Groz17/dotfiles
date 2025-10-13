@@ -582,6 +582,7 @@ bind = $mainMod SHIFT, F, fullscreen,
 bind = $mainMod, F, fullscreen, 1
 # go to previous window map?
 # like in windows win+tab
+# caret like vim?
 bind = $mainMod, tab, exec, rofi -show window
 # bind = $mainMod, tab, exec, hyprctl dispatch focuscurrentorlast 
 # bind = $mainMod, P, pseudo,

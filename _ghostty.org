@@ -9,6 +9,7 @@
 * TODO TASK LIST
 - [ ] split docker container pane same cwd?
 - [ ] window-save-state?
+- [ ] resize?
 
 * Prefs
 #+begin_src conf
