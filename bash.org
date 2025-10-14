@@ -2,8 +2,6 @@
 #+startup: content
 
 * TODO TASK LIST
- - [ ] aliases and env vars shouldn't be bound to a specific shell...
- - [ ] maybe global shell file?
 
 #+begin_src bash
 # If not running interactively, don't do anything
