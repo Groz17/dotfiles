@@ -2,6 +2,8 @@
 #+property: header-args :tangle no
 #+startup: content
 
+add shell icon
+
 $direnv\ afte directory... (no separator?)
 $docker/kubernetes/nats_context\
 env_var
