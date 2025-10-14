@@ -372,10 +372,10 @@ bindkey '^M' accept-line
 
 ** Aliases
 #+begin_src zsh :noweb yes
-<<sh.org:aliases()>>
+<<sh|.org:aliases()>>
 
 # Enable tab completion for function wrappers
-<<sh.org:completion-functions()>>
+<<sh|.org:completion-functions()>>
 for entry in "${_completion_funcs[@]}"; do
     IFS=: read -r alias_name cmd_name <<< "$entry"
     compdef "$alias_name=$cmd_name"
@@ -383,9 +383,14 @@ done
 unset _completion_funcs
 #+end_src
 
+** Functions
+#+begin_src zsh :noweb yes
+<<sh|.org:functions()>>
+#+end_src
+
 ** External commands
 #+begin_src zsh :noweb yes
-<<sh.org:commands(shell="zsh")>>
+<<sh|.org:commands(shell="zsh")>>
 #+end_src
 
 ** [[https://superuser.com/questions/1563825/is-there-a-zsh-equivalent-to-the-bash-help-builtin][zsh equivalent to bash's `help` builtin]]

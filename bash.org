@@ -35,13 +35,13 @@ Use f13 like for neovim/emacs toggling keymaps
 
 * Aliases
 #+begin_src bash :noweb yes
-<<sh.org:aliases()>>
+<<sh|.org:aliases()>>
 
 # Enable tab completion for function wrappers using complete-alias
 # https://github.com/cykerway/complete-alias
 if [ -f /usr/share/bash-complete-alias/complete_alias ]; then
     source /usr/share/bash-complete-alias/complete_alias
-    <<sh.org:completion-functions()>>
+    <<sh|.org:completion-functions()>>
     for entry in "${_completion_funcs[@]}"; do
         IFS=: read -r alias_name cmd_name <<< "$entry"
         complete -F _complete_alias "$alias_name"
@@ -65,29 +65,10 @@ wtf  $(< "$acronyms_location" cut -f1 | shuf -n1)
 # PROMPT_COMMAND='printf "\033]133;A\007"'
 
 
-
-info() {
-path=`command info -w "$1"`
-if [ $path == '*manpages*' ]; then
-  emacsclient -t -a '' --eval "(progn (man \"$1\")(delete-window))"
-else
-  emacsclient -t -a ''  "$path"
-fi
-}
 # man() {
 #     emacsclient -t -e "(man \"$*\")"
 # }
 
-
-c() {
-  if [ -t 0 ]; then
-    # stdin is a terminal: act as paste (output clipboard)
-    wl-paste
-  else
-    # stdin is piped: act as copy (input to clipboard)
-    wl-copy
-  fi
-}
 
 
 html2pdf() {
@@ -107,10 +88,6 @@ for (( ; ; )); do
 done
 }
 
-J(){
-cd "$(fd -E \\.git -i -td '^'"$(sed 's/[][^\\."+*?()|{}$#&~-]/\\\0/' <<< "$1")"'.*$' ~/vimwiki | ifne sh -c 'awk "{print length,\$0}"|sort -k1,1n |cut -f1 --complement -d " "|fzf -1')"
-}
-
 adbvw() {
 
 adb get-state 2>/dev/null | grep -q "device" || { notify-send "Not connected"; return 1; }
@@ -127,45 +104,13 @@ adb shell rm $files
 
 #+end_src
 
-** Emacs-inspired
-Magari usa stessi mapping di emacs nel terminal, tipo F15a per agenda?
-#+begin_src bash
-compile () {
-    args="${*:-$(emacsclient --eval '(print compile-command nil)' \
-                 | sed 's/^.//;s/.$//')}"  # strip outer quotes
-    emacsclient -t --eval "(compile \"$args\")"
-  }
 
-edir () {
-  target=${1:-$PWD}
-    if [ ! -d "$target" ]; then
-        echo "Not a directory: '$target'" >&2
-        return 1
-    fi
-    emacsclient -a '' -t --eval "(progn (dired \"$target\") (wdired-change-to-wdired-mode))"
-  }
-
-eww () {
-  emacsclient -t --eval "(eww \"$*\")"
-}
-
-agenda () {
-    # emacsclient -t --eval "(progn (org-agenda-list)(kill-buffer "*dashboard*") (delete-other-windows))"
-    # emacsclient -t --eval "(progn (org-agenda-list) (delete-other-windows)(kill-buffer "*dashboard*"))"
-    emacsclient -t --eval "(progn (org-agenda-list) (delete-other-windows))"
-}
-
-magit () {
-  target=${1:-$PWD}
-  if ! git rev-parse --is-inside-work-tree &>/dev/null ; then
-    echo "Not a git repository: '$target'" >&2
-    return 1
-  fi
-  emacsclient -t --eval "(magit-status-setup-buffer \"$target\")"
-}
+** Functions
+#+begin_src bash :noweb yes
+<<sh|.org:functions()>>
 #+end_src
 
 * External commands
 #+begin_src zsh :noweb yes
-<<sh.org:commands(shell="bash")>>
+<<sh|.org:commands(shell="bash")>>
 #+end_src
