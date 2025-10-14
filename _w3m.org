@@ -1,6 +1,6 @@
 * Options
 :PROPERTIES:
-:header-args: :tangle  ~/.config/w3m/config
+:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/w3m/config")
 :END:
 
 #+begin_src conf-unix
@@ -9,7 +9,7 @@ meta_refresh 1
 
 * Keymaps
 :PROPERTIES:
-:header-args: :tangle  ~/.config/w3m/keymap
+:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/w3m/keymap")
 :END:
 
 # w3m vim-like keymap file

@@ -7,7 +7,7 @@ source = ~/.config/hypr/myColors.conf
 
 * Hyprland
 :PROPERTIES:
-:header-args: :tangle  ~/.config/hypr/hyprland.conf
+:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/hypr/hyprland.conf")
 :END:
 
 ** TODO TASK LIST
@@ -856,7 +856,7 @@ windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 
 * Hyprlock
 :PROPERTIES:
-:header-args: :tangle  ~/.config/hypr/hyprlock.conf
+:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/hypr/hyprlock.conf")
 :END:
 
 #+name: font-size
@@ -1090,7 +1090,7 @@ A frog’s child is a frog; like parent, like child.
 
 * Hypridle
 :PROPERTIES:
-:header-args: :tangle  ~/.config/hypr/hypridle.conf
+:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/hypr/hypridle.conf")
 :END:
 
 #+begin_src hyprlang
@@ -1139,7 +1139,7 @@ listener {
 
 * Hyprpaper
 :PROPERTIES:
-:header-args: :tangle  ~/.config/hypr/hyprpaper.conf
+:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/hypr/hyprpaper.conf")
 :END:
 
 can u use source code (maybe elisp) to pick random image?
