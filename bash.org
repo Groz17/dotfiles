@@ -52,17 +52,13 @@ fi
 
 * Functions
 #+begin_src bash :var distro=(org-sbe "distro")
-
 function WTF {
-# wtf -t comp $(cat /usr/share/games/bsdgames/acronyms.comp | cut -f1 | shuf -n1)
-# wtf  $(cat /usr/share/misc/acronyms.comp | cut -f1 | shuf -n1)
-# case "$distro" in
-#   arch) acronyms_location=
-#   fedora)
-#   *)
-#   esac
+case "$distro" in
+  arch) acronyms_location=/usr/share/wtf/acronyms.comp;;
+  fedora) acronyms_location=/usr/share/misc/acronyms.comp;;
+esac
 
-wtf  $(cat /usr/share/wtf/acronyms.comp | cut -f1 | shuf -n1)
+wtf  $(< "$acronyms_location" cut -f1 | shuf -n1)
 }
 
 
