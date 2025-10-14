@@ -316,7 +316,12 @@ bindkey -s '^1' '\e1'
 #+end_src
 
 **** Meta Commands
-#+begin_src sh
+#+begin_src zsh
+# Ctrl+X Ctrl+E - edit command line in editor (like bash)
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+
 # Ctrl+X Ctrl+X - reload shell
 bindkey -s '^X^X' ' [[ $(jobs) ]] || exec ${SHELL:-/bin/zsh}\n'
 
@@ -380,9 +385,9 @@ bindkey '^[^J' _toggle_vi_emacs
 #+end_src
 
 *** Special Keys
-#+begin_src sh
-# Ctrl+M - accept line (fix for ghostty)
-bindkey '^M' accept-line
+#+begin_src zsh
+# Ctrl+M - accept line (fix for ghostty with kitty keyboard protocol)
+bindkey '^[[109;5u' accept-line
 #+end_src
 
 ** Aliases
