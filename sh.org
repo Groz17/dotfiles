@@ -63,29 +63,45 @@ alias a="apy"
 alias V="nvim -c TransparentEnable"
 
 alias f="fd"
-# Kinda like :Git in fugitive and {locale,hostname}ctl
-# Function aliases that wrap commands (for auto-completion setup)
-# Format: alias_name:command_name
-g() { if [ $# -gt 0 ]; then git "$@"; else git status; fi; }
-mr() { (cd ~ && if [ $# -gt 0 ]; then command mr "$@"; else command mr status; fi); }
-d() { if [ $# -gt 0 ]; then docker "$@"; else docker ps; fi; }
-k() { if [ $# -gt 0 ]; then kubectl "$@"; else kubectl get all; fi; }
+
+# Function aliases - generated from table below
+<<function-aliases()>>
 
 <<distro-aliases()>>
 #+end_src
 
-* Completions
-List of function aliases that should have tab completion:
-#+name: completion-functions-table
-| alias | command |
-|-------+---------|
-| g     | git     |
-| d     | docker  |
-| k     | kubectl |
+* Function Aliases
+Define function aliases that wrap commands with a default action (for commands
+with subcommands):
+#+name: function-aliases-table
+| alias | command | default_action           |
+|-------+---------+--------------------------|
+| g     | git     | status                   |
+| mr    | mr      | status                   |
+| d     | docker  | ps                       |
+| k     | kubectl | get all                  |
 
-Generate completion array from table:
+Generate functions from table:
+#+name: function-aliases
+#+begin_src emacs-lisp :var funcs=function-aliases-table :exports none :results raw
+(mapconcat
+ (lambda (row)
+   (let ((alias (car row))
+         (cmd (cadr row))
+         (default (caddr row)))
+     (if (string= alias "mr")
+         (format "%s() { (cd ~ && if [ $# -gt 0 ]; then command %s \"$@\"; else command %s %s; fi); }"
+                 alias cmd cmd default)
+       (format "%s() { if [ $# -gt 0 ]; then %s \"$@\"; else %s %s; fi; }"
+               alias cmd cmd default))))
+ funcs
+ "\n")
+#+end_src
+
+* Completions
+Generate completion functions list from the same table:
 #+name: completion-functions
-#+begin_src emacs-lisp :var funcs=completion-functions-table :exports none :results raw
+#+begin_src emacs-lisp :var funcs=function-aliases-table :exports none :results raw
 (concat "_completion_funcs=(\n"
         (mapconcat (lambda (row)
                      (format "    \"%s:%s\"" (car row) (cadr row)))

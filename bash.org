@@ -37,13 +37,17 @@ Use f13 like for neovim/emacs toggling keymaps
 #+begin_src bash :noweb yes
 <<sh.org:aliases()>>
 
-# Enable tab completion for function wrappers
-<<sh.org:completion-functions()>>
-for entry in "${_completion_funcs[@]}"; do
-    IFS=: read -r alias_name cmd_name <<< "$entry"
-    complete -F _command "$alias_name"
-done
-unset _completion_funcs
+# Enable tab completion for function wrappers using complete-alias
+# https://github.com/cykerway/complete-alias
+if [ -f /usr/share/bash-complete-alias/complete_alias ]; then
+    source /usr/share/bash-complete-alias/complete_alias
+    <<sh.org:completion-functions()>>
+    for entry in "${_completion_funcs[@]}"; do
+        IFS=: read -r alias_name cmd_name <<< "$entry"
+        complete -F _complete_alias "$alias_name"
+    done
+    unset _completion_funcs
+fi
 #+end_src
 
 * Functions
