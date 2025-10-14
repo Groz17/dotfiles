@@ -64,12 +64,35 @@ alias V="nvim -c TransparentEnable"
 
 alias f="fd"
 # Kinda like :Git in fugitive and {locale,hostname}ctl
+# Function aliases that wrap commands (for auto-completion setup)
+# Format: alias_name:command_name
 g() { if [ $# -gt 0 ]; then git "$@"; else git status; fi; }
 mr() { (cd ~ && if [ $# -gt 0 ]; then command mr "$@"; else command mr status; fi); }
 d() { if [ $# -gt 0 ]; then docker "$@"; else docker ps; fi; }
 k() { if [ $# -gt 0 ]; then kubectl "$@"; else kubectl get all; fi; }
 
 <<distro-aliases()>>
+#+end_src
+
+* Completions
+List of function aliases that should have tab completion:
+#+name: completion-functions-table
+| alias | command |
+|-------+---------|
+| g     | git     |
+| d     | docker  |
+| k     | kubectl |
+
+Generate completion array from table:
+#+name: completion-functions
+#+begin_src emacs-lisp :var funcs=completion-functions-table :exports none :results raw
+(concat "_completion_funcs=(\n"
+        (mapconcat (lambda (row)
+                     (format "    \"%s:%s\"" (car row) (cadr row)))
+                   funcs
+                   "\n")
+        "\n)")
+#+end_src
 #+end_src
 
 ** Distro-specific

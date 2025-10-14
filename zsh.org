@@ -15,14 +15,8 @@ http://www.acm.uiuc.edu/workshops/zsh/alias.html
 
 https://github.com/glacambre/ileum
 
-#+begin_src zsh
-bindkey -e
-autoload -Uz compinit && compinit
 autoload -Uz promptinit && promptinit
 # prompt adam1  # Or any theme
-#+end_src
-
-compinit
 
 #allow tab completion in the middle of a word
 setopt COMPLETE_IN_WORD
@@ -155,24 +149,6 @@ bindkey '^X^' exec-bash
 bindkey -s '\e[24~' '^X'
 #+end_src
 
-** Aliases
-#+begin_src zsh :noweb yes
-<<sh.org:aliases()>>
-#+end_src
-
-** External commands
-#+begin_src zsh :noweb yes
-<<sh.org:commands(shell="zsh")>>
-#+end_src
-
-** [[https://superuser.com/questions/1563825/is-there-a-zsh-equivalent-to-the-bash-help-builtin][zsh equivalent to bash's `help` builtin]]
-#+begin_src zsh
-unalias run-help
-autoload run-help
-HELPDIR=/usr/share/zsh/"${ZSH_VERSION}"/help
-alias help=run-help
-#+end_src
-
 ** zinit
 *** Bootstrap
 #+begin_src zsh
@@ -281,6 +257,146 @@ autoload -Uz add-zsh-hook
 add-zsh-hook precmd _bottom_padding_precmd
 #+end_src
 
+** ZLE
+*** TODO Tasks
+- [ ] Test Alt+Ctrl+J for vi mode toggle
+- [ ] Verify all Ctrl+X combinations work
+- [ ] Add keybinding for common commands (analyze with atuin)
+- [ ] Implement nohist function if needed
+
+
+# Ctrl+X Ctrl+N - dynamic history completion
+bindkey '^X^N' _history-complete-older
+*** Options
+#+begin_src sh
+# Completion options
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'  # case-insensitive
+setopt COMPLETE_IN_WORD
+setopt AUTO_MENU
+setopt LIST_AMBIGUOUS
+
+# Colored completion
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu select
+#+end_src
+
+*** Keybindings
+**** Base Mode
+#+begin_src sh
+# Default to emacs mode
+bindkey -e
+#+end_src
+
+**** Tab Completion
+#+begin_src sh
+# Tab - menu completion
+bindkey '^I' expand-or-complete-prefix
+#+end_src
+
+**** Line Editing
+#+begin_src sh
+# Ctrl+1 maps to Alt+1
+bindkey -s '^1' '\e1'
+#+end_src
+
+**** Meta Commands
+#+begin_src sh
+# Ctrl+X Ctrl+X - reload shell
+bindkey -s '^X^X' ' [[ $(jobs) ]] || exec ${SHELL:-/bin/zsh}\n'
+
+# Ctrl+X \ - nohist (if you have this function)
+# bindkey -s '^X\\' ' nohist\n'
+#+end_src
+
+**** Wrapping
+#+begin_src sh
+# Ctrl+X $ - wrap in $()
+bindkey -s '^X$' ' $()\e[D'
+
+# Ctrl+X < - wrap in <()
+bindkey -s '^X<' ' <()\e[D'
+
+# Ctrl+X " - wrap in double quotes
+bindkey -s '^X"' ' ""\e[D'
+
+# Ctrl+X ' - wrap in single quotes
+bindkey -s "^X'" " ''\e[D"
+#+end_src
+
+**** Redirections
+#+begin_src sh
+bindkey -s '^X0' ' &>/dev/null '
+bindkey -s '^X1' ' >/dev/null '
+bindkey -s '^X2' ' 2>/dev/null '
+bindkey -s '^X3' ' 2>&1 '
+#+end_src
+
+**** Emacs-Inspired Navigation
+#+begin_src sh
+# Ctrl+X Ctrl+F - find file with fzf
+bindkey -s '^X^F' ' "$(fd -tf . 2>/dev/null | fzf)"\n'
+
+# Ctrl+X d - find directory with fzf
+bindkey -s '^Xd' ' "$(fd -td . 2>/dev/null | fzf)"\n'
+
+# Ctrl+X Ctrl+J - open dired in emacs
+# bindkey -s '^X^J' ' emacsclient -a "" -t --eval '\''(dired ".")'\'''\n'
+
+# Alt+X - command search with preview
+# bindkey -s '\ex' 'print -l ${(k)commands} | sort -u | grep -v ^_ | fzf --preview='\''man {} 2>/dev/null||echo "No preview available"'\'')'
+#+end_src
+
+**** Vi/Emacs Mode Toggle
+#+begin_src sh
+# Alt+Ctrl+J - toggle between vi and emacs mode
+_toggle_vi_emacs() {
+  if [[ $KEYMAP == vicmd ]] || [[ $KEYMAP == viins ]]; then
+    bindkey -e
+    echo "Switched to emacs mode"
+  else
+    bindkey -v
+    echo "Switched to vi mode"
+  fi
+  zle reset-prompt
+}
+zle -N _toggle_vi_emacs
+bindkey '^[^J' _toggle_vi_emacs
+#+end_src
+
+*** Special Keys
+#+begin_src sh
+# Ctrl+M - accept line (fix for ghostty)
+bindkey '^M' accept-line
+#+end_src
+
+** Aliases
+#+begin_src zsh :noweb yes
+<<sh.org:aliases()>>
+
+# Enable tab completion for function wrappers
+<<sh.org:completion-functions()>>
+for entry in "${_completion_funcs[@]}"; do
+    IFS=: read -r alias_name cmd_name <<< "$entry"
+    compdef "$alias_name=$cmd_name"
+done
+unset _completion_funcs
+#+end_src
+
+** External commands
+#+begin_src zsh :noweb yes
+<<sh.org:commands(shell="zsh")>>
+#+end_src
+
+** [[https://superuser.com/questions/1563825/is-there-a-zsh-equivalent-to-the-bash-help-builtin][zsh equivalent to bash's `help` builtin]]
+#+begin_src zsh
+unalias run-help
+autoload run-help
+HELPDIR=/usr/share/zsh/"${ZSH_VERSION}"/help
+alias help=run-help
+#+end_src
+
+
 * [[https://www.reddit.com/r/zsh/comments/3ubrdr/comment/cxe7ejm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button][zshenv]]
 #+begin_src zsh :tangle ~/.zshenv
 # export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
@@ -292,3 +408,4 @@ ZDOTDIR=$HOME/.config/zsh
 #+begin_src zsh :tangle (concat (getenv "XDG_CONFIG_HOME") "/zsh/.zprofile")
 [ -f ~/.profile ] && . ~/.profile
 #+end_src
+
