@@ -92,7 +92,7 @@ make ansi and iso defsrc?
   tab  q    w    e   r    t    y    u i o p [ ]   
   caps a    s    d   f    g    h    j k l ; ' \    ret
   lsft <    z    x   c    v    b    n m , . / rsft
-  lctl lmet lalt spc ralt menu rctl
+  lctl lmet lalt spc ralt menu prnt rctl
   mlft mmid mrgt
 )
   ;;lalt           spc            ralt menu
@@ -104,7 +104,7 @@ make ansi and iso defsrc?
   @tab  @q    @w    @e   @r    @t    @y    @u  @i  @o  @p @[ @]   
   @caps @a    @s    @d   @f    @g    @h    @j  @k  @l  @; @' @\    @ret
   @lsft @ISO  @z    @x   @c    @v    @b    @n  @m  @,  @. @/ @rsft
-  @lctl @lmet @lalt @spc @ralt @menu @rctl
+  @lctl @lmet @lalt @spc @ralt @menu @prnt @rctl
   @mlft @mmid @mrgt
 )
 #+end_src
@@ -155,6 +155,7 @@ you could inoremap/abbrev them tbh
   ;; opposite of | for shell scripting
   ;; equal has horizontal lines like menu
   menu (tap-hold 175 175 = (tap-hold-press-timeout 0 100 = \ (macro S-=)))
+  prnt (tap-hold 175 175 = (tap-hold-press-timeout 0 100 = \ (macro S-=)))
   ret (tap-hold 200 249 ret (macro S-ret))
   ;; can rpt-any work with chords as well? if not make it work
   ;; combine rpt-any w/ tap-hold? like for neovim debug
@@ -537,7 +538,7 @@ _ _ _ _     _ _ _ _    _    _  _    _ _
 _ _ _ _     _ _ _ _    _    _  _    _
 _ _ _ _     _ _ _ left down up rght _ _ _ _
 _ _ _ _     _ _ _ _    ret  _  _    _ _
-_ _ _ _     _ _ _
+_ _ _ _     _ _ _ _
 _ _ _
 )
 
@@ -562,7 +563,7 @@ Add missing keys w/ playerctl/mpv ipc... (stop, etc...)
   _ _ _              _              _ _   _ _   f19          f24      MediaTrackPrevious _
   _ _ _              f20            _ f21 _ f22 VolumeDown VolumeUp f23                _ _ _ _
   _ _ _              _              _ _   _ MediaTrackNext   VolumeMute _        _                  _ _
-  _ _ _ MediaPlayPause _ _   _
+  _ _ _ MediaPlayPause _ _   _ _
   _ _ _             
 )
 #+end_src
