@@ -1,6 +1,6 @@
 HACK: f12 becomes ~ on ghostty
-#+property: header-args :tangle ~/.inputrc :mkdirp yes
-,#+property: header-args :tangle ~/.config/readline/inputrc :mkdirp yes
+#+property: header-args :tangle ~/.inputrc
+,#+property: header-args :tangle (concat (getenv "XDG_CONFIG_HOME") "/readline/inputrc")
 #+startup: content
 
 * TODO TASK LIST

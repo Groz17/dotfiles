@@ -411,7 +411,7 @@ bind = , f21, exec, echo '{ "command": ["get_property", "af"] }' | socat - /tmp/
 bind = , f20, exec, ~/.config/hypr/scripts/recognize_song
 #+end_src
 
-#+begin_src bash :tangle ~/.config/hypr/scripts/recognize_song :noweb yes :shebang "#!/usr/bin/env bash"
+#+begin_src bash :tangle (concat (getenv "XDG_CONFIG_HOME") "/hypr/scripts/recognize_song") :noweb yes :shebang "#!/usr/bin/env bash"
 dunstify "Recognizing song..."
 
 cmd=(songrec)
@@ -442,7 +442,7 @@ bind = $mainMod , m, exec, ~/.config/hypr/scripts/songs
 bind = $mainMod shift, m, exec, ~/.config/hypr/scripts/yt_songs
 #+end_src
 
-#+begin_src bash :tangle ~/.config/hypr/scripts/songs :shebang "#!/usr/bin/env bash"
+#+begin_src bash :tangle (concat (getenv "XDG_CONFIG_HOME") "/hypr/scripts/songs") :shebang "#!/usr/bin/env bash"
 # how to reference this from config file?
 SOCKET=/tmp/mpvsocket
 [ -S "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
@@ -456,7 +456,7 @@ ifne mpv --playlist=/dev/stdin --no-video --no-terminal --input-ipc-server="$SOC
 #+end_src
 
 ***** Search on YT
-#+begin_src bash :tangle ~/.config/hypr/scripts/yt_songs :shebang "#!/usr/bin/env bash"
+#+begin_src bash :tangle (concat (getenv "XDG_CONFIG_HOME") "/hypr/scripts/yt_songs") :shebang "#!/usr/bin/env bash"
 SOCKET=/tmp/mpvsocket
 [ -S "$SOCKET" ] && echo '{ "command": ["quit"] }' | socat - "$SOCKET"
 search="$(rofi -dmenu -l 0 -p 'Search song')"
@@ -480,7 +480,7 @@ bindel = ,XF86MonBrightnessDown, exec, brightnessctl s 10%-
 bind = $mainMod SHIFT, comma, exec, ~/.config/hypr/scripts/notifications
 #+end_src
 
-#+begin_src bash :tangle ~/.config/hypr/scripts/notifications :shebang "#!/usr/bin/env bash"
+#+begin_src bash :tangle (concat (getenv "XDG_CONFIG_HOME") "/hypr/scripts/notifications") :shebang "#!/usr/bin/env bash"
 for i in {1..3}; do dunstctl history-pop;done
 sleep 5
 dunstctl close-all
@@ -1152,7 +1152,7 @@ wallpaper=,~/dotfiles/wallpapers/kanagawa_vaporwave.jpg
 #+end_src
 
 * hyprsunset
-#+begin_src hyprlang :tangle ~/.config/hypr/hyprsunset.conf
+#+begin_src hyprlang :tangle (concat (getenv "XDG_CONFIG_HOME") "/hypr/hyprsunset.conf")
 max-gamma = 150
 
 profile {

@@ -1,6 +1,6 @@
 * Config
 :PROPERTIES:
-:header-args: :tangle ~/.config/waybar/config.jsonc
+:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/waybar/config.jsonc")
 :END:
 
 disk percentage?
@@ -233,7 +233,7 @@ notifiche ricevute?
 
 * Style
 :PROPERTIES:
-:header-args: :tangle ~/.config/waybar/style.css
+:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/waybar/style.css")
 :END:
 
 

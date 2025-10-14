@@ -1,4 +1,4 @@
-#+property: header-args :tangle ~/.config/kanata/config.kbd :comments org
+#+property: header-args :tangle (concat (getenv "XDG_CONFIG_HOME") "/kanata/config.kbd") :comments org
 #+startup: content
 ;; two/multiple keys to activate layer?
 ;; config.kbd beautifier?

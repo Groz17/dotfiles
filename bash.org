@@ -6,7 +6,6 @@
 #+begin_src bash
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
-
 #+end_src
 
 * Options

@@ -1,4 +1,4 @@
-#+property: header-args :tangle ~/.config/rofi/config.rasi
+#+property: header-args :tangle (concat (getenv "XDG_CONFIG_HOME") "/rofi/config.rasi")
 #+startup: content
 
 - [ ] find readline configs? or copy your telescope.nvim config...

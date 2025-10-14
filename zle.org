@@ -1,4 +1,4 @@
-#+property: header-args :tangle ~/.config/zsh/zle.zsh :mkdirp yes
+#+property: header-args :tangle (concat (getenv "XDG_CONFIG_HOME") "/zsh/zle.zsh")
 #+startup: content
 
 * ZLE Configuration (Zsh Line Editor)

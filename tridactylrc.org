@@ -1,5 +1,5 @@
 # -*- comment-start: "\""; -*-
-#+property: header-args :tangle ~/.config/tridactyl/tridactylrc
+#+property: header-args :tangle (concat (getenv "XDG_CONFIG_HOME") "/tridactyl/tridactylrc")
 #+startup: content
 
 # neo_mouse_mode
@@ -283,12 +283,12 @@ bind <space><S-space> composite js "# [" + document.title + "](" + document.URL 
 
 #+end_src
 
-#+begin_src bash :tangle ~/.config/tridactyl/scripts/data :shebang "#!/usr/bin/env bash"
+#+begin_src bash :tangle (concat (getenv "XDG_CONFIG_HOME") "/tridactyl/scripts/data") :shebang "#!/usr/bin/env bash"
 for id in $(cliphist list|head -2|cut -f1); do cliphist decode $id;echo; done | wl-copy
 hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qy"'
 #+end_src
 
-#+begin_src bash :tangle ~/.config/tridactyl/scripts/to-markdown :shebang "#!/usr/bin/env bash"
+#+begin_src bash :tangle (concat (getenv "XDG_CONFIG_HOME") "/tridactyl/scripts/to-markdown") :shebang "#!/usr/bin/env bash"
 # wl-paste | pandoc --wrap=preserve --from html-native_divs-native_spans --to commonmark-raw_html+pipe_tables | xclip -selection clipboard && dunstify -i ~/Pictures/icons/dunstify/check.png "Selection copied to clipboard"
 # wl-paste | pandoc --wrap=preserve --from html --to commonmark | wl-copy && dunstify "Selection copied to clipboard"
 # cb |
@@ -299,7 +299,7 @@ pandoc --wrap=preserve --from html --to commonmark-raw_html+pipe_tables  | wl-co
 # except (@(href|src))???
 #+end_src
 
-#+begin_src bash :tangle ~/.config/tridactyl/scripts/selection_html.js
+#+begin_src bash :tangle (concat (getenv "XDG_CONFIG_HOME") "/tridactyl/scripts/selection_html.js")
 var html = "";
 if (typeof window.getSelection != "undefined") {
     var sel = window.getSelection();

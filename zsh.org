@@ -1,7 +1,7 @@
 #+startup: content
-* Zshrc
+* zshrc
 :PROPERTIES:
-:header-args: :tangle ~/.config/zsh/.zshrc :mkdirp yes
+:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/zsh/.zshrc")
 :END:
 
 put common headers in just one file? tangle org mode...

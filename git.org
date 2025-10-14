@@ -2,7 +2,7 @@
 
 * Gitconfig
 :PROPERTIES:
-:header-args: :tangle ~/.config/git/config :mkdirp yes
+:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/git/config")
 :END:
 
 ** Include
@@ -309,10 +309,10 @@ Is it possible to tangle at end of file with directive?
 
 * Commit template
 :PROPERTIES:
-:header-args: :tangle ~/.config/git/message :mkdirp yes
+:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/git/message")
 :END:
 
-# :header-args: :tangle ~/.config/git/COMMIT_TEMPLATE :mkdirp yes
+# :header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/git/COMMIT_TEMPLATE")
 
 #+begin_src text
 # Title: Summary, imperative, start upper case, don't end with a period
@@ -341,7 +341,7 @@ Is it possible to tangle at end of file with directive?
 
 * Gitignore
 :PROPERTIES:
-:header-args: :tangle ~/.config/git/ignore :mkdirp yes
+:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/git/ignore")
 :END:
 
 #+begin_src gitconfig
