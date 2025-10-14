@@ -92,7 +92,7 @@ make ansi and iso defsrc?
   tab  q    w    e   r    t    y    u i o p [ ]   
   caps a    s    d   f    g    h    j k l ; ' \    ret
   lsft <    z    x   c    v    b    n m , . / rsft
-  lctl lmet lalt spc ralt ssrq rctl
+  lctl lmet lalt spc ralt menu rctl
   mlft mmid mrgt
 )
   ;;lalt           spc            ralt menu
@@ -153,7 +153,8 @@ you could inoremap/abbrev them tbh
   ;;tab (on-press toggle-virtualkey fk1)
   ;; menu (layer-switch nav)
   ;; opposite of | for shell scripting
-  menu (macro S-7)
+  ;; equal has horizontal lines like menu
+  menu (tap-hold 175 175 = (tap-hold-press-timeout 0 100 = \ (macro S-=)))
   ret (tap-hold 200 249 ret (macro S-ret))
   ;; can rpt-any work with chords as well? if not make it work
   ;; combine rpt-any w/ tap-hold? like for neovim debug
@@ -201,6 +202,7 @@ you could inoremap/abbrev them tbh
   ;; i guess also useful for evil in emacs, like for calc
   ;; lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 100 - (multi \) (macro S--)))
   ;; lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 230 - (layer-while-held audio) (macro S--)))
+  ;; combacia anche con terminal dove alt=esc
   lalt (tap-hold-press-timeout 175 175 esc esc (macro S-esc))
 
   ;; combina bene con - per pipelines
@@ -211,7 +213,9 @@ you could inoremap/abbrev them tbh
   ;; per shell pipeline: mnemonic: eventuali opzioni vengono prima della pipe
   ;; also nice for org mode tables |-tab goes all in one direction
   ;;ralt (tap-hold 175 150 (multi lsft \) (tap-hold-press-timeout 0 100 (multi lsft \) \ (macro S-d)))
-  ralt (tap-hold 175 175 = (tap-hold-press-timeout 0 100 = \ (macro S-=)))
+  ;;ralt (tap-hold 175 175 = (tap-hold-press-timeout 0 100 = \ (macro S-=)))
+  ;; - and = similar to j and k to zoom in pdfs, etc...
+  ralt (tap-hold 175 175 - (tap-hold-press-timeout 0 100 - \ (macro S--)))
   ;; ralt esc
 
   ;;lctl (macro S-3)
