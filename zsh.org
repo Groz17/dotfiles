@@ -178,14 +178,22 @@ zinit light-mode for \
 
 *** Plugins
 #+begin_src zsh
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
+# Load plugins with turbo mode for faster startup
+# wait'0' defers loading until after prompt is shown
+zinit wait lucid for \
+    atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+        zdharma-continuum/fast-syntax-highlighting \
+    blockf \
+        zsh-users/zsh-completions \
+    atload"!_zsh_autosuggest_start" \
+        zsh-users/zsh-autosuggestions
 #+end_src
 
 **** [[https://github.com/Aloxaf/fzf-tab/issues/461][fzf-tab]]
 #+begin_src zsh
-zinit light Aloxaf/fzf-tab
+# Load fzf-tab with turbo mode
+zinit wait lucid for \
+    Aloxaf/fzf-tab
 
 export _PREVIEW_="$ZDOTDIR/preview.zsh"
 local extract="
@@ -269,8 +277,15 @@ add-zsh-hook precmd _bottom_padding_precmd
 bindkey '^X^N' _history-complete-older
 *** Options
 #+begin_src sh
-# Completion options
-autoload -Uz compinit && compinit
+# Completion options with cache
+# Skip security check (-C) for faster startup, check manually with: compaudit
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
+
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'  # case-insensitive
 setopt COMPLETE_IN_WORD
 setopt AUTO_MENU
