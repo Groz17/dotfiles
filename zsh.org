@@ -205,8 +205,44 @@ zinit light-mode for \
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
+#+end_src
 
+**** [[https://github.com/Aloxaf/fzf-tab/issues/461][fzf-tab]]
+#+begin_src zsh
 zinit light Aloxaf/fzf-tab
+
+export _PREVIEW_="$ZDOTDIR/preview.zsh"
+local extract="
+local in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
+local -A ctxt
+for entry in \${(@ps:\2:)CTXT}; do
+    local key=\${entry%%=*}
+    local value=\${entry#*=}
+    ctxt[\$key]=\$value
+done
+local realpath=\${ctxt[IPREFIX]}\${ctxt[hpre]}\$in
+realpath=\${(Qe)~realpath}
+"
+zstyle ':fzf-tab:complete:*:*' fzf-flags --preview=$extract';$_PREVIEW_ $realpath'
+#+end_src
+
+#+begin_src zsh :tangle ~/.config/zsh/preview.zsh
+#!/usr/bin/env zsh
+
+# Check if the file exists
+if [[ -e "$1" ]]; then
+    # If the file is a regular text file, display its content
+    if [[ $(file --mime-type -b "$1") == text/* ]]; then
+        # Use highlight for syntax highlighting or fallback to cat
+        (highlight -O ansi "$1" || cat "$1") 2> /dev/null | head -500
+    else
+        # If not a text file, display the file type
+        file "$1"
+    fi
+else
+    # If the file does not exist, print the filename
+    echo "$1"
+fi
 #+end_src
 
 *** Snippets
