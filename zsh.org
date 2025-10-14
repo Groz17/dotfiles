@@ -1,5 +1,9 @@
-#+property: header-args :tangle ~/.config/zsh/.zshrc :mkdirp yes
 #+startup: content
+* Zshrc
+:PROPERTIES:
+:header-args: :tangle ~/.config/zsh/.zshrc :mkdirp yes
+:END:
+
 put common headers in just one file? tangle org mode...
 https://github.com/zimfw/completion/blob/master/init.zsh
 zmodload -F zsh/datetime +p:EPOCHREALTIME
@@ -40,8 +44,7 @@ setopt COMPLETE_IN_WORD
 
 # autoload -U colors
 #colors
-
-* [[https://github.com/zimfw/environment/blob/master/init.zsh][Options]]
+** [[https://github.com/zimfw/environment/blob/master/init.zsh][Options]]
 # setopt CORRECT
 # magicequalsubst
 # nonomatch
@@ -57,7 +60,7 @@ setopt COMPLETE_IN_WORD
 
 Generic options and environment settings
 
-** Changing directories
+*** Changing directories
 #+begin_src zsh
 
 # Perform cd to a directory if the typed command is invalid, but is a directory.
@@ -82,13 +85,13 @@ setopt PUSHD_TO_HOME
 
 #+end_src
 
-** Expansion and globbing
+*** Expansion and globbing
 #+begin_src zsh
 # Treat `#`, `~`, and `^` as patterns for filename globbing.
 setopt EXTENDED_GLOB
 #+end_src
 
-** History
+*** History
  #+begin_src zsh
  # The file to save the history in.
  if (( ! ${+HISTFILE} )) typeset -g HISTFILE=${ZDOTDIR:-${HOME}}/.zhistory
@@ -114,7 +117,7 @@ setopt EXTENDED_GLOB
     setopt SHARE_HISTORY
  #+end_src
 
-** Input/output
+*** Input/output
  #+begin_src zsh
  # Allow comments starting with `#` in the interactive shell.
  setopt INTERACTIVE_COMMENTS
@@ -123,7 +126,7 @@ setopt EXTENDED_GLOB
  setopt NO_CLOBBER
  #+end_src
 
-** Job control
+*** Job control
  #+begin_src zsh
  # List jobs in verbose format by default.
  setopt LONG_LIST_JOBS
@@ -138,7 +141,7 @@ setopt EXTENDED_GLOB
  setopt NO_HUP
  #+end_src
 
-* Keymaps
+** Keymaps
 #+begin_src zsh
 zle -N copy-line-to-clipboard; copy-line-to-clipboard() { print -n -- "$BUFFER" | wl-copy }
 bindkey '\ew' copy-line-to-clipboard
@@ -152,17 +155,17 @@ bindkey '^X^' exec-bash
 bindkey -s '\e[24~' '^X'
 #+end_src
 
-* Aliases
+** Aliases
 #+begin_src zsh :noweb yes
 <<sh.org:aliases()>>
 #+end_src
 
-* External commands
+** External commands
 #+begin_src zsh :noweb yes
 <<sh.org:commands(shell="zsh")>>
 #+end_src
 
-* [[https://superuser.com/questions/1563825/is-there-a-zsh-equivalent-to-the-bash-help-builtin][Is there a zsh equivalent to the bash `help` builtin? - Super User]]
+** [[https://superuser.com/questions/1563825/is-there-a-zsh-equivalent-to-the-bash-help-builtin][zsh equivalent to bash's `help` builtin]]
 #+begin_src zsh
 unalias run-help
 autoload run-help
@@ -170,8 +173,8 @@ HELPDIR=/usr/share/zsh/"${ZSH_VERSION}"/help
 alias help=run-help
 #+end_src
 
-* zinit
-** Bootstrap
+** zinit
+*** Bootstrap
 #+begin_src zsh
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -197,7 +200,7 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 #+end_src
 
-** Plugins
+*** Plugins
 #+begin_src zsh
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
@@ -206,7 +209,7 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 #+end_src
 
-** Snippets
+*** Snippets
 #+begin_src zsh
 # zinit snippet OMZP::git
 # zinit snippet OMZP::sudo
@@ -215,7 +218,7 @@ zinit light Aloxaf/fzf-tab
 # zinit snippet OMZP::command-not-found
 #+end_src
 
-* Completion styling
+** Completion styling
 #+begin_src zsh
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
@@ -226,7 +229,7 @@ zstyle ':completion:*:*:docker:*' option-stacking yes
 zstyle ':completion:*:*:docker-*:*' option-stacking yes
 #+end_src
 
-* [[Bottom padding][https://www.reddit.com/r/zsh/comments/1iyajgx/i_added_bottom_padding_to_my_zsh_terminal_so/]]
+** [[https://www.reddit.com/r/zsh/comments/1iyajgx/i_added_bottom_padding_to_my_zsh_terminal_so/][Bottom padding]]
 #+begin_src zsh
 # Add padding only at initial prompt, not during editing
 function _bottom_padding_precmd() {
@@ -242,7 +245,7 @@ autoload -Uz add-zsh-hook
 add-zsh-hook precmd _bottom_padding_precmd
 #+end_src
 
-* [[https://www.reddit.com/r/zsh/comments/3ubrdr/comment/cxe7ejm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button][zenv]]
+* [[https://www.reddit.com/r/zsh/comments/3ubrdr/comment/cxe7ejm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button][zshenv]]
 #+begin_src zsh :tangle ~/.zshenv
 # export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
 ZDOTDIR=$HOME/.config/zsh
