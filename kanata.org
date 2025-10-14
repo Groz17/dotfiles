@@ -200,7 +200,8 @@ you could inoremap/abbrev them tbh
   ;; doesn't work with \| tough
   ;; i guess also useful for evil in emacs, like for calc
   ;; lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 100 - (multi \) (macro S--)))
-  lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 230 - (layer-while-held audio) (macro S--)))
+  ;; lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 230 - (layer-while-held audio) (macro S--)))
+  lalt (tap-hold-press-timeout 175 175 esc esc (macro S-esc))
 
   ;; combina bene con - per pipelines
   ;;ralt (macro S-\)
@@ -211,6 +212,7 @@ you could inoremap/abbrev them tbh
   ;; also nice for org mode tables |-tab goes all in one direction
   ;;ralt (tap-hold 175 150 (multi lsft \) (tap-hold-press-timeout 0 100 (multi lsft \) \ (macro S-d)))
   ralt (tap-hold 175 175 = (tap-hold-press-timeout 0 100 = \ (macro S-=)))
+  ;; ralt esc
 
   ;;lctl (macro S-3)
    ;; lctl \
@@ -595,7 +597,7 @@ also use alt and altgr... (by themselves+chords)
 ;; (j S-k) (macro S-ret) 250 first-release ()
 ;; (d f) esc 250 first-release ()
 ;; maybe dF chord to turn into symbol layer? like dFm to input c-a-%? also what about dFM?
-(f d) (switch ((input-history real d 1)) esc break() (multi lctl alt) break) 150 all-released ()
+;; (f d) (switch ((input-history real d 1)) esc break() (multi lctl alt) break) 150 all-released ()
 ;;(s d f) f12 250 first-release ()
 ;;non funge
 ;;(j k l) f13 250 first-release ()
