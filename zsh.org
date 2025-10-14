@@ -241,3 +241,10 @@ function _bottom_padding_precmd() {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd _bottom_padding_precmd
 #+end_src
+
+* [[https://www.reddit.com/r/zsh/comments/3ubrdr/comment/cxe7ejm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button][zenv]]
+#+begin_src zsh :tangle ~/.zshenv
+# export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+ZDOTDIR=$HOME/.config/zsh
+# . $ZDOTDIR/.zshenv
+#+end_src
