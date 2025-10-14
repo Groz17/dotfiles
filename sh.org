@@ -70,7 +70,7 @@ alias f="fd"
 <<distro-aliases()>>
 #+end_src
 
-* Function Aliases
+** Function Aliases
 Define function aliases that wrap commands with a default action (for commands
 with subcommands):
 #+name: function-aliases-table
@@ -108,7 +108,6 @@ Generate completion functions list from the same table:
                    funcs
                    "\n")
         "\n)")
-#+end_src
 #+end_src
 
 ** Distro-specific
@@ -148,6 +147,24 @@ alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 #+name: distro-aliases-fedora
 #+begin_src sh :results output :prologue "cat << 'EOF'" :epilogue EOF
 # alias fedora_test="echo fedora_test"
+#+end_src
+
+* Functions
+#+name: functions
+#+begin_src sh :results output :prologue "cat << 'EOF'" :epilogue EOF
+c() {
+  if [ -t 0 ]; then
+    # stdin is a terminal: act as paste (output clipboard)
+    wl-paste
+  else
+    # stdin is piped: act as copy (input to clipboard)
+    wl-copy
+  fi
+}
+
+J(){
+cd "$(fd -E \\.git -i -td '^'"$(sed 's/[][^\\."+*?()|{}$#&~-]/\\\0/' <<< "$1")"'.*$' ~/vimwiki | ifne sh -c 'awk "{print length,\$0}"|sort -k1,1n |cut -f1 --complement -d " "|fzf -1')"
+}
 #+end_src
 
 * External commands
