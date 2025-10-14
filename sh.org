@@ -64,10 +64,10 @@ alias V="nvim -c TransparentEnable"
 
 alias f="fd"
 # Kinda like :Git in fugitive and {locale,hostname}ctl
-alias g='f(){ if [[ $# -gt 0 ]]; then git "$@"; else git status; fi; unset -f f; };f'
-alias mr='f(){ (cd ~; if [[ $# -gt 0 ]]; then command mr "$@"; else command mr status; fi); unset -f f; }; f'
-alias d='f(){ if [[ $# -gt 0 ]]; then docker "$@"; else docker ps; fi; unset -f f; }; f'
-alias k='f(){ if [[ $# -gt 0 ]]; then kubectl "$@"; else kubectl get all; fi; unset -f f; }; f'
+g() { if [ $# -gt 0 ]; then git "$@"; else git status; fi; }
+mr() { (cd ~ && if [ $# -gt 0 ]; then command mr "$@"; else command mr status; fi); }
+d() { if [ $# -gt 0 ]; then docker "$@"; else docker ps; fi; }
+k() { if [ $# -gt 0 ]; then kubectl "$@"; else kubectl get all; fi; }
 
 <<distro-aliases()>>
 #+end_src
