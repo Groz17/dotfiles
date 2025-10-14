@@ -28,7 +28,8 @@ window-padding-y = 0
 # theme=purplepeter
 # theme=vesper
 # theme=Belafonte Night
-theme=Sugarplum
+# theme=Sugarplum
+theme=Dracula+
 
  # TODO: finche non fixo deferred-clipboard in emacs
 clipboard-read=allow
@@ -44,7 +45,7 @@ confirm-close-surface=true
 
 window-padding-balance=true
 # background-opacity=0.8
-background-opacity=0.83
+background-opacity=1
 cursor-style=block
 shell-integration-features=no-cursor,sudo,no-title
 adjust-cell-height=3%
