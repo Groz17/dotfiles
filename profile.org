@@ -1,4 +1,10 @@
 #+property: header-args :tangle ~/.profile
+
+* zprofile
+#+begin_src zsh :tangle ~/.config/zsh/.zprofile :mkdirp yes
+[ -f ~/.profile ] && . ~/.profile
+#+end_src
+
 * Environment variables
 ** XDG
 Use =xdg-ninja=
