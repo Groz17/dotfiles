@@ -1,10 +1,5 @@
 #+property: header-args :tangle ~/.profile
 
-* zprofile
-#+begin_src zsh :tangle (concat (getenv "XDG_CONFIG_HOME") "/zsh/.zprofile")
-[ -f ~/.profile ] && . ~/.profile
-#+end_src
-
 * Environment variables
 ** XDG
 Use =xdg-ninja=

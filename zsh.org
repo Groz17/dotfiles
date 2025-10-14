@@ -287,3 +287,8 @@ add-zsh-hook precmd _bottom_padding_precmd
 ZDOTDIR=$HOME/.config/zsh
 # . $ZDOTDIR/.zshenv
 #+end_src
+
+* zprofile
+#+begin_src zsh :tangle (concat (getenv "XDG_CONFIG_HOME") "/zsh/.zprofile")
+[ -f ~/.profile ] && . ~/.profile
+#+end_src
