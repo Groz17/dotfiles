@@ -2,6 +2,7 @@
 #+startup: content
 
 * TODO TASK LIST
+# PROMPT_COMMAND='printf "\033]133;A\007"'
 
 #+begin_src bash
 # If not running interactively, don't do anything
@@ -37,6 +38,7 @@ Use f13 like for neovim/emacs toggling keymaps
 #+begin_src bash :noweb yes
 <<sh|.org:aliases()>>
 
+# maybe works for pure aliases and not subcommands/functions
 # Enable tab completion for function wrappers using complete-alias
 # https://github.com/cykerway/complete-alias
 if [ -f /usr/share/bash-complete-alias/complete_alias ]; then
@@ -51,61 +53,6 @@ fi
 #+end_src
 
 * Functions
-#+begin_src bash :var distro=(org-sbe "distro")
-function WTF {
-case "$distro" in
-  arch) acronyms_location=/usr/share/wtf/acronyms.comp;;
-  fedora) acronyms_location=/usr/share/misc/acronyms.comp;;
-esac
-
-wtf  $(< "$acronyms_location" cut -f1 | shuf -n1)
-}
-
-
-# PROMPT_COMMAND='printf "\033]133;A\007"'
-
-
-# man() {
-#     emacsclient -t -e "(man \"$*\")"
-# }
-
-
-
-html2pdf() {
-	typst compile <(rdrview -H "$1" | pandoc -f html -t typst) /dev/stdout | zathura -
-}
-
-# try the same w/ elisp/clojure
-# ascii_quiz
-aq() {
-for (( ; ; )); do
-	# line="$(nvim -es -V1 <<<'for i in range(0,127) | echo i.."\t"..strtrans(nr2char(i)) | endfor' |& grep -P ^\\d | shuf -n1)" &&
-	line="$(nvim -es -V1 <<<'for i in range(0,127) | echo i.."\t"..keytrans(nr2char(i)) | endfor' |& grep -P ^\\d | shuf -n1)" &&
-        awk '{print $2}' <<<"$line" && read -p $'\e[1mEnter code: > \e[0m' guessed_code 
-
-	correct_code="$(awk '{print $1}' <<<"$line")"
-	[ $correct_code == $guessed_code ] && echo "Correct" || echo "Wrong! ($correct_code)"
-done
-}
-
-adbvw() {
-
-adb get-state 2>/dev/null | grep -q "device" || { notify-send "Not connected"; return 1; }
-
-files=$(adb shell find /sdcard/Documents/Obsidian_vault/Data -maxdepth 1 -name '*.md')
-[[ -z "$files" ]] && return 1;
-dir=~/vimwiki/Obsidian_vault/phone
-[ -d "$dir" ] && cd "$dir" || { notify-send "Directory doesn't exist"; return 1; }
-for f in $files; do [[ -f "${f##*/}" ]] && adb pull "$f" "${f##*/}"_$(date +%s) || adb pull "$f" .;done
-# attenzione agli spazi
-adb shell rm $files
-}
-
-
-#+end_src
-
-
-** Functions
 #+begin_src bash :noweb yes
 <<sh|.org:functions()>>
 #+end_src

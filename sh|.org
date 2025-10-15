@@ -147,7 +147,55 @@ alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 
 * Functions
 #+name: functions
-#+begin_src sh :results output :prologue "cat << 'EOF'" :epilogue EOF
+#+begin_src sh :results output :prologue "cat << 'EOF'" :epilogue EOF :noweb yes :var distro=(org-sbe "distro")
+WTF() {
+case $distro in
+  arch) acronyms_location=/usr/share/wtf/acronyms.comp;;
+  fedora) acronyms_location=/usr/share/misc/acronyms.comp;;
+esac
+
+wtf  $(< "$acronyms_location" cut -f1 | shuf -n1)
+}
+
+
+# try the same w/ elisp/clojure
+# ascii_quiz
+aq() {
+  for (( ; ; )); do
+    # line="$(nvim -es -V1 <<<'for i in range(0,127) | echo i.."\t"..strtrans(nr2char(i)) | endfor' |& grep -P ^\\d | shuf -n1)" &&
+    line="$(nvim -es -V1 <<<'for i in range(0,127) | echo i.."\t"..keytrans(nr2char(i)) | endfor' |& grep -P '^\d' | shuf -n1)" &&
+      awk '{print $2}' <<<"$line" 
+    printf $'\e[1mEnter code: > \e[0m'
+    read guessed_code 
+
+    correct_code="$(awk '{print $1}' <<<"$line")"
+    [[ $correct_code == $guessed_code ]] && echo "Correct" || echo "Wrong! ($correct_code)"
+done
+}
+
+# man() {
+#     emacsclient -t -e "(man \"$*\")"
+# }
+
+html2pdf() {
+	typst compile <(rdrview -H "$1" | pandoc -f html -t typst) /dev/stdout | zathura -
+}
+
+adbvw() {
+
+adb get-state 2>/dev/null | grep -q "device" || { notify-send "Not connected"; return 1; }
+
+files=$(adb shell find /sdcard/Documents/Obsidian_vault/Data -maxdepth 1 -name '*.md')
+[[ -z "$files" ]] && return 1;
+dir=~/vimwiki/Obsidian_vault/phone
+[ -d "$dir" ] && cd "$dir" || { notify-send "Directory doesn't exist"; return 1; }
+for f in $files; do [[ -f "${f##*/}" ]] && adb pull "$f" "${f##*/}"_$(date +%s) || adb pull "$f" .;done
+# attenzione agli spazi
+adb shell rm $files
+}
+
+
+
 c() {
   if [ -t 0 ]; then
     # stdin is a terminal: act as paste (output clipboard)

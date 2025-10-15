@@ -4,6 +4,6 @@ hostnamectl chassis
 #+end_src
 
 #+name: distro
-#+begin_src bash :results output
+#+begin_src bash :results raw
 hostnamectl -j | jq -r '.OperatingSystemReleaseData | map(select(startswith("ID")))[-1] | split("=")[1]'
 #+end_src
