@@ -7,17 +7,16 @@ disk percentage?
 notifiche ricevute?
 
 ** Bar
-#+begin_src conf
+ #+begin_src jsonc :prologue "{"
 // show if muted
-{
-  "layer": "top",
-  "position": "top",
-  "spacing": 0,
-  "height": 0,
-  "margin-top": 0,
-  "margin-right": 0,
-  "margin-bottom": 0,
-  "margin-left": 0,
+"layer": "top",
+"position": "top",
+"spacing": 0,
+"height": 0,
+"margin-top": 0,
+"margin-right": 0,
+"margin-bottom": 0,
+"margin-left": 0,
 #+end_src
 
 ** Modules
@@ -27,7 +26,7 @@ notifiche ricevute?
 "modules-left": [
   "hyprland/workspaces",
   "mpris",
-"custom/mpv-repeat"
+  "custom/mpv-repeat"
   // "custom/vpn"
 ],
 
@@ -57,7 +56,7 @@ notifiche ricevute?
 #+end_src
 
 *** Built-in
-#+begin_src conf
+ #+begin_src conf :epilogue "}"
   "privacy": {
     "icon-spacing": 4,
     "icon-size": 18,
@@ -228,7 +227,6 @@ notifiche ricevute?
 	"scroll-step": 1,
 	"on-click": "pavucontrol"
 },
-}
 #+end_src
 
 * Style
