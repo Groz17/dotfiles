@@ -38,6 +38,7 @@ alias helpme='cht.sh --shell'
 # alias jctl="journalctl -p 3 -xb"
 
 # mine
+alias m="man"
 alias v="nvim"
 alias vi="vim -i NONE"
 alias vim="vim -i NONE"

@@ -11,8 +11,6 @@ zmodload -F zsh/datetime +p:EPOCHREALTIME
 https://grml.org/zsh/zsh-lovers.html#_aliases
 http://www.acm.uiuc.edu/workshops/zsh/alias.html
 
-  # bind -x '"...": exec zsh
-
 https://github.com/glacambre/ileum
 
 autoload -Uz promptinit && promptinit
@@ -399,6 +397,25 @@ for entry in "${_completion_funcs[@]}"; do
     compdef "$alias_name=$cmd_name"
 done
 unset _completion_funcs
+#+end_src
+
+*** Global aliases
+#+begin_src zsh
+alias -g ...='../..'
+alias -g ....='../../..'
+
+alias -g F="| fzf"
+alias -g H="| head"
+alias -g T="| tail"
+alias -g G="| grep"
+alias -g S="| sort"
+alias -g U="| sort -u"
+alias -g Q="| qrencode -t ansiutf8"
+#+end_src
+
+*** Suffix aliases
+#+begin_src zsh
+alias -s {png,jpg}='feh'
 #+end_src
 
 ** Functions
