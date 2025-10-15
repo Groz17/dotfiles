@@ -1,23 +1,21 @@
 * Aliases
 TODO: Add completions
 
-two problems: first, every distro-specific alias block i add, i need to 
-name. secondly, i need to update the distro-aliases block to include its
-name in there...                                                        
-
 #+name: aliases
 #+begin_src sh :results output :noweb yes :prologue "cat << 'EOF'" :epilogue EOF
-# Advanced command-not-found hook
-# source /usr/share/doc/find-the-command/ftc.bash
 
-## Useful aliases
-# Common use
+<<common-aliases()>>
 
-# Replace some more things with better alternatives
-# alias cat='bat --style header --style snip --style changes'
+# Function aliases - generated from table below
+<<function-aliases()>>
 
-# Replace ls with exa
-# alias ls='exa -al --color=always --group-directories-first --icons'     # preferred listing
+<<distro-aliases()>>
+#+end_src
+
+** Pure
+Maybe create table and completions here as well
+#+name: common-aliases
+#+begin_src sh :results output :prologue "cat << 'EOF'" :epilogue EOF
 alias ls='ls --color=auto'     # preferred listing
 alias grubup="sudo update-grub"
 
@@ -37,7 +35,6 @@ alias helpme='cht.sh --shell'
 # Get the error messages from journalctl
 # alias jctl="journalctl -p 3 -xb"
 
-# mine
 alias m="man"
 alias v="nvim"
 alias vi="vim -i NONE"
@@ -64,14 +61,9 @@ alias a="apy"
 alias V="nvim -c TransparentEnable"
 
 alias f="fd"
-
-# Function aliases - generated from table below
-<<function-aliases()>>
-
-<<distro-aliases()>>
 #+end_src
 
-** Function Aliases
+** Subcommands
 Define function aliases that wrap commands with a default action (for commands
 with subcommands):
 #+name: function-aliases-table
@@ -99,7 +91,7 @@ Generate functions from table:
  "\n")
 #+end_src
 
-* Completions
+*** Completions
 Generate completion functions list from the same table:
 #+name: completion-functions
 #+begin_src emacs-lisp :var funcs=function-aliases-table :exports none :results raw
@@ -112,6 +104,9 @@ Generate completion functions list from the same table:
 #+end_src
 
 ** Distro-specific
+
+Name every distro-specific alias block added
+
 #+name: distro-aliases
 #+begin_src emacs-lisp :exports none :results raw
 (let* ((distro (string-trim (org-sbe "distro")))
