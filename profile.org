@@ -33,8 +33,11 @@ export FZF_DEFAULT_OPTS_FILE="$XDG_CONFIG_HOME"/fzfrc
 
 ** Preferred programs
 #+begin_src sh
-EDITORS=( "emacsclient -nw" nvim )
-export EDITOR="${EDITORS[$((RANDOM%${#EDITORS[@]}))]}"
+# Randomly pick an editor
+case $(($(date +%s) % 2)) in
+    0) export EDITOR="emacsclient -nw" ;;
+    1) export EDITOR="nvim" ;;
+esac
 # make it so man with multiple arguments open vim with multiple buffers/quickfix
 export MANPAGER="nvim +Man!"
 # export MANWIDTH=999
