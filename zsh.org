@@ -403,6 +403,8 @@ unset _completion_funcs
 #+end_src
 
 *** Global aliases
+There's also =https://github.com/momo-lab/zsh-abbrev-alias=
+
 #+begin_src zsh
 alias -g ...='../..'
 alias -g ....='../../..'
