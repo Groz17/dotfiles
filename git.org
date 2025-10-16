@@ -85,7 +85,7 @@ in = log HEAD..@{upstream}
 
 # what would be pushed
 out = log @{upstream}..HEAD
-out = log @{u}..
+; out = log @{u}..
 
 # List contributors with number of commits.
 contributors = shortlog --summary --numbered
@@ -141,7 +141,6 @@ side-by-side = true
 ; syntax-theme = tokyonight_moon
 ; syntax-theme = Dracula
 #+end_src
-
 
 ** Difftool
 #+begin_src gitconfig :prologue "[difftool]"

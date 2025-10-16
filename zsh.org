@@ -187,7 +187,7 @@ zinit wait lucid for \
         zsh-users/zsh-completions \
     atload"!_zsh_autosuggest_start" \
         zsh-users/zsh-autosuggestions \
-        MichaelAquilina/zsh-you-should-use
+        MichaelAquilina/zsh-you-should-use # doesn't work with both aliases like g grep...
 #+end_src
 
 **** [[https://github.com/Aloxaf/fzf-tab/issues/461][fzf-tab]]
