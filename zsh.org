@@ -37,7 +37,9 @@ setopt COMPLETE_IN_WORD
 # autoload -U colors
 #colors
 ** [[https://github.com/zimfw/environment/blob/master/init.zsh][Options]]
-# setopt CORRECT
+#+begin_src zsh
+setopt CORRECTALL
+#+end_src
 # magicequalsubst
 # nonomatch
 # notify
@@ -421,6 +423,7 @@ alias -g Q="| qrencode -t ansiutf8"
 *** Suffix aliases
 #+begin_src zsh
 alias -s {png,jpg}='feh'
+alias -s {ape,avi,flv,m4a,mkv,mov,mp3,mp4,mpeg,mpg,ogg,ogm,wav,webm}=mpv
 #+end_src
 
 ** Functions

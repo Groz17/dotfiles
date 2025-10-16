@@ -39,12 +39,10 @@ alias m="man"
 alias v="nvim"
 alias vi="vim -i NONE"
 alias vim="vim -i NONE"
-alias V="SUDO_EDITOR=\"nvim\" sudoedit"
 alias t="trans"
 alias em="emacsclient -c -a ''"
 # cool: https://www.reddit.com/r/emacs/comments/3rxfr5/xclip_copypaste_killyank_and_emacs_in_a_terminal/
 alias e='emacsclient -t -a ""'
-alias E="SUDO_EDITOR=\"emacsclient -t -a ''\" sudoedit"
 
 alias vinfo='nvim -c "silent only" -c "Vinfo "'
 alias perli='reply'
@@ -54,11 +52,8 @@ alias clj='clojure'
 alias gg="lazygit"
 alias py="python"
 # alias d="lazydocker"
-alias l="ls"
 alias s="sioyek"
 alias a="apy"
-
-alias V="nvim -c TransparentEnable"
 
 alias f="fd"
 #+end_src
