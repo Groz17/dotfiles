@@ -54,6 +54,7 @@ a = add
 ci = commit
 
 d = diff
+dt = difftool
 
 g = grep
 
