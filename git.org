@@ -148,7 +148,7 @@ prompt=false
 #+end_src
 
 *** nvim_difftool
-#+begin_src gitconfig :prologue '[difftool "nvim_difftool"]'
+#+begin_src gitconfig :prologue "[difftool \"nvim_difftool\"]"
 cmd = nvim -c \"packadd nvim.difftool\" -c \"DiffTool $LOCAL $REMOTE\"
 # use it for prs as well: git difftool -d main
 #+end_src
