@@ -765,7 +765,8 @@ bind = $mainMod , slash, exec, [float] $terminal
 
 # open neovim in file w/ keymaps? like pressing <super>n<space>fp to go plugins or smth?
 # substitute with org-capture?
-bind = $mainMod , w, exec, [float] $terminal -e nvim ~/vimwiki/Personal/diary/`date +%F`.md -c 'set ft=' -c 'norm! Go' -cstartinsert -c 'norm! zt'
+bind = $mainMod , w, exec, [float] $terminal -e nvim ~/vimwiki/Personal/diary/`date +%F`.md -c 'set ft=' -c 'norm! G2o' -cstartinsert -c 'norm! zt'
+bind = $mainMod shift, w, exec, [float] $terminal -e nvim ~/vimwiki/Personal/diary/`date +%F`.md -c 'set ft=' -c 'norm! Go' -cstartinsert -c 'norm! zt'
 
 # for language learning? arabic/spanish (like anki)... I want this at startup
 # bind = $mainMod , a, exec, ~/scripts/DailyRandomAnki

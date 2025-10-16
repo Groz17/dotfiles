@@ -416,6 +416,7 @@ alias -g G="| grep"
 alias -g S="| sort"
 alias -g U="| sort -u"
 alias -g Q="| qrencode -t ansiutf8"
+alias -g W="| wc -l"
 alias -g X="| xargs"
 alias -g Y="| yank"
 #+end_src

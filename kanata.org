@@ -204,6 +204,7 @@ you could inoremap/abbrev them tbh
   ;; lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 100 - (multi \) (macro S--)))
   ;; lalt (tap-hold 175 175 - (tap-hold-press-timeout 0 230 - (layer-while-held audio) (macro S--)))
   ;; combacia anche con terminal dove alt=esc
+  ;; also add tap dance for double esc = pseudo key
   lalt (tap-hold-press-timeout 175 175 esc esc (macro S-esc))
 
   ;; combina bene con - per pipelines
