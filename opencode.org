@@ -2,5 +2,11 @@
 
 #+begin_src jsonc :prologue "{" :epilogue "}"
 "$schema": "https://opencode.ai/config.json",
-"theme": "aura"
+"theme": "aura",
+"mcp": {
+    "gh_grep": {
+      "type": "remote",
+      "url": "https://mcp.grep.app"
+    }
+  }
 #+end_src
