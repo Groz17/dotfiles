@@ -186,7 +186,8 @@ zinit wait lucid for \
     blockf \
         zsh-users/zsh-completions \
     atload"!_zsh_autosuggest_start" \
-        zsh-users/zsh-autosuggestions
+        zsh-users/zsh-autosuggestions \
+        MichaelAquilina/zsh-you-should-use
 #+end_src
 
 **** [[https://github.com/Aloxaf/fzf-tab/issues/461][fzf-tab]]
@@ -234,11 +235,6 @@ zinit snippet OMZP::sudo
 # zinit snippet OMZP::tmuxinator
 # zinit snippet OMZP::docker
 zinit snippet OMZP::command-not-found
-zinit snippet OMZP::alias-finder
-zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
-zstyle ':omz:plugins:alias-finder' longer yes # disabled by default
-zstyle ':omz:plugins:alias-finder' exact yes # disabled by default
-zstyle ':omz:plugins:alias-finder' cheaper yes # disabled by default
 #+end_src
 
 ** Completion styling
@@ -418,6 +414,8 @@ alias -g G="| grep"
 alias -g S="| sort"
 alias -g U="| sort -u"
 alias -g Q="| qrencode -t ansiutf8"
+alias -g X="| xargs"
+alias -g Y="| yank"
 #+end_src
 
 *** Suffix aliases
@@ -444,16 +442,16 @@ HELPDIR=/usr/share/zsh/"${ZSH_VERSION}"/help
 alias help=run-help
 #+end_src
 
-
-* [[https://www.reddit.com/r/zsh/comments/3ubrdr/comment/cxe7ejm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button][zshenv]]
-#+begin_src zsh :tangle ~/.zshenv
-# export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
-ZDOTDIR=$HOME/.config/zsh
-# . $ZDOTDIR/.zshenv
-#+end_src
-
 * zprofile
 #+begin_src zsh :tangle (concat (getenv "XDG_CONFIG_HOME") "/zsh/.zprofile")
 [ -f ~/.profile ] && . ~/.profile
 #+end_src
 
+* [[https://www.reddit.com/r/zsh/comments/3ubrdr/comment/cxe7ejm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button][zshenv]]
+#+begin_src zsh :tangle ~/.zshenv
+# export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+ZDOTDIR=$HOME/.config/zsh
+YSU_MESSAGE_FORMAT="$(tput setaf 1)Hey! I found this %alias_type for %command: %alias$(tput sgr0)"
+YSU_MESSAGE_POSITION="after"
+# . $ZDOTDIR/.zshenv
+#+end_src
