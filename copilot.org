@@ -7,7 +7,8 @@
 
 #+name: adapter
 #+begin_src bash :results raw :tangle no :var servers=(org-sbe "mcp.org:MCP")
-cat << EOF | jq 'map_values(.command as $command |if .type == "local" then . + {command:$command[0]} + {args:$command[1:]}else .type = "http" end|.+{ "tools":["*"] })'
+cat << EOF
 $servers
 EOF
+jq 'map_values(.command as $command |if .type == "local" then . + {command:$command[0]} + {args:$command[1:]}else .type = "http" end|.+{ "tools":["*"] })'
 #+end_src
