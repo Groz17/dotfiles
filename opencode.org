@@ -6,6 +6,6 @@
 #+end_src
 
 * MCP
-#+begin_src jsonc :prologue "\"mcp\":{\"servers\":" :epilogue "}}" :noweb yes :padline no
+#+begin_src jsonc :prologue "\"mcp\":" :epilogue "}" :noweb yes :padline no
 <<mcp.org:MCP()>>
 #+end_src
