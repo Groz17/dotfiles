@@ -7,5 +7,5 @@
 
 * MCP
 #+begin_src jsonc :prologue "\"mcp\":" :epilogue "}" :noweb yes :padline no
-<<mcp.org:MCP()>>
+<<mcp|.org:MCP()>>
 #+end_src

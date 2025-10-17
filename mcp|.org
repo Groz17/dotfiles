@@ -6,23 +6,13 @@ gh_grep:
   url: https://mcp.grep.app
 context7:
   type: local
-  command:
-    - npx
-    - -y
-    - "@upstash/context7-mcp"
+  command: [ "npx", "-y", "@upstash/context7-mcp" ]
 blender:
   type: local
-  command:
-   - uvx
-   - blender-mcp
-time:
+  command: [ "uvx", "blender-mcp" ]
+sqlite:
   type: local
-  command:
-    - docker
-    - run
-    - -i
-    - --rm
-    - mcp/time
+  command: [ "uvx", "mcp-server-sqlite", "--db-path", "${DB_PATH}" ]
 
 #+end_src
 
