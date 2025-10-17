@@ -419,6 +419,8 @@ alias -g Q="| qrencode -t ansiutf8"
 alias -g W="| wc -l"
 alias -g X="| xargs"
 alias -g Y="| yank"
+
+alias -g TS='| ts "%F %H:%M:%.S"'
 #+end_src
 
 *** Suffix aliases

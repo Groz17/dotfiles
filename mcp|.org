@@ -1,6 +1,6 @@
 * MCP servers
 #+name: MCP_YAML
-#+begin_src yaml :tangle no
+#+begin_src yaml
 gh_grep:
   type: remote
   url: https://mcp.grep.app
@@ -27,7 +27,7 @@ time:
 #+end_src
 
 #+name: MCP
-#+begin_src bash :noweb yes :results raw :tangle no
+#+begin_src bash :noweb yes :results raw
 cat<<'EOF'|yq -oj|head -c -1
 <<MCP_YAML>>
 EOF
