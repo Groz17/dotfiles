@@ -1,16 +1,34 @@
-,#+property: header-args :tangle (concat (getenv "XDG_CONFIG_HOME") "/mcp/servers.yaml") :mkdirp yes
+* MCP servers
+#+name: MCP_YAML
+#+begin_src yaml :tangle no
+gh_grep:
+  type: remote
+  url: https://mcp.grep.app
+context7:
+  type: local
+  command:
+    - npx
+    - -y
+    - "@upstash/context7-mcp"
+blender:
+  type: local
+  command:
+   - uvx
+   - blender-mcp
+time:
+  type: local
+  command:
+    - docker
+    - run
+    - -i
+    - --rm
+    - mcp/time
 
-* MCP servers (YAML)
-#+begin_src yaml
-servers:
-  gh_grep:
-    type: remote
-    url: https://mcp.grep.app
-  context7:
-    type: local
-    command:
-      - npx
-      - -y
-      - "@upstash/context7-mcp"
 #+end_src
 
+#+name: MCP
+#+begin_src bash :noweb yes :results raw :tangle no
+cat<<'EOF'|yq -oj|head -c -1
+<<MCP_YAML>>
+EOF
+#+end_src

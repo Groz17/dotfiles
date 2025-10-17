@@ -6,17 +6,6 @@
 #+end_src
 
 * MCP
-#+begin_src jsonc :prologue "\"mcp\":{" :epilogue "}}"
-"gh_grep": {
-  "type": "remote",
-  "url": "https://mcp.grep.app"
-},
-"context7": {
-  "type" : "local",
-  "command": [  
-    "npx",
-    "-y",  
-    "@upstash/context7-mcp"  
-  ]  
-}  
+#+begin_src jsonc :prologue "\"mcp\":{\"servers\":" :epilogue "}}" :noweb yes :padline no
+<<mcp.org:MCP()>>
 #+end_src

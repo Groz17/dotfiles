@@ -1,0 +1,13 @@
+#+property: header-args :tangle (concat (getenv "XDG_CONFIG_HOME") "/.copilot/mcp-config.json")
+
+* MCP
+#+begin_src jsonc :prologue "{\"mcpServers\":" :epilogue "}" :padline no :noweb yes
+<<adapter()>>
+#+end_src
+
+#+name: adapter
+#+begin_src bash :results raw :tangle no :var servers=(org-sbe "mcp.org:MCP")
+cat << EOF | jq 'map_values(.command as $command |if .type == "local" then . + {command:$command[0]} + {args:$command[1:]}else .type = "http" end|.+{ "tools":["*"] })'
+$servers
+EOF
+#+end_src
