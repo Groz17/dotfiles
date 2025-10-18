@@ -13,6 +13,9 @@ blender:
 sqlite:
   type: local
   command: [ "uvx", "mcp-server-sqlite", "--db-path", "${DB_PATH}" ]
+reaper:
+  type: local
+  command: [ "python", "-m", "reaper_reapy_mcp" ]
 
 #+end_src
 
