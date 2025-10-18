@@ -6,6 +6,22 @@
 #+end_src
 
 * MCP
-#+begin_src jsonc :prologue "\"mcp\":" :epilogue "}" :noweb yes :padline no
+#+begin_src jsonc :prologue "\"mcp\":" :noweb yes :padline no :epilogue ","
 <<mcp|.org:MCP()>>
+#+end_src
+
+* Providers
+#+begin_src jsonc :prologue "\"provider\":{" :epilogue "}}"
+"ollama": {
+  "npm": "@ai-sdk/openai-compatible",
+  "name": "Ollama (local)",
+  "options": {
+    "baseURL": "http://localhost:11434/v1"
+  },
+  "models": {
+    "gemma3:12b": {
+      "name": "Gemma 3"
+    }
+  }
+}
 #+end_src
