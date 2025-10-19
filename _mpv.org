@@ -3,7 +3,7 @@ Mirror config for emms???
 
 * Prefs
 :PROPERTIES:
-:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/mpv/mpv.conf")
+:header-args: :tangle ~/.config/mpv/mpv.conf
 :END:
 ** Subtitles
 #+begin_src conf
@@ -31,28 +31,28 @@ reset-on-next-file=pause
 #+end_src
 
 ** Video
-#+begin_src mpv :tangle (concat (getenv "XDG_CONFIG_HOME") "/mpv/mpv.conf")
+#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
 #
 #+end_src
 
 ** Audio
-#+begin_src mpv :tangle (concat (getenv "XDG_CONFIG_HOME") "/mpv/mpv.conf")
+#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
   #
 #+end_src
 
 ** Input
-#+begin_src mpv :tangle (concat (getenv "XDG_CONFIG_HOME") "/mpv/mpv.conf")
+#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
   #
 #+end_src
 
 ** Output
-#+begin_src mpv :tangle (concat (getenv "XDG_CONFIG_HOME") "/mpv/mpv.conf")
+#+begin_src mpv :tangle ~/.config/mpv/mpv.conf
   #
 #+end_src
 
 * Keys
 :PROPERTIES:
-:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/mpv/input.conf")
+:header-args: :tangle ~/.config/mpv/input.conf
 :END:
 #+begin_src conf
 

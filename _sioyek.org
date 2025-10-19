@@ -2,7 +2,7 @@
 
 * Keys
 :PROPERTIES:
-:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/sioyek/keys_user.config")
+:header-args: :tangle ~/.config/sioyek/keys_user.config
 :END:
 
 # silent option (no verbose when executing?)
@@ -532,7 +532,7 @@ _screenshot2jpg4anki <A-s>
 
 * Prefs
 :PROPERTIES:
-:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/sioyek/prefs_user.config")
+:header-args: :tangle ~/.config/sioyek/prefs_user.config
 :END:
 
 super_fast_search 1

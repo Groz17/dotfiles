@@ -1,6 +1,6 @@
 * KEY BINDINGS
 :PROPERTIES:
-:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/feh/keys")
+:header-args: :tangle ~/.config/feh/keys
 :END:
 
 #+begin_src conf
@@ -116,7 +116,7 @@ zoom_fill exclam
 
 * MOUSE BINDINGS
 :PROPERTIES:
-:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/feh/button")
+:header-args: :tangle ~/.config/feh/button
 :END:
 
 # If you like Vim, why would you use a mouse?
@@ -137,7 +137,7 @@ zoom_out
 
 * THEMES
 :PROPERTIES:
-:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/feh/themes")
+:header-args: :tangle ~/.config/feh/themes
 :END:
 
 #+begin_src conf

@@ -1,4 +1,4 @@
-#+property: header-args :tangle (concat (getenv "XDG_CONFIG_HOME") "/atuin/config.toml")
+#+property: header-args :tangle ~/.config/atuin/config.toml
 #+startup: content
 * TODO TASK LIST
 

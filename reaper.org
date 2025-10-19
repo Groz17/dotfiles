@@ -2,7 +2,7 @@
 
 * Prefs
 :PROPERTIES:
-:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/REAPER/Scripts/reaper-keys/internal/definitions/config.lua")
+:header-args: :tangle ~/.config/REAPER/Scripts/reaper-keys/internal/definitions/config.lua
 :END:
 
 #+begin_src lua
@@ -97,7 +97,7 @@ return { ["general"] = general, ["gui"] = gui }
 
 * Keybindings
 :PROPERTIES:
-:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/REAPER/Scripts/reaper-keys/internal/definitions/bindings.lua")
+:header-args: :tangle ~/.config/REAPER/Scripts/reaper-keys/internal/definitions/bindings.lua
 :END:
 
 ** Global

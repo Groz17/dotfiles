@@ -1,4 +1,4 @@
-,#+property: header-args :tangle (concat (getenv "XDG_CONFIG_HOME") "/starship.toml")
+,#+property: header-args :tangle ~/.config/starship.toml
 #+property: header-args :tangle no
 #+startup: content
 

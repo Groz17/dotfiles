@@ -1,7 +1,7 @@
 #+startup: content
 * zshrc
 :PROPERTIES:
-:header-args: :tangle (concat (getenv "XDG_CONFIG_HOME") "/zsh/.zshrc")
+:header-args: :tangle ~/.config/zsh/.zshrc
 :END:
 
 put common headers in just one file? tangle org mode...
@@ -448,7 +448,7 @@ alias help=run-help
 #+end_src
 
 * zprofile
-#+begin_src zsh :tangle (concat (getenv "XDG_CONFIG_HOME") "/zsh/.zprofile")
+#+begin_src zsh :tangle ~/.config/zsh/.zprofile
 [ -f ~/.profile ] && . ~/.profile
 #+end_src
 

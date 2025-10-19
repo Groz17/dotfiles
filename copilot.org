@@ -1,4 +1,4 @@
-#+property: header-args :tangle (concat (getenv "XDG_CONFIG_HOME") "/.copilot/mcp-config.json")
+#+property: header-args :tangle ~/.config/.copilot/mcp-config.json
 
 * MCP
 #+begin_src jsonc :prologue "{\"mcpServers\":" :epilogue "}" :padline no :noweb yes

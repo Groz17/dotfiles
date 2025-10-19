@@ -1,4 +1,4 @@
-#+property: header-args :tangle (concat (getenv "XDG_CONFIG_HOME") "/opencode/opencode.json")
+#+property: header-args :tangle ~/.config/opencode/opencode.json
 
 #+begin_src jsonc :prologue "{"
 "$schema": "https://opencode.ai/config.json",
