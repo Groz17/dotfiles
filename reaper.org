@@ -212,16 +212,6 @@ local global = { -- applies both to main and midi
 	-- gi for input?
         ["gt"] = "NextTab",
         ["gT"] = "PrevTab",
-        ["<F12>"] = { "+emacs", {
-
-                ["C-s"] = "SaveProject",
-                ["C-S"] = "SaveProjectAs",
-                ["C-v"] = "SaveProjectWithNewVersion",
-            ["t"] = { "+tabs", {
-		 ["0"] = "CloseProject",
-            } }
-       }},
-	
 
         ['"'] = { "+snapshots", {
             ["j"] = "RecallNextSnapshot",
@@ -274,6 +264,12 @@ local global = { -- applies both to main and midi
         -- ["<SPC>"] = { "+leader commands", {
 	-- to pause/stop 😀
         ["<F12>"] = { "+leader commands", {
+          ["<C-s>"] = "SaveProject",
+          ["<C-w>"] = "SaveProjectAs",
+          ["<C-v>"] = "SaveProjectWithNewVersion",
+          ["t"] = { "+tabs", {
+            ["0"] = "CloseProject",
+          } },
             N = "ShowNotesWindow",
             n = { "+notes", {
                 i = "ShowNotesItem",
