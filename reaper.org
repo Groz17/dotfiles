@@ -161,7 +161,7 @@ local global = { -- applies both to main and midi
     command = {
         ["<M-x>"] = "ShowActionList",
         ["<CM-x>"] = "ShowBindingList",
-	-- (doesn't work...)
+        -- (doesn't work...)
         ["<F18>b"] = "ShowBindingList", 
         ["<ESC>"] = "Reset",
         ["<C-g>"] = "Reset",
@@ -213,10 +213,14 @@ local global = { -- applies both to main and midi
         ["gt"] = "NextTab",
         ["gT"] = "PrevTab",
         ["<F12>"] = { "+emacs", {
+
+                ["C-s"] = "SaveProject",
+                ["C-S"] = "SaveProjectAs",
+                ["C-v"] = "SaveProjectWithNewVersion",
             ["t"] = { "+tabs", {
 		 ["0"] = "CloseProject",
             } }
-        } },
+       }},
 	
 
         ['"'] = { "+snapshots", {
@@ -514,9 +518,6 @@ local global = { -- applies both to main and midi
                 [","] = "ShowProjectSettings",
                 ["n"] = "NextTab",
                 ["p"] = "PrevTab",
-                s = "SaveProject",
-                S = "SaveProjectAs",
-                v = "SaveProjectWithNewVersion",
                 ["o"] = "OpenProject",
                 ["c"] = "NewProjectTab",
                 ["x"] = "CloseProject",
