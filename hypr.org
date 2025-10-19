@@ -37,7 +37,7 @@ ruota schermo per prendere appunti?
 # monitor=,preferred,auto,auto
 # monitor=,preferred,auto,auto, transform, 1
 # monitor=HDMI-A-2,preferred,auto,1, mirror, 0
-# monitor=,preferred,auto,auto, mirror, 0
+monitor=,preferred,auto,auto, mirror, 0
 # monitor=,highres,auto,2 (xwayland fix)
 # monitor=,preferred,auto,auto, transform, 0
 #+end_src
@@ -145,8 +145,8 @@ exec-once = emacs --daemon
 ** [[https://wiki.hyprland.org/Configuring/Environment-variables/][ENVIRONMENT VARIABLES]]
 
 #+begin_src hyprlang
-env = XCURSOR_SIZE,32
-env = GDK_SCALE,2
+env = XCURSOR_SIZE,24
+# env = GDK_SCALE,2
 env = HYPRCURSOR_SIZE,24
 #+end_src
 
@@ -199,9 +199,9 @@ cursor{
     inactive_timeout=1
 }
 
-xwayland {
-force_zero_scaling=true
-}
+# xwayland {
+# force_zero_scaling=true
+# }
 
 
 # https://wiki.hyprland.org/Configuring/Variables/#decoration
@@ -393,7 +393,7 @@ bindl = , XF86AudioNext, exec, playerctl next
 bindl = $mainMod shift, n, exec, playerctl previous
 # bindl = $mainMod, less, exec, playerctl previous
 
-
+# needs mpv-mpris
 bind= , f22, exec, playerctl position 3-
 bind= , f23, exec, playerctl position 3+
 bind = , f19, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle

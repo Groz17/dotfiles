@@ -570,82 +570,34 @@ use cmd feature w/ playerctl
 #+end_src
 
 * CHORDS
+use also to toggle another layer
  purtroppo Chords legati a layout... qwerty (eventualmente adatta in base a prima letter premuta)
 also use alt and altgr... (by themselves+chords)
  find unusual combinations lik hj/jh/etc... (also three (maybe more) letters like kl; ) (the letters don't have to be adiacent)
  double chord taps?
  how to repeat chords w/ rpt-any
+ come usare autoshift keys here?
+is it possible to do a tap-hold but for chords? for |...
+ one finger only
+~(n m) bspc 250 first-release ()~
 #+begin_src kbd
-
 (defchordsv2
-
-;; (j k) (switch ((input-history real k 1)) ret break() (multi lctl alt) break) 130 first-release ()
-
-;;(f d) esc 150 first-release ()
-;; use also to toggle another layer
 ;; (lsft rsft) lrld 250 first-release ()
-;; probably better to use lmet mapping?
 ;; use same mapping as :restart?
 ;;(f 5) lrld 250 first-release ()
-;; how to make it silent in vim?
-;; questi accordi non fanno funzionare alt-ctl e potenzialmente shift per una mano
-;;(j k l) f12 250 first-release ()
-;; (j k) ret 250 first-release ()
-;; I keep it just for c-cr and c-a-cr, otherwise use c-m,c-a-m and c-s-m
 
 ;; would be nice if it worked with <C-h>
 (lsft rsft) (caps-word 10000) 250 first-release ()
 
-;; changing timeout or firstall doesn't seem to change for modifiers... (wanna use djk)
-;; (j k) (switch ((input-history real k 1)) ret break() (multi lctl alt) break) 30 first-release ()
-;; (j S-k) (switch ((input-history real S-k 1)) S-ret break() (multi lctl alt) break) 150 all-released ()
-;; (j S-k) (switch ((input-history real S-k 1)) S-ret break() (multi lctl alt) break) 150 all-released ()
-;; (j S-k) (macro S-ret) 250 first-release ()
-;; (d f) esc 250 first-release ()
-;; maybe dF chord to turn into symbol layer? like dFm to input c-a-%? also what about dFM?
-;; (f d) (switch ((input-history real d 1)) esc break() (multi lctl alt) break) 150 all-released ()
-;;(s d f) f12 250 first-release ()
-;;non funge
-;;(j k l) f13 250 first-release ()
-;;(j k l) (macro S-f13) 250 first-release ()
 ;; flash f13?
 
-;; (c m) (switch ((input-history real c 1)) (macro S-5) break() \ break) 150 all-released ()
-;; (z .) (switch ((input-history real z 1)) \ break() grave break) 150 all-released ()
-;; (/ .) (switch ((input-history real . 1)) \ break() grave break) 150 all-released ()
-;;(/ ( macro  S-9)) (switch ((input-history real / 1)) \ break() grave break) 150 all-released ()
-;;(/ ( macro  S-9)) (switch ((input-history real / 1)) S-9 break() S-0 break) 150 all-released ()
-
-;;(mlft mrgt) (switch ((input-history real mlft 1)) = break() (macro S-=) break) 150 all-released ()
-;; is it possible to do a tap-hold but for chords? for |...
-;;(mlft mrgt) (switch ((input-history real mrgt 1)) \ break() (macro S-\) break) 150 all-released ()
-;; (g h) (switch ((input-history real g 1)) (macro S-grave) break() grave break) 150 all-released ()
-;; more comfortable
-;; (h f) (switch ((input-history real f 1)) (macro S-grave) break() lalt break) 150 all-released ()
-;; fj = home (doesn't work with alt...)
-;;(f j) (switch ((input-history real j 1)) (macro S-grave) break() grave break) 150 all-released ()
-;; (g j) (switch ((input-history real j 1)) grave break() lalt break) 150 all-released ()
-;; (g h) (switch ((input-history real h 1)) [ break() ] break) 150 all-released ()
-;; (g k) (switch ((input-history real h 1)) [ break() ] break) 150 all-released ()
-;; (h d) (switch ((input-history real h 1)) [ break() ] break) 150 all-released ()
-
-;; works for vanilla (neo)vim as well
-;; would be nice that you can press kl (emacs mappings c-x c-s), save pressing s and kill pressing ;
 ;;(mlft mrgt) rpt-any 250 first-release ()
-;; one finger only
-;; (n m) bspc 250 first-release ()
- ;; TODO: (( /) toggle cpas lock
-
-;; (k l) (tap-hold 200 80 (switch
-;;  ((input-history real k 1)) (multi l k) break
-;;  ((input-history real l 1)) (multi k l) break
-;; ) ret) 50 first-release ())
-;; (italian) accents (chords bcs vim digraphs kinda work like that)
-
 #+end_src
 
 ** Quick accents
 In the future use picker like on phone?
+(italian) accents (chords bcs vim digraphs kinda work like that)
+
 #+begin_src kbd
 (a caps)  (unicode à) 100 first-release ()
 (a ')  (unicode á) 100 first-release ()
@@ -667,7 +619,6 @@ In the future use picker like on phone?
 (u ')  (unicode ú) 100 first-release ()
 
 )
-
 #+end_src
 
 ;; rmet-q(dynamic-macro-record 0)
