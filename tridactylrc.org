@@ -963,7 +963,7 @@ alias video_mode composite mode video ; video_mark_init
 alias exit_video mode normal
 bind gv video_mode
 set videomaps.V exit_video
-set videomaps.z mode normal
+set videomaps.<esc> mode normal
 
 bindurl ^https://www.youtube.com/watch\? v video_mode
 " how to make it also when switching to it?
