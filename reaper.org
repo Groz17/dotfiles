@@ -181,7 +181,7 @@ local global = { -- applies both to main and midi
         ["."] = "RepeatLastCommand",
         ["<C-.>"] = "RepeatPenultimateAction",
         ["@"] = "PlayMacro",
-        [","] = "RecordMacro",
+        ["q"] = "RecordMacro",
         ["m"] = "Mark",
         ["~"] = "MarkedRegion",
         ["<C-'>"] = "DeleteMark",
@@ -233,7 +233,7 @@ local global = { -- applies both to main and midi
                 ["9"] = "RecallSnapshot9",
             } },
         } },
-        ["q"] = { "+options", {
+        [","] = { "+options", {
             ["p"] = "TogglePlaybackPreroll",
             ["r"] = "ToggleRecordingPreroll",
             ["z"] = "TogglePlaybackAutoScroll",
@@ -248,7 +248,7 @@ local global = { -- applies both to main and midi
             F = "ResetFeedbackWindow",
             M = "ToggleMasterMonoStereo",
         } },
-	-- use emacs as file explorer?
+        -- use emacs as file explorer?
         ["i"] = { "+insert", {
             ["f"] = "InsertMediaFile",
             ["m"] = "InsertMidiItem",
@@ -261,13 +261,13 @@ local global = { -- applies both to main and midi
             ["3"] = "InsertTrackFromTemplateSlot3",
             ["4"] = "InsertTrackFromTemplateSlot4",
         } },
-        -- ["<SPC>"] = { "+leader commands", {
-	-- to pause/stop 😀
+          -- SPC to pause/stop 😀
         ["<F12>"] = { "+leader commands", {
           ["<C-s>"] = "SaveProject",
           ["<C-w>"] = "SaveProjectAs",
           ["<C-v>"] = "SaveProjectWithNewVersion",
-          ["t"] = { "+tabs", {
+
+          t = { "+tabs", {
             ["0"] = "CloseProject",
           } },
             N = "ShowNotesWindow",
