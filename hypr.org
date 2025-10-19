@@ -1152,7 +1152,7 @@ wallpaper=,~/dotfiles/wallpapers/kanagawa_vaporwave.jpg
 # ipc = off
 #+end_src
 
-* hyprsunset
+* Hyprsunset
 #+begin_src hyprlang :tangle (concat (getenv "XDG_CONFIG_HOME") "/hypr/hyprsunset.conf")
 max-gamma = 150
 

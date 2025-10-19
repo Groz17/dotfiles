@@ -19,8 +19,8 @@
     "baseURL": "http://localhost:11434/v1"
   },
   "models": {
-    "gemma3:12b": {
-      "name": "Gemma 3"
+    "qwen3:14b": {
+      "name": "Qwen 3",
     }
   }
 }

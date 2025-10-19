@@ -556,6 +556,7 @@ _ _ _
 ** TODO Audio
 MediaMute: i (i looks like a mic)
 Add missing keys w/ playerctl/mpv ipc... (stop, etc...)
+use cmd feature w/ playerctl
 #+begin_src kbd
 (deflayer audio
   _
