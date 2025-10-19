@@ -88,7 +88,7 @@ make ansi and iso defsrc?
 ;; e un bene che bspc sia in una posizione scomodina (non vuoi favoreggiare sbagli)
 (defsrc
   esc 
-  grv  1    2    3   4    5    6    7 8 9 - = bspc
+  grv  1    2    3   4    5    6    7 8 9 0 - = bspc
   tab  q    w    e   r    t    y    u i o p [ ]   
   caps a    s    d   f    g    h    j k l ; ' \    ret
   lsft <    z    x   c    v    b    n m , . / rsft
@@ -100,7 +100,7 @@ make ansi and iso defsrc?
 
 (deflayer base
   @esc 
-  @grv  @d1   @d2   @d3  @d4   @d5   @d6   @d7 @d8 @d9 @- @= @bspc
+  @grv  @d1   @d2   @d3  @d4   @d5   @d6   @d7 @d8 @d9 @d0 @- @= @bspc
   @tab  @q    @w    @e   @r    @t    @y    @u  @i  @o  @p @[ @]   
   @caps @a    @s    @d   @f    @g    @h    @j  @k  @l  @; @' @\    @ret
   @lsft @ISO  @z    @x   @c    @v    @b    @n  @m  @,  @. @/ @rsft
@@ -506,7 +506,9 @@ bspc (tap-hold-press-timeout 175 175 bspc bspc (macro S-bspc))
 ;; do maybe maths
 ;; maybe function keys when held? but what about shifted fun keys?
 d1 (tap-hold-press-timeout 175 175 1 1 (macro S-1))
-d2 (tap-hold-press-timeout 175 175 2 2 (macro S-2))
+;; d2 (tap-hold-press-timeout 175 175 2 2 (macro S-2))
+d2 (tap-hold 175 175 2 (tap-hold-press-timeout 0 230 2 (layer-while-held audio) (macro S-2)))
+;; d3 (tap-hold 175 175 3 (tap-hold-press-timeout 0 230 3 (layer-while-held audio) (macro S-3)))
 d3 (tap-hold-press-timeout 175 175 3 3 (macro S-3))
 d4 (tap-hold-press-timeout 175 175 4 4 (macro S-4))
 d5 (tap-hold-press-timeout 175 175 5 5 (macro S-5))
@@ -514,11 +516,8 @@ d6 (tap-hold-press-timeout 175 175 6 6 (macro S-6))
 d7 (tap-hold-press-timeout 175 175 7 7 (macro S-7))
 d8 (tap-hold-press-timeout 175 175 8 8 (macro S-8))
 ;; change hold for 9 and 0 (i use shift for those)
-d9 (tap-hold-press-timeout 175 175 9 9 (macro S-5))
-;;d0 (tap-hold-press-timeout 175 175 0 0 (macro S-6))
-;;d0 (tap-hold-press-timeout 175 175 0 0 f13)
-;; doesn't work?
-d0 (tap-hold-press-timeout 175 175 0 0 0)
+d9 (tap-hold-press-timeout 175 175 9 9 (unicode “))
+d0 (tap-hold 175 175 0 (tap-hold-press-timeout 0 230 0 (layer-while-held audio) (unicode ”)))
 )
 #+end_src
 
@@ -535,7 +534,7 @@ Also toggle layer activation?
 #+begin_src kbd
 (deflayer nav
 _
-_ _ _ _     _ _ _ _    _    _  _    _ _
+_ _ _ _     _ _ _ _    _    _  _    _ _ _
 _ _ _ _     _ _ _ _    _    _  _    _
 _ _ _ _     _ _ _ left down up rght _ _ _ _
 _ _ _ _     _ _ _ _    ret  _  _    _ _
@@ -560,7 +559,7 @@ Add missing keys w/ playerctl/mpv ipc... (stop, etc...)
 #+begin_src kbd
 (deflayer audio
   _
-  _ _ _              _              _ _   _ _   _          _        _                  _ _
+  _ _ _              _              _ _   _ _   _          _        _                  _ _ _
   _ _ _              _              _ _   _ _   f19          f24      MediaTrackPrevious _
   _ _ _              f20            _ f21 _ f22 VolumeDown VolumeUp f23                _ _ _ _
   _ _ _              _              _ _   _ MediaTrackNext   VolumeMute _        _                  _ _
