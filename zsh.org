@@ -104,8 +104,8 @@ setopt EXTENDED_GLOB
     # Remove commands from the history that begin with a space.
     setopt HIST_IGNORE_SPACE
 
-    # Don't execute the command directly upon history expansion.
-    setopt HIST_VERIFY
+    # Execute the command directly upon history expansion.
+    unsetopt HIST_VERIFY
 
     # Cause all terminals to share the same history 'session'.
     setopt SHARE_HISTORY
