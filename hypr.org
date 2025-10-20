@@ -758,7 +758,15 @@ bind = $mainMod , slash, exec, [float] $terminal
 bind = $mainMod , w, exec, [float] $terminal -e nvim ~/vimwiki/Personal/diary/`date +%F`.md -c 'set ft=' -c 'norm! G2o' -cstartinsert -c 'norm! zt'
 bind = $mainMod shift, w, exec, [float] $terminal -e nvim ~/vimwiki/Personal/diary/`date +%F`.md -c 'set ft=' -c 'norm! Go' -cstartinsert -c 'norm! zt'
 # FIX: per neovim unnamed register
-bind = SUPER, p, exec, sh -c '{ printf "\n"; wl-paste; } >> ~/vimwiki/Personal/diary/`date +%F`.md && dunstify "Saved in diary"'
+bind = SUPER, p, exec, ~/.config/hypr/scripts/send_to_diary
+#+end_src
+
+#+begin_src bash :tangle ~/.config/hypr/scripts/send_to_diary :shebang "#!/usr/bin/env bash"
+[[ `hyprctl activewindow -j | jq -r .title` == *" - Nvim" ]] && data=`nvim --server "$NVIM_LISTEN_ADDRESS" --remote-expr "getreg('\"')"` || data=`wl-paste`
+printf "%s\n" "$data" >> ~/vimwiki/Personal/diary/`date +%F`.md && dunstify "Saved in diary"
+#+end_src
+
+#+begin_src hyprlang
 
 # for language learning? arabic/spanish (like anki)... I want this at startup
 # bind = $mainMod , a, exec, ~/scripts/DailyRandomAnki
