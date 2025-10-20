@@ -804,7 +804,7 @@ bind = $mainMod, u, submap, univArg
 # submap = univArg, reset
 submap = univArg
 
-bind = $mainMod, o, exec, sh -c 'lang=`tesseract --list-langs | tail -n +2 | rofi -dmenu -multi-select | tee >(test -s || exit 1) | paste -sd+` &&\
+bind = $mainMod, o, exec, sh -c 'lang=`tesseract --list-langs | tail -n +2 | rofi -dmenu -multi-select | paste -sd+`; [ -n "$lang" ] &&\
   grimblast --freeze save area - | tesseract -l $lang - - | wl-copy'
 bind = $mainMod, o, submap, reset
 
