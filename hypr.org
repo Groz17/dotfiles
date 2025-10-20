@@ -535,7 +535,7 @@ bind = $mainMod shift, e, exec, [float;fullscreen]emacs -Q
 # bind=super , minus,exec, emacsclient -e '(eshell)' -c -a emacs
 
 # maybe these mappings should go under the terminal/ghostty keybind prefix (use zellij/tmux maybe?) or actually this is better maybe, use something like exwm
-# bind = $mainMod, v, exec, PATH=$HOME/.cargo/bin:$PATH ghostty --fullscreen -e nvim
+# bind = $mainMod, v, exec, ghostty --fullscreen -e nvim
 bind = $mainMod, v, exec, ghostty --fullscreen -e nvim
 # create kanata chord for this?
 bind = $mainMod, B, exec, $browser
@@ -783,11 +783,11 @@ bind = SUPER, p, exec, sh -c '{ printf '\n'; wl-paste; } >> ~/vimwiki/Personal/d
 
 # TODO: add v:count hyprland
 # metti in kanata?
-bind = $mainMod , n, exec, [float;size 30% 30%] PATH=$HOME/.cargo/bin:$PATH kitty -e nvim -c 'norm 1 Qd'
+bind = $mainMod , n, exec, [float;size 30% 30%] kitty -e nvim -c 'norm 1 Qd'
 # hyprctl activewindow -j | jq .title?
-bind = $mainMod shift, n, exec, [float] PATH=$HOME/.cargo/bin:$PATH $terminal -e nvim -c 'let @+=\"## \" ..input(\">\")..\"\n\"..@+|norm 1 Qy'
+bind = $mainMod shift, n, exec, [float] $terminal -e nvim -c 'let @+=\"## \" ..input(\">\")..\"\n\"..@+|norm 1 Qy'
 # resize terminal for input?
-bind = $mainMod shift, slash, exec, [float;size 30% 30%] PATH=$HOME/.cargo/bin:$PATH $terminal -e nvim -c 'let @+=input(">")|norm 1 Qd'
+bind = $mainMod shift, slash, exec, [float;size 30% 30%] $terminal -e nvim -c 'let @+=input(">")|norm 1 Qd'
 #+end_src
 
 
