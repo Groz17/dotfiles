@@ -58,6 +58,6 @@ fi
 #+end_src
 
 * External commands
-#+begin_src zsh :noweb yes
+#+begin_src bash :noweb yes
 <<sh|.org:commands(shell="bash")>>
 #+end_src

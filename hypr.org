@@ -505,20 +505,13 @@ bind=super shift,b,exec, bash -c "bluetoothctl info ||\
 #+begin_src hyprlang
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 bind = $mainMod, Return, exec, $terminal
-# bind = $mainMod, RETURN, exec, emacsclient -n -e '(progn (select-frame-set-input-focus (selected-frame)) (vterm))'
-
-
 # prefix bind for opening files like in vim/emacs? use $EDITOR (magari con nvim -c or smth)
 # how to quickly switch between emacs and neovim?
-# open terminal when exiting or before emacs?
-# bind = $mainMod, e, exec, [float;fullscreen] emacsclient -c  -a ''
-# bind = $mainMod, e, exec, emacsclient -c  -a '' -F "'(fullscreen . fullboth)"
 bind = $mainMod, e, exec, emacsclient -c  -a ''
 # bind = $mainMod SHIFT, E, exec, emacsclient --eval "(emacs-everywhere)"
 
 # bind = $mainMod, P, exec, emacsclient -n -e '(progn (select-frame-set-input-focus (selected-frame)) (pass))'
 
-# bind = $mainMod, E, exec, emacsclient -c -a ""
 # bind = $mainMod, F, exec, emacsclient -n -e '(progn (select-frame-set-input-focus (selected-frame)) (dired "~/"))'
 # bind = $mainMod, B, exec, emacsclient ~/org/roam/personal/Bookmarks/Sites.org
 # bind = $mainMod, N, exec, emacsclient ~/org/notes.org
@@ -530,23 +523,13 @@ bind = $mainMod, e, exec, emacsclient -c  -a ''
 # bind = $mainMod, d, exec, emacsclient -c  -a 'emacs' -F "'(app-launcher)" DT video?
 bind = $mainMod shift, e, exec, [float;fullscreen]emacs -Q
 ### maybe better to put in free workspace?
-# bind=super ,equal,exec, emacsclient -e '(full-calc)' -c -a emacs
-# have To use shift+9...
-# bind=super , (,exec, emacsclient -e '(eshell)' -c -a emacs
-# bind=super , minus,exec, emacsclient -e '(eshell)' -c -a emacs
+# bind=super ,equal,exec, emacsclient -e '(full-calc)' -c -a ''
 
 # maybe these mappings should go under the terminal/ghostty keybind prefix (use zellij/tmux maybe?) or actually this is better maybe, use something like exwm
 bind = $mainMod, v, exec, ghostty --fullscreen -e nvim
-# create kanata chord for this?
 bind = $mainMod, B, exec, $browser
-# bind = $mainMod, n, exec, hyprctl keyword gaps_in=0
- # a for apps
- # use emacs
-# bind = $mainMod, a, exec, ferdium --ozone-platform=wayland --enable-fetures-WaylandWindowDecorations
 
 bind = $mainMod, period, exec, [float] $fileManager
-# crea submap per emacs bindings for email, dired, etc...
-#bind = $mainMod CTRL, x, d, exec, [float] $fileManager
 
 # super shift enter?
 bind = $mainMod, D, exec, $menu
@@ -559,7 +542,6 @@ bind = $mainMod, D, exec, $menu
 #+begin_src hyprlang
 # query screen for color
 bind = $mainMod, c, exec, hyprpicker -a
-# bind = $mainMod SHIFT, x, exec, hyprlock
 # zzz mnemonic
 # maybe shift? so u don't accidentaly type? test!
 bind = $mainMod , z, exec, hyprlock

@@ -275,7 +275,7 @@ add-zsh-hook precmd _bottom_padding_precmd
 # Ctrl+X Ctrl+N - dynamic history completion
 bindkey '^X^N' _history-complete-older
 *** Options
-#+begin_src sh
+#+begin_src zsh
 # Completion options with cache
 # Skip security check (-C) for faster startup, check manually with: compaudit
 autoload -Uz compinit
@@ -297,19 +297,19 @@ zstyle ':completion:*' menu select
 
 *** Keybindings
 **** Base Mode
-#+begin_src sh
+#+begin_src zsh
 # Default to emacs mode
 bindkey -e
 #+end_src
 
 **** Tab Completion
-#+begin_src sh
+#+begin_src zsh
 # Tab - menu completion
 bindkey '^I' expand-or-complete-prefix
 #+end_src
 
 **** Line Editing
-#+begin_src sh
+#+begin_src zsh
 # Ctrl+1 maps to Alt+1
 bindkey -s '^1' '\e1'
 #+end_src
@@ -329,7 +329,7 @@ bindkey -s '^X^X' ' [[ $(jobs) ]] || exec ${SHELL:-/bin/zsh}\n'
 #+end_src
 
 **** Wrapping
-#+begin_src sh
+#+begin_src zsh
 # Ctrl+X $ - wrap in $()
 bindkey -s '^X$' ' $()\e[D'
 
@@ -344,7 +344,7 @@ bindkey -s "^X'" " ''\e[D"
 #+end_src
 
 **** Redirections
-#+begin_src sh
+#+begin_src zsh
 bindkey -s '^X0' ' &>/dev/null '
 bindkey -s '^X1' ' >/dev/null '
 bindkey -s '^X2' ' 2>/dev/null '
@@ -352,7 +352,7 @@ bindkey -s '^X3' ' 2>&1 '
 #+end_src
 
 **** Emacs-Inspired Navigation
-#+begin_src sh
+#+begin_src zsh
 # Ctrl+X Ctrl+F - find file with fzf
 bindkey -s '^X^F' ' "$(fd -tf . 2>/dev/null | fzf)"\n'
 
@@ -367,7 +367,7 @@ bindkey -s '^Xd' ' "$(fd -td . 2>/dev/null | fzf)"\n'
 #+end_src
 
 **** Vi/Emacs Mode Toggle
-#+begin_src sh
+#+begin_src zsh
 # Alt+Ctrl+J - toggle between vi and emacs mode
 _toggle_vi_emacs() {
   if [[ $KEYMAP == vicmd ]] || [[ $KEYMAP == viins ]]; then
