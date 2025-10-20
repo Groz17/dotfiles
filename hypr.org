@@ -50,7 +50,8 @@ Set programs that you use
 # usa ENV vars?
 $terminal = ghostty
 #$fileManager = dolphin
-$fileManager = ghostty -e emacsclient -t --eval '(dired nil)'
+# $fileManager = ghostty -e emacsclient -t --eval '(dired nil)'
+$fileManager = emacsclient --eval '(dired nil)'
 # $menu = wofi --show drun
 # in futuro standalone emacs picker (elimina tutte le dipendenze)
 $menu = rofi -show drun -show-icons
@@ -535,7 +536,6 @@ bind = $mainMod shift, e, exec, [float;fullscreen]emacs -Q
 # bind=super , minus,exec, emacsclient -e '(eshell)' -c -a emacs
 
 # maybe these mappings should go under the terminal/ghostty keybind prefix (use zellij/tmux maybe?) or actually this is better maybe, use something like exwm
-# bind = $mainMod, v, exec, ghostty --fullscreen -e nvim
 bind = $mainMod, v, exec, ghostty --fullscreen -e nvim
 # create kanata chord for this?
 bind = $mainMod, B, exec, $browser
@@ -544,7 +544,7 @@ bind = $mainMod, B, exec, $browser
  # use emacs
 # bind = $mainMod, a, exec, ferdium --ozone-platform=wayland --enable-fetures-WaylandWindowDecorations
 
-# bind = $mainMod, period, exec, [float] $fileManager
+bind = $mainMod, period, exec, [float] $fileManager
 # crea submap per emacs bindings for email, dired, etc...
 #bind = $mainMod CTRL, x, d, exec, [float] $fileManager
 
@@ -556,7 +556,7 @@ bind = $mainMod, D, exec, $menu
 #+end_src
 
 *** Hypr Ecosystem
-#+begin_src python
+#+begin_src hyprlang
 # query screen for color
 bind = $mainMod, c, exec, hyprpicker -a
 # bind = $mainMod SHIFT, x, exec, hyprlock
@@ -775,7 +775,8 @@ bind = $mainMod , slash, exec, [float] $terminal
 # substitute with org-capture?
 bind = $mainMod , w, exec, [float] $terminal -e nvim ~/vimwiki/Personal/diary/`date +%F`.md -c 'set ft=' -c 'norm! G2o' -cstartinsert -c 'norm! zt'
 bind = $mainMod shift, w, exec, [float] $terminal -e nvim ~/vimwiki/Personal/diary/`date +%F`.md -c 'set ft=' -c 'norm! Go' -cstartinsert -c 'norm! zt'
-bind = SUPER, p, exec, sh -c '{ printf '\n'; wl-paste; } >> ~/vimwiki/Personal/diary/`date +%F`.md && dunstify "Saved in diary"'
+# FIX: per neovim unnamed register
+bind = SUPER, p, exec, sh -c '{ printf "\n"; wl-paste; } >> ~/vimwiki/Personal/diary/`date +%F`.md && dunstify "Saved in diary"'
 
 # for language learning? arabic/spanish (like anki)... I want this at startup
 # bind = $mainMod , a, exec, ~/scripts/DailyRandomAnki
