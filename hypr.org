@@ -801,7 +801,7 @@ emacs emms
 bind = $mainMod, u, submap, univArg
 submap = univArg
 
-bind = $mainMod, o, exec, sh -c 'lang=`tesseract --list-langs | tail -3 | rofi -dmenu`; grimblast --freeze save area - | tesseract -l $lang - - | wl-copy'
+bind = $mainMod, o, exec, sh -c 'lang=`tesseract --list-langs | tail -3 | ifne rofi -dmenu` && grimblast --freeze save area - | tesseract -l $lang - - | wl-copy'
 bind = $mainMod, o, submap, reset
 
 submap = reset
