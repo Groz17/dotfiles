@@ -42,7 +42,6 @@ esac
 # make it so man with multiple arguments open vim with multiple buffers/quickfix
 export MANPAGER="nvim +Man!"
 # export MANWIDTH=999
-export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 
 export OLLAMA_API_BASE=http://127.0.0.1:11434
 # export GPG_TTY=$(tty)
