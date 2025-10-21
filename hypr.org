@@ -27,6 +27,7 @@ source = ~/.config/hypr/myColors.conf
 - [ ] also u could use keys like f20 here (no modifier b4)
 - [ ] turn pane into own tab?
 - [ ] support v:count? bindv?
+- [ ] sync @" and terminal kill ring
 
 # hyprctl clients -j | jq -r '.[]|(.pid|tostring)+"\t"+.title' | grep -v "$USER"@ | rofi -dmenu  -display-column-separator '\t' -display-columns 2
 
@@ -96,7 +97,7 @@ exec-once = hypridle &
 **** Notification daemon
 #+begin_src hyprlang
 #exec-once = swaync
-# dunst
+exec-once = dunst &
 #+end_src  
 
 **** Clipboard
@@ -762,8 +763,13 @@ bind = SUPER, p, exec, ~/.config/hypr/scripts/send_to_diary
 #+end_src
 
 #+begin_src bash :tangle ~/.config/hypr/scripts/send_to_diary :shebang "#!/usr/bin/env bash"
-[[ `hyprctl activewindow -j | jq -r .title` == *" - Nvim" ]] && data=`nvim --server "$NVIM_LISTEN_ADDRESS" --remote-expr "getreg('\"')"` || data=`wl-paste`
-printf "%s\n" "$data" >> ~/vimwiki/Personal/diary/`date +%F`.md && dunstify "Saved in diary"
+if hyprctl activewindow -j | jq -e 'select(.title | endswith (" - Nvim"))'; then
+  socket=$(find /run/user/1000 -maxdepth 1 -name 'nvim.*.0' -type s -printf '%A@ %p\n' | sort -rn | head -1 | cut -d' ' -f2-)
+  data="$(nvim --headless --server "$socket" --remote-expr "getreg('\"')")"
+else
+  data=$(wl-paste)
+fi
+printf "%s\n" "$data" >> ~/vimwiki/Personal/diary/$(date +%F).md && dunstify "Saved in diary"
 #+end_src
 
 #+begin_src hyprlang
