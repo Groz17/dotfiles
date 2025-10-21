@@ -763,13 +763,14 @@ bind = SUPER, p, exec, ~/.config/hypr/scripts/send_to_diary
 #+end_src
 
 #+begin_src bash :tangle ~/.config/hypr/scripts/send_to_diary :shebang "#!/usr/bin/env bash"
+# waiting for ghostty scripting API...
 if hyprctl activewindow -j | jq -e 'select(.title | endswith (" - Nvim"))'; then
   socket=$(find /run/user/1000 -maxdepth 1 -name 'nvim.*.0' -type s -printf '%A@ %p\n' | sort -rn | head -1 | cut -d' ' -f2-)
   data="$(nvim --headless --server "$socket" --remote-expr "getreg('\"')")"
 else
   data=$(wl-paste)
 fi
-printf "%s\n" "$data" >> ~/vimwiki/Personal/diary/$(date +%F).md && dunstify "Saved in diary"
+printf "\n%s\n" "$data" >> ~/vimwiki/Personal/diary/$(date +%F).md && dunstify "Saved $data in diary"
 #+end_src
 
 #+begin_src hyprlang
