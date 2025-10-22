@@ -83,6 +83,7 @@ local general = {
     dock_feedback_window = true,
     show_feedback_window = true,
     search_for_custom_config = false,
+    use_f12_f14 = true,
     profile = false,
     -- should operators in visual modes reset the selection or have it persist?
     persist_visual_timeline_selection = true,
