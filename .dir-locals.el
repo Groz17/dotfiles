@@ -1,3 +1,4 @@
+;; TODO: automatically tangle when dependencies updated
 ((org-mode . ((eval . (progn
                         (when (locate-library "org")
                           (require 'ob-lob)
