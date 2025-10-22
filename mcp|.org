@@ -22,6 +22,9 @@ yt-dlp:
 fetch:
   type: local
   command: [ "uvx", " mcp-server-fetch" ]
+pdf-reader-mcp:
+  type: local
+  command: [ npx, '@sylphlab/pdf-reader-mcp']
 
 #+end_src
 
