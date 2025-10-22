@@ -890,7 +890,7 @@ background {
     monitor =
         # color = rgba(25, 20, 20, 1.0)
         # blur_passes = 2
-    path = ~/dotfiles/wallpapers/lockscreen/kanagawa.jpg
+    path = ~/dotfiles/pics/lockscreen/kanagawa.jpg
     blur_passes = 1
     contrast = 0.8916
     brightness = 0.8172
@@ -1166,8 +1166,8 @@ can u use source code (maybe elisp) to pick random image?
 #+begin_src hyprlang
 # preload=/tmp/anki
 # https://wallpapersafari.com/w/izoh9I/download
-preload=~/dotfiles/wallpapers/kanagawa_vaporwave.jpg
-wallpaper=,~/dotfiles/wallpapers/kanagawa_vaporwave.jpg
+preload=~/dotfiles/pics/wallpapers/kanagawa_vaporwave.jpg
+wallpaper=,~/dotfiles/pics/wallpapers/kanagawa_vaporwave.jpg
 # ipc = off
 #+end_src
 
