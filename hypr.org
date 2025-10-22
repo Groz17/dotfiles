@@ -213,7 +213,7 @@ decoration {
 # Change transparency of focused and unfocused windows
 # mapping for opacity
     active_opacity = 1
-    inactive_opacity = 0.8
+    inactive_opacity = 0.93
 
     shadow {
         enabled = true
