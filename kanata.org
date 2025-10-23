@@ -414,7 +414,7 @@ r (tap-hold 175 175 r (tap-hold-press-timeout 0 100 r (macro C-r) (macro S-r)))
 ;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (macro C-r) (macro S-u)))
 ;; for emacs (4 is the default)
 ;;maybe C-u for emacs? when held?
-u (tap-hold 175 175 u (tap-hold-press-timeout 0 100 u (macro C-u) (macro S-u)))
+u (tap-hold 175 175 u (tap-hold-press-timeout 0 150 u f19 (macro S-u)))
 ;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (multi lctl u) (macro S-u)))
 #+end_src
 
@@ -557,11 +557,12 @@ _ _ _
 MediaMute: i (i looks like a mic)
 Add missing keys w/ playerctl/mpv ipc... (stop, etc...)
 use cmd feature w/ playerctl
+  _ _ _              _              _ _   _ _   f19          f24      MediaTrackPrevious _
 #+begin_src kbd
 (deflayer audio
   _
   _ _ _              _              _ _   _ _   _          _        _                  _ _ _
-  _ _ _              _              _ _   _ _   f19          f24      MediaTrackPrevious _
+  _ _ _              _              _ _   _ _   _          f24      MediaTrackPrevious _
   _ _ _              f20            _ f21 _ f22 VolumeDown VolumeUp f23                _ _ _ _
   _ _ _              _              _ _   _ MediaTrackNext   VolumeMute _        _                  _ _
   _ _ _ MediaPlayPause _ _   _ _

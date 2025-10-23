@@ -398,7 +398,7 @@ bindl = $mainMod shift, n, exec, playerctl previous
 # needs mpv-mpris
 bind= , f22, exec, playerctl position 3-
 bind= , f23, exec, playerctl position 3+
-bind = , f19, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle
+# bind = , f19, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle
 #  sudo modprobe -r uvcvideo     # Unload (disable)
 
 
