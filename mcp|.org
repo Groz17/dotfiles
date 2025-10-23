@@ -25,6 +25,9 @@ fetch:
 pdf-reader-mcp:
   type: local
   command: [ npx, '@sylphlab/pdf-reader-mcp']
+freecad:
+  type: local
+  command: [ python3, ~/.local/share/FreeCAD/v1-1/Mod/freecad_mcp/src/freecad_bridge.py]
 
 #+end_src
 
