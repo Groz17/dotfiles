@@ -101,6 +101,10 @@ return { ["general"] = general, ["gui"] = gui }
 :header-args: :tangle ~/.config/REAPER/Scripts/reaper-keys/internal/definitions/bindings.lua
 :END:
 
+/Actions/ from: ~/.config/REAPER/Scripts/reaper-keys/internal/definitions/actions.lua
+
+Reverse action?
+
 ** Global
 #+begin_src lua
 ---@type Definition
@@ -267,6 +271,8 @@ local global = { -- applies both to main and midi
           ["<C-s>"] = "SaveProject",
           ["<C-w>"] = "SaveProjectAs",
           ["<C-v>"] = "SaveProjectWithNewVersion",
+          -- ["h"] = "SelectAllItems",
+          ["h"] = "SelectAllTracks",
 
           t = { "+tabs", {
             ["0"] = "CloseProject",
@@ -513,8 +519,6 @@ local global = { -- applies both to main and midi
             } },
             ["p"] = { "+project", {
                 [","] = "ShowProjectSettings",
-                ["n"] = "NextTab",
-                ["p"] = "PrevTab",
                 ["o"] = "OpenProject",
                 ["c"] = "NewProjectTab",
                 ["x"] = "CloseProject",
