@@ -377,7 +377,6 @@ bind = $mainMod , mouse:274, exec, hyprctl -q keyword cursor:zoom_factor 1 # mid
 
 *** [[https://wiki.hypr.land/Configuring/Binds/#media][Media]]
 Source/Software-agnostic keybindings
-Using f2\d keys?
 #+begin_src hyprlang
 bindel = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 bindel = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
@@ -388,58 +387,6 @@ bindel = ,XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 bindl = , XF86AudioPlay, exec, playerctl play-pause
 bindl = , XF86AudioPrev, exec, playerctl previous
 bindl = , XF86AudioNext, exec, playerctl next
-
-# go 10 sec forward? for tridactyl yt...
-# make these support v:count?
-# previous first in playlist? <S-BS>?
-bindl = $mainMod shift, n, exec, playerctl previous
-# bindl = $mainMod, less, exec, playerctl previous
-
-# needs mpv-mpris
-bind= , f22, exec, playerctl position 3-
-bind= , f23, exec, playerctl position 3+
-# bind = , f19, exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle
-#  sudo modprobe -r uvcvideo     # Unload (disable)
-
-
-# uppercase O for playlist?
-bind= , f24, exec, playerctl loop $( [ "$(playerctl loop)" = "None" ] && printf Track || printf None )
-#+end_src
-**** Audio effects
-Make this work w/ mpris/playerctl?
-#+begin_src hyprlang
-bind = , f21, exec, echo '{ "command": ["get_property", "af"] }' | socat - /tmp/mpvsocket | jq -er '.data[]?' ||\
-    { echo '{ "command": ["set_property", "af","lowpass=f=400"] }' | socat - /tmp/mpvsocket ; false ;}  &&\
-    echo '{ "command": ["set_property", "af",""] }' | socat - /tmp/mpvsocket 
-#+end_src
-
-
-**** Recognize song
-#+begin_src hyprlang
-bind = , f20, exec, ~/.config/hypr/scripts/recognize_song
-#+end_src
-
-#+begin_src bash :tangle ~/.config/hypr/scripts/recognize_song :noweb yes :shebang "#!/usr/bin/env bash"
-dunstify "Recognizing song..."
-
-cmd=(songrec)
-args=(recognize --json)
-
-if [[ <<chassis()>> == "desktop" ]]; then
-  cmd=(flatpak run com.github.marinm.songrec)
-  args+=(-d "Webcam C270 Mono")
-fi
-
-# Run the recognition command
-song_json="$(timeout 13 "${cmd[@]}" "${args[@]}" 2>/dev/null)"
-if [[ -n "$song_json" && "$song_json" != "null" ]]; then
-    artist="$(jq -r '.track.urlparams | .["{trackartist}"]' <<<"$song_json" | php -r 'echo urldecode(file_get_contents("php://stdin"));')"
-    title="$(jq -r '.track.urlparams | .["{tracktitle}"]' <<<"$song_json" |  php -r 'echo urldecode(file_get_contents("php://stdin"));')"
-  dunstify "Title: $title" "Artist: $artist"
-  printf "%s - %s\n" "$artist" "$title" | wl-copy
-else
-  dunstify "Song not found"
-fi
 #+end_src
 
 **** Songs
