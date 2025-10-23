@@ -29,7 +29,7 @@ export KUBECONFIG="$XDG_DATA_HOME"/kube
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 export ANDROID_USER_HOME="$XDG_DATA_HOME"/android
 export FZF_DEFAULT_OPTS_FILE="$XDG_CONFIG_HOME"/fzfrc
-# export INPUTRC="$HOME/.config/readline/inputrc"
+export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 #+end_src
 
 ** Preferred programs

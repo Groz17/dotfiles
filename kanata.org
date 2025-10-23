@@ -9,6 +9,10 @@
 ;; check if tangled code is valid kanata when saving?
 
 
+autoshift
+  I use a variable timing depending on the finger. From 100 ms on the index to 135 ms on the pinky. Note that I use low profile choc switches. 
+  activate autoshift only when key is released, so u can use whichkey neovim w/ 13 leader?
+
 * TODO TASK LIST
 org-babel for kanata/config files in general?
 
@@ -45,6 +49,40 @@ basically i want:
 - [ ] fai che df<symbol>=ctrl-alt-<symbol>, fd e rilascia->esc, fd e <symbol>->ctrl-alt-symbol layer
 - [ ] make a touchpad press be rpt-any? also explore zones... (maybe also for symbols, like %(left top)&^(right top), rpt-any (top center))
 
+- [ ] layer to select layers? which-key?
+- [ ] flash f13?
+- [ ] writing layer? like for quotes, em dash...
+- [ ]
+- [ ] mappings to transform last \S+ to pascal, camel (corce-like, same letters)
+- [ ]
+- [ ] bottom alt tap/hold mapping?
+- [ ]
+- [ ] one-shot shift? chord?
+- [ ]
+- [ ]
+- [ ] caps and ; for accents? digraphs?
+- [ ]
+- [ ] how to make tap-dance work with modifiers?
+- [ ] rpt-any should be in either side of the keyboard (maybe altgr/alt?)
+- [ ] how to use with multi like ^ww?
+- [ ]
+- [ ] mappa in modo da rendere piu facili combinazioni usate tipo ctrl-- and ctrl-+ per zoomare?
+- [ ]
+- [ ] magari, asdfc -> leader, ctrl, alt, symbols, localleader (oppure switcha c-x and c-c in emacs cosi diventa alt,ctrl... pessima idea?)
+- [ ] also sdc are easier to type together
+- [ ] mappa ctrl-o per normal mode comments in neovim?
+- [ ] make ctrl-letter generalized: when not release act as ctrl (do these for All letters and maybe overwrite for HRM?)
+- [ ]
+- [ ] press symbol that toggle the functionality of a key? like for mouse/square brackets
+- [ ]
+- [ ] crea prefix for popup completion?
+- [ ]
+- [ ] use altgr hold for accents/fancy symbols like em dash?
+- [ ]
+- [ ] maybe use prefix for operators? like g or d hold?
+- [ ]
+- [ ] mouse layer: trackpoint held and j left k right m middle
+
 crea tutti o i piu importanti prefix in emacs like (place keys considering importance and mnemonics, like /&? for M-s)
 - [X] C-h
 - [X] C-x
@@ -79,10 +117,8 @@ crea tutti o i piu importanti prefix in emacs like (place keys considering impor
 #+end_src
 
 * KEYBOARD
-conditinally tangle:
-, #+begin_src python :tangle (when (not (string-match  "Battery status not available" (battery))) "laptop.sh")
 
-make ansi and iso defsrc?
+@ISO extra key from ANSI
 
 #+begin_src kbd
 ;; e un bene che bspc sia in una posizione scomodina (non vuoi favoreggiare sbagli)
@@ -129,17 +165,12 @@ you could inoremap/abbrev them tbh
 (defalias
 
 ;; []-> -+/_*
-  ;; [   (tap-hold 200 249 (macro S-5) (macro S-bspc)) ;; same place as [{
   [   (tap-hold 200 249 [ [) ;; same place as [{
-  ;; [   (tap-hold 200 249 - (macro S--) ;; same place as [{
-  ;; ]   (tap-hold 200 249 (macro S-1) (macro S-bspc)) ;; comfortable to type %!
   ]   (tap-hold 200 249 ] (macro S-8))
   \   (tap-hold 175 175 \ (macro S-\))
   ;; f11 lrld
-  ;;  f11 f11
   ;;f11 (layer-switch nav)
 
-  ;; tab   (tap-hold 0 175 tab (macro S-tab))
   ;; alla fine tab naviga nei form...
  ;; tab (tap-hold 175 100 tab (tap-hold-release-timeout 0 200 tab (layer-while-held nav) (macro S-tab)))
  tab (tap-hold 175 100 tab (tap-hold-release-timeout 0 200 tab (layer-while-held nav) (macro S-tab)))
@@ -221,13 +252,10 @@ you could inoremap/abbrev them tbh
   ;; ralt esc
 
   ;;lctl (macro S-3)
-   ;; lctl \
    lctl rpt-any ;; ... doesn't work with c-m-s-v though? for emacs
   ;;lctl (macro S-1) ;; near | and vertical aligned with 1/!
   rctl (macro S-8)
-  ;;rctl (macro S-\)
   ;; facile usare |-tab in orgmode (also nice for pipelines near -)
-  ;; lmet \
   ;; so i can easily do |- in org mode for tables ; also near - for bash commands
   lmet (macro S-\)
 
@@ -295,6 +323,9 @@ mlft mlft
 #+end_src
 
 ** Macros
+;; rmet-q(dynamic-macro-record 0)
+;; rmet-@(dynamic-macro-play   0)
+
 EXWM would be perfect for these ig
 v:count?
 also S-9 and S-0 could be an idea (like emacs c-x())
@@ -316,7 +347,6 @@ grv (tap-hold 200 249 (dynamic-macro-play 0) (macro S-grv)) ;; usa C-u 0 for ema
 
 ;; double shift/caps tab?
 ;; map it to disable/toggle kanata (for when you pass pc to other)
-;; esc caps
 ;; esc (tap-hold 200 249 (dynamic-macro-play 0) (macro S-grv)) ;; usa C-u 0 for emacs
 ;; how to repeat?
 ;; esc (tap-hold 200 249 (dynamic-macro-play 0) (dynamic-macro-play 0)) ;; usa C-u 0 for emacs
@@ -339,7 +369,6 @@ spc (tap-hold-press-timeout 0 200 spc lmet (multi S-spc))
 ;; make lctl sticky (for ctrl-h backspace), like ctrl-h and then press again should repeat?
 ;; if d and m pressed at the same time-> double ctrl, for things like c-cr (c-c-m)
 d (tap-hold 175 175 d (tap-hold-press-timeout 0 230 d lctl (macro S-d)))
-
 k (tap-hold 175 175 k (tap-hold-press-timeout 0 230 k rctl (macro S-k)))
 #+end_src
 
@@ -348,8 +377,6 @@ k (tap-hold 175 175 k (tap-hold-press-timeout 0 230 k rctl (macro S-k)))
 ;; change this out for the list:https://github.com/jtroo/kanata/blob/main/cfg_samples/home-row-mod-advanced.kbd
 f (tap-hold 175 175 f (tap-hold-press-timeout 0 230 f lalt (macro S-f)))
 ;; usa release e press solo x escape...
-
-;; j (tap-hold 150 150 j (tap-hold-press-timeout 0 200 j (layer-while-held syms_for_j) (macro S-j)))
 j (tap-hold 175 175 j (tap-hold-press-timeout 0 230 j lalt (macro S-j)))
 
 #+end_src
@@ -365,8 +392,6 @@ z (tap-hold 150 175 z (tap-hold-press-timeout 0 75 z f13 (macro S-z)))
 
 ** TODO
 #+begin_src kbd
-;; v (tap-hold 150 200 v (tap-hold-press-timeout 0 150 v i (macro S-v)))
-;; n (tap-hold 150 200 n (tap-hold-press-timeout 0 150 n i (macro S-n)))
 v (tap-hold-press-timeout 175 175 v v (macro S-v))
 n (tap-hold-press-timeout 175 175 n n (macro S-n))
 #+end_src
@@ -405,50 +430,33 @@ a (tap-hold 175 175 a (tap-hold-press-timeout 0 175 a f16 (macro S-a)))
 #+end_src
 
 #+begin_src kbd
-
-;; ───────────────────────────── register ──────────────────────────────
 ;; one-shot modifier for ctrl-u universal arg?
 ;;per vim
-r (tap-hold 175 175 r (tap-hold-press-timeout 0 100 r (macro C-r) (macro S-r)))
+r (tap-hold 175 175 r (tap-hold-press-timeout 0 100 r f19 (macro S-r)))
 ;; work on autorepeat? like if over>250 UU?
-;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (macro C-r) (macro S-u)))
 ;; for emacs (4 is the default)
 ;;maybe C-u for emacs? when held?
 u (tap-hold 175 175 u (tap-hold-press-timeout 0 150 u f19 (macro S-u)))
-;;u (tap-hold 175 150 u (tap-hold-press-timeout 0 100 u (multi lctl u) (macro S-u)))
 #+end_src
 
 ** C-x emacs
 C-x is also useful for readline
 
 #+begin_src kbd
-;; s (tap-hold 150 175 s (tap-hold-press-timeout 0 75 s f13 (macro S-s)))
 ;;s (tap-hold-release 150 175 s (tap-hold-press-timeout 0 75 s (macro C-x) (macro S-s)))
 ;; how to activate C-x when pressed and not released?
 ;;s (tap-hold 150 175 s (tap-hold-press-timeout 0 230 s (macro C-x) (macro S-s)))
-;;s (tap-hold 150 175 s (tap-hold-press-timeout 0 230 s f15 (macro S-s)))
-;; f15 not recognized in terminal (for readline c-x c-e) (.inpurc line)
 ;; make it press f12 unless released so which-key buffer pops up...
 ;; make it hyper so u can hold s, sd, etc...
 s (tap-hold 150 175 s (tap-hold-press-timeout 0 230 s f12 (macro S-s)))
 
-;; l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l f13 (macro S-l)))
-;; l (tap-hold 150 175 l (tap-hold-press-timeout 0 75 l f15 (macro S-l)))
 l (tap-hold 150 175 l (tap-hold-press-timeout 0 150 l f12 (macro S-l)))
 #+end_src
 
 #+begin_src elisp
-
-  ;; basically d and f are ctrl and alt, and x is c, c is ctrl alt (fusion of d and f) and v is alt
-  ;;x (tap-hold-press-timeout 175 175 x (multi lctl u lctl) (macro S-x))
-  ;;x (tap-hold-press-timeout 175 175 x (multi lctl c lctl x lctl) (macro S-x))
-  ;; basically x is for snacks keymaps (ks mnemonic)
-  ;; maybe map to c-c c-x? it's in the middle of c-x and c-c
-  ;;x (tap-hold-press-timeout 175 175 x f14 (macro S-x))
-  x (tap-hold 150 175 x (tap-hold-press-timeout 0 124 x x (macro S-x)))
-  ;;, (tap-hold-press-timeout 190 157 , (multi lctl c lctl x) (macro S-,))
-  ;; , (tap-hold-press-timeout 190 157 , f14 (macro S-,))
-  , (tap-hold-press-timeout 190 157 , , (macro S-,))
+;; basically x is for snacks keymaps (ks mnemonic)
+x (tap-hold 150 175 x (tap-hold-press-timeout 0 124 x x (macro S-x)))
+, (tap-hold-press-timeout 190 157 , , (macro S-,))
 #+end_src
 
 ** Help
@@ -479,9 +487,7 @@ y (tap-hold 150 200 y (tap-hold-press-timeout 0 150 y f14 (macro S-y)))
 p (tap-hold-press-timeout 175 175 p p (macro S-p))
 q (tap-hold-press-timeout 175 175 q q (macro S-q))
 
-;;n (tap-hold 150 175 n (tap-hold-press-timeout 0 124 n (macro C-c C-v) (macro S-n)))
 b (tap-hold-press-timeout 175 175 b b (macro S-b))
-;;n (tap-hold-press-timeout 175 175 n n (macro S-n))
 #+end_src
 
 #+begin_src kbd
@@ -541,16 +547,6 @@ _ _ _ _     _ _ _ _    ret  _  _    _ _
 _ _ _ _     _ _ _ _
 _ _ _
 )
-
-;; (deflayer nav_sx
-;; _
-;; _ _ _ _ _ _ _ _ _ _ _ _ _
-;;      _    _    _    _    _    _   _    _    _    _    _
-;;   _    _    _    rght    up    down    lft    _ _ _ _    _  _  _ _
-;;   _   _ _    _    _    _    _    _    _    _    _    _    _
-;; _ _ _  _              _              _   _
-;;    _ _ _ 
-;; )
 #+end_src
 
 ** TODO Audio
@@ -590,8 +586,6 @@ is it possible to do a tap-hold but for chords? for |...
 ;; would be nice if it worked with <C-h>
 (lsft rsft) (caps-word 10000) 250 first-release ()
 
-;; flash f13?
-
 ;;(mlft mrgt) rpt-any 250 first-release ()
 #+end_src
 
@@ -618,46 +612,5 @@ In the future use picker like on phone?
 
 (u caps)  (unicode ù) 100 first-release ()
 (u ')  (unicode ú) 100 first-release ()
-
 )
 #+end_src
-
-;; rmet-q(dynamic-macro-record 0)
-;; rmet-@(dynamic-macro-play   0)
-
-;; layer to select layers? which-key?
-
-;; writing layer? like for quotes, em dash...
-
-;; mappings to transform last \S+ to pascal, camel (corce-like, same letters)
-
-;; bottom alt tap/hold mapping?
-
-;; one-shot shift? chord?
-
-;;autoshift
-;; I use a variable timing depending on the finger. From 100 ms on the index to 135 ms on the pinky. Note that I use low profile choc switches. 
-;; activate autoshift only when key is released, so u can use whichkey neovim w/ 13 leader?
-
-;; caps and ; for accents? digraphs?
-
-;; how to make tap-dance work with modifiers?
-;;rpt-any should be in either side of the keyboard (maybe altgr/alt?)
-;; how to use with multi like ^ww?
-
-;; mappa in modo da rendere piu facili combinazioni usate tipo ctrl-- and ctrl-+ per zoomare?
-
-;; magari, asdfc -> leader, ctrl, alt, symbols, localleader (oppure switcha c-x and c-c in emacs cosi diventa alt,ctrl... pessima idea?)
-;; also sdc are easier to type together
-;; mappa ctrl-o per normal mode comments in neovim?
-;; make ctrl-letter generalized: when not release act as ctrl (do these for All letters and maybe overwrite for HRM?)
-
-;; press symbol that toggle the functionality of a key? like for mouse/square brackets
-
-;; crea prefix for popup completion?
-
-;; use altgr hold for accents/fancy symbols like em dash?
-
-;; maybe use prefix for operators? like g or d hold?
-
-;; mouse layer: trackpoint held and j left k right m middle

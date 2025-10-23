@@ -1,6 +1,5 @@
 HACK: f12 becomes ~ on ghostty
-#+property: header-args :tangle ~/.inputrc
-,#+property: header-args :tangle ~/.config/readline/inputrc
+#+property: header-args :tangle ~/.config/readline/inputrc
 #+startup: content
 
 * TODO TASK LIST
