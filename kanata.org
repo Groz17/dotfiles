@@ -586,10 +586,10 @@ fi
 microphone (cmd pactl set-source-mute @DEFAULT_SOURCE@ toggle)
 ;; previous first in playlist? <S-BS>?
 ;; make these support v:count? or should hyprland?
-recognize (cmd bash -c "sudo -u `id -un` ~/.config/hypr/scripts/recognize_song")
-fx (cmd bash -c "sudo -u `id -un` ~/.config/hypr/scripts/fx")
+recognize (cmd bash -c "~/.config/hypr/scripts/recognize_song")
+fx (cmd bash -c "~/.config/hypr/scripts/fx")
 ;; uppercase O for playlist?
-loop (cmd bash -c "sudo -u `id -un` playerctl loop $( [ $(playerctl loop) = None ] && printf Track || printf None )")
+loop (cmd bash -c "playerctl loop $( [ $(playerctl loop) = None ] && printf Track || printf None )")
 
 ;; needs mpv-mpris
 back (cmd playerctl position 3-)
