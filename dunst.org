@@ -1,6 +1,7 @@
 #+property: header-args :tangle ~/.config/dunst/dunstrc
 #+begin_src conf
 [global]
+font = Cousine 10
 monitor = 1
 frame_width = 1
 frame_color = "#ff6ec7"
@@ -14,7 +15,7 @@ corners = all
 progress_bar_corners = top-left,bottom-right
 offset = (15, 25)
 gap_size = 5
-format = "<b>󰁕 %a</b>\n%s\n<i>%b</i>"
+format = "<big><span size="x-large" color="rebeccapurple"><b>%a</b></span>\n<span foreground="#000000">%s</span>\n%b</big>"
 
 [urgency_low]
 foreground = "#00ffff"
