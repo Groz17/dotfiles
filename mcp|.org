@@ -27,7 +27,7 @@ pdf-reader-mcp:
   command: [ npx, '@sylphlab/pdf-reader-mcp']
 freecad:
   type: local
-  command: [ python3, ~/.local/share/FreeCAD/<<FreeCAD_Path()>>/Mod/freecad_mcp/src/freecad_bridge.py]
+  command: [ python3, ~/.local/share/FreeCAD<<FreeCAD_Version()>>Mod/freecad_mcp/src/freecad_bridge.py]
 #+end_src
 
 #+name: MCP
@@ -37,7 +37,7 @@ freecad:
 EOF
 #+end_src
 
-#+name: FreeCAD_Path
+#+name: FreeCAD_Version
 #+begin_src bash :tangle no :noweb yes
-[[ <<chassis()>> = "desktop" ]] && echo 'v1-1' || echo ''
+[[ <<chassis()>> = "desktop" ]] && echo '/v1-1/' || echo '/'
 #+end_src

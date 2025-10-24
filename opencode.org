@@ -20,7 +20,7 @@
   },
   "models": {
     "qwen3:14b": {
-      "name": "Qwen 3",
+      "name": "Qwen 3"
     }
   }
 }
