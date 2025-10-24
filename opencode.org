@@ -11,7 +11,7 @@
 #+end_src
 
 * Providers
-#+begin_src jsonc :prologue "\"provider\":{" :epilogue "}}"
+#+begin_src jsonc :prologue "\"provider\":{" :epilogue "}}" :padline no
 "ollama": {
   "npm": "@ai-sdk/openai-compatible",
   "name": "Ollama (local)",
