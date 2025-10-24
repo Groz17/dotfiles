@@ -5,7 +5,7 @@ check if file can/should be tangled...
 tmpfile=$(mktemp)
 trap 'rm -f "$tmpfile"' EXIT
 
-if ! git diff --exit-code -z --name-only ORIG_HEAD @ -- '*[^|].org' > "$tmpfile"; then
+if ! git diff --diff-filter=d --exit-code -z --name-only ORIG_HEAD @ -- '*[^|].org' > "$tmpfile"; then
 
  read -r -n1 -p $'\nTangle pulled org files? [y|n] ' < /dev/tty
  [[ $REPLY = 'n' ]] && { printf '\n'; exit 1; }
