@@ -1,6 +1,6 @@
 * MCP servers
 #+name: MCP_YAML
-#+begin_src yaml
+#+begin_src yaml :noweb yes
 gh_grep:
   type: remote
   url: https://mcp.grep.app
@@ -27,8 +27,7 @@ pdf-reader-mcp:
   command: [ npx, '@sylphlab/pdf-reader-mcp']
 freecad:
   type: local
-  command: [ python3, ~/.local/share/FreeCAD/v1-1/Mod/freecad_mcp/src/freecad_bridge.py]
-
+  command: [ python3, ~/.local/share/FreeCAD/<<FreeCAD_Path()>>/Mod/freecad_mcp/src/freecad_bridge.py]
 #+end_src
 
 #+name: MCP
@@ -36,4 +35,10 @@ freecad:
 <<'EOF' yq -oj|head -c -1
 <<MCP_YAML>>
 EOF
+#+end_src
+
+#+name: FreeCAD_Path
+#+begin_src bash :tangle no :noweb yes
+[[ <<chassis()>> = "desktop" ]] && echo 'v1-1' || echo ''
+#+end_src
 #+end_src
