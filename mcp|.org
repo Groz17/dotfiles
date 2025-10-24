@@ -41,4 +41,3 @@ EOF
 #+begin_src bash :tangle no :noweb yes
 [[ <<chassis()>> = "desktop" ]] && echo 'v1-1' || echo ''
 #+end_src
-#+end_src
