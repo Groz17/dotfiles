@@ -249,10 +249,6 @@ bind --mode=ex     <C-g> composite text.beginning_of_line ; text.forward_word ; 
 #+begin_src tridactyl
 bind --mode=normal <space>a composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append
 bind --mode=normal <space>A composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/append_no_space
-" Clipboard mapping?
-" bind <space>c exclaim_quiet sh -c 'printf '\n%s\n' "$(wl-paste)" >> ~/todo && notify-send "Sent Clipboard"'
-bind --mode=normal <space>c exclaim_quiet bash -c 'clip="$(wl-paste)" && echo >> ~/vimwiki/Personal/diary/`date +%F`.md && echo "$clip" >> ~/vimwiki/Personal/diary/`date +%F`.md && notify-send "Clipboard in diary" "$clip"'
-bind <space>C exclaim_quiet bash -c 'clip="$(wl-paste)" && echo "$clip" >> ~/vimwiki/Personal/diary/`date +%F`.md && notify-send "Clipboard in diary (No Newline)" "$clip"'
 
 bind --mode=normal <space>s composite get_current_url | shellescape | exclaim_quiet ~/.config/tridactyl/scripts/subs
 
