@@ -155,7 +155,7 @@ bindurl ^https://en.wikipedia.org/wiki/ <f12><c-s> composite get_current_url | s
 dir=~/vimwiki/"$(fd -E '.git/' -td . ~/vimwiki| cut -f1-4 --complement -d/ | rofi -dmenu -i -sort)"resources/pdfs
 page="${1##*/}"
 API="${1%/wiki/$page}/api/rest_v1/page/pdf/$page"
-wget -O "$dir"/"$page".pdf "$API" && dunstify "Saved $dir" "$API" || dunstify -a tridactyl -u critical "Error" "Article couldn't be downloaded"
+wget -O "$dir"/"$page".pdf "$API" && dunstify -a tridactyl "Saved $dir" "$API" || dunstify -a tridactyl -u critical "Error" "Article couldn't be downloaded"
 #+end_src
 
 ** [[https://github.com/yashasolutions/tridactylmode/blob/master/sample-tridactylrc.tri][Emacs-inspired]]
