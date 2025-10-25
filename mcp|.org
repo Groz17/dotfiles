@@ -29,6 +29,7 @@ freecad:
   type: local
   command: [ uvx, freecad-mcp]
 #+end_src
+# npx -y github:nietus/anki-mcp
 
 #+name: MCP
 #+begin_src bash :noweb yes :results raw

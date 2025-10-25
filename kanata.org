@@ -594,11 +594,12 @@ loop (cmd bash -c "playerctl loop $( [ $(playerctl loop) = None ] && printf Trac
 ;; needs mpv-mpris
 back (cmd playerctl position 3-)
 forward (cmd playerctl position 3+)
+restart (cmd playerctl position 0)
 )
 
 (deflayer audio
   _
-  _ _ _              _              _ _   _ _   _          _        _                  _ _ _
+  _ _ _              _              _ _   _ _   _          _        @restart                  _ _ _
   _ _ _              _              _ _   _ _   @microphone          @loop      MediaTrackPrevious _
   _ _ _              @recognize            _ @fx _ @back VolumeDown VolumeUp @forward                _ _ _ _
   _ _ _              _              _ _   _ MediaTrackNext   VolumeMute _        _                  _ _
