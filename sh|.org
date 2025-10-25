@@ -268,6 +268,7 @@ eval "$(direnv hook $shell)"
 
 # Please ensure that zoxide is initialized right at the end of your shell configuration file (usually ~/.bashrc).
 eval "$(zoxide init --cmd j $shell)"
+eval "$(himalaya completion $shell)"
 #+end_src
 
 # eval "$(pay-respects bash --alias| sed '$s/f/fk/')"
