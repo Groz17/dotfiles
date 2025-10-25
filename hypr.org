@@ -717,7 +717,7 @@ if hyprctl activewindow -j | jq -e 'select(.title | endswith (" - Nvim"))'; then
 else
   data="$(wl-paste)"
 fi
-printf "\n%s" "$data" >> ~/vimwiki/Personal/diary/$(date +%F).md && dunstify -a wl-paste "Clipboard in diary" "$data"
+printf "\n%s" "$data" >> ~/vimwiki/Personal/diary/$(date +%F).md && dunstify -a clipboard "Clipboard in diary" "$data"
 cliphist list | head -1 | cliphist delete
 #+end_src
 
