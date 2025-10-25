@@ -291,7 +291,7 @@ hyprctl dispatch exec '[float;size 30% 30%] ghostty -e nvim -c "norm 1 Qy"'
 wl-paste |
 xidel --html -e 'x:replace-nodes(/,//a/(@* except @href),())' |
 xidel --html -e 'x:replace-nodes(/,//img/(@* except @src),())' |
-pandoc --wrap=preserve --from html --to commonmark-raw_html+pipe_tables  | wl-copy && dunstify "Selection copied to clipboard"
+pandoc --wrap=preserve --from html --to commonmark-raw_html+pipe_tables  | wl-copy && dunstify -a tridactyl "Selection copied to clipboard" "$(wl-paste)"
 # except (@(href|src))???
 #+end_src
 
