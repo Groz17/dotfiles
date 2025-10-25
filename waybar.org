@@ -22,7 +22,7 @@ notifiche ricevute?
 ** Modules
 *** Arrangement
 
-#+begin_src conf
+#+begin_src conf :noweb yes
 "modules-left": [
   "hyprland/workspaces",
   "mpris",
@@ -33,15 +33,23 @@ notifiche ricevute?
 "modules-center": ["clock", "privacy"],
 
 "modules-right": [
-  "bluetooth",
   "tray",
   // "cpu_text",
   "cpu",
   "memory",
-  "battery",
   "network",
+  <<laptop_modules()>>
   "pulseaudio"
 ],
+#+end_src
+
+*** Laptop-specific
+#+name: laptop_modules
+#+begin_src bash :noweb yes :results raw :tangle no
+[ <<chassis()>> == "laptop"] && cat << 'EOF'|head -c -1
+  "bluetooth",
+  "battery",
+EOF
 #+end_src
 
 *** Custom
