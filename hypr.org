@@ -1101,7 +1101,7 @@ listener {
   # on-timeout = DISPLAY=:0 dunstify "Take a break"
   # on-timeout = paplay /usr/share/sounds/freedesktop/stereo/message.oga
   # run-once
-  on-timeout =  zenity --info --text="Take a break!"
+  on-timeout =  pgrep zenity || zenity --info --text="Take a break!"
 }
 #+end_src
 
