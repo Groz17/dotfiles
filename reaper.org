@@ -108,6 +108,7 @@ Reverse action?
 ** Global
 #+begin_src lua
 ---@type Definition
+-- use <c-f><c-b> to move horizontally as well (readline)
 local global = { -- applies both to main and midi
     timeline_motion = {
         ["0"] = "ProjectStart",
@@ -168,7 +169,7 @@ local global = { -- applies both to main and midi
         ["<CM-x>"] = "ShowBindingList",
         -- (doesn't work...)
         ["<F18>b"] = "ShowBindingList", 
-        ["<ESC>"] = "Reset",
+        ["<ESC>"] = "SetModeNormal",
         ["<C-g>"] = "Reset",
         ["<S-<ESC>>"] = "ClearTimeSelection",
 
