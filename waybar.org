@@ -191,7 +191,7 @@ notifiche ricevute?
         // how to fit at most to next section?
     "max-length": 70,
 
-    "ignored-players": ["firefox"],
+    // "ignored-players": ["firefox"],
     "interval": 1,
 
     "on-scroll-up": "playerctl position 3+",
