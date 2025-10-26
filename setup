@@ -1,3 +1,11 @@
 #!/usr/bin/env bash
 emacs execute buffer?
 tuned-adm powersaver when battery<20%?
+
+termpdf.py fix (line 1858)
+    log_path = os.path.expanduser(
+        os.path.join(os.getenv("XDG_CACHE_HOME", "~/.cache"), 'termpdf.py', 'termpdf.log')
+    )
+    os.makedirs(os.path.dirname(log_path), exist_ok=True)
+
+    logging.basicConfig(filename=log_path, level=logging.WARNING)
