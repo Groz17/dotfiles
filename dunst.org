@@ -25,15 +25,15 @@ alignment=center
 [urgency_low]
 foreground = "#00ffff"
 frame_color = "#00ffff"
-default_icon = "~/dotfiles/pics/notifications/bell-badge-low.svg"
+default_icon = "~/dots/pics/notifications/bell-badge-low.svg"
 
 [urgency_normal]
 foreground = "#ff6ec7"
 frame_color = "#ff6ec7"
-default_icon = "~/dotfiles/pics/notifications/bell-badge.svg"
+default_icon = "~/dots/pics/notifications/bell-badge.svg"
 
 [urgency_critical]
 foreground = "#ff00ff"
 frame_color = "#ff00ff"
-default_icon = "~/dotfiles/pics/notifications/alert-decagram.svg"
+default_icon = "~/dots/pics/notifications/alert-decagram.svg"
 #+end_src

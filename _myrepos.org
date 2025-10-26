@@ -7,8 +7,8 @@ mr status doesn't work?
 [DEFAULT]
 pre_pull = echo ${MR_REPO}
 
-[dotfiles]
-checkout = git clone 'git@github.com:Groz17/dotfiles' 'dotfiles'
+[dots]
+checkout = git clone 'git@github.com:Groz17/dots' 'dots'
 
 [.config/nvim]
 checkout = git clone 'git@github.com:Groz17/nvim.git' 'nvim'
