@@ -17,9 +17,10 @@ corners = all
 progress_bar_corners = top-left,bottom-right
 offset = (9, 9)
 gap_size = 5
-format = "<big><span size="x-large" color="rebeccapurple"><b>%a</b></span>\n%s\n<span color="peachpuff">%b</span></big>"
+format = "<big><span size="x-large" color="rebeccapurple"><b>%a</b></span>\n%s\n<span color="MediumSpringGreen">%b</span></big>"
 
 markup = no
+alignment=center
 
 [urgency_low]
 foreground = "#00ffff"
