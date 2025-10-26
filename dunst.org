@@ -19,6 +19,8 @@ offset = (9, 9)
 gap_size = 5
 format = "<big><span size="x-large" color="rebeccapurple"><b>%a</b></span>\n%s\n<span color="peachpuff">%b</span></big>"
 
+markup = no
+
 [urgency_low]
 foreground = "#00ffff"
 frame_color = "#00ffff"

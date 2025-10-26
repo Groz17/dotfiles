@@ -52,6 +52,7 @@ st = status
 a = add
 
 ci = commit
+br = branch
 
 d = diff
 dt = difftool
