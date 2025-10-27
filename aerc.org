@@ -4,5 +4,7 @@ accounts.conf
 aerc.conf
 * binds
 binds.conf
+<Enter> = :view<Enter>
+l = :view<Enter>
 * personal
 personal.qmap
