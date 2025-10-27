@@ -83,6 +83,9 @@ setopt PUSHD_TO_HOME
 #+begin_src zsh
 # Treat `#`, `~`, and `^` as patterns for filename globbing.
 setopt EXTENDED_GLOB
+
+# Pass through unmatched patterns like Bash (instead of failing)
+setopt NO_NOMATCH
 #+end_src
 
 *** History
@@ -299,6 +302,9 @@ bindkey '^I' expand-or-complete-prefix
 
 **** Line Editing
 #+begin_src zsh
+# Ctrl+U - kill from cursor to beginning of line (like Bash)
+bindkey '^U' backward-kill-line
+
 # Ctrl+1 maps to Alt+1
 bindkey -s '^1' '\e1'
 #+end_src
