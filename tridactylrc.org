@@ -960,6 +960,8 @@ quickmark p https://www.perplexity.ai
 #+end_src
 
 * [[https://github.com/tridactyl/tridactyl/wiki/Video-mode][Video Mode]]
+
+autocmd DocLoad ^https://www.youtube.com/watch\? exec printf '{"ChangeLayer":{"new":"audio"}} ' | nc -w1 127.0.0.1 31415 could be an idea as well
 bind --mode=video <space> keyfeed <space>
 ** Enter and exit the mode
 #+begin_src tridactyl
