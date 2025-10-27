@@ -306,6 +306,10 @@ bindkey '^I' expand-or-complete-prefix
 # Ctrl+U - kill from cursor to beginning of line (like Bash)
 bindkey '^U' backward-kill-line
 
+# Ctrl+W - keep default Zsh behavior (delete to whitespace)
+# select-word-style bash changes this, so restore the original widget
+bindkey '^W' .backward-kill-word
+
 # Ctrl+1 maps to Alt+1
 bindkey -s '^1' '\e1'
 #+end_src
