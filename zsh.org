@@ -283,8 +283,9 @@ setopt LIST_AMBIGUOUS
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu select
 
-# Make word movements stop at punctuation like Bash
-WORDCHARS=''
+# Use Bash-style word boundaries for all word operations
+autoload -Uz select-word-style
+select-word-style bash
 #+end_src
 
 *** Keybindings
