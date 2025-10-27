@@ -9,3 +9,5 @@ termpdf.py fix (line 1858)
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
 
     logging.basicConfig(filename=log_path, level=logging.WARNING)
+
+inverti _ meaning in org files
