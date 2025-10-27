@@ -1,0 +1,8 @@
+* accounts
+accounts.conf
+* aerc
+aerc.conf
+* binds
+binds.conf
+* personal
+personal.qmap
