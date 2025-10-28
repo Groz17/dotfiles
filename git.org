@@ -67,6 +67,7 @@ review = "!git fetch origin && git difftool -d origin/HEAD...HEAD"
 
 conflicts = diff --check --relative
 jump = !sh \"$(locate /usr/share/ -A /git-jump/git-jump | grep '^/usr')\"
+j = jump
 
 dirdiff = difftool --ignore-submodules --dir-diff --no-symlinks --tool=vimdirdiff
 # list branches sorted by last modified
