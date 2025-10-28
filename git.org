@@ -22,8 +22,7 @@ useConfigOnly=true
 
 ** Core
 #+begin_src gitconfig :prologue "[core]"
-# use $EDITOR?
-editor = nvim
+; editor = nvim
 compression=9
 autocrlf = input
 ; pager = delta --dark
