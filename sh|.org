@@ -35,6 +35,7 @@ alias helpme='cht.sh --shell'
 # Get the error messages from journalctl
 # alias jctl="journalctl -p 3 -xb"
 
+alias n="notmuch"
 alias m="man"
 alias v="nvim"
 alias vi="vim -i NONE"
