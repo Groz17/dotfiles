@@ -65,6 +65,9 @@ l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --
 c = clone
 review = "!git fetch origin && git difftool -d origin/HEAD...HEAD"
 
+conflicts = diff --check --relative
+jump = !sh \"$(locate /usr/share/ -A /git-jump/git-jump)\"
+
 dirdiff = difftool --ignore-submodules --dir-diff --no-symlinks --tool=vimdirdiff
 # list branches sorted by last modified
 b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
