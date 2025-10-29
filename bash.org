@@ -1,9 +1,6 @@
 #+property: header-args :tangle ~/.bashrc
 #+startup: content
 
-* TODO TASK LIST
-# PROMPT_COMMAND='printf "\033]133;A\007"'
-
 #+begin_src bash
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return

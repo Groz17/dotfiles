@@ -11,7 +11,6 @@ source = ~/.config/hypr/myColors.conf
 :END:
 
 ** TODO TASK LIST
-- [ ] one-shot emacs/neovim keybinding, like C-c r for eradio?
 - [ ] bindsym $mod+s sticky toggle
 - [ ] add search image in clipboard? after using grim...
 - [ ] hyprshot don't save to clipboard
@@ -714,6 +713,8 @@ bind = SUPER, p, exec, ~/.config/hypr/scripts/send_to_diary
 if hyprctl activewindow -j | jq -e 'select(.title | endswith (" - Nvim"))'; then
   socket=$(find $XDG_RUNTIME_DIR -maxdepth 1 -name 'nvim.*.0' -type s -printf '%A@ %p\n' | sort -rn | head -1 | cut -d' ' -f2-)
   data="$(nvim -u NONE --headless --server "$socket" --remote-expr "getreg('\"')")"
+elif hyprctl activewindow -j | jq -e 'select(.class == "emacs" or (.title | endswith (" - Nvim")))'; then
+  data="$(emacsclient -e '(substring-no-properties (current-kill 0))' | sed 's/^"\(.*\)"$/\1/')"
 else
   data="$(wl-paste)"
 fi
