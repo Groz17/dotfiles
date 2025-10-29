@@ -312,6 +312,12 @@ bindkey '^W' .backward-kill-word
 
 # Ctrl+1 maps to Alt+1
 bindkey -s '^1' '\e1'
+
+# C-M-] - search prev char (vi)
+bindkey '^[^]' vi-find-prev-char
+# C-] - search next char (vi)
+bindkey '^]' vi-find-next-char
+
 #+end_src
 
 **** Meta Commands
