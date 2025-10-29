@@ -85,7 +85,7 @@ keybind = ctrl+shift+c=copy_to_clipboard
 keybind = ctrl+shift+v=paste_from_clipboard
 # like emacs' <c-x>0
 # keybind = super+alt+digit_0=close_surface
-keybind = super+alt+digit_q=close_surface
+keybind = super+alt+q=close_surface
 keybind = super+alt+slash=undo
 # Currently not working
 keybind = super+alt+shift+i=inspector:toggle
