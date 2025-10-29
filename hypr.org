@@ -602,10 +602,6 @@ bind = $mainMod SHIFT, o, exec, sh -c 'grimblast --freeze save area - | tesserac
 # p->salva in Pictures mnemonic
 bind = SUPER,       s, exec, grimblast --freeze --notify save area
 bind = SUPER SHIFT, s, exec, grimblast --freeze --notify save active
-# dunno what these do, also clash with kanata terminal keybindings
-# bind = SUPER ALT,   p, exec, grimblast --notify save output
-# bind = SUPER CTRL,  p, exec, grimblast --notify save screen
-# bind = SUPER,       c, exec, grimblast --notify copy area
 # nice dicotomy/mnemonic w y (copy) and p (paste)
 bind = SUPER,       y, exec, grimblast --freeze --notify copy area
 bind = SUPER SHIFT, y, exec, grimblast --freeze --notify copy active
