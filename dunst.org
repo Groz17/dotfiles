@@ -17,7 +17,7 @@ corners = all
 progress_bar_corners = top-left,bottom-right
 offset = (9, 9)
 gap_size = 5
-format = "<big><span background='#8b00ff' color='#ffffff'><b> %a </b></span>\n<span background='#ff006e' color='#000000'> %s </span>\n<span background='#1a1a2e' color='#00ffff'>%b</span></big>"
+format = "<big><span background='#8b00ff' color='#cfefe0'><b> %a </b></span>\n<span background='#fb4b6e' color='#000000'> %s </span>\n<span background='#1a1a2e' color='#00ffff'>%b</span></big>"
 
 markup = no
 alignment=center
