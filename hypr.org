@@ -819,6 +819,13 @@ windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 # windowrulev2 = workspace special:reaper (xprop)
 #+end_src
 
+** [[https://wiki.hypr.land/Configuring/Window-Rules/#layer-rules][LAYERS]]
+#+begin_src hyprlang
+# layerrule = blur, waybar
+# or
+# layerrule = order, rofi
+#+end_src
+
 * Hyprlock
 :PROPERTIES:
 :header-args: :tangle ~/.config/hypr/hyprlock.conf
