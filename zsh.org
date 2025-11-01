@@ -306,10 +306,6 @@ bindkey '^I' expand-or-complete-prefix
 # Ctrl+U - kill from cursor to beginning of line (like Bash)
 bindkey '^U' backward-kill-line
 
-# Ctrl+W - keep default Zsh behavior (delete to whitespace)
-# select-word-style bash changes this, so restore the original widget
-bindkey '^W' .backward-kill-word
-
 # Ctrl+1 maps to Alt+1
 bindkey -s '^1' '\e1'
 
@@ -318,6 +314,9 @@ bindkey '^[^]' vi-find-prev-char
 # C-] - search next char (vi)
 bindkey '^]' vi-find-next-char
 
+backward-kill-blank-word() { [[ $LBUFFER =~ '^(.*[[:space:]])[^[:space:]]*$' ]] && LBUFFER=${match[1]} || LBUFFER=; }
+zle -N backward-kill-blank-word
+bindkey -M emacs '^W' backward-kill-blank-word
 #+end_src
 
 **** Meta Commands
