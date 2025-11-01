@@ -352,8 +352,11 @@ device {
 # modifier: win+ctrl+shift (doesn't work)
 # modifier: win+ctrl (doesn't work) -> ctrl sta per controller
 # bind=super ctrl shift,h,exec, playerctl position 10-
-bind=super ctrl,h,exec, playerctl position 10-
-bind=super ctrl,l,exec, playerctl position 10+
+bind=super ctrl,left,exec, playerctl position 10-
+bind=super ctrl,right,exec, playerctl position 10+
+bind=super ctrl,up,exec, playerctl volume 0.1+
+bind=super ctrl,down,exec, playerctl volume 0.1-
+bind=super ctrl,space,exec, playerctl play-pause
 #+end_src
 
 ** KEYBINDINGS
