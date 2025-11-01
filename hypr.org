@@ -356,7 +356,15 @@ bind=super ctrl,left,exec, playerctl position 10-
 bind=super ctrl,right,exec, playerctl position 10+
 bind=super ctrl,up,exec, playerctl volume 0.1+
 bind=super ctrl,down,exec, playerctl volume 0.1-
-bind=super ctrl,space,exec, playerctl play-pause
+bind=super ctrl,l,exec, playerctl play-pause
+bind=super shift ctrl,l,exec, playerctl volume 0
+
+bind=super ctrl,b,exec, wtype -k Left
+bind=super ctrl,a,exec, wtype -k Down
+bind=super ctrl,y,exec, wtype -k Up
+bind=super ctrl,x,exec, wtype -k Right
+bind=super ctrl,r,exec, wtype -k Space
+bind=super shift ctrl,r,exec, wtype -k Escape
 #+end_src
 
 ** KEYBINDINGS
