@@ -314,7 +314,11 @@ bindkey '^[^]' vi-find-prev-char
 # C-] - search next char (vi)
 bindkey '^]' vi-find-next-char
 
-backward-kill-blank-word() { [[ $LBUFFER =~ '^(.*[[:space:]])[^[:space:]]*$' ]] && LBUFFER=${match[1]} || LBUFFER=; }
+backward-kill-blank-word() {
+  # Remove trailing spaces, then kill the last word
+  LBUFFER="${LBUFFER%${LBUFFER##*[![:space:]]}}"
+  [[ $LBUFFER =~ '^(.*[[:space:]])[^[:space:]]+$' ]] && LBUFFER="${match[1]}" || LBUFFER=
+}
 zle -N backward-kill-blank-word
 bindkey -M emacs '^W' backward-kill-blank-word
 #+end_src
